@@ -122,7 +122,7 @@ const books: ItemProps[] = [
     YearOfPublication: 1979,
     NumberOfPages: 215,
     Image: "https://cdn-icons-png.flaticon.com/512/5606/5606108.png",
-    Article: 12232111,
+    Article: 12232907,
   },
 ];
 

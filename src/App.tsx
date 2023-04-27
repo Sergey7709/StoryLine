@@ -2,6 +2,7 @@ import {
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
+  ScrollArea,
 } from "@mantine/core";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
