@@ -2,7 +2,6 @@ import {
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
-  ScrollArea,
 } from "@mantine/core";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -92,6 +91,7 @@ const links = {
 };
 
 export default function App() {
+  console.log("YES");
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
