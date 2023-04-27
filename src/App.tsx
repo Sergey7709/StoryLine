@@ -24,6 +24,7 @@ import { ChildrenLiterature } from "./pages/catalog/childrenLiterature";
 import { TravelHobbiesLeisure } from "./pages/catalog/travelHobbiesLeisure";
 import { ComputerBooks } from "./pages/catalog/computerBooks";
 import { ArtReligion } from "./pages/catalog/artReligion";
+import { AllBooks } from "./pages/catalog/allBooks";
 
 const links = {
   links: [
@@ -31,6 +32,10 @@ const links = {
       link: "/catalog",
       label: "Каталог",
       links: [
+        {
+          link: "/allBooks",
+          label: "Все книги",
+        },
         {
           link: "/newBooks",
           label: "Новинки",
@@ -125,6 +130,7 @@ export default function App() {
             <Route path={"/readerBlogs"} element={<ReaderBlogs />} />
             <Route path={"/aboutUs"} element={<AboutUs />} />
 
+            <Route path={"/allBooks"} element={<AllBooks />} />
             <Route path={"/newBooks"} element={<NewBooks />} />
             <Route path={"/fiction"} element={<Fiction />} />
             <Route path={"/scientific"} element={<Scientific />} />
@@ -139,6 +145,7 @@ export default function App() {
             />
             <Route path={"/computerBooks"} element={<ComputerBooks />} />
             <Route path={"/artReligion"} element={<ArtReligion />} />
+
             <Route path={"/*"} element={<Error404 />} />
           </Routes>
         </AppShell>
