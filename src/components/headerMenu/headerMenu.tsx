@@ -13,11 +13,11 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronDown, IconSearch } from "@tabler/icons-react";
-import { ThemeToggleIcon } from "../../ui/themeToggleIcon";
-import { CartIcon } from "../../ui/cartIcon";
+import { ThemeToggleIcon } from "../../assets/themeToggleIcon";
+import { CartIcon } from "../../assets/cartIcon";
 import { useStyles } from "./headerMenuStyles";
-import { FavoritesIcon } from "../../ui/favoritesIcon";
-import { AvatarIcon } from "../../ui/avatarIcon";
+import { FavoritesIcon } from "../../assets/favoritesIcon";
+import { AvatarIcon } from "../../assets/avatarIcon";
 import { Link, useNavigate } from "react-router-dom";
 
 const dataForAutocomplete = [
