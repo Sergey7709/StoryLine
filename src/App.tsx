@@ -25,7 +25,7 @@ const links = {
       label: "Каталог",
       links: [
         {
-          link: "/allBooks",
+          link: "/BooksList",
           label: "Все книги",
         },
         {
@@ -48,6 +48,7 @@ const links = {
           link: "/childrenLiterature",
           label: "Детская литература",
         },
+
         {
           link: "/travelHobbiesLeisure",
           label: "Путешествия. Хобби. Досуг",
