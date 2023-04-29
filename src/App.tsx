@@ -16,6 +16,7 @@ import { AboutUs } from './pages/aboutUs/aboutUs';
 import { Error404 } from './pages/error404/error404';
 import { useAutoLogin } from './hooks/useAutoLogin';
 import { LINKS } from './common/constants';
+import UserAccount from './pages/userAccount/UserAccount';
 
 export default function App() {
   useAutoLogin();
@@ -48,6 +49,7 @@ export default function App() {
             <Route path={'/readerBlogs'} element={<ReaderBlogs />} />
             <Route path={'/aboutUs'} element={<AboutUs />} />
             <Route path={'/BooksList'} element={<BooksList />} />
+            <Route path={'/user-account'} element={<UserAccount />} />
             <Route path={'/*'} element={<Error404 />} />
           </Routes>
         </AppShell>

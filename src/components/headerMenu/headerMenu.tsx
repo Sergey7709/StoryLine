@@ -11,7 +11,7 @@ import {
   Image,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconChevronDown, IconLogin, IconSearch } from '@tabler/icons-react';
+import { Icon360View, IconChevronDown, IconLogin, IconSearch } from '@tabler/icons-react';
 import { ThemeToggleIcon } from '../../assets/themeToggleIcon';
 import { CartIcon } from '../../assets/cartIcon';
 import { useStyles } from './headerMenuStyles';
@@ -127,6 +127,7 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
             <ThemeToggleIcon />
             {isAuth ? <IconLogin size={35} cursor="pointer" onClick={logOut} /> : <AvatarIcon />}
             <CartIcon />
+            <Icon360View onClick={() => navigate('/user-account')} />
             <FavoritesIcon />
             <Burger
               opened={opened}
