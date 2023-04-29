@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Image, Text } from "@mantine/core";
 
 type ItemProps = {
@@ -126,7 +125,7 @@ const books: ItemProps[] = [
   },
 ];
 
-export const AllBooks = () => {
+export const BooksList = () => {
   return (
     <div>
       {books.map((book, index) => (

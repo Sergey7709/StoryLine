@@ -9,27 +9,18 @@ import {
   Paper,
   Grid,
   Image,
-  Text,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconChevronDown, IconSearch } from "@tabler/icons-react";
-import { ThemeToggleIcon } from "../../ui/themeToggleIcon";
-import { CartIcon } from "../../ui/cartIcon";
-import { useStyles } from "./headerMenuStyles";
-import { FavoritesIcon } from "../../ui/favoritesIcon";
-import { AvatarIcon } from "../../ui/avatarIcon";
-import { Link, useNavigate } from "react-router-dom";
-
-const dataForAutocomplete = [
-  "Pushkin",
-  "Harry",
-  "Angular",
-  "Vue",
-  "Next",
-  "Riot",
-  "Svelte",
-  "Blitz",
-];
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { IconChevronDown, IconLogin, IconSearch } from '@tabler/icons-react';
+import { ThemeToggleIcon } from '../../assets/themeToggleIcon';
+import { CartIcon } from '../../assets/cartIcon';
+import { useStyles } from './headerMenuStyles';
+import { FavoritesIcon } from '../../assets/favoritesIcon';
+import { AvatarIcon } from '../../assets/avatarIcon';
+import { Link, useNavigate } from 'react-router-dom';
+import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
+import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
+import { userReceived } from '../../redux/authSlice';
 
 interface HeaderMenuProps {
   links: {
@@ -41,16 +32,17 @@ interface HeaderMenuProps {
 
 export const HeaderMenu = ({ links }: HeaderMenuProps) => {
   const [opened, { toggle }] = useDisclosure(false);
-  console.log("on");
-
   const { classes } = useStyles();
-
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const onClickToHome = () => {
-    navigate("/");
+    navigate('/');
   };
-
+  const logOut = () => {
+    dispatch(userReceived(null));
+    localStorage.clear();
+  };
   const onClickToItem = (link: string) => {
     navigate(link);
     toggle();
@@ -62,23 +54,20 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
         {item.label}
       </Menu.Item>
     ));
-
     if (menuItems) {
       return (
         <Menu
           key={link.label}
-          trigger={"click"}
+          trigger={'click'}
           transitionProps={{ exitDuration: 0 }}
           withinPortal
           width="100%"
-          position="bottom-start"
-        >
+          position="bottom-start">
           <Menu.Target>
             <a
               href={link.link}
               className={classes.link}
-              onClick={(event) => event.preventDefault()}
-            >
+              onClick={(event) => event.preventDefault()}>
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
                 <IconChevronDown size="1rem" stroke={1.5} />
@@ -104,8 +93,8 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
   });
 
   return (
-    <Header height={105} className={classes.header} m={"0px"}>
-      <Grid m={10} gutter={"5px"}>
+    <Header height={105} className={classes.header} m={'0px'}>
+      <Grid m={10} gutter={'5px'}>
         <Grid.Col span={2}>
           <Image
             onClick={onClickToHome}
@@ -126,23 +115,17 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
           </Text> */}
         </Grid.Col>
         <Grid.Col span={10}>
-          <Group
-            spacing={12}
-            align="center"
-            position="right"
-            mr={"5%"}
-            mb={"0px"}
-          >
+          <Group spacing={12} align="center" position="right" mr={'5%'} mb={'0px'}>
             <Autocomplete
               className={classes.search_default}
               placeholder="Search"
               icon={<IconSearch size="1rem" stroke={1.5} />}
               size="md"
-              data={dataForAutocomplete}
+              data={DATA_FOR_AUTO_COMPLETE}
               m={0}
             />
             <ThemeToggleIcon />
-            <AvatarIcon />
+            {isAuth ? <IconLogin size={35} cursor="pointer" onClick={logOut} /> : <AvatarIcon />}
             <CartIcon />
             <FavoritesIcon />
             <Burger
@@ -155,12 +138,7 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
           </Group>
         </Grid.Col>
         <Grid.Col span={12}>
-          <Group
-            spacing={12}
-            align="center"
-            position="center"
-            className={classes.links}
-          >
+          <Group spacing={12} align="center" position="center" className={classes.links}>
             {items}
           </Group>
         </Grid.Col>
@@ -174,7 +152,7 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
                 placeholder="Search"
                 icon={<IconSearch size="1rem" stroke={1.5} />}
                 size="md"
-                data={dataForAutocomplete}
+                data={DATA_FOR_AUTO_COMPLETE}
               />
             </Paper>
           )}
