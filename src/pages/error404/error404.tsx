@@ -1,13 +1,13 @@
-import { Container, Title, Text, Button, Group } from "@mantine/core";
+import { Container, Title, Text, Button, Group } from '@mantine/core';
 
-import { useNavigate } from "react-router-dom";
-import { useStyles } from "./Error404Styles";
-import { Illustration } from "./Illustration";
+import { useNavigate } from 'react-router-dom';
+import { Illustration } from './illustration';
+import { useStyles } from './error404Styles';
 
 export function Error404() {
   const navigate = useNavigate();
   const onClickToHome = () => {
-    navigate("/");
+    navigate('/');
   };
   const { classes } = useStyles();
 
@@ -17,14 +17,9 @@ export function Error404() {
         <Illustration className={classes.image} />
         <div className={classes.content}>
           <Title className={classes.title}>Здесь не на что смотреть</Title>
-          <Text
-            color="dimmed"
-            size="lg"
-            align="center"
-            className={classes.description}
-          >
-            Страница, которую вы пытаетесь открыть, не существует. Возможно, вы
-            неправильно ввели адрес, или страница была перемещена на другой URL.
+          <Text color="dimmed" size="lg" align="center" className={classes.description}>
+            Страница, которую вы пытаетесь открыть, не существует. Возможно, вы неправильно ввели
+            адрес, или страница была перемещена на другой URL.
           </Text>
           <Group position="center">
             <Button onClick={onClickToHome} size="md">
