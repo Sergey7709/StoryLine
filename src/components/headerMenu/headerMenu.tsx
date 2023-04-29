@@ -9,9 +9,10 @@ import {
   Paper,
   Grid,
   Image,
+  Avatar,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Icon360View, IconChevronDown, IconLogin, IconSearch } from '@tabler/icons-react';
+import { IconChevronDown, IconLogin, IconSearch } from '@tabler/icons-react';
 import { ThemeToggleIcon } from '../../assets/themeToggleIcon';
 import { CartIcon } from '../../assets/cartIcon';
 import { useStyles } from './headerMenuStyles';
@@ -31,6 +32,7 @@ interface HeaderMenuProps {
 }
 
 export const HeaderMenu = ({ links }: HeaderMenuProps) => {
+  const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
   const isAuth = useAppSelector((state) => state.auth.isAuth);
@@ -125,9 +127,16 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
               m={0}
             />
             <ThemeToggleIcon />
-            {isAuth ? <IconLogin size={35} cursor="pointer" onClick={logOut} /> : <AvatarIcon />}
             <CartIcon />
-            <Icon360View onClick={() => navigate('/user-account')} />
+            {isAuth ? (
+              <>
+                <IconLogin size={35} cursor="pointer" onClick={logOut} />
+                <Avatar onClick={() => navigate('/user-account')} src={userAvatar} />
+              </>
+            ) : (
+              <AvatarIcon />
+            )}
+
             <FavoritesIcon />
             <Burger
               opened={opened}

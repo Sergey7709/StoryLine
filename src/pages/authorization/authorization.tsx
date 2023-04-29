@@ -1,5 +1,5 @@
 import { useForm, isEmail, hasLength } from '@mantine/form';
-import { Button, Group, TextInput, Box, PasswordInput } from '@mantine/core';
+import { Button, Group, TextInput, Box, PasswordInput, Checkbox } from '@mantine/core';
 import { FormEvent, useState } from 'react';
 import styles from './authorization.module.css';
 import { BodyFetchUserRequest, fetchUser } from '../../api/authApi';
@@ -14,6 +14,7 @@ export function Authorization() {
   const navigate = useNavigate();
   const [, saveToken] = useSaveTokenLocalStorage();
   const dispatch = useAppDispatch();
+  const [remember, setRemember] = useState(true);
   const [isRegister, setIsRegister] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
@@ -65,7 +66,7 @@ export function Authorization() {
       }
       if (result?.token) {
         dispatch(userReceived(result));
-        if (typeof saveToken === 'function') saveToken(result.token);
+        if (typeof saveToken === 'function' && remember) saveToken(result.token);
         navigate('/');
         notifications.show({
           color: 'green',
@@ -99,9 +100,8 @@ export function Authorization() {
     }
     setIsLoading(false);
   };
-
   return (
-    <Box component="form" maw={400} mx="auto" onSubmit={submitForm}>
+    <Box component="form" maw={420} mx="auto" onSubmit={submitForm}>
       <TextInput
         label="Ваш email"
         placeholder="Ваш email"
@@ -161,6 +161,13 @@ export function Authorization() {
           }}>
           {isRegister ? 'У меня уже есть аккаунт' : 'Зарегистрироваться'}
         </span>
+        {!isRegister && (
+          <Checkbox
+            checked={remember}
+            onChange={() => setRemember((prev) => !prev)}
+            label="Запомнить"
+          />
+        )}
         <Button loading={isLoading} type="submit">
           {isRegister ? 'Регистрация' : 'Войти'}
         </Button>

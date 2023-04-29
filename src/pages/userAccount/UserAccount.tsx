@@ -17,7 +17,7 @@ const UserAccount = () => {
         <Tabs.Tab value="orders">Мои заказы</Tabs.Tab>
         <Tabs.Tab value="reviews">Мои отзывы</Tabs.Tab>
         <Tabs.Tab value="posts">Мои посты</Tabs.Tab>
-        <Tabs.Tab value="change">Изменить данные</Tabs.Tab>
+        <Tabs.Tab value="change">Изменить мои данные</Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value="profile">
         <MyProfile />
