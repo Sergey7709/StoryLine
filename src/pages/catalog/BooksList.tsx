@@ -7,6 +7,7 @@ import {
   Group,
   Grid,
   ActionIcon,
+  SimpleGrid,
 } from "@mantine/core";
 import { IconBookmark } from "@tabler/icons-react";
 import { useStyles } from "./BooksListStyles";
@@ -32,12 +33,13 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "Мастер и Маргарита",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://www.moscowbooks.ru/image/book/710/orig/i710218.jpg?cu=20201230101528",
     description:
       "Роман Михаила Афанасьевича Булгакова, неоднократно издававшийся в период с 1966 по 1967 годы.",
     category: "Фантастика",
     publisher: "Художественная литература",
-    discount: 10,
+    discount: 0,
     pagesCount: 480,
     price: 500,
     genre: "Роман",
@@ -49,12 +51,13 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "Война и мир",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://www.moscowbooks.ru/image/book/669/orig/i669023.jpg?cu=20190902123514",
     description:
       "Эпический роман-хроника Льва Толстого, описывающий события войн и жизнь российского общества в период 1805—1812 годов.",
     category: "Исторический роман",
     publisher: "Эксмо",
-    discount: 20,
+    discount: 0,
     pagesCount: 1274,
     price: 1000,
     genre: "Роман",
@@ -66,12 +69,13 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "451° по Фаренгейту",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://www.moscowbooks.ru/image/book/543/w259/i543138.jpg?cu=20180101000000",
     description:
       "Роман Рэя Брэдбери о жизни в будущем, в котором книги запрещены и сжигаются.",
     category: "Фантастика",
     publisher: "РИПОЛ классик",
-    discount: 15,
+    discount: 0,
     pagesCount: 256,
     price: 550,
     genre: "Роман",
@@ -83,7 +87,8 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "О дивный новый мир",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://www.moscowbooks.ru/image/book/564/w259/i564815.jpg?cu=20180101000000",
     description:
       "Роман Олдоса Хаксли, описывающий будущее общество, где все люди уравнены и живут по системе социального управления.",
     category: "Антиутопия",
@@ -100,7 +105,8 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "Гарри Поттер и философский камень",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://www.moscowbooks.ru/image/book/454/w259/i454685.jpg?cu=20180101000000",
     description:
       "Первая книга в серии о Гарри Поттере, автором которой является Джоан Роулинг.",
     category: "Фэнтези",
@@ -117,7 +123,8 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "Гарри Поттер и Тайная комната",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://img4.labirint.ru/rc/8c1237b3f043b854dec5bd6c9d44d02c/363x561q80/books44/435204/cover.jpg?1670073964",
     description:
       "Вторая книга в серии о Гарри Поттере, автором которой является Джоан Роулинг.",
     category: "Фэнтези",
@@ -134,12 +141,13 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "Гарри Поттер и узник Азкабана",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://www.moscowbooks.ru/image/book/466/w259/i466300.jpg?cu=20180101000000",
     description:
       "Третья книга в серии о Гарри Поттере, автором которой является Джоан Роулинг.",
     category: "Фэнтези",
     publisher: "Росмэн",
-    discount: 20,
+    discount: 0,
     pagesCount: 480,
     price: 700,
     genre: "Роман",
@@ -151,7 +159,8 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "Преступление и наказание",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://www.moscowbooks.ru/image/book/355/orig/i355030.jpg?cu=20180101000000",
     description:
       "Роман Федора Достоевского, описывающий жизнь Раскольникова, бывшего студента, который убивает зажиточную старушку, чтобы забрать ее деньги.",
     category: "Классика",
@@ -168,12 +177,13 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "Анна Каренина",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://www.moscowbooks.ru/image/book/410/orig/i410282.jpg?cu=20180101000000",
     description:
       "Роман Льва Толстого о жизни высшего общества России в конце 19 века.",
     category: "Классика",
     publisher: "Эксмо",
-    discount: 10,
+    discount: 0,
     pagesCount: 864,
     price: 850,
     genre: "Роман",
@@ -185,7 +195,8 @@ const books: ItemProps[] = [
   {
     inStock: true,
     title: "Алиса в стране чудес",
-    itemImageUrl: "https://store.artlebedev.ru/products/images/804a54ch.jpg",
+    itemImageUrl:
+      "https://www.moscowbooks.ru/image/book/768/w259/i768813.jpg?cu=20221207150502",
     description:
       "Роман Льюиса Кэрролла о девочке Алисе, которая попадает в страну чудес.",
     category: "Детская литература",
@@ -204,7 +215,7 @@ const books: ItemProps[] = [
 export const BooksList = () => {
   const { classes } = useStyles();
   return (
-    <Grid className={classes.grid}>
+    <Grid className={classes.grid} px={"2%"}>
       {books.map((book, index) => (
         <Card
           key={index}
@@ -216,39 +227,43 @@ export const BooksList = () => {
         >
           <Group position="apart">
             <Image
-              mt={"1rem"}
-              maw={"10rem"}
+              width={"8rem"}
+              height={"12rem"}
               src={book.itemImageUrl}
               alt="book img"
             />
-            <Badge className={classes.discount} color="pink" variant="light">
-              {`скидка: ${book.discount}%`}
-            </Badge>
+            {book.discount > 0 && (
+              <Badge className={classes.discount} color="pink" variant="light">
+                {`скидка: ${book.discount}%`}
+              </Badge>
+            )}
             <ActionIcon className={classes.favorite}>
-              <IconBookmark size="1.2rem" color={"red"} stroke={1.5} />
+              <IconBookmark size="2rem" color={"red"} stroke={1.5} />
             </ActionIcon>
           </Group>
-
-          <Text size="sm" color="dimmed" lineClamp={2}>
-            {book.authorBook}
-          </Text>
-
-          <Group position="apart">
-            <Text weight={500} lineClamp={2}>
-              {book.title}
-            </Text>
-          </Group>
-
-          <Text className={classes.text} size="md" color="green" lineClamp={2}>
+          <Grid mt={10} pl={10} mb={5} gutter={0}>
+            <Grid.Col span={12}>
+              <Text align="start" size="sm" color="dimmed" lineClamp={2}>
+                {book.authorBook}
+              </Text>
+            </Grid.Col>
+            <Grid.Col span={12}>
+              <Text weight={500} lineClamp={2}>
+                {book.title}
+              </Text>
+            </Grid.Col>
+          </Grid>
+          <Text className={classes.text} weight={600} size="lg" color="green">
             {`${book.price} руб.`}
           </Text>
+
           <Button
             className={classes.buy}
             variant="light"
             color="blue"
             fullWidth
             radius="md"
-            w={"12rem"}
+            w={"10rem"}
           >
             Купить
           </Button>
