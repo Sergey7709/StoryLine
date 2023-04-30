@@ -9,6 +9,7 @@ import {
   Paper,
   Grid,
   Image,
+  Avatar,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown, IconLogin, IconSearch } from '@tabler/icons-react';
@@ -31,6 +32,7 @@ interface HeaderMenuProps {
 }
 
 export const HeaderMenu = ({ links }: HeaderMenuProps) => {
+  const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
   const isAuth = useAppSelector((state) => state.auth.isAuth);
@@ -125,8 +127,16 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
               m={0}
             />
             <ThemeToggleIcon />
-            {isAuth ? <IconLogin size={35} cursor="pointer" onClick={logOut} /> : <AvatarIcon />}
             <CartIcon />
+            {isAuth ? (
+              <>
+                <IconLogin size={35} cursor="pointer" onClick={logOut} />
+                <Avatar onClick={() => navigate('/user-account')} src={userAvatar} />
+              </>
+            ) : (
+              <AvatarIcon />
+            )}
+
             <FavoritesIcon />
             <Burger
               opened={opened}

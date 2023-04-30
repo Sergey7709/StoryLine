@@ -5,18 +5,38 @@ export type BodyFetchUserRequest = {
   email: string;
   name?: string;
 };
-export const fetchUser = async (params: string, body?: BodyFetchUserRequest, token?: string) => {
+export type BodyUpdateUserRequest = {
+  id: number;
+  name: string;
+  userImageUrl: string;
+  about: string;
+  phone: string;
+  address: string;
+};
+type Params = 'user/current' | 'user/register' | 'user/login' | 'user/update';
+export const fetchUser = async (
+  params: Params,
+  body?: BodyFetchUserRequest | BodyUpdateUserRequest,
+  token?: string,
+) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: token ?? '',
   };
   try {
-    if (token) {
-      const response = await axios.get(BASE_URL + params, { headers });
-      return response.data;
-    } else {
-      const response = await axios.post(BASE_URL + params, body, { headers });
-      return response.data;
+    switch (params) {
+      case 'user/current':
+        const responseGet = await axios.get(BASE_URL + params, { headers });
+        return responseGet.data;
+      case 'user/register':
+      case 'user/login':
+        const responsePost = await axios.post(BASE_URL + params, body, { headers });
+        return responsePost.data;
+      case 'user/update':
+        const responsePut = await axios.put(BASE_URL + params, body, { headers });
+        return responsePut.data;
+      default:
+        throw new Error('Неверный параметр');
     }
   } catch (error) {
     console.error(error);

@@ -11,6 +11,8 @@ export type User = {
   reviews: Item[];
   posts: Post[];
   token: string;
+  phone: string;
+  address: string;
 };
 export type Item = {
   id: number;
