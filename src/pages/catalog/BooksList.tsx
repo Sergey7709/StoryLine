@@ -7,10 +7,10 @@ import {
   Group,
   Grid,
   ActionIcon,
-  SimpleGrid,
 } from "@mantine/core";
 import { IconBookmark } from "@tabler/icons-react";
 import { useStyles } from "./BooksListStyles";
+import CustomScrollbar from "../../components/customScrollbar/CustomScrollbar";
 
 type ItemProps = {
   inStock: boolean;
@@ -259,13 +259,15 @@ export const BooksList = () => {
 
           <Button
             className={classes.buy}
-            variant="light"
+            variant="gradient"
+            gradient={{ from: "teal", to: "blue", deg: 60 }}
             color="blue"
-            fullWidth
+            // fullWidth
+            size="sm"
             radius="md"
-            w={"10rem"}
+            w={"9rem"}
           >
-            Купить
+            КУПИТЬ
           </Button>
         </Card>
       ))}
