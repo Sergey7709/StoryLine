@@ -21,6 +21,7 @@ import { Stocks } from "./pages/stocks/Stocks";
 import { BookstoreServices } from "./pages/bookstoreServices/BookstoreServices";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
 import { AboutUs } from "./pages/aboutUs/AboutUs";
+import CustomScrollbar from "./components/customScrollbar/CustomScrollbar";
 
 export default function App() {
   useAutoLogin();
@@ -51,22 +52,24 @@ export default function App() {
             </Footer>
           }
         >
-          <Routes>
-            <Route path={"/"} element={<Home />} />
-            <Route path={"/authorization"} element={<Authorization />} />
-            <Route path={"/cart"} element={<Cart />} />
-            <Route path={"/favorites"} element={<Favorites />} />
-            <Route path={"/stocks"} element={<Stocks />} />
-            <Route
-              path={"/bookstoreServices"}
-              element={<BookstoreServices />}
-            />
-            <Route path={"/readerBlogs"} element={<ReaderBlogs />} />
-            <Route path={"/aboutUs"} element={<AboutUs />} />
-            <Route path={"/BooksList"} element={<BooksList />} />
-            <Route path={"/user-account"} element={<UserAccount />} />
-            <Route path={"/*"} element={<Error404 />} />
-          </Routes>
+          <CustomScrollbar>
+            <Routes>
+              <Route path={"/"} element={<Home />} />
+              <Route path={"/authorization"} element={<Authorization />} />
+              <Route path={"/cart"} element={<Cart />} />
+              <Route path={"/favorites"} element={<Favorites />} />
+              <Route path={"/stocks"} element={<Stocks />} />
+              <Route
+                path={"/bookstoreServices"}
+                element={<BookstoreServices />}
+              />
+              <Route path={"/readerBlogs"} element={<ReaderBlogs />} />
+              <Route path={"/aboutUs"} element={<AboutUs />} />
+              <Route path={"/BooksList"} element={<BooksList />} />
+              <Route path={"/user-account"} element={<UserAccount />} />
+              <Route path={"/*"} element={<Error404 />} />
+            </Routes>
+          </CustomScrollbar>
         </AppShell>
       </MantineProvider>
     </ColorSchemeProvider>

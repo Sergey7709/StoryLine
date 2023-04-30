@@ -1,6 +1,6 @@
 /* Стили для полосы прокрутки */
 ::-webkit-scrollbar {
-  width: 10px; /* Ширина полосы прокрутки */
+  width: 0px; /* Ширина полосы прокрутки */
 }
 /* Стили для ползунка полосы прокрутки */
 ::-webkit-scrollbar-thumb {
@@ -13,6 +13,7 @@
 ::-webkit-scrollbar-track {
   background-color: #f1f1f1; /* Цвет фона трека */
   border-radius: 6px; /* Скругление углов трека */
+  color: cadetblue;
 }
 
 .custom-scrollbar {

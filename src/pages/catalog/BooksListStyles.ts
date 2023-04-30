@@ -17,7 +17,7 @@ export const useStyles = createStyles((theme) => ({
       boxShadow: theme.shadows.md,
     },
 
-    width: "12rem",
+    width: "14rem",
     height: "24rem",
     margin: "1rem",
   },
@@ -25,17 +25,36 @@ export const useStyles = createStyles((theme) => ({
   discount: {
     position: "absolute",
     // top: theme.spacing.xs,
-    top: "10px",
+    top: "9px",
     left: rem(5),
     pointerEvents: "none",
   },
 
-  favorite: {
+  action_favorite: {
     position: "absolute",
-    top: "5px",
-    right: rem(5),
-    backgroundColor: "none",
+    top: "1px",
+    right: "5px",
     padding: "0px",
+    height: "3rem",
+    width: "2rem",
+    "&:hover": {
+      transform: "scale(1.05)",
+      fill: "red",
+    },
+  },
+  favorite_on: {
+    fill: "crimson",
+    "&:hover": {
+      transform: "scale(1.05)",
+      fill: "cadetblue",
+    },
+  },
+  favorite_off: {
+    fill: "cadetblue",
+    "&:hover": {
+      transform: "scale(1.05)",
+      fill: "crimson",
+    },
   },
 
   buy: {
