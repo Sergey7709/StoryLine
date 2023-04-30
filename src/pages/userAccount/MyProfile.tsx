@@ -9,13 +9,14 @@ import { checkRankLevel } from '../../helpers/checkRankLevel';
 const MyFavorites = () => {
   const user = useAppSelector((state) => state.auth.user);
   const rank = useMemo(() => {
-    const totalOrderPrice = user?.orderItems.reduce((acc, curr) => acc + curr.price, 0);
+    const totalOrderPrice = user?.orderItems.reduce((acc, curr) => acc + curr.totalPrice, 0);
     return typeof totalOrderPrice === 'number'
       ? checkRankLevel(totalOrderPrice)
       : {
           title: 'Читатель',
           next: 5000,
           proc: 0,
+          totalOrderPrice,
         };
   }, [user]);
 
@@ -23,7 +24,7 @@ const MyFavorites = () => {
     <Grid>
       <Grid.Col span={4}>
         <Paper shadow="xs" p="md" mt={10}>
-          <Flex mih={350} gap="md" direction="column" justify="space-between">
+          <Flex h={350} gap="md" direction="column" justify="space-between">
             <Image mx="auto" radius="md" src={user?.userImageUrl} alt="" />
             <Box display="flex">
               <IconUser />
@@ -36,7 +37,7 @@ const MyFavorites = () => {
       </Grid.Col>
       <Grid.Col span={4}>
         <Paper shadow="xs" p="md" mt={10}>
-          <Flex mih={350} gap="md" direction="column">
+          <Flex h={350} gap="md" direction="column">
             <RingProgress
               mx="auto"
               size={250}
@@ -56,7 +57,7 @@ const MyFavorites = () => {
               ) : (
                 <>
                   <span>Для перехода на следующий уровень выкупите товаров на : </span>
-                  <b>{rank?.next}Р</b>
+                  <b>{rank?.next} &#8381;</b>
                 </>
               )}
             </Text>
@@ -65,11 +66,13 @@ const MyFavorites = () => {
       </Grid.Col>
       <Grid.Col span={4}>
         <Paper shadow="xs" p="md" mt={10}>
-          <Flex mih={350} gap="md" direction="column" justify="space-between">
+          <Flex h={350} gap="md" direction="column" justify="space-between">
             <Title mt="md" ta="center">
               Моя статистика
             </Title>
             <Text fz="lg">Заказов всего {user?.orderItems.length ?? 0}</Text>
+            <Text fz="lg">Заказано на сумму {rank.totalOrderPrice} &#8381;</Text>
+
             <Text fz="lg">Написано постов {user?.posts.length ?? 0}</Text>
             <Text fz="lg">Написано отзывов {user?.reviews.length ?? 0}</Text>
           </Flex>

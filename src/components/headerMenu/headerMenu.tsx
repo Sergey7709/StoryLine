@@ -10,6 +10,7 @@ import {
   Grid,
   Image,
   Avatar,
+  Box,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown, IconLogin, IconSearch } from '@tabler/icons-react';
