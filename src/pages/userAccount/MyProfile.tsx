@@ -4,7 +4,7 @@ import { Image } from '@mantine/core';
 import { useAppSelector } from '../../redux/redux.hooks';
 import { IconSettings, IconUser } from '@tabler/icons-react';
 import { checkRankLevel } from '../../helpers/checkRankLevel';
-import ChangeMyData from './ChangeMyData';
+import ChangeMyData from './assetsUserAccount/ChangeMyData';
 import { useDisclosure } from '@mantine/hooks';
 
 const MyFavorites = () => {

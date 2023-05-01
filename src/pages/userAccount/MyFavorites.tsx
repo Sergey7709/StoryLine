@@ -1,7 +1,8 @@
 import React from 'react';
+import { BooksList } from '../catalog/BooksList';
 
 const MyFavorites = () => {
-  return <div>MyFavorites</div>;
+  return <BooksList />;
 };
 
 export default MyFavorites;
