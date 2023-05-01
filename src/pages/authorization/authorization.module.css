@@ -1,4 +1,5 @@
 .register_toggle_link {
   text-decoration: underline;
   cursor: pointer;
+  opacity: 0.5;
 }

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { User } from '../common/types';
+import { Post, User } from '../common/types';
 type InitialStateUserSlice = {
   user: User | null;
   isAuth: boolean;
@@ -17,8 +17,11 @@ export const userSlice = createSlice({
       state.user = action.payload;
       state.isAuth = !!action.payload;
     },
+    updateUserPosts: (state, action: PayloadAction<Post[]>) => {
+      if (state.user) state.user.posts = action.payload;
+    },
   },
 });
 
-export const { userReceived } = userSlice.actions;
+export const { userReceived, updateUserPosts } = userSlice.actions;
 export default userSlice.reducer;
