@@ -1,13 +1,16 @@
-import { Box, Button, Group, TextInput } from '@mantine/core';
+import { Box, Button, Group, TextInput, Textarea, Title } from '@mantine/core';
 import { hasLength, useForm } from '@mantine/form';
-import { FormEvent, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
 import { fetchUser } from '../../api/authApi';
 import { useMutation } from 'react-query';
 import { BodyUpdateUserRequest } from '../../api/authApi';
 import { userReceived } from '../../redux/authSlice';
 import { notifications } from '@mantine/notifications';
-const MyProfile = () => {
+type Props = {
+  close: () => void;
+};
+const MyProfile: FC<Props> = ({ close }) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +47,7 @@ const MyProfile = () => {
           message: result.name,
         });
       }
+      close();
     } catch (err) {
       console.log(err);
       notifications.show({
@@ -57,6 +61,9 @@ const MyProfile = () => {
   };
   return (
     <Box component="form" maw={400} mx="auto" onSubmit={submitForm}>
+      <Title color="dimmed" fz={15} mb={5}>
+        Мои данные
+      </Title>
       <TextInput mt={5} label="Имя" placeholder="Имя" {...form.getInputProps('name')} />
       <TextInput mt={5} label="Телефон" placeholder="Телефон" {...form.getInputProps('phone')} />
       <TextInput
@@ -71,7 +78,7 @@ const MyProfile = () => {
         placeholder="Ссылка на аватар"
         {...form.getInputProps('userImageUrl')}
       />
-      <TextInput mt={5} label="Обо мне" placeholder="Обо мне" {...form.getInputProps('about')} />
+      <Textarea mt={5} label="Обо мне" placeholder="Обо мне" {...form.getInputProps('about')} />
       <Group position="right" mt="md">
         <Button loading={isLoading} type="submit">
           Сохранить изменения

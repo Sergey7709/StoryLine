@@ -1,6 +1,6 @@
 import { useForm, isEmail, hasLength } from '@mantine/form';
-import { Button, Group, TextInput, Box, PasswordInput, Checkbox } from '@mantine/core';
-import { FormEvent, useState } from 'react';
+import { Button, Group, TextInput, Box, PasswordInput, Checkbox, Title } from '@mantine/core';
+import { FC, FormEvent, useState } from 'react';
 import styles from './authorization.module.css';
 import { BodyFetchUserRequest, fetchUser } from '../../api/authApi';
 import { useMutation } from 'react-query';
@@ -8,15 +8,19 @@ import { useAppDispatch } from '../../redux/redux.hooks';
 import { userReceived } from '../../redux/authSlice';
 import { notifications } from '@mantine/notifications';
 import { useSaveTokenLocalStorage } from '../../hooks/useSaveTokenLocalStorage';
-import { useNavigate } from 'react-router-dom';
 import { User } from '../../common/types';
-export function Authorization() {
-  const navigate = useNavigate();
+type FetchAuthArgs = {
+  body: BodyFetchUserRequest;
+  params: 'user/register' | 'user/login';
+};
+type Props = {
+  close: () => void;
+};
+export const Authorization: FC<Props> = ({ close }) => {
   const [, saveToken] = useSaveTokenLocalStorage();
   const dispatch = useAppDispatch();
   const [remember, setRemember] = useState(true);
   const [isRegister, setIsRegister] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     initialValues: isRegister
       ? {
@@ -45,29 +49,29 @@ export function Authorization() {
           password: hasLength({ min: 3, max: 15 }, 'Пароль должно быть 3-15 символов'),
         },
   });
-  const registerUserMutation = useMutation((body: BodyFetchUserRequest) =>
-    fetchUser('user/register', body),
-  );
-  const loginUserMutation = useMutation((body: BodyFetchUserRequest) =>
-    fetchUser('user/login', body),
-  );
+  const authUserMutation = useMutation((args: FetchAuthArgs) => fetchUser(args.params, args.body));
   const submitForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let result: User | null = null;
     if (form.validate().hasErrors) return;
-    setIsLoading(true);
     try {
       if (!isRegister) {
         const loginData = { ...form.values };
-        result = await loginUserMutation.mutateAsync(loginData);
+        result = await authUserMutation.mutateAsync({
+          params: 'user/login',
+          body: loginData,
+        });
       } else {
         const newUser = { ...form.values, isAdmin: false };
-        result = await registerUserMutation.mutateAsync(newUser);
+        result = await authUserMutation.mutateAsync({
+          params: 'user/register',
+          body: newUser,
+        });
       }
       if (result?.token) {
         dispatch(userReceived(result));
         if (typeof saveToken === 'function' && remember) saveToken(result.token);
-        navigate('/');
+        close();
         notifications.show({
           color: 'green',
           autoClose: 3000,
@@ -98,10 +102,12 @@ export function Authorization() {
         message,
       });
     }
-    setIsLoading(false);
   };
   return (
     <Box component="form" maw={420} mx="auto" onSubmit={submitForm}>
+      <Title color="dimmed" fz={15} mb={5}>
+        Авторизация
+      </Title>
       <TextInput
         label="Ваш email"
         placeholder="Ваш email"
@@ -109,7 +115,6 @@ export function Authorization() {
         {...form.getInputProps('email')}
       />
       <PasswordInput
-        mt={5}
         label="Ваш пароль"
         placeholder="Ваш пароль"
         withAsterisk
@@ -117,38 +122,24 @@ export function Authorization() {
       />
       {isRegister && (
         <>
+          <TextInput label="Имя" placeholder="Имя" withAsterisk {...form.getInputProps('name')} />
           <TextInput
-            mt={5}
-            label="Имя"
-            placeholder="Имя"
-            withAsterisk
-            {...form.getInputProps('name')}
-          />
-          <TextInput
-            mt={5}
             label="Телефон"
             placeholder="Телефон"
             withAsterisk
             {...form.getInputProps('phone')}
           />
           <TextInput
-            mt={5}
             label="Адрес доставки"
             placeholder="Адрес доставки"
             {...form.getInputProps('address')}
           />
           <TextInput
-            mt={5}
             label="Аватар"
             placeholder="Ссылка на аватар"
             {...form.getInputProps('userImageUrl')}
           />
-          <TextInput
-            mt={5}
-            label="Обо мне"
-            placeholder="Обо мне"
-            {...form.getInputProps('about')}
-          />
+          <TextInput label="Обо мне" placeholder="Обо мне" {...form.getInputProps('about')} />
         </>
       )}
 
@@ -168,10 +159,10 @@ export function Authorization() {
             label="Запомнить"
           />
         )}
-        <Button loading={isLoading} type="submit">
+        <Button loading={authUserMutation.isLoading} type="submit">
           {isRegister ? 'Регистрация' : 'Войти'}
         </Button>
       </Group>
     </Box>
   );
-}
+};
