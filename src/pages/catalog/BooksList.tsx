@@ -7,7 +7,6 @@ import {
   Group,
   Grid,
   ActionIcon,
-  Container,
 } from "@mantine/core";
 import { useStyles } from "./BooksListStyles";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
