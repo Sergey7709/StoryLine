@@ -1,3 +1,4 @@
+
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -16,6 +17,7 @@ import { Error404 } from './pages/error404/error404';
 import { useAutoLogin } from './hooks/useAutoLogin';
 import { LINKS } from './common/constants';
 import UserAccount from './pages/userAccount/UserAccount';
+
 
 export default function App() {
   useAutoLogin();
@@ -39,6 +41,7 @@ export default function App() {
             </Footer>
           }>
           <Routes>
+
             <Route path={'/'} element={<Home />} />
             <Route path={'/cart'} element={<Cart />} />
             <Route path={'/favorites'} element={<Favorites />} />
@@ -49,6 +52,7 @@ export default function App() {
             <Route path={'/BooksList'} element={<BooksList />} />
             <Route path={'/user-account'} element={<UserAccount />} />
             <Route path={'/*'} element={<Error404 />} />
+
           </Routes>
         </AppShell>
       </MantineProvider>
