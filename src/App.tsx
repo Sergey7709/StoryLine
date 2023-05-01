@@ -20,8 +20,9 @@ import { Favorites } from "./pages/favorites/Favorites";
 import { AboutUs } from "./pages/aboutUs/AboutUs";
 import { BookstoreServices } from "./pages/bookstoreServices/BookstoreServices";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
-import { Stocks } from "./pages/stocks/Stocks";
+
 import { ScrollToTopButton } from "./components/scroll-to-top-button/ScrollToTopButton";
+import { Stocks } from "./pages/stocks/stocks";
 
 export default function App() {
   useAutoLogin();
