@@ -14,6 +14,7 @@ import { useAutoLogin } from "./hooks/useAutoLogin";
 import { LINKS } from "./common/constants";
 import UserAccount from "./pages/userAccount/UserAccount";
 import CustomScrollbar from "./components/customScrollbar/CustomScrollbar";
+import { ScrollToTopButton } from "./components/scroll-to-top-button/ScrollToTopButton";
 import ChatBot from "./components/chatBot/ChatBot";
 import { AboutUs } from "./pages/aboutUs/AboutUs";
 import { BookstoreServices } from "./pages/bookstoreServices/BookstoreServices";
@@ -21,6 +22,7 @@ import { Cart } from "./pages/cart/Cart";
 import { Favorites } from "./pages/favorites/Favorites";
 import { Home } from "./pages/home/Home";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
+
 import { Stocks } from "./pages/stocks/stocks";
 
 export default function App() {
@@ -52,7 +54,9 @@ export default function App() {
             </Footer>
           }
         >
+
           <ChatBot />
+
           <CustomScrollbar>
             <Routes>
               <Route path={"/"} element={<Home />} />
@@ -69,6 +73,9 @@ export default function App() {
               <Route path={"/user-account"} element={<UserAccount />} />
               <Route path={"/*"} element={<Error404 />} />
             </Routes>
+
+            <ScrollToTopButton />
+
           </CustomScrollbar>
         </AppShell>
       </MantineProvider>
