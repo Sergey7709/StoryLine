@@ -16,7 +16,6 @@ export function Authorization() {
   const dispatch = useAppDispatch();
   const [remember, setRemember] = useState(true);
   const [isRegister, setIsRegister] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     initialValues: isRegister
       ? {
@@ -55,7 +54,6 @@ export function Authorization() {
     e.preventDefault();
     let result: User | null = null;
     if (form.validate().hasErrors) return;
-    setIsLoading(true);
     try {
       if (!isRegister) {
         const loginData = { ...form.values };
@@ -98,7 +96,6 @@ export function Authorization() {
         message,
       });
     }
-    setIsLoading(false);
   };
   return (
     <Box component="form" maw={420} mx="auto" onSubmit={submitForm}>
@@ -168,7 +165,9 @@ export function Authorization() {
             label="Запомнить"
           />
         )}
-        <Button loading={isLoading} type="submit">
+        <Button
+          loading={isRegister ? registerUserMutation.isLoading : loginUserMutation.isLoading}
+          type="submit">
           {isRegister ? 'Регистрация' : 'Войти'}
         </Button>
       </Group>
