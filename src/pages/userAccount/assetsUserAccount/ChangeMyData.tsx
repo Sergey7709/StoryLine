@@ -1,11 +1,11 @@
 import { Box, Button, Group, TextInput, Textarea, Title } from '@mantine/core';
 import { hasLength, useForm } from '@mantine/form';
 import { FC, FormEvent, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
-import { fetchUser } from '../../api/authApi';
+import { useAppDispatch, useAppSelector } from '../../../redux/redux.hooks';
+import { fetchUser } from '../../../api/authApi';
 import { useMutation } from 'react-query';
-import { BodyUpdateUserRequest } from '../../api/authApi';
-import { userReceived } from '../../redux/authSlice';
+import { BodyUpdateUserRequest } from '../../../api/authApi';
+import { userReceived } from '../../../redux/authSlice';
 import { notifications } from '@mantine/notifications';
 type Props = {
   close: () => void;

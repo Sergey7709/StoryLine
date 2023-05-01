@@ -2,3 +2,6 @@
   background-color: aqua;
   height: 100%;
 }
+.show_item_text {
+  cursor: pointer;
+}
