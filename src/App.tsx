@@ -17,6 +17,8 @@ import { Error404 } from './pages/error404/error404';
 import { useAutoLogin } from './hooks/useAutoLogin';
 import { LINKS } from './common/constants';
 import UserAccount from './pages/userAccount/UserAccount';
+import CustomScrollbar from "./components/customScrollbar/CustomScrollbar";
+
 
 
 export default function App() {
@@ -39,7 +41,8 @@ export default function App() {
             <Footer height={60} p="md">
               © 2023 World of books. All rights reserved.
             </Footer>
-          }>
+
+          }>  <CustomScrollbar>
           <Routes>
 
             <Route path={'/'} element={<Home />} />
@@ -54,6 +57,8 @@ export default function App() {
             <Route path={'/*'} element={<Error404 />} />
 
           </Routes>
+            </CustomScrollbar>
+
         </AppShell>
       </MantineProvider>
     </ColorSchemeProvider>

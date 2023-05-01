@@ -8,9 +8,9 @@ import {
   Grid,
   ActionIcon,
 } from "@mantine/core";
-import { IconBookmark } from "@tabler/icons-react";
 import { useStyles } from "./BooksListStyles";
-import CustomScrollbar from "../../components/customScrollbar/CustomScrollbar";
+import { BsBookmarkCheckFill, BsBookmarkDash } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 type ItemProps = {
   inStock: boolean;
@@ -27,6 +27,7 @@ type ItemProps = {
   releaseDate: string;
   typeOfCover: string;
   id: number;
+  favorite?: boolean;
 };
 
 const books: ItemProps[] = [
@@ -214,31 +215,48 @@ const books: ItemProps[] = [
 
 export const BooksList = () => {
   const { classes } = useStyles();
+
   return (
     <Grid className={classes.grid} px={"2%"}>
       {books.map((book, index) => (
         <Card
           key={index}
           className={classes.card}
-          shadow="md"
+          shadow="sm"
           padding="md"
           radius="md"
           withBorder
         >
           <Group position="apart">
-            <Image
-              width={"8rem"}
-              height={"12rem"}
-              src={book.itemImageUrl}
-              alt="book img"
-            />
+            <Link to="/book">
+              <Image
+                width={"8rem"}
+                height={"12rem"}
+                src={book.itemImageUrl}
+                alt="book img"
+              />
+            </Link>
             {book.discount > 0 && (
-              <Badge className={classes.discount} color="pink" variant="light">
+              <Badge
+                className={classes.discount}
+                color="orange"
+                variant="filled"
+              >
                 {`скидка: ${book.discount}%`}
               </Badge>
             )}
-            <ActionIcon className={classes.favorite}>
-              <IconBookmark size="2rem" color={"red"} stroke={1.5} />
+            <ActionIcon
+              variant="transparent"
+              className={classes.action_favorite}
+            >
+              {!book?.favorite ? (
+                <BsBookmarkCheckFill
+                  className={classes.favorite_on}
+                  size="4rem"
+                />
+              ) : (
+                <BsBookmarkDash className={classes.favorite_off} size="4rem" />
+              )}
             </ActionIcon>
           </Group>
           <Grid mt={10} pl={10} mb={5} gutter={0}>
@@ -262,10 +280,8 @@ export const BooksList = () => {
             variant="gradient"
             gradient={{ from: "teal", to: "blue", deg: 60 }}
             color="blue"
-            // fullWidth
-            size="sm"
             radius="md"
-            w={"9rem"}
+            w={"12rem"}
           >
             КУПИТЬ
           </Button>
