@@ -4,11 +4,7 @@ const HEADER_HEIGHT = rem(100);
 
 export const useStyles = createStyles((theme) => ({
   header: {
-    backgroundColor: theme.fn.variant({
-      variant: "filled",
-      // color: theme.primaryColor,
-      color: "violet",
-    }).background,
+    backgroundImage: `linear-gradient(to bottom, ${theme.colors.cyan[6]}, ${theme.colors.violet[6]})`,
     borderBottom: 0,
     padding: "0px",
   },
