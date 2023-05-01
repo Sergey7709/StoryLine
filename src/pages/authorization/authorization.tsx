@@ -1,6 +1,6 @@
 import { useForm, isEmail, hasLength } from '@mantine/form';
 import { Button, Group, TextInput, Box, PasswordInput, Checkbox, Title } from '@mantine/core';
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useCallback, useState } from 'react';
 import styles from './authorization.module.css';
 import { BodyFetchUserRequest, fetchUser } from '../../api/authApi';
 import { useMutation } from 'react-query';
@@ -50,59 +50,62 @@ export const Authorization: FC<Props> = ({ close }) => {
         },
   });
   const authUserMutation = useMutation((args: FetchAuthArgs) => fetchUser(args.params, args.body));
-  const submitForm = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    let result: User | null = null;
-    if (form.validate().hasErrors) return;
-    try {
-      if (!isRegister) {
-        const loginData = { ...form.values };
-        result = await authUserMutation.mutateAsync({
-          params: 'user/login',
-          body: loginData,
-        });
-      } else {
-        const newUser = { ...form.values, isAdmin: false };
-        result = await authUserMutation.mutateAsync({
-          params: 'user/register',
-          body: newUser,
-        });
-      }
-      if (result?.token) {
-        dispatch(userReceived(result));
-        if (typeof saveToken === 'function' && remember) saveToken(result.token);
-        close();
+  const submitForm = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      let result: User | null = null;
+      if (form.validate().hasErrors) return;
+      try {
+        if (!isRegister) {
+          const loginData = { ...form.values };
+          result = await authUserMutation.mutateAsync({
+            params: 'user/login',
+            body: loginData,
+          });
+        } else {
+          const newUser = { ...form.values, isAdmin: false };
+          result = await authUserMutation.mutateAsync({
+            params: 'user/register',
+            body: newUser,
+          });
+        }
+        if (result?.token) {
+          dispatch(userReceived(result));
+          if (typeof saveToken === 'function' && remember) saveToken(result.token);
+          close();
+          notifications.show({
+            color: 'green',
+            autoClose: 3000,
+            title: isRegister ? 'Спасибо за регистрацию' : 'Добрый день',
+            message: result.name,
+          });
+        }
+        form.reset();
+      } catch (error: any) {
+        let message = '';
+        switch (error.response.data.message) {
+          case 'Credentials are not available': {
+            message = 'Неверный логин или пароль';
+            break;
+          }
+          case 'Email are taken': {
+            message = 'Такой email уже существует';
+            break;
+          }
+          default: {
+            message = 'Попробуйте позже';
+          }
+        }
         notifications.show({
-          color: 'green',
+          color: 'red',
           autoClose: 3000,
-          title: isRegister ? 'Спасибо за регистрацию' : 'Добрый день',
-          message: result.name,
+          title: 'Ошибка',
+          message,
         });
       }
-      form.reset();
-    } catch (error: any) {
-      let message = '';
-      switch (error.response.data.message) {
-        case 'Credentials are not available': {
-          message = 'Неверный логин или пароль';
-          break;
-        }
-        case 'Email are taken': {
-          message = 'Такой email уже существует';
-          break;
-        }
-        default: {
-          message = 'Попробуйте позже';
-        }
-      }
-      notifications.show({
-        color: 'red',
-        autoClose: 3000,
-        title: 'Ошибка',
-        message,
-      });
-    }
-  };
+    },
+    [form, isRegister, authUserMutation, dispatch, saveToken, remember, close],
+  );
   return (
     <Box component="form" maw={420} mx="auto" onSubmit={submitForm}>
       <Title color="dimmed" fz={15} mb={5}>
