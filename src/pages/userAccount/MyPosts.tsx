@@ -21,9 +21,10 @@ import { Post, PostCreate, PostUpdate } from '../../common/types';
 import { updateUserPosts } from '../../redux/authSlice';
 import { notifications } from '@mantine/notifications';
 type UpdatePostArgs = {
-  body?: PostUpdate | PostCreate;
   params: string;
   token: string;
+  body?: PostUpdate | PostCreate;
+  type: FetchPostType;
 };
 const initialPostState = {
   description: '',
@@ -35,15 +36,8 @@ const initialPostState = {
 const MyPosts = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  console.log(user);
-  const createPost = useMutation((args: UpdatePostArgs) =>
-    fetchPost('post', args.params, args.body, args.token),
-  );
-  const updatePost = useMutation((args: UpdatePostArgs) =>
-    fetchPost('put', args.params, args.body, args.token),
-  );
-  const deletePost = useMutation((args: UpdatePostArgs) =>
-    fetchPost('delete', args.params, undefined, args.token),
+  const mutatePost = useMutation((args: UpdatePostArgs) =>
+    fetchPost(args.type, args.params, args?.body, args.token),
   );
   const [currentPost, setCurrentPost] = useState<number | 'create'>(0);
   const [opened, { open, close }] = useDisclosure(false);
@@ -55,11 +49,12 @@ const MyPosts = () => {
   useEffect(() => {
     setPostForm(post);
   }, [post]);
-  const submitPost = async (type: Omit<FetchPostType, 'get'>, id?: number) => {
+  const submitPost = async (type: FetchPostType, id?: number) => {
     try {
       switch (type) {
         case 'post': {
-          const resultCreate = await createPost.mutateAsync({
+          const resultCreate = await mutatePost.mutateAsync({
+            type,
             params: 'post/create',
             body: postForm,
             token: user?.token ?? '',
@@ -73,7 +68,8 @@ const MyPosts = () => {
             ...postForm,
             id,
           };
-          const resultUpdate = await updatePost.mutateAsync({
+          const resultUpdate = await mutatePost.mutateAsync({
+            type,
             body: updatePostForm,
             params: 'post/' + id.toString(),
             token: user?.token ?? '',
@@ -83,7 +79,8 @@ const MyPosts = () => {
         }
         case 'delete': {
           if (!id) throw new Error('Не верный ID поста');
-          const resultDelete = await deletePost.mutateAsync({
+          const resultDelete = await mutatePost.mutateAsync({
+            type,
             params: 'post/' + id.toString(),
             token: user?.token ?? '',
           });
@@ -96,7 +93,9 @@ const MyPosts = () => {
       notifications.show({
         color: 'green',
         autoClose: 3000,
-        title: 'Пост успешно добавлен',
+        title: `Пост успешно ${
+          type === 'post' ? ' добавлен' : type === 'put' ? 'изменен' : 'удален'
+        }`,
         message: '',
       });
     } catch (err) {
@@ -138,7 +137,7 @@ const MyPosts = () => {
         <Box display="flex">
           {currentPost !== 'create' && (
             <Button
-              loading={deletePost.isLoading}
+              loading={mutatePost.isLoading}
               color="pink"
               mr={20}
               onClick={async () => {
@@ -154,7 +153,7 @@ const MyPosts = () => {
               else await submitPost('post');
               close();
             }}
-            loading={currentPost === 'create' ? createPost.isLoading : updatePost.isLoading}>
+            loading={mutatePost.isLoading}>
             {currentPost === 'create' ? 'Создать пост' : 'Изменить пост'}
           </Button>
         </Box>

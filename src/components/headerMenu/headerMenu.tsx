@@ -10,7 +10,7 @@ import {
   Grid,
   Image,
   Avatar,
-  Box,
+  Modal,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown, IconLogin, IconSearch } from '@tabler/icons-react';
@@ -23,6 +23,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
 import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
 import { userReceived } from '../../redux/authSlice';
+import { Authorization } from '../../pages/authorization/authorization';
 
 interface HeaderMenuProps {
   links: {
@@ -33,6 +34,7 @@ interface HeaderMenuProps {
 }
 
 export const HeaderMenu = ({ links }: HeaderMenuProps) => {
+  const [openedAuth, { open, close }] = useDisclosure(false);
   const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
@@ -116,6 +118,9 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
           >
             Мир книг
           </Text> */}
+          <Modal size={500} opened={openedAuth} onClose={close} centered>
+            <Authorization close={close} />
+          </Modal>
         </Grid.Col>
         <Grid.Col span={10}>
           <Group spacing={12} align="center" position="right" mr={'5%'} mb={'0px'}>
@@ -135,7 +140,7 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
                 <Avatar onClick={() => navigate('/user-account')} src={userAvatar} />
               </>
             ) : (
-              <AvatarIcon />
+              <AvatarIcon open={open} />
             )}
 
             <FavoritesIcon />
