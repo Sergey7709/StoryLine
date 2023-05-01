@@ -1,0 +1,23 @@
+/* Стили для полосы прокрутки */
+::-webkit-scrollbar {
+  width: 0px; /* Ширина полосы прокрутки */
+}
+/* Стили для ползунка полосы прокрутки */
+::-webkit-scrollbar-thumb {
+  background-color: #8624e8; /* Цвет ползунка */
+  border-radius: 6px; /* Скругление углов ползунка */
+  border: 3px solid transparent; /* Добавить прозрачную границу для правильного скругления углов */
+  background-clip: padding-box; /* Ограничить фоновый цвет ползунка внутри границы */
+}
+/* Стили для трека полосы прокрутки */
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Цвет фона трека */
+  border-radius: 6px; /* Скругление углов трека */
+  color: cadetblue;
+}
+
+.custom-scrollbar {
+  height: "100vh";
+  width: "100vw";
+  overflow-y: "scroll";
+}
