@@ -1,7 +1,9 @@
+
 import { Card, Image, Text, Badge, Button, Group, Grid, ActionIcon } from '@mantine/core';
 import { useStyles } from './BooksListStyles';
 import { BsBookmarkCheckFill, BsBookmarkDash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+
 
 type ItemProps = {
   inStock: boolean;
@@ -195,6 +197,7 @@ export const BooksList = () => {
   return (
     <Grid className={classes.grid} px={'2%'}>
       {books.map((book, index) => (
+
         <Card key={index} className={classes.card} shadow="sm" padding="md" radius="md" withBorder>
           <Group position="apart">
             <Link to="/book">
@@ -208,6 +211,7 @@ export const BooksList = () => {
             <ActionIcon variant="transparent" className={classes.action_favorite}>
               {!book?.favorite ? (
                 <BsBookmarkCheckFill className={classes.favorite_on} size="4rem" />
+
               ) : (
                 <BsBookmarkDash className={classes.favorite_off} size="4rem" />
               )}
@@ -235,7 +239,9 @@ export const BooksList = () => {
             gradient={{ from: 'teal', to: 'blue', deg: 60 }}
             color="blue"
             radius="md"
+
             w={'12rem'}>
+
             КУПИТЬ
           </Button>
         </Card>

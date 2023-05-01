@@ -1,3 +1,4 @@
+
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -20,15 +21,23 @@ import { ReaderBlogs } from './pages/readerBlogs/readerBlogs';
 import { AboutUs } from './pages/aboutUs/aboutUs';
 import ChatBot from './components/chatBot/ChatBot';
 
+
 export default function App() {
   useAutoLogin();
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   return (
-    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+    <ColorSchemeProvider
+      colorScheme={colorScheme}
+      toggleColorScheme={toggleColorScheme}
+    >
+      <MantineProvider
+        theme={{ colorScheme }}
+        withGlobalStyles
+        withNormalizeCSS
+      >
         <Notifications />
         <AppShell
           header={
@@ -40,6 +49,7 @@ export default function App() {
             <Footer height={60} p="md">
               © 2023 World of books. All rights reserved.
             </Footer>
+
           }>
           <ChatBot />
           <CustomScrollbar>
@@ -54,6 +64,7 @@ export default function App() {
               <Route path={'/BooksList'} element={<BooksList />} />
               <Route path={'/user-account'} element={<UserAccount />} />
               <Route path={'/*'} element={<Error404 />} />
+
             </Routes>
           </CustomScrollbar>
         </AppShell>
