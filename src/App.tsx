@@ -18,6 +18,7 @@ import { Stocks } from './pages/stocks/stocks';
 import { BookstoreServices } from './pages/bookstoreServices/bookstoreServices';
 import { ReaderBlogs } from './pages/readerBlogs/readerBlogs';
 import { AboutUs } from './pages/aboutUs/aboutUs';
+import ChatBot from './components/chatBot/ChatBot';
 
 export default function App() {
   useAutoLogin();
@@ -40,6 +41,7 @@ export default function App() {
               © 2023 World of books. All rights reserved.
             </Footer>
           }>
+          <ChatBot />
           <CustomScrollbar>
             <Routes>
               <Route path={'/'} element={<Home />} />

@@ -12,7 +12,7 @@ import {
   Box,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getCurrentDate } from '../../helpers/getCurrentDate';
 import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
 import { useMutation } from 'react-query';
@@ -49,65 +49,69 @@ const MyPosts = () => {
   useEffect(() => {
     setPostForm(post);
   }, [post]);
-  const submitPost = async (type: FetchPostType, id?: number) => {
-    try {
-      switch (type) {
-        case 'post': {
-          const resultCreate = await mutatePost.mutateAsync({
-            type,
-            params: 'post/create',
-            body: postForm,
-            token: user?.token ?? '',
-          });
-          dispatch(updateUserPosts(resultCreate));
-          break;
+
+  const submitPost = useCallback(
+    async (type: FetchPostType, id?: number) => {
+      try {
+        switch (type) {
+          case 'post': {
+            const resultCreate = await mutatePost.mutateAsync({
+              type,
+              params: 'post/create',
+              body: postForm,
+              token: user?.token ?? '',
+            });
+            dispatch(updateUserPosts(resultCreate));
+            break;
+          }
+          case 'put': {
+            if (!id) throw new Error('Не верный ID поста');
+            const updatePostForm: PostUpdate = {
+              ...postForm,
+              id,
+            };
+            const resultUpdate = await mutatePost.mutateAsync({
+              type,
+              body: updatePostForm,
+              params: 'post/' + id.toString(),
+              token: user?.token ?? '',
+            });
+            dispatch(updateUserPosts(resultUpdate));
+            break;
+          }
+          case 'delete': {
+            if (!id) throw new Error('Не верный ID поста');
+            const resultDelete = await mutatePost.mutateAsync({
+              type,
+              params: 'post/' + id.toString(),
+              token: user?.token ?? '',
+            });
+            dispatch(updateUserPosts(resultDelete));
+            break;
+          }
+          default:
+            throw new Error('Неверный тип экшена');
         }
-        case 'put': {
-          if (!id) throw new Error('Не верный ID поста');
-          const updatePostForm: PostUpdate = {
-            ...postForm,
-            id,
-          };
-          const resultUpdate = await mutatePost.mutateAsync({
-            type,
-            body: updatePostForm,
-            params: 'post/' + id.toString(),
-            token: user?.token ?? '',
-          });
-          dispatch(updateUserPosts(resultUpdate));
-          break;
-        }
-        case 'delete': {
-          if (!id) throw new Error('Не верный ID поста');
-          const resultDelete = await mutatePost.mutateAsync({
-            type,
-            params: 'post/' + id.toString(),
-            token: user?.token ?? '',
-          });
-          dispatch(updateUserPosts(resultDelete));
-          break;
-        }
-        default:
-          throw new Error('Неверный тип экшена');
+        notifications.show({
+          color: 'green',
+          autoClose: 3000,
+          title: `Пост успешно ${
+            type === 'post' ? ' добавлен' : type === 'put' ? 'изменен' : 'удален'
+          }`,
+          message: '',
+        });
+      } catch (err) {
+        console.log(err);
+        notifications.show({
+          color: 'red',
+          autoClose: 3000,
+          title: 'Ошибка',
+          message: 'Попробуйте позже',
+        });
       }
-      notifications.show({
-        color: 'green',
-        autoClose: 3000,
-        title: `Пост успешно ${
-          type === 'post' ? ' добавлен' : type === 'put' ? 'изменен' : 'удален'
-        }`,
-        message: '',
-      });
-    } catch (err) {
-      console.log(err);
-      notifications.show({
-        color: 'red',
-        autoClose: 3000,
-        title: 'Ошибка',
-        message: 'Попробуйте позже',
-      });
-    }
-  };
+    },
+    [dispatch, mutatePost, postForm, user?.token],
+  );
 
   return (
     <>
