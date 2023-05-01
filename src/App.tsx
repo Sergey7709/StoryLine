@@ -21,6 +21,7 @@ import { AboutUs } from "./pages/aboutUs/AboutUs";
 import { BookstoreServices } from "./pages/bookstoreServices/BookstoreServices";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
 import { Stocks } from "./pages/stocks/Stocks";
+import { ScrollToTopButton } from "./components/scroll-to-top-button/ScrollToTopButton";
 
 export default function App() {
   useAutoLogin();
@@ -51,7 +52,6 @@ export default function App() {
             </Footer>
           }
         >
-          {" "}
           <CustomScrollbar>
             <Routes>
               <Route path={"/"} element={<Home />} />
@@ -68,6 +68,7 @@ export default function App() {
               <Route path={"/user-account"} element={<UserAccount />} />
               <Route path={"/*"} element={<Error404 />} />
             </Routes>
+            <ScrollToTopButton />
           </CustomScrollbar>
         </AppShell>
       </MantineProvider>
