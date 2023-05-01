@@ -20,12 +20,18 @@ export function Bookcard() {
   const [value, setValue] = useState(0);
   return (
     <Container my="xl">
-      <Grid gutter="md">
-        <Grid.Col span={12} style={{ height: "5rem" }}>
+      <Grid gutter="lg">
+        <Grid.Col offsetSm={3} span={12} style={{ height: "5rem" }}>
           {/* <Skeleton height="100%" radius="md" animate={false} /> */}
           <Title size="h3">Джоан Роулинг: Гарри Поттер и Тайная комната</Title>
         </Grid.Col>
-        <Grid.Col xs={12} sm={4} style={{ height: "30rem" }}>
+        <Grid.Col
+          xs={12}
+          sm={4}
+          offsetXs={3}
+          offsetSm={3}
+          style={{ height: "30rem" }}
+        >
           {/* <Skeleton height="100%" radius="md" animate={false} /> */}
           <Image
             maw={"18rem"}
@@ -35,7 +41,7 @@ export function Bookcard() {
             alt="book img"
           />
         </Grid.Col>
-        <Grid.Col xs={12} sm={4}>
+        <Grid.Col xs={12} sm={4} offsetXs={3} offsetSm={0}>
           <Grid gutter="sm">
             <Grid.Col xs={12} style={{ height: "5rem" }}>
               {/* <Skeleton height="100%" radius="md" animate={false} /> */}
