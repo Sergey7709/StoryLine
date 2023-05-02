@@ -11,25 +11,27 @@ import {
   Image,
   Avatar,
   Modal,
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconChevronDown, IconLogin, IconSearch } from '@tabler/icons-react';
-import { ThemeToggleIcon } from '../../assets/themeToggleIcon';
-import { CartIcon } from '../../assets/cartIcon';
-import { useStyles } from './headerMenuStyles';
-import { FavoritesIcon } from '../../assets/favoritesIcon';
-import { AvatarIcon } from '../../assets/avatarIcon';
-import { Link, useNavigate } from 'react-router-dom';
-import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
-import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
-import { userReceived } from '../../redux/authSlice';
-import { Authorization } from '../../pages/authorization/authorization';
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { IconChevronDown, IconLogin, IconSearch } from "@tabler/icons-react";
+import { ThemeToggleIcon } from "../../assets/themeToggleIcon";
+import { CartIcon } from "../../assets/cartIcon";
+import { useStyles } from "./headerMenuStyles";
+import { FavoritesIcon } from "../../assets/favoritesIcon";
+import { AvatarIcon } from "../../assets/avatarIcon";
+import { Link, useNavigate } from "react-router-dom";
+import { DATA_FOR_AUTO_COMPLETE } from "../../common/constants";
+import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
+import { userReceived } from "../../redux/authSlice";
+import { Authorization } from "../../pages/authorization/authorization";
+import { fetchItem } from "../../api/itemsApi";
+import { currenFilter } from "../../redux/filterSlice";
 
 interface HeaderMenuProps {
   links: {
     link: string;
     label: string;
-    links?: { link: string; label: string }[];
+    links?: { link: string; label: string; param: string }[];
   }[];
 }
 
@@ -42,20 +44,25 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const onClickToHome = () => {
-    navigate('/');
+    navigate("/");
   };
   const logOut = () => {
     dispatch(userReceived(null));
     localStorage.clear();
   };
-  const onClickToItem = (link: string) => {
+  const onClickToItem = (link: string, param: string) => {
+    console.log(link);
+    dispatch(currenFilter(param));
     navigate(link);
     toggle();
   };
 
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
-      <Menu.Item onClick={() => onClickToItem(item.link)} key={item.link}>
+      <Menu.Item
+        onClick={() => onClickToItem(item.link, item.param)}
+        key={item.link}
+      >
         {item.label}
       </Menu.Item>
     ));
@@ -63,16 +70,18 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
       return (
         <Menu
           key={link.label}
-          trigger={'click'}
+          trigger={"click"}
           transitionProps={{ exitDuration: 0 }}
           withinPortal
           width="100%"
-          position="bottom-start">
+          position="bottom-start"
+        >
           <Menu.Target>
             <a
               href={link.link}
               className={classes.link}
-              onClick={(event) => event.preventDefault()}>
+              onClick={(event) => event.preventDefault()}
+            >
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
                 <IconChevronDown size="1rem" stroke={1.5} />
@@ -98,8 +107,8 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
   });
 
   return (
-    <Header height={105} className={classes.header} m={'0px'}>
-      <Grid m={10} gutter={'5px'}>
+    <Header height={105} className={classes.header} m={"0px"}>
+      <Grid m={10} gutter={"5px"}>
         <Grid.Col span={2}>
           <Image
             onClick={onClickToHome}
@@ -123,7 +132,13 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
           </Modal>
         </Grid.Col>
         <Grid.Col span={10}>
-          <Group spacing={12} align="center" position="right" mr={'5%'} mb={'0px'}>
+          <Group
+            spacing={12}
+            align="center"
+            position="right"
+            mr={"5%"}
+            mb={"0px"}
+          >
             <Autocomplete
               className={classes.search_default}
               placeholder="Search"
@@ -137,7 +152,10 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
             {isAuth ? (
               <>
                 <IconLogin size={35} cursor="pointer" onClick={logOut} />
-                <Avatar onClick={() => navigate('/user-account')} src={userAvatar} />
+                <Avatar
+                  onClick={() => navigate("/user-account")}
+                  src={userAvatar}
+                />
               </>
             ) : (
               <AvatarIcon open={open} />
@@ -154,7 +172,12 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
           </Group>
         </Grid.Col>
         <Grid.Col span={12}>
-          <Group spacing={12} align="center" position="center" className={classes.links}>
+          <Group
+            spacing={12}
+            align="center"
+            position="center"
+            className={classes.links}
+          >
             {items}
           </Group>
         </Grid.Col>
