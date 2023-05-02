@@ -100,6 +100,7 @@ const MyPosts = () => {
           }`,
           message: '',
         });
+        close();
       } catch (err) {
         console.log(err);
         notifications.show({
@@ -110,7 +111,7 @@ const MyPosts = () => {
         });
       }
     },
-    [dispatch, mutatePost, postForm, user?.token],
+    [dispatch, mutatePost, postForm, user?.token, close],
   );
 
   return (
@@ -144,18 +145,16 @@ const MyPosts = () => {
               loading={mutatePost.isLoading}
               color="pink"
               mr={20}
-              onClick={async () => {
-                if ('id' in postForm) await submitPost('delete', postForm.id);
-                close();
+              onClick={() => {
+                if ('id' in postForm) submitPost('delete', postForm.id);
               }}>
               Удалить пост
             </Button>
           )}
           <Button
-            onClick={async () => {
-              if ('id' in postForm) await submitPost('put', postForm.id);
-              else await submitPost('post');
-              close();
+            onClick={() => {
+              if ('id' in postForm) submitPost('put', postForm.id);
+              else submitPost('post');
             }}
             loading={mutatePost.isLoading}>
             {currentPost === 'create' ? 'Создать пост' : 'Изменить пост'}
