@@ -54,7 +54,6 @@ export default function App() {
             </Footer>
           }
         >
-
           <ChatBot />
 
           <CustomScrollbar>
@@ -75,7 +74,6 @@ export default function App() {
             </Routes>
 
             <ScrollToTopButton />
-
           </CustomScrollbar>
         </AppShell>
       </MantineProvider>

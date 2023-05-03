@@ -15,6 +15,7 @@ import { useQuery } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
 import { Item } from "../../common/types";
 import { useAppSelector } from "../../redux/redux.hooks";
+import { Loader } from "../../components/loader/Loader";
 
 type ItemProps = {
   inStock: boolean;
@@ -221,13 +222,15 @@ export const BooksList = () => {
   const param = useAppSelector((state) => state.filter.param);
   console.log(param);
   const { data, isLoading } = useQuery<Item[]>(["item", param], () =>
-    fetchItem("all?limit=5&offset=7")
+    // fetchItem("all?limit=5&offset=2")
+    // fetchItem("all?category=Художественная литература&limit=5&offset=0")
+    fetchItem("all")
   );
 
   const { classes } = useStyles();
 
   if (isLoading) {
-    return <Text> ЗАГРУЗКА</Text>;
+    return <Loader />;
   }
 
   return (
