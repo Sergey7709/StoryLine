@@ -224,7 +224,7 @@ export const BooksList = () => {
   const { data, isLoading } = useQuery<ItemsResponse>(["item", param], () =>
     // fetchItem("all?limit=5&offset=2")
     // fetchItem("all?category=Художественная литература&limit=5&offset=0")
-    fetchItem("all")
+    fetchItem(param)
   );
 
   const { classes } = useStyles();
@@ -292,7 +292,7 @@ export const BooksList = () => {
               </Group>
               <Grid mt={10} pl={10} mb={5} gutter={0}>
                 <Grid.Col span={12}>
-                  <Text align="start" size="sm" color="dimmed" lineClamp={2}>
+                  <Text align="start" size="sm" color="dimmed" lineClamp={1}>
                     {book.authorBook}
                   </Text>
                 </Grid.Col>
