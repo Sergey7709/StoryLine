@@ -8,8 +8,6 @@ export const useStyles = createStyles((theme) => ({
     transition: "transform 150ms ease, box-shadow 150ms ease",
     display: "flex",
     flexDirection: "column",
-    // justifyContent: "center",
-    // alignContent: "center",
     alignItems: "center",
 
     "&:hover": {
@@ -19,14 +17,13 @@ export const useStyles = createStyles((theme) => ({
 
     width: "14rem",
     height: "24rem",
-    margin: "1rem",
+    marginTop: "1rem",
   },
 
   discount: {
     position: "absolute",
-    // top: theme.spacing.xs,
     top: "9px",
-    left: rem(5),
+    left: rem(10),
     pointerEvents: "none",
   },
 
@@ -61,7 +58,6 @@ export const useStyles = createStyles((theme) => ({
     position: "absolute",
     bottom: "10px",
     margin: "0px",
-    // right: rem(5),
   },
 
   text: {
@@ -69,7 +65,6 @@ export const useStyles = createStyles((theme) => ({
     bottom: "55px",
     margin: "0px",
     left: "30px",
-    // right: rem(5),
   },
 
   title: {
@@ -82,26 +77,10 @@ export const useStyles = createStyles((theme) => ({
   grid: {
     [theme.fn.smallerThan("xs")]: {
       cols: 1,
-      justifyContent: "center",
     },
-    [theme.fn.smallerThan("sm")]: {
-      cols: 2,
-      // paddingLeft: "6%",
-    },
-    [theme.fn.smallerThan("md")]: {
-      cols: 3,
-      // paddingLeft: "5%",
-    },
-    [theme.fn.smallerThan("lg")]: {
-      cols: 4,
-      // paddingLeft: "3%",
-    },
-    [theme.fn.smallerThan("xl")]: {
-      cols: 5,
-      // paddingLeft: "3%",
-    },
-    [theme.fn.largerThan("xl")]: {
-      cols: 7,
-    },
+  },
+  gridCol: {
+    display: "flex",
+    justifyContent: "center",
   },
 }));
