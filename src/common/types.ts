@@ -61,7 +61,7 @@ export type Order = {
   userEmail: string;
   userPhone: string;
   userAddress: string;
-  itemId: number[];
+  items: OrderItem[];
   date: string;
   totalPrice: number;
 };
@@ -70,4 +70,10 @@ export type ItemsResponse = {
   totalItems: number;
   minPrice: number;
   maxPrice: number;
+};
+export type OrderItem = {
+  imageUrl: string;
+  price: number;
+  count: number;
+  title: string;
 };
