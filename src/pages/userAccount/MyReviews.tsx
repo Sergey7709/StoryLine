@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Grid, Group, Image, Text } from '@mantine/core';
+import { Badge, Button, Card, Flex, Grid, Group, Image, Text } from '@mantine/core';
 import { books } from '../catalog/BooksList';
 
 const MyReviews = () => {
@@ -8,7 +8,9 @@ const MyReviews = () => {
         <Grid.Col span={4} key={el.id}>
           <Card shadow="sm" padding="lg" radius="md" withBorder mt={10}>
             <Card.Section>
-              <Image src={el.itemImageUrl} height={160} alt="Norway" />
+              <Flex justify="center">
+                <Image src={el.itemImageUrl} height={192} width={128} alt="Norway" />
+              </Flex>
             </Card.Section>
             <Group position="apart" mt="md" mb="xs">
               <Text weight={500}>{el.title}</Text>

@@ -24,12 +24,13 @@ import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
 import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
 import { userReceived } from '../../redux/authSlice';
 import { Authorization } from '../../pages/authorization/authorization';
+import { currenFilter } from '../../redux/filterSlice';
 
 interface HeaderMenuProps {
   links: {
     link: string;
     label: string;
-    links?: { link: string; label: string }[];
+    links?: { link: string; label: string; param: string }[];
   }[];
 }
 
@@ -48,14 +49,16 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
     dispatch(userReceived(null));
     localStorage.clear();
   };
-  const onClickToItem = (link: string) => {
+  const onClickToItem = (link: string, param: string) => {
+    console.log(link);
+    dispatch(currenFilter(param));
     navigate(link);
     toggle();
   };
 
   const items = links.map((link) => {
-    const menuItems = link.links?.map((item) => (
-      <Menu.Item onClick={() => onClickToItem(item.link)} key={item.link}>
+    const menuItems = link.links?.map((item, ind) => (
+      <Menu.Item onClick={() => onClickToItem(item.link, item.param)} key={ind}>
         {item.label}
       </Menu.Item>
     ));

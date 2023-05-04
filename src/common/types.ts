@@ -65,3 +65,9 @@ export type Order = {
   date: string;
   totalPrice: number;
 };
+export type ItemsResponse = {
+  items: Item[];
+  totalItems: number;
+  minPrice: number;
+  maxPrice: number;
+};
