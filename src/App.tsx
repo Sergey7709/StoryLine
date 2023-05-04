@@ -12,7 +12,6 @@ import UserAccount from './pages/userAccount/UserAccount';
 import CustomScrollbar from './components/customScrollbar/CustomScrollbar';
 import { ScrollToTopButton } from './components/scroll-to-top-button/ScrollToTopButton';
 import ChatBot from './components/chatBot/ChatBot';
-
 import { Stocks } from './pages/stocks/stocks';
 import { Home } from './pages/home/home';
 import { Cart } from './pages/cart/cart';
