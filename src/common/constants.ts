@@ -13,43 +13,43 @@ export const LINKS = {
         {
           link: "/BooksList",
           label: "Новинки",
-          param: "all?category=Роман",
+          param: "all?category=Новинки",
         },
         {
           link: "/BooksList",
-          label: "Художественная литуратура",
-          param: "all?category=Фантастика",
+          label: "Художественная литература",
+          param: "all?category=Художественная литература",
         },
         {
           link: "/BooksList",
           label: "Научная и научно-популярная литература",
-          param: "all?category=Классика",
+          param: "all?category=Научная и научно-популярная литература",
         },
         {
           link: "/BooksList",
           label: "Бизнес",
-          param: "all?category=Классика",
+          param: "all?category=Бизнес",
         },
         {
           link: "/BooksList",
           label: "Детская литература",
-          param: "all?category=Классика",
+          param: "all?category=Детская литература",
         },
 
         {
           link: "/BooksList",
           label: "Путешествия. Хобби. Досуг",
-          param: "all?category=Классика",
+          param: "all?category=Путешествия. Хобби. Досуг",
         },
         {
           link: "/BooksList",
           label: "Компьютерная литература",
-          param: "all?category=Классика",
+          param: "all?category=Компьютерная литература",
         },
         {
           link: "/BooksList",
           label: "Искусство. Религия",
-          param: "all?category=Классика",
+          param: "all?category=Искусство. Религия",
         },
       ],
     },

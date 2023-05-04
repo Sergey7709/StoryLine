@@ -1,4 +1,3 @@
-import { ActionIcon } from "@mantine/core";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type InitialStateFilterSlice = {
