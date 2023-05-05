@@ -23,6 +23,7 @@ import { Cart } from "./pages/cart/Cart";
 import { Favorites } from "./pages/favorites/Favorites";
 import { Home } from "./pages/home/Home";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
+import { BookCard } from "./pages/catalog/BookCard";
 
 export default function App() {
   useAutoLogin();
@@ -69,6 +70,7 @@ export default function App() {
               <Route path={"/readerBlogs"} element={<ReaderBlogs />} />
               <Route path={"/aboutUs"} element={<AboutUs />} />
               <Route path={"/BooksList"} element={<BooksList />} />
+              <Route path={"/BookCard"} element={<BookCard />} />
               <Route path={"/user-account"} element={<UserAccount />} />
               <Route path={"/*"} element={<Error404 />} />
             </Routes>

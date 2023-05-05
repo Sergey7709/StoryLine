@@ -1,6 +1,3 @@
-import { Bookcard } from "../catalog/bookcard";
-
 export const Stocks = () => {
-  // return <div>Акции</div>;
-  return <Bookcard />;
+  return <div>Акции</div>;
 };

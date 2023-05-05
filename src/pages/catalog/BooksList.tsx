@@ -13,7 +13,7 @@ import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
-import { Item, ItemsResponse } from "../../common/types";
+import { ItemsResponse } from "../../common/types";
 import { useAppSelector } from "../../redux/redux.hooks";
 import { Loader } from "../../components/loader/Loader";
 
@@ -51,7 +51,7 @@ export const BooksList = () => {
               withBorder
             >
               <Group position="apart">
-                <Link to="/book">
+                <Link to="/BookCard">
                   <Image
                     width={"8rem"}
                     height={"12rem"}

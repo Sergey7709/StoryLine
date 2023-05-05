@@ -10,13 +10,12 @@ import {
   Button,
   Avatar,
   Divider,
-  Space,
 } from "@mantine/core";
 import { useState } from "react";
 import { Rating } from "@mantine/core";
-import CartBar from "./cart/cart";
+import CartBar from "../../components/cartCount/cartCount";
 
-export function Bookcard() {
+export const BookCard = () => {
   const [value, setValue] = useState(0);
   return (
     <Container my="xl">
@@ -127,4 +126,4 @@ export function Bookcard() {
       </Grid>
     </Container>
   );
-}
+};
