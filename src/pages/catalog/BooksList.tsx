@@ -220,10 +220,7 @@ export const books: ItemProps[] = [
 
 export const BooksList = () => {
   const param = useAppSelector((state) => state.filter.param);
-  console.log(param);
   const { data, isLoading } = useQuery<ItemsResponse>(["item", param], () =>
-    // fetchItem("all?limit=5&offset=2")
-    // fetchItem("all?category=Художественная литература&limit=5&offset=0")
     fetchItem(param)
   );
 
