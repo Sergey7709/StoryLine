@@ -13,7 +13,7 @@ export const LINKS = {
         {
           link: "/BooksList",
           label: "Новинки",
-          param: "all?category=Новинки",
+          param: "all?sortBy=releaseDate&sortOrder=desc&limit=6",
         },
         {
           link: "/BooksList",
