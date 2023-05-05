@@ -25,16 +25,18 @@ import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import { userReceived } from "../../redux/authSlice";
 import { Authorization } from "../../pages/authorization/authorization";
 import { currenFilter } from "../../redux/filterSlice";
+import { CategoryBooks } from "../../common/constants";
+import React from "react";
 
-interface HeaderMenuProps {
+type HeaderMenuProps = {
   links: {
     link: string;
     label: string;
     links?: { link: string; label: string; param: string }[];
   }[];
-}
+};
 
-export const HeaderMenu = ({ links }: HeaderMenuProps) => {
+const HeaderMenu = () => {
   const [openedAuth, { open, close }] = useDisclosure(false);
   const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const [opened, { toggle }] = useDisclosure(false);
@@ -42,19 +44,24 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const onClickToHome = () => {
     navigate("/");
   };
+
   const logOut = () => {
     dispatch(userReceived(null));
     localStorage.clear();
   };
+
   const onClickToItem = (link: string, param: string) => {
     console.log(link);
     dispatch(currenFilter(param));
     navigate(link);
     toggle();
   };
+
+  const { links }: HeaderMenuProps = CategoryBooks;
 
   const items = links.map((link) => {
     const menuItems = link.links?.map((item, ind) => (
@@ -96,7 +103,6 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
         to={link.link}
         className={classes.link}
         onClick={toggle}
-        // onClick={(event) => event.preventDefault()}
       >
         {link.label}
       </Link>
@@ -197,3 +203,5 @@ export const HeaderMenu = ({ links }: HeaderMenuProps) => {
     </Header>
   );
 };
+
+export default React.memo(HeaderMenu);

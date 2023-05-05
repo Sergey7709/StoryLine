@@ -1,5 +1,6 @@
 export const BASE_URL = "https://rest-api-books.onrender.com/";
-export const LINKS = {
+
+export const CategoryBooks = {
   links: [
     {
       link: "/catalog",
@@ -72,6 +73,7 @@ export const LINKS = {
     },
   ],
 };
+
 export const DATA_FOR_AUTO_COMPLETE = [
   "Pushkin",
   "Harry",

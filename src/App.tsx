@@ -7,11 +7,11 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Notifications } from "@mantine/notifications";
 import { AppShell, Header, Footer } from "@mantine/core";
-import { HeaderMenu } from "./components/headerMenu/headerMenu";
+import HeaderMenu from "./components/headerMenu/headerMenu";
 import { BooksList } from "./pages/catalog/BooksList";
 import { Error404 } from "./pages/error404/error404";
 import { useAutoLogin } from "./hooks/useAutoLogin";
-import { LINKS } from "./common/constants";
+import { CategoryBooks } from "./common/constants";
 import UserAccount from "./pages/userAccount/UserAccount";
 import CustomScrollbar from "./components/customScrollbar/CustomScrollbar";
 import { ScrollToTopButton } from "./components/scroll-to-top-button/ScrollToTopButton";
@@ -44,7 +44,8 @@ export default function App() {
         <AppShell
           header={
             <Header height={{ base: 100, md: 100 }} p="md">
-              <HeaderMenu {...LINKS} />
+              {/* <HeaderMenu {...CategoryBooks} /> */}
+              <HeaderMenu />
             </Header>
           }
           footer={
