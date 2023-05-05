@@ -1,10 +1,11 @@
 import { Badge, Button, Card, Flex, Grid, Group, Image, Text } from '@mantine/core';
-import { books } from '../catalog/BooksList';
+import { useAppSelector } from '../../redux/redux.hooks';
 
 const MyReviews = () => {
+  const user = useAppSelector((state) => state.auth.user);
   return (
     <Grid>
-      {books.map((el) => (
+      {user?.reviews.map((el) => (
         <Grid.Col span={4} key={el.id}>
           <Card shadow="sm" padding="lg" radius="md" withBorder mt={10}>
             <Card.Section>
