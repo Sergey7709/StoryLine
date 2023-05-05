@@ -1,17 +1,18 @@
-import { useMemo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { Box, Text, Flex, Grid, Paper, RingProgress, Title, Modal } from '@mantine/core';
 import { Image } from '@mantine/core';
-import { useAppSelector } from '../../redux/redux.hooks';
 import { IconSettings, IconUser } from '@tabler/icons-react';
 import { checkRankLevel } from '../../helpers/checkRankLevel';
 import ChangeMyData from './assetsUserAccount/ChangeMyData';
 import { useDisclosure } from '@mantine/hooks';
-
-const MyFavorites = () => {
+import { User } from '../../common/types';
+type MyProfileProps = {
+  user: User;
+};
+const MyProfile: FC<MyProfileProps> = ({ user }) => {
   const [opened, { open, close }] = useDisclosure(false);
-  const user = useAppSelector((state) => state.auth.user);
   const rank = useMemo(() => {
-    const totalOrderPrice = user?.orderItems.reduce((acc, curr) => acc + curr.totalPrice, 0);
+    const totalOrderPrice = user.orderItems.reduce((acc, curr) => acc + curr.totalPrice, 0);
     return typeof totalOrderPrice === 'number'
       ? checkRankLevel(totalOrderPrice)
       : {
@@ -25,16 +26,16 @@ const MyFavorites = () => {
   return (
     <>
       <Modal size="md" opened={opened} onClose={close} centered>
-        <ChangeMyData close={close} />
+        <ChangeMyData close={close} user={user} />
       </Modal>
       <Grid>
         <Grid.Col span={4}>
           <Paper shadow="xs" p="md" mt={10}>
             <Flex h={350} gap="md" direction="column" justify="space-between">
-              <Image mx="auto" radius="md" src={user?.userImageUrl} alt="" />
+              <Image mx="auto" radius="md" src={user.userImageUrl} alt="" />
               <Box>
                 <Text mb={20} fw={700} display="flex">
-                  <IconUser opacity={0.7} /> {user?.name}
+                  <IconUser opacity={0.7} /> {user.name}
                 </Text>
                 <Text mb={10} fw={700} display="flex">
                   <IconSettings opacity={0.7} cursor="pointer" onClick={open} /> Изменить мои данные
@@ -57,7 +58,7 @@ const MyFavorites = () => {
                 }
               />
               <Text>
-                Текущий ранг : <b>{rank?.title}</b>
+                Текущий ранг : <b>{rank.title}</b>
               </Text>
               <Text>
                 {rank.title === 'Книжный бог' ? (
@@ -65,7 +66,7 @@ const MyFavorites = () => {
                 ) : (
                   <>
                     <span>Для перехода на следующий уровень выкупите товаров на : </span>
-                    <b>{rank?.next} &#8381;</b>
+                    <b>{rank.next} &#8381;</b>
                   </>
                 )}
               </Text>
@@ -78,10 +79,10 @@ const MyFavorites = () => {
               <Title mt="md" ta="center">
                 Моя статистика
               </Title>
-              <Text fz="lg">Заказов всего {user?.orderItems.length ?? 0}</Text>
+              <Text fz="lg">Заказов всего {user.orderItems.length}</Text>
               <Text fz="lg">Заказано на сумму {rank.totalOrderPrice} &#8381;</Text>
-              <Text fz="lg">Написано постов {user?.posts.length ?? 0}</Text>
-              <Text fz="lg">Написано отзывов {user?.reviews.length ?? 0}</Text>
+              <Text fz="lg">Написано постов {user.posts.length}</Text>
+              <Text fz="lg">Написано отзывов {user.reviews.length}</Text>
             </Flex>
           </Paper>
         </Grid.Col>
@@ -90,4 +91,4 @@ const MyFavorites = () => {
   );
 };
 
-export default MyFavorites;
+export default memo(MyProfile);

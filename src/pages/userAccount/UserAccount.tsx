@@ -5,8 +5,12 @@ import MyFavorites from './MyFavorites';
 import MyOrders from './MyOrders';
 import MyReviews from './MyReviews';
 import MyPosts from './MyPosts';
+import { useAppSelector } from '../../redux/redux.hooks';
 const UserAccount = () => {
+  const user = useAppSelector((state) => state.auth.user);
   const [activeTab, setActiveTab] = useState<string | null>('profile');
+
+  if (!user) return <div>Только для авториизованных пользователей</div>;
   return (
     <Tabs value={activeTab} onTabChange={setActiveTab} color="violet">
       <Tabs.List position="center" grow>
@@ -17,19 +21,19 @@ const UserAccount = () => {
         <Tabs.Tab value="posts">Мои посты</Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value="profile">
-        <MyProfile />
+        <MyProfile user={user} />
       </Tabs.Panel>
       <Tabs.Panel value="favorites">
-        <MyFavorites />
+        <MyFavorites favorites={user.favoriteItems} />
       </Tabs.Panel>
       <Tabs.Panel value="orders">
-        <MyOrders />
+        <MyOrders orders={user.orderItems} />
       </Tabs.Panel>
       <Tabs.Panel value="reviews">
-        <MyReviews />
+        <MyReviews reviews={user.reviews} />
       </Tabs.Panel>
       <Tabs.Panel value="posts">
-        <MyPosts />
+        <MyPosts token={user.token} posts={user.posts} />
       </Tabs.Panel>
     </Tabs>
   );

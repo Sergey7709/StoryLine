@@ -1,29 +1,31 @@
 import { Box, Button, Group, TextInput, Textarea, Title } from '@mantine/core';
 import { hasLength, useForm } from '@mantine/form';
 import { FC, FormEvent, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../redux/redux.hooks';
+import { useAppDispatch } from '../../../redux/redux.hooks';
 import { fetchUser } from '../../../api/authApi';
 import { useMutation } from 'react-query';
 import { BodyUpdateUserRequest } from '../../../api/authApi';
 import { userReceived } from '../../../redux/authSlice';
 import { notifications } from '@mantine/notifications';
+import { User } from '../../../common/types';
 type Props = {
   close: () => void;
+  user: User;
 };
-const MyProfile: FC<Props> = ({ close }) => {
+const MyProfile: FC<Props> = ({ close, user }) => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
   const updateUserMutation = useMutation((body: BodyUpdateUserRequest) =>
     fetchUser('user/update', body, user?.token),
   );
+
   const form = useForm({
     initialValues: {
-      name: user?.name ?? '',
-      about: user?.about ?? '',
-      userImageUrl: user?.userImageUrl ?? '',
-      phone: user?.phone ?? '',
-      address: user?.address ?? '',
+      name: user.name,
+      about: user.about,
+      userImageUrl: user.userImageUrl,
+      phone: user.phone,
+      address: user.address,
     },
     validate: {
       name: hasLength({ min: 2, max: 15 }, 'Имя должно быть 3-15 символов'),
