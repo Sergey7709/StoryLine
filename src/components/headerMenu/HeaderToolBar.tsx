@@ -32,7 +32,6 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
   const [openedAuth, { open, close }] = useDisclosure(false);
   const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const logOut = useCallback(() => {

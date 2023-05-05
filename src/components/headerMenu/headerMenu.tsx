@@ -12,7 +12,6 @@ const HeaderMenu = () => {
   const { classes } = useStyles();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const onClickToItem = useCallback(
     (link: string, param: string) => {
       dispatch(currentFilter(param));
@@ -63,8 +62,8 @@ const HeaderMenu = () => {
 
   return (
     <Header height={105} className={classes.header} m={'0px'}>
-      <HeaderToolBar classes={classes} />
       <Grid m={10} gutter={'5px'}>
+        <HeaderToolBar classes={classes} />
         <Grid.Col span={12}>
           <Group spacing={12} align="center" position="center" className={classes.links}>
             {items}
