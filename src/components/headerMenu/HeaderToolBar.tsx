@@ -1,16 +1,16 @@
-import { Autocomplete, Avatar, Grid, Group, Modal, Image } from '@mantine/core';
-import { FC, memo, useCallback } from 'react';
-import { ThemeToggleIcon } from '../../assets/ThemeToggleIcon';
-import { FavoritesIcon } from '../../assets/FavoritesIcon';
-import { AvatarIcon } from '../../assets/AvatarIcon';
-import { IconLogin, IconSearch } from '@tabler/icons-react';
-import { CartIcon } from '../../assets/CartIcon';
-import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
-import { Authorization } from '../../pages/authorization/authorization';
-import { userReceived } from '../../redux/authSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
-import { useNavigate } from 'react-router-dom';
-import { useDisclosure } from '@mantine/hooks';
+import { Autocomplete, Avatar, Grid, Group, Modal, Image } from "@mantine/core";
+import { FC, memo, useCallback } from "react";
+import { DATA_FOR_AUTO_COMPLETE } from "../../common/constants";
+import { Authorization } from "../../pages/authorization/authorization";
+import { userReceived } from "../../redux/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
+import { useNavigate } from "react-router-dom";
+import { useDisclosure } from "@mantine/hooks";
+import { IconSearch, IconLogin } from "@tabler/icons-react";
+import { AvatarIcon } from "../../assets/avatarIcon";
+import { CartIcon } from "../../assets/cartIcon";
+import { FavoritesIcon } from "../../assets/favoritesIcon";
+import { ThemeToggleIcon } from "../../assets/themeToggleIcon";
 type HeaderToolBarProps = {
   classes: {
     header: string;
@@ -26,7 +26,7 @@ type HeaderToolBarProps = {
 };
 const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
   const onClickToHome = () => {
-    navigate('/');
+    navigate("/");
   };
 
   const [openedAuth, { open, close }] = useDisclosure(false);
@@ -54,7 +54,13 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
         </Modal>
       </Grid.Col>
       <Grid.Col span={10}>
-        <Group spacing={12} align="center" position="right" mr={'5%'} mb={'0px'}>
+        <Group
+          spacing={12}
+          align="center"
+          position="right"
+          mr={"5%"}
+          mb={"0px"}
+        >
           <Autocomplete
             className={classes.search_default}
             placeholder="Search"
@@ -68,7 +74,10 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
           {isAuth ? (
             <>
               <IconLogin size={35} cursor="pointer" onClick={logOut} />
-              <Avatar onClick={() => navigate('/user-account')} src={userAvatar} />
+              <Avatar
+                onClick={() => navigate("/user-account")}
+                src={userAvatar}
+              />
             </>
           ) : (
             <AvatarIcon open={open} />
