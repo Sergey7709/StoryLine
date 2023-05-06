@@ -8,11 +8,12 @@ import React, { useCallback, useMemo } from "react";
 import { useStyles } from "./headerMenuStyles";
 import HeaderToolBar from "./HeaderToolBar";
 import { NavLink } from "react-router-dom";
+import { MenuItem } from "./MenuItem";
 
 const HeaderMenu = () => {
   console.log("render header");
   const { classes } = useStyles();
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   // const navigate = useNavigate();
   // const onClickToItem = useCallback(
   //   (link: string, param: string) => {
@@ -35,6 +36,7 @@ const HeaderMenu = () => {
   //     )),
   //   [onClickToItem]
   // );
+
   const items = useMemo(
     () =>
       NAV_BUTTONS.map((link) => (
@@ -53,6 +55,9 @@ const HeaderMenu = () => {
                 {link.label}
                 <IconChevronDown size="1rem" />
                 {/* <Menu.Dropdown pl={40}>{menuCategory}</Menu.Dropdown> */}
+                <Menu.Dropdown pl={40}>
+                  <MenuItem />
+                </Menu.Dropdown>
               </Flex>
             ) : (
               <NavLink to={link.link} className={classes.link}>
