@@ -60,7 +60,7 @@ export const BooksList = () => {
         />
 
         <Text>
-          от {value} до {endValue}{" "}
+          от {value} до {endValue}
         </Text>
       </Group>
 
