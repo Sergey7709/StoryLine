@@ -85,7 +85,7 @@ export const BooksList = () => {
                 withBorder
               >
                 <Group position="apart">
-                  <Link to="/BookCard">
+                  <Link to="/book-card">
                     <Image
                       width={"8rem"}
                       height={"12rem"}
