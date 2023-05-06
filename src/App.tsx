@@ -25,6 +25,7 @@ import { Home } from "./pages/home/Home";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
 
 export default function App() {
+  console.log("render APP");
   useAutoLogin();
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>

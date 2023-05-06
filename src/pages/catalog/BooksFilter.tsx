@@ -5,8 +5,16 @@
 // };
 
 import { Group, Text, Menu, UnstyledButton, rem } from "@mantine/core";
+import { useState } from "react";
 
 export function BooksFilter() {
+  const [sortName, setSortName] = useState("");
+  const [sortRating, setSortRating] = useState("");
+  const [sortCost, setSortCost] = useState("");
+  const [sortData, setSortData] = useState("");
+  const [price, setPrice] = useState("");
+  const [priceEnd, setPriceEnd] = useState("");
+
   return (
     <Group position="center">
       <Menu
