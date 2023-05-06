@@ -83,4 +83,28 @@ export const useStyles = createStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+
+  slider_lable: {
+    height: rem(28),
+    lineHeight: rem(28),
+    width: rem(150),
+    padding: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontWeight: 500,
+    backgroundColor: "transparent",
+  },
+
+  slider_thumb: {
+    backgroundColor: theme.colors[theme.primaryColor][6],
+    height: rem(10),
+    width: rem(15),
+    border: "none",
+  },
+
+  slider_dragging: {
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "transparent",
+  },
 }));
