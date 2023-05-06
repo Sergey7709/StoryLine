@@ -12,9 +12,9 @@ import {
   Box,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCurrentDate } from '../../helpers/getCurrentDate';
-import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
+import { useAppDispatch } from '../../redux/redux.hooks';
 import { useMutation } from 'react-query';
 import { FetchPostType, fetchPost } from '../../api/postApi';
 import { Post, PostCreate, PostUpdate } from '../../common/types';
@@ -33,18 +33,21 @@ const initialPostState = {
   likes: 0,
   date: getCurrentDate(),
 };
-const MyPosts = () => {
+type MyPostsProps = {
+  posts: Post[];
+  token: string;
+};
+const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
   const mutatePost = useMutation((args: UpdatePostArgs) =>
     fetchPost(args.type, args.params, args?.body, args.token),
   );
   const [currentPost, setCurrentPost] = useState<number | 'create'>(0);
   const [opened, { open, close }] = useDisclosure(false);
   const post: Post | PostCreate = useMemo(() => {
-    const findPost = user?.posts.find((el) => el.id === currentPost);
+    const findPost = posts.find((el) => el.id === currentPost);
     return currentPost === 'create' || findPost === undefined ? initialPostState : findPost;
-  }, [user, currentPost]);
+  }, [currentPost, posts]);
   const [postForm, setPostForm] = useState<Post | PostCreate>(initialPostState);
   useEffect(() => {
     setPostForm(post);
@@ -59,7 +62,7 @@ const MyPosts = () => {
               type,
               params: 'post/create',
               body: postForm,
-              token: user?.token ?? '',
+              token: token,
             });
             dispatch(updateUserPosts(resultCreate));
             break;
@@ -74,7 +77,7 @@ const MyPosts = () => {
               type,
               body: updatePostForm,
               params: 'post/' + id.toString(),
-              token: user?.token ?? '',
+              token: token,
             });
             dispatch(updateUserPosts(resultUpdate));
             break;
@@ -84,7 +87,7 @@ const MyPosts = () => {
             const resultDelete = await mutatePost.mutateAsync({
               type,
               params: 'post/' + id.toString(),
-              token: user?.token ?? '',
+              token: token,
             });
             dispatch(updateUserPosts(resultDelete));
             break;
@@ -111,7 +114,7 @@ const MyPosts = () => {
         });
       }
     },
-    [dispatch, mutatePost, postForm, user?.token, close],
+    [close, mutatePost, postForm, token, dispatch],
   );
 
   return (
@@ -170,7 +173,7 @@ const MyPosts = () => {
         Добавить пост
       </Button>
       <Grid>
-        {user?.posts.map((el) => (
+        {posts.map((el) => (
           <Grid.Col span={4} key={el.id}>
             <Card mt={10} shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
@@ -208,4 +211,4 @@ const MyPosts = () => {
   );
 };
 
-export default MyPosts;
+export default memo(MyPosts);

@@ -1,10 +1,12 @@
 import { Table } from '@mantine/core';
 import ShowOrderedItems from './assetsUserAccount/ShowOrderedItems';
-import { useAppSelector } from '../../redux/redux.hooks';
-
-const MyOrders = () => {
-  const user = useAppSelector((state) => state.auth.user);
-  const rows = user?.orderItems.map((el) => (
+import { FC, memo } from 'react';
+import { Order } from '../../common/types';
+type MyOrdersProps = {
+  orders: Order[];
+};
+const MyOrders: FC<MyOrdersProps> = ({ orders }) => {
+  const rows = orders.map((el) => (
     <tr key={el.id}>
       <td>{el.id}</td>
       <td>{el.totalPrice} &#8381;</td>
@@ -14,6 +16,7 @@ const MyOrders = () => {
       </td>
     </tr>
   ));
+
   return (
     <Table mt={10}>
       <thead>
@@ -29,4 +32,4 @@ const MyOrders = () => {
   );
 };
 
-export default MyOrders;
+export default memo(MyOrders);

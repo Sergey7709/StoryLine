@@ -1,11 +1,13 @@
 import { Badge, Button, Card, Flex, Grid, Group, Image, Text } from '@mantine/core';
-import { useAppSelector } from '../../redux/redux.hooks';
-
-const MyReviews = () => {
-  const user = useAppSelector((state) => state.auth.user);
+import { Item } from '../../common/types';
+import { FC, memo } from 'react';
+type MyReviewsType = {
+  reviews: Item[];
+};
+const MyReviews: FC<MyReviewsType> = ({ reviews }) => {
   return (
     <Grid>
-      {user?.reviews.map((el) => (
+      {reviews.map((el) => (
         <Grid.Col span={4} key={el.id}>
           <Card shadow="sm" padding="lg" radius="md" withBorder mt={10}>
             <Card.Section>
@@ -39,4 +41,4 @@ const MyReviews = () => {
   );
 };
 
-export default MyReviews;
+export default memo(MyReviews);
