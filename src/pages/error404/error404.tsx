@@ -1,8 +1,8 @@
 import { Container, Title, Text, Button, Group } from "@mantine/core";
 
 import { useNavigate } from "react-router-dom";
-import { Illustration } from "./Illustration";
 import { useStyles } from "./Error404Styles";
+import { Illustration } from "./Illustration";
 
 export function Error404() {
   const navigate = useNavigate();
