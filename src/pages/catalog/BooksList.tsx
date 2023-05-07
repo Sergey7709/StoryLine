@@ -33,7 +33,7 @@ export const BooksList = () => {
 
   return (
     <Grid>
-      <Group ml={100} mt={20}>
+      <Group ml={"20%"} mt={20}>
         <BooksFilter />
         <RangeSlider w={200} size="md" color="green" min={0} max={2000} />
       </Group>

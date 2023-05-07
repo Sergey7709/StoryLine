@@ -73,7 +73,7 @@ export function BooksFilter() {
       <Menu
         shadow="md"
         // withArrow
-        width={200}
+        width={370}
         offset={0}
         // position="right-start"
         trigger="hover"
@@ -86,37 +86,42 @@ export function BooksFilter() {
           </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown>
-          {menuData.map((menuItem) => (
-            <Menu
-              position="right-start"
-              trigger="hover"
-              width={200}
-              offset={2}
-              key={menuItem.key}
-            >
-              <Menu.Target>
-                <Menu.Item>
-                  <Text size="md" color="blue" weight={300}>
-                    {menuItem.title}
-                  </Text>
-                </Menu.Item>
-              </Menu.Target>
-              <Menu.Dropdown>
-                {menuItem.options.map((option) => (
-                  <Menu.Item
-                    key={option.value}
-                    onClick={() =>
-                      sortHandler(menuItem.key as keyof SortType, option.value)
-                    }
-                  >
+          <Group>
+            {menuData.map((menuItem) => (
+              <Menu
+                position="bottom"
+                trigger="hover"
+                width={140}
+                offset={5}
+                key={menuItem.key}
+              >
+                <Menu.Target>
+                  <UnstyledButton>
                     <Text size="md" color="blue" weight={300}>
-                      {option.subtitle}
+                      {menuItem.title}
                     </Text>
-                  </Menu.Item>
-                ))}
-              </Menu.Dropdown>
-            </Menu>
-          ))}
+                  </UnstyledButton>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  {menuItem.options.map((option) => (
+                    <Menu.Item
+                      key={option.value}
+                      onClick={() =>
+                        sortHandler(
+                          menuItem.key as keyof SortType,
+                          option.value
+                        )
+                      }
+                    >
+                      <Text size="md" color="blue" weight={300}>
+                        {option.subtitle}
+                      </Text>
+                    </Menu.Item>
+                  ))}
+                </Menu.Dropdown>
+              </Menu>
+            ))}
+          </Group>
         </Menu.Dropdown>
       </Menu>
     </Group>
