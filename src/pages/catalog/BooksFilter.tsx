@@ -99,25 +99,22 @@ export function BooksFilter() {
                   <Text size="md" color="blue" weight={300}>
                     {menuItem.title}
                   </Text>
-                  <Menu.Dropdown>
-                    {menuItem.options.map((option) => (
-                      <Menu.Item
-                        key={option.value}
-                        onClick={() =>
-                          sortHandler(
-                            menuItem.key as keyof SortType,
-                            option.value
-                          )
-                        }
-                      >
-                        <Text size="md" color="blue" weight={300}>
-                          {option.subtitle}
-                        </Text>
-                      </Menu.Item>
-                    ))}
-                  </Menu.Dropdown>
                 </Menu.Item>
               </Menu.Target>
+              <Menu.Dropdown>
+                {menuItem.options.map((option) => (
+                  <Menu.Item
+                    key={option.value}
+                    onClick={() =>
+                      sortHandler(menuItem.key as keyof SortType, option.value)
+                    }
+                  >
+                    <Text size="md" color="blue" weight={300}>
+                      {option.subtitle}
+                    </Text>
+                  </Menu.Item>
+                ))}
+              </Menu.Dropdown>
             </Menu>
           ))}
         </Menu.Dropdown>
