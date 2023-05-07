@@ -1,16 +1,16 @@
 import { Autocomplete, Avatar, Grid, Group, Modal, Image } from "@mantine/core";
-import { FC, memo, useCallback } from "react";
+import { FC } from "react";
 import { DATA_FOR_AUTO_COMPLETE } from "../../common/constants";
 import { Authorization } from "../../pages/authorization/authorization";
 import { userReceived } from "../../redux/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
-import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import { IconSearch, IconLogin } from "@tabler/icons-react";
 import { AvatarIcon } from "../../assets/avatarIcon";
 import { CartIcon } from "../../assets/cartIcon";
 import { FavoritesIcon } from "../../assets/favoritesIcon";
 import { ThemeToggleIcon } from "../../assets/themeToggleIcon";
+import { Link } from "react-router-dom";
 type HeaderToolBarProps = {
   classes: {
     header: string;
@@ -25,30 +25,28 @@ type HeaderToolBarProps = {
   };
 };
 const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
-  const onClickToHome = () => {
-    navigate("/");
-  };
+  console.log("render toolbar");
 
   const [openedAuth, { open, close }] = useDisclosure(false);
   const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const logOut = useCallback(() => {
+  const logOut = () => {
     dispatch(userReceived(null));
     localStorage.clear();
-  }, [dispatch]);
+  };
   return (
     <>
       <Grid.Col span={2}>
-        <Image
-          onClick={onClickToHome}
-          maw={50}
-          mx="30px"
-          radius="md"
-          src="https://th.bing.com/th/id/OIG.IuHUSGbrzq_JUMRk1Yrq?pid=ImgGn"
-          alt="Random image"
-        />
+        <Link to="/">
+          <Image
+            maw={50}
+            mx="30px"
+            radius="md"
+            src="https://th.bing.com/th/id/OIG.IuHUSGbrzq_JUMRk1Yrq?pid=ImgGn"
+            alt="Home image"
+          />
+        </Link>
         <Modal size={500} opened={openedAuth} onClose={close} centered>
           <Authorization close={close} />
         </Modal>
@@ -74,10 +72,9 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
           {isAuth ? (
             <>
               <IconLogin size={35} cursor="pointer" onClick={logOut} />
-              <Avatar
-                onClick={() => navigate("/user-account")}
-                src={userAvatar}
-              />
+              <Link to="/user-account">
+                <Avatar src={userAvatar} />
+              </Link>
             </>
           ) : (
             <AvatarIcon open={open} />
@@ -89,4 +86,4 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
   );
 };
 
-export default memo(HeaderToolBar);
+export default HeaderToolBar;
