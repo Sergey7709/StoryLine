@@ -8,7 +8,6 @@ import {
   Grid,
   ActionIcon,
   RangeSlider,
-  Slider,
 } from "@mantine/core";
 import { useStyles } from "./BooksListStyles";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
@@ -19,12 +18,8 @@ import { ItemsResponse } from "../../common/types";
 import { useAppSelector } from "../../redux/redux.hooks";
 import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
-import { useState } from "react";
 
 export const BooksList = () => {
-  const [value, setValue] = useState(0);
-  const [endValue, setEndValue] = useState(0);
-
   const param = useAppSelector((state) => state.filter.param);
   const { data, isLoading } = useQuery<ItemsResponse>(["item", param], () =>
     fetchItem(param)
@@ -38,30 +33,9 @@ export const BooksList = () => {
 
   return (
     <Grid>
-      <Group ml={100} mt={20}>
+      <Group ml={"20%"} mt={20}>
         <BooksFilter />
-        <RangeSlider
-          // defaultValue={[20, 60]}
-          w={200}
-          size="md"
-          color="green"
-          // label={null}
-          min={0}
-          max={2000}
-          // value={[min, max]}
-          // onChange={setValue}
-          // onChangeEnd={setEndValue}
-
-          // className={classes.slider_lable}
-          // classNames={{
-          //   // thumb: classes.slider_thumb,
-          //   dragging: classes.slider_dragging,
-          // }}
-        />
-
-        <Text>
-          от {value} до {endValue}
-        </Text>
+        <RangeSlider w={200} size="md" color="green" min={0} max={2000} />
       </Group>
 
       <Grid className={classes.grid} align="center">

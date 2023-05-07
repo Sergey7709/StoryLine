@@ -16,9 +16,9 @@ import { Home } from './pages/home/home';
 import { Cart } from './pages/cart/cart';
 import { AboutUs } from './pages/aboutUs/aboutUs';
 import { BookstoreServices } from './pages/bookstoreServices/bookstoreServices';
-import { BookCard } from './pages/catalog/bookcard';
 import { Favorites } from './pages/favorites/favorites';
 import { ReaderBlogs } from './pages/readerBlogs/readerBlogs';
+import { BookCard } from './pages/catalog/Bookcard';
 
 export default function App() {
   console.log('render APP');

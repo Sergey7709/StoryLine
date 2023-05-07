@@ -1,7 +1,7 @@
 import { Header, Group, Grid } from '@mantine/core';
+
 import { useStyles } from './headerMenuStyles';
 import HeaderToolBar from './HeaderToolBar';
-
 import HeaderButtons from './HeaderButtons';
 
 const HeaderMenu = () => {

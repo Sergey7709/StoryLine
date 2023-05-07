@@ -4,14 +4,13 @@ import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
 import { Authorization } from '../../pages/authorization/authorization';
 import { userReceived } from '../../redux/authSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
-import { Link } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { IconSearch, IconLogin } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
 import { AvatarIcon } from '../../assets/AvatarIcon';
 import { CartIcon } from '../../assets/CartIcon';
 import { FavoritesIcon } from '../../assets/FavoritesIcon';
 import { ThemeToggleIcon } from '../../assets/ThemeToggleIcon';
-
 type HeaderToolBarProps = {
   classes: {
     header: string;
@@ -26,7 +25,8 @@ type HeaderToolBarProps = {
   };
 };
 const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
-  console.log('toolbar');
+  console.log('render toolbar');
+
   const [openedAuth, { open, close }] = useDisclosure(false);
   const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
@@ -35,17 +35,16 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
     dispatch(userReceived(null));
     localStorage.clear();
   };
-
   return (
     <>
       <Grid.Col span={2}>
-        <Link to={'/'}>
+        <Link to="/">
           <Image
             maw={50}
             mx="30px"
             radius="md"
             src="https://th.bing.com/th/id/OIG.IuHUSGbrzq_JUMRk1Yrq?pid=ImgGn"
-            alt="Random image"
+            alt="Home image"
           />
         </Link>
         <Modal size={500} opened={openedAuth} onClose={close} centered>
@@ -69,7 +68,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
           {isAuth ? (
             <>
               <IconLogin size={35} cursor="pointer" onClick={logOut} />
-              <Link to={'/user-account'}>
+              <Link to="/user-account">
                 <Avatar src={userAvatar} />
               </Link>
             </>

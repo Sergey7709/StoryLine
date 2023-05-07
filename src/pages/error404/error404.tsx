@@ -1,5 +1,4 @@
 import { Container, Title, Text, Button, Group } from '@mantine/core';
-
 import { useNavigate } from 'react-router-dom';
 import { useStyles } from './error404Styles';
 import { Illustration } from './illustration';

@@ -1,6 +1,6 @@
 import { Menu, Flex, Center } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { NAV_BUTTONS } from '../../common/constants';
 import { MenuItem } from './MenuItem';

@@ -12,9 +12,9 @@ import {
 } from '@mantine/core';
 import { useState } from 'react';
 import { Rating } from '@mantine/core';
-import CartBar from '../../components/cartCount/cartCount';
 import { Spoiler } from '@mantine/core';
-
+import { CartIcon } from '../../assets/CartIcon';
+import CartBar from '../../components/cartCount/CartBar';
 export const BookCard = () => {
   const [value, setValue] = useState(0);
   return (
@@ -62,7 +62,7 @@ export const BookCard = () => {
                 <Text fz={20} color="green">
                   Цена: 450 руб.
                 </Text>
-                <CartBar />
+                <CartBar initialQuantity={0} />
               </Group>
               <Button
                 variant="gradient"
