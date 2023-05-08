@@ -53,6 +53,7 @@ export type Review = ReviewUpdate & {
   itemId: number;
   authorName: string;
   itemImageUrl: string;
+  userImageUrl: string;
   itemTitle: string;
   id: number;
 };

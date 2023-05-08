@@ -20,8 +20,10 @@ import { getCurrentDate } from '../../helpers/getCurrentDate';
 import { useAppSelector } from '../../redux/redux.hooks';
 import EmptyData from './assetsUserAccount/EmptyData';
 import { useCurrentUser } from '../../hooks/useCurrenUser';
+import ModalReviewFields from '../catalog/UI/ModalReviewFields';
+
 type MyReviewsType = {};
-type FetchReviewArgs = {
+export type FetchReviewArgs = {
   type: FetchType;
   params: string;
   body: ReviewUpdate;
@@ -38,6 +40,7 @@ const MyReviews: FC<MyReviewsType> = () => {
   const [currentReview, setCurrentReview] = useState<null | { itemId: number; reviewId: number }>(
     null,
   );
+
   const [review, setReview] = useState(initialReviewState);
   const getCurrentUser = useCurrentUser();
   const reviewMutation = useMutation((args: FetchReviewArgs) =>
@@ -53,17 +56,7 @@ const MyReviews: FC<MyReviewsType> = () => {
   return (
     <>
       <Modal size="lg" opened={opened} onClose={close} centered>
-        <Rating value={review.rate} onChange={(rate) => setReview((prev) => ({ ...prev, rate }))} />
-        <Textarea
-          onChange={(e) => setReview((prev) => ({ ...prev, text: e.target.value }))}
-          autosize
-          value={review.text}
-          placeholder="Пост"
-          mt={10}
-          mb={20}
-          size="sm"
-          color="dimmed"
-        />
+        <ModalReviewFields setReview={setReview} review={review} />
         <Button
           onClick={() => {
             submitReview('put', {
