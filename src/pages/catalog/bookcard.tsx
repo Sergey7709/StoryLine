@@ -13,7 +13,6 @@ import {
 import { useState } from 'react';
 import { Rating } from '@mantine/core';
 import { Spoiler } from '@mantine/core';
-import { CartIcon } from '../../assets/CartIcon';
 import CartBar from '../../components/cartCount/CartBar';
 export const BookCard = () => {
   const [value, setValue] = useState(0);
@@ -34,6 +33,7 @@ export const BookCard = () => {
             alt="book img"
           />
         </Grid.Col>
+        <Grid.Col xs={12} sm={4} offsetXs={3} offsetSm={3} style={{ height: '30rem' }}></Grid.Col>
         <Grid.Col xs={12} sm={4} offsetXs={3} offsetSm={0}>
           <Grid gutter="sm">
             <Grid.Col xs={12} style={{ height: '5rem' }}>

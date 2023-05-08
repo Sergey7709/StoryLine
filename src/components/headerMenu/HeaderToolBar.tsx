@@ -1,7 +1,7 @@
 import { Autocomplete, Avatar, Grid, Group, Modal, Image } from '@mantine/core';
 import { FC } from 'react';
 import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
-import { Authorization } from '../../pages/authorization/authorization';
+import { Authorization } from '../../pages/authorization/Authorization';
 import { userReceived } from '../../redux/authSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
 import { useDisclosure } from '@mantine/hooks';
@@ -11,6 +11,7 @@ import { AvatarIcon } from '../../assets/AvatarIcon';
 import { CartIcon } from '../../assets/CartIcon';
 import { FavoritesIcon } from '../../assets/FavoritesIcon';
 import { ThemeToggleIcon } from '../../assets/ThemeToggleIcon';
+
 type HeaderToolBarProps = {
   classes: {
     header: string;
@@ -25,8 +26,6 @@ type HeaderToolBarProps = {
   };
 };
 const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
-  console.log('render toolbar');
-
   const [openedAuth, { open, close }] = useDisclosure(false);
   const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
@@ -35,6 +34,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
     dispatch(userReceived(null));
     localStorage.clear();
   };
+
   return (
     <>
       <Grid.Col span={2}>
@@ -62,9 +62,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
             m={0}
           />
           <ThemeToggleIcon />
-          <Link to={'/cart'}>
-            <CartIcon />
-          </Link>
+          <CartIcon />
           {isAuth ? (
             <>
               <IconLogin size={35} cursor="pointer" onClick={logOut} />
@@ -75,9 +73,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
           ) : (
             <AvatarIcon open={open} />
           )}
-          <Link to={'/favorites'}>
-            <FavoritesIcon />
-          </Link>
+          <FavoritesIcon />
         </Group>
       </Grid.Col>
     </>

@@ -11,7 +11,7 @@ import CustomScrollbar from './components/customScrollbar/CustomScrollbar';
 import { ScrollToTopButton } from './components/scroll-to-top-button/ScrollToTopButton';
 import ChatBot from './components/chatBot/ChatBot';
 import { Stocks } from './pages/stocks/stocks';
-import HeaderMenu from './components/headerMenu/headerMenu';
+import HeaderMenu from './components/headerMenu/HeaderMenu';
 import { Home } from './pages/home/home';
 import { Cart } from './pages/cart/cart';
 import { AboutUs } from './pages/aboutUs/aboutUs';
@@ -21,7 +21,6 @@ import { ReaderBlogs } from './pages/readerBlogs/readerBlogs';
 import { BookCard } from './pages/catalog/Bookcard';
 
 export default function App() {
-  console.log('render APP');
   useAutoLogin();
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
   const toggleColorScheme = (value?: ColorScheme) =>

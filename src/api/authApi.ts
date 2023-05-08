@@ -3,7 +3,6 @@ import { BASE_URL } from '../common/constants';
 export type BodyFetchUserRequest = {
   password: string;
   email: string;
-  name?: string;
 };
 export type BodyUpdateUserRequest = {
   id: number;
@@ -13,10 +12,15 @@ export type BodyUpdateUserRequest = {
   phone: string;
   address: string;
 };
+export type BodyRegisterUserRequest = BodyFetchUserRequest &
+  BodyUpdateUserRequest &
+  Omit<BodyFetchUserRequest, 'id'> & {
+    isAdmin: boolean;
+  };
 type Params = 'user/current' | 'user/register' | 'user/login' | 'user/update';
 export const fetchUser = async (
   params: Params,
-  body?: BodyFetchUserRequest | BodyUpdateUserRequest,
+  body?: BodyFetchUserRequest | BodyUpdateUserRequest | BodyRegisterUserRequest,
   token?: string,
 ) => {
   const headers = {

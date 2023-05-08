@@ -4,6 +4,7 @@ import { useAppDispatch } from '../redux/redux.hooks';
 import { useQuery } from 'react-query';
 import { fetchUser } from '../api/authApi';
 import { userReceived } from '../redux/authSlice';
+import { useMutation } from 'react-query';
 
 export const useAutoLogin = () => {
   const [token] = useSaveTokenLocalStorage();
@@ -16,4 +17,19 @@ export const useAutoLogin = () => {
   useEffect(() => {
     if (data) dispatch(userReceived(data));
   }, [dispatch, data]);
+};
+
+export const useCurrentUser = () => {
+  const [token] = useSaveTokenLocalStorage();
+  const dispatch = useAppDispatch();
+  const { mutateAsync } = useMutation(async () => {
+    if (!token || typeof token !== 'string') return;
+    const response = await fetchUser('user/current', undefined, token);
+    return response;
+  });
+  const getCurrentUser = async () => {
+    const data = await mutateAsync();
+    if (data !== null) dispatch(userReceived(data));
+  };
+  return getCurrentUser;
 };

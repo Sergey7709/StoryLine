@@ -5,7 +5,6 @@ import HeaderToolBar from './HeaderToolBar';
 import HeaderButtons from './HeaderButtons';
 
 const HeaderMenu = () => {
-  console.log('render header');
   const { classes } = useStyles();
 
   return (
