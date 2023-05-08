@@ -64,7 +64,7 @@ export function BooksFilter() {
   const { sortName, sortRating, sortCost, sortData, price, priceEnd } =
     sortCategories;
 
-  const param = `${sortName}${sortRating}${sortCost}${sortData}${price}${priceEnd}`; //! тест
+  const param = `&${sortName}${sortRating}${sortCost}${sortData}${price}${priceEnd}`; //! тест
 
   console.log(param);
 
