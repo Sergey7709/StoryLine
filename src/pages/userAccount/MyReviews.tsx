@@ -19,6 +19,7 @@ import { FetchReviewType, fetchReview } from '../../api/reviewApi';
 import { getCurrentDate } from '../../helpers/getCurrentDate';
 import { useCurrentUser } from '../../hooks/useAutoLogin';
 import { useAppSelector } from '../../redux/redux.hooks';
+import EmptyData from './assetsUserAccount/EmptyData';
 type MyReviewsType = {
   reviews: Review[];
 };
@@ -79,7 +80,7 @@ const MyReviews: FC<MyReviewsType> = () => {
           Изменить
         </Button>
       </Modal>
-
+      {user?.reviews.length === 0 && <EmptyData text="Вы не написали ни одного отзыва" />}
       <Grid>
         {user &&
           user.reviews.map((el) => (

@@ -19,6 +19,7 @@ import { FetchPostType, fetchPost } from '../../api/postApi';
 import { Post, PostCreate, PostUpdate } from '../../common/types';
 import { notifications } from '@mantine/notifications';
 import { useCurrentUser } from '../../hooks/useAutoLogin';
+import EmptyData from './assetsUserAccount/EmptyData';
 type UpdatePostArgs = {
   params: string;
   token: string;
@@ -172,6 +173,7 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
         }}>
         Добавить пост
       </Button>
+      {!posts.length && <EmptyData text="Вы не написали ни одного поста" />}
       <Grid>
         {posts.map((el) => (
           <Grid.Col span={4} key={el.id}>

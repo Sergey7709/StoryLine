@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
 import { Item } from '../../common/types';
 import SingleBookList from '../catalog/SingleBookList';
+import EmptyData from './assetsUserAccount/EmptyData';
 type MyFavoritesProps = {
   favorites: Item[];
 };
@@ -10,7 +11,7 @@ const MyFavorites: FC<MyFavoritesProps> = ({ favorites = [] }) => {
       {favorites.length ? (
         favorites.map((book) => <SingleBookList book={book} />)
       ) : (
-        <div>В избранном нет товаров</div>
+        <EmptyData text="У вас нет избранных товаров" />
       )}
     </>
   );
