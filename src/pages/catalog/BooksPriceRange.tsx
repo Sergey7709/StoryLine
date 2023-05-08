@@ -1,10 +1,4 @@
-// import React from "react";
-
-// export const BooksNavigation = () => {
-//   return <div>BooksNavigation</div>;
-// };
-
-import { Group, Input, Text } from "@mantine/core";
+import { Grid, Group, Input, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 
@@ -41,26 +35,31 @@ const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
     minPrice !== "" && maxPrice !== "" && Number(minPrice) >= Number(maxPrice);
 
   return (
-    <Group>
-      <Text color="blue">Стоимость от</Text>
-      <Input
-        value={minPrice}
-        onChange={handleMinPriceChange}
-        w={100}
-        size="xs"
-        placeholder="min"
-        error={isPriceNotValid}
-      />
+    <Grid w={400} justify="start" align="center">
+      <Grid.Col>
+        <Group noWrap spacing={5}>
+          <Text color="violet">Стоимость</Text>
+          <Text color="violet">от</Text>
+          <Input
+            value={minPrice}
+            onChange={handleMinPriceChange}
+            w={100}
+            size="xs"
+            placeholder="min"
+            error={isPriceNotValid}
+          />
 
-      <Text color="blue">до</Text>
-      <Input
-        value={maxPrice}
-        onChange={handleMaxPriceChange}
-        w={100}
-        size="xs"
-        placeholder="max"
-      />
-    </Group>
+          <Text color="violet">до</Text>
+          <Input
+            value={maxPrice}
+            onChange={handleMaxPriceChange}
+            w={100}
+            size="xs"
+            placeholder="max"
+          />
+        </Group>
+      </Grid.Col>
+    </Grid>
   );
 };
 
