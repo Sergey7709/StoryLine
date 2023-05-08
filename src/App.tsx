@@ -16,9 +16,9 @@ import { Home } from './pages/home/home';
 import { Cart } from './pages/cart/cart';
 import { AboutUs } from './pages/aboutUs/aboutUs';
 import { BookstoreServices } from './pages/bookstoreServices/bookstoreServices';
-import { Favorites } from './pages/favorites/Favorites';
 import { ReaderBlogs } from './pages/readerBlogs/readerBlogs';
-import { BookCard } from './pages/catalog/Bookcard';
+import { BookCard } from './pages/catalog/BookCard';
+import { Favorites } from './pages/favorites/Favorites';
 
 export default function App() {
   useAutoLogin();
@@ -52,7 +52,7 @@ export default function App() {
               <Route path={'/reader-blogs'} element={<ReaderBlogs />} />
               <Route path={'/about-us'} element={<AboutUs />} />
               <Route path={'/books-list'} element={<BooksList />} />
-              <Route path={'/book-card'} element={<BookCard />} />
+              <Route path={'/books-list/:id'} element={<BookCard />} />
               <Route path={'/user-account'} element={<UserAccount />} />
               <Route path={'*'} element={<Error404 />} />
             </Routes>

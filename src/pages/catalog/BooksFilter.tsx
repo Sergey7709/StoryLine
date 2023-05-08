@@ -1,5 +1,6 @@
-import { Group, Text, Menu, UnstyledButton } from '@mantine/core';
-import { memo, useState } from 'react';
+import { Group, Text, Menu, UnstyledButton } from "@mantine/core";
+import { memo, useState } from "react";
+import { useStyles } from "./BooksListStyles";
 
 type SortType = {
   sortName: string;
@@ -11,45 +12,45 @@ type SortType = {
 };
 
 const initialState: SortType = {
-  sortName: '',
-  sortRating: '',
-  sortCost: '',
-  sortData: '',
-  price: '',
-  priceEnd: '',
+  sortName: "",
+  sortRating: "",
+  sortCost: "",
+  sortData: "",
+  price: "",
+  priceEnd: "",
 };
 
 const menuData = [
   {
-    key: 'sortName',
-    title: 'Наименованию',
+    key: "sortName",
+    title: "Наименованию",
     options: [
-      { value: 'asc', subtitle: 'Наименованию А-Я' },
-      { value: 'desc', subtitle: 'Наименованию Я-А' },
+      { value: "asc", subtitle: "Наименованию А-Я" },
+      { value: "desc", subtitle: "Наименованию Я-А" },
     ],
   },
   {
-    key: 'sortRating',
-    title: 'Рейтингу',
+    key: "sortRating",
+    title: "Рейтингу",
     options: [
-      { value: 'asc', subtitle: 'Рейтингу возрастанию' },
-      { value: 'desc', subtitle: 'Рейтингу убыванию' },
+      { value: "asc", subtitle: "Рейтингу возрастанию" },
+      { value: "desc", subtitle: "Рейтингу убыванию" },
     ],
   },
   {
-    key: 'sortCost',
-    title: 'Цене',
+    key: "sortCost",
+    title: "Цене",
     options: [
-      { value: 'asc', subtitle: 'Цене возрастанию' },
-      { value: 'desc', subtitle: 'Цене убыванию' },
+      { value: "asc", subtitle: "Цене возрастанию" },
+      { value: "desc", subtitle: "Цене убыванию" },
     ],
   },
   {
-    key: 'sortData',
-    title: 'Дате выхода',
+    key: "sortData",
+    title: "Дате выхода",
     options: [
-      { value: 'asc', subtitle: 'Дате возрастанию' },
-      { value: 'desc', subtitle: 'Дате убыванию' },
+      { value: "asc", subtitle: "Дате возрастанию" },
+      { value: "desc", subtitle: "Дате убыванию" },
     ],
   },
 ];
@@ -61,12 +62,15 @@ export const BooksFilter = memo(() => {
     setSortCategories((prevState) => ({ ...prevState, [key]: value }));
   };
 
-  const { sortName, sortRating, sortCost, sortData, price, priceEnd } = sortCategories;
+  const { sortName, sortRating, sortCost, sortData, price, priceEnd } =
+    sortCategories;
 
   const param = `&${sortName}${sortRating}${sortCost}${sortData}${price}${priceEnd}`; //! тест
 
+  const { classes } = useStyles();
+
   console.log(param);
-  console.log('render BooksFilter');
+  console.log("render BooksFilter");
 
   return (
     <Group position="center">
@@ -74,12 +78,13 @@ export const BooksFilter = memo(() => {
         shadow="md"
         // withArrow
         width={370}
-        offset={0}
-        // position="right-start"
-        trigger="hover">
+        offset={3}
+        position="bottom-start"
+        trigger="hover"
+      >
         <Menu.Target>
           <UnstyledButton>
-            <Text size={'md'} color="blue" weight={500}>
+            <Text size={"md"} color="violet" weight={500}>
               Сортировать книги по...
             </Text>
           </UnstyledButton>
@@ -87,10 +92,16 @@ export const BooksFilter = memo(() => {
         <Menu.Dropdown>
           <Group>
             {menuData.map((menuItem) => (
-              <Menu position="bottom" trigger="hover" width={140} offset={5} key={menuItem.key}>
+              <Menu
+                position="bottom"
+                trigger="hover"
+                width={140}
+                offset={5}
+                key={menuItem.key}
+              >
                 <Menu.Target>
                   <UnstyledButton>
-                    <Text size="md" color="blue" weight={300}>
+                    <Text size="md" color="violet" weight={300}>
                       {`${menuItem.title}`}
                     </Text>
                   </UnstyledButton>
@@ -99,8 +110,14 @@ export const BooksFilter = memo(() => {
                   {menuItem.options.map((option) => (
                     <Menu.Item
                       key={option.value}
-                      onClick={() => sortHandler(menuItem.key as keyof SortType, option.value)}>
-                      <Text size="md" color="blue" weight={300}>
+                      onClick={() =>
+                        sortHandler(
+                          menuItem.key as keyof SortType,
+                          option.value
+                        )
+                      }
+                    >
+                      <Text size="md" color="violet" weight={300}>
                         {option.subtitle}
                       </Text>
                     </Menu.Item>

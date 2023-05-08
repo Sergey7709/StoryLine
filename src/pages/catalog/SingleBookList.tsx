@@ -28,8 +28,8 @@ const SingleBookList: FC<SingleBookListProps> = ({ book }) => {
   return (
     <Grid.Col xs={6} sm={4} md={4} lg={3} xl={2} className={classes.gridCol}>
       <Card key={book.id} className={classes.card} shadow="sm" padding="md" radius="md" withBorder>
-        <Group position="apart">
-          <Link to="/book-card">
+        <Group position="center">
+          <Link to={`/books-list/${book.id}`}>
             <Image width={'8rem'} height={'12rem'} src={book.itemImageUrl} alt="book img" />
           </Link>
           {book.discount > 0 && (
