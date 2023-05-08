@@ -2,22 +2,24 @@ import { useForm, isEmail, hasLength } from '@mantine/form';
 import { Button, Group, TextInput, Box, PasswordInput, Checkbox, Title } from '@mantine/core';
 import { FC, FormEvent, useCallback, useState } from 'react';
 import styles from './authorization.module.css';
-import { BodyFetchUserRequest, fetchUser } from '../../api/authApi';
+import { BodyFetchUserRequest, BodyRegisterUserRequest, fetchUser } from '../../api/authApi';
 import { useMutation } from 'react-query';
 import { useAppDispatch } from '../../redux/redux.hooks';
 import { userReceived } from '../../redux/authSlice';
 import { notifications } from '@mantine/notifications';
 import { useSaveTokenLocalStorage } from '../../hooks/useSaveTokenLocalStorage';
 import { User } from '../../common/types';
+
 type FetchAuthArgs = {
-  body: BodyFetchUserRequest;
+  body: BodyFetchUserRequest | BodyRegisterUserRequest;
   params: 'user/register' | 'user/login';
 };
-type Props = {
+type AuthorizationProps = {
   close: () => void;
 };
-export const Authorization: FC<Props> = ({ close }) => {
+export const Authorization: FC<AuthorizationProps> = ({ close }) => {
   const [, saveToken] = useSaveTokenLocalStorage();
+
   const dispatch = useAppDispatch();
   const [remember, setRemember] = useState(true);
   const [isRegister, setIsRegister] = useState(true);
@@ -106,6 +108,7 @@ export const Authorization: FC<Props> = ({ close }) => {
     },
     [form, isRegister, authUserMutation, dispatch, saveToken, remember, close],
   );
+
   return (
     <Box component="form" maw={420} mx="auto" onSubmit={submitForm}>
       <Title color="dimmed" fz={15} mb={5}>
@@ -145,7 +148,6 @@ export const Authorization: FC<Props> = ({ close }) => {
           <TextInput label="Обо мне" placeholder="Обо мне" {...form.getInputProps('about')} />
         </>
       )}
-
       <Group position="right" mt="md">
         <span
           className={styles.register_toggle_link}

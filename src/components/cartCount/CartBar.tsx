@@ -1,12 +1,12 @@
-import { useState } from "react";
-import styles from "./cart.module.css";
-import { Button, Text } from "@mantine/core";
+import { FC, useState } from 'react';
+import styles from './cart.module.css';
+import { Button, Text } from '@mantine/core';
 
 interface CartProps {
   initialQuantity: number;
 }
 
-const CartBar = () => {
+const CartBar: FC<CartProps> = () => {
   const [quantity, setQuantity] = useState(1);
 
   const increment = () => {

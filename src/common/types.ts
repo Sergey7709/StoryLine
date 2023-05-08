@@ -8,7 +8,7 @@ export type User = {
   favoriteItems: Item[];
   basketItems: Item[];
   orderItems: Order[];
-  reviews: Item[];
+  reviews: Review[];
   posts: Post[];
   token: string;
   phone: string;
@@ -29,6 +29,7 @@ export type Item = {
   authorBook: string;
   releaseDate: string;
   reviews: Review[];
+  averageRate: number;
 };
 export type PostCreate = {
   description: string;
@@ -45,15 +46,20 @@ export type Post = PostUpdate & {
   authorName: string;
 };
 
-export type Review = {
-  id: number;
-  text: string;
+export type Review = ReviewUpdate & {
   authorId: number;
   itemId: number;
   authorName: string;
+  itemImageUrl: string;
+  itemTitle: string;
+  id: number;
+};
+export type ReviewUpdate = {
+  text: string;
   date: string;
   rate: number;
 };
+
 export type Order = {
   id: number;
   userId: number;

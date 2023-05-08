@@ -1,84 +1,116 @@
-// import React from "react";
+import { Group, Text, Menu, UnstyledButton } from '@mantine/core';
+import { memo, useState } from 'react';
 
-// export const BooksFilter = () => {
-//   return <div>Filter</div>;
-// };
+type SortType = {
+  sortName: string;
+  sortRating: string;
+  sortCost: string;
+  sortData: string;
+  price: string;
+  priceEnd: string;
+};
 
-import { Group, Text, Menu, UnstyledButton, rem } from "@mantine/core";
+const initialState: SortType = {
+  sortName: '',
+  sortRating: '',
+  sortCost: '',
+  sortData: '',
+  price: '',
+  priceEnd: '',
+};
 
-export function BooksFilter() {
+const menuData = [
+  {
+    key: 'sortName',
+    title: 'Наименованию',
+    options: [
+      { value: 'asc', subtitle: 'Наименованию А-Я' },
+      { value: 'desc', subtitle: 'Наименованию Я-А' },
+    ],
+  },
+  {
+    key: 'sortRating',
+    title: 'Рейтингу',
+    options: [
+      { value: 'asc', subtitle: 'Рейтингу возрастанию' },
+      { value: 'desc', subtitle: 'Рейтингу убыванию' },
+    ],
+  },
+  {
+    key: 'sortCost',
+    title: 'Цене',
+    options: [
+      { value: 'asc', subtitle: 'Цене возрастанию' },
+      { value: 'desc', subtitle: 'Цене убыванию' },
+    ],
+  },
+  {
+    key: 'sortData',
+    title: 'Дате выхода',
+    options: [
+      { value: 'asc', subtitle: 'Дате возрастанию' },
+      { value: 'desc', subtitle: 'Дате убыванию' },
+    ],
+  },
+];
+
+export const BooksFilter = memo(() => {
+  const [sortCategories, setSortCategories] = useState<SortType>(initialState);
+
+  const sortHandler = (key: keyof SortType, value: string) => {
+    setSortCategories((prevState) => ({ ...prevState, [key]: value }));
+  };
+
+  const { sortName, sortRating, sortCost, sortData, price, priceEnd } = sortCategories;
+
+  const param = `&${sortName}${sortRating}${sortCost}${sortData}${price}${priceEnd}`; //! тест
+
+  console.log(param);
+  console.log('render BooksFilter');
+
   return (
     <Group position="center">
       <Menu
         shadow="md"
         // withArrow
-        width={200}
+        width={370}
         offset={0}
         // position="right-start"
-        trigger="hover"
-      >
+        trigger="hover">
         <Menu.Target>
           <UnstyledButton>
-            <Text size={"md"} color="blue" weight={500}>
+            <Text size={'md'} color="blue" weight={500}>
               Сортировать книги по...
             </Text>
           </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu position="right-start" trigger="hover" width={200} offset={5}>
-            <Menu.Target>
-              <Menu.Item>
-                <Text size={"md"} color="blue" weight={300}>
-                  Наименованию
-                </Text>
+          <Group>
+            {menuData.map((menuItem) => (
+              <Menu position="bottom" trigger="hover" width={140} offset={5} key={menuItem.key}>
+                <Menu.Target>
+                  <UnstyledButton>
+                    <Text size="md" color="blue" weight={300}>
+                      {`${menuItem.title}`}
+                    </Text>
+                  </UnstyledButton>
+                </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item>Наименованию up</Menu.Item>
-                  <Menu.Item>Наименованию down</Menu.Item>
+                  {menuItem.options.map((option) => (
+                    <Menu.Item
+                      key={option.value}
+                      onClick={() => sortHandler(menuItem.key as keyof SortType, option.value)}>
+                      <Text size="md" color="blue" weight={300}>
+                        {option.subtitle}
+                      </Text>
+                    </Menu.Item>
+                  ))}
                 </Menu.Dropdown>
-              </Menu.Item>
-            </Menu.Target>
-          </Menu>
-          <Menu position="right-start" trigger="hover" width={200} offset={5}>
-            <Menu.Target>
-              <Menu.Item>
-                <Text size={"md"} color="blue" weight={300}>
-                  Рейтингу
-                </Text>
-                <Menu.Dropdown>
-                  <Menu.Item>Рейтингу up</Menu.Item>
-                  <Menu.Item>Рейтингу down</Menu.Item>
-                </Menu.Dropdown>
-              </Menu.Item>
-            </Menu.Target>
-          </Menu>
-          <Menu position="right-start" trigger="hover" width={200} offset={5}>
-            <Menu.Target>
-              <Menu.Item>
-                <Text size={"md"} color="blue" weight={300}>
-                  Цене
-                </Text>
-                <Menu.Dropdown>
-                  <Menu.Item>Цене up</Menu.Item>
-                  <Menu.Item>Цене down</Menu.Item>
-                </Menu.Dropdown>
-              </Menu.Item>
-            </Menu.Target>
-          </Menu>
-          <Menu position="right-end" trigger="hover" width={200} offset={5}>
-            <Menu.Target>
-              <Menu.Item>
-                <Text size={"md"} color="blue" weight={300}>
-                  Дате выхода
-                </Text>
-                <Menu.Dropdown>
-                  <Menu.Item>Дате выхода up</Menu.Item>
-                  <Menu.Item>Дате выхода down</Menu.Item>
-                </Menu.Dropdown>
-              </Menu.Item>
-            </Menu.Target>
-          </Menu>
+              </Menu>
+            ))}
+          </Group>
         </Menu.Dropdown>
       </Menu>
     </Group>
   );
-}
+});

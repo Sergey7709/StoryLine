@@ -9,7 +9,6 @@ import { useAppSelector } from '../../redux/redux.hooks';
 const UserAccount = () => {
   const user = useAppSelector((state) => state.auth.user);
   const [activeTab, setActiveTab] = useState<string | null>('profile');
-
   if (!user) return <div>Только для авториизованных пользователей</div>;
   return (
     <Tabs value={activeTab} onTabChange={setActiveTab} color="violet">
@@ -30,7 +29,7 @@ const UserAccount = () => {
         <MyOrders orders={user.orderItems} />
       </Tabs.Panel>
       <Tabs.Panel value="reviews">
-        <MyReviews reviews={user.reviews} />
+        <MyReviews />
       </Tabs.Panel>
       <Tabs.Panel value="posts">
         <MyPosts token={user.token} posts={user.posts} />

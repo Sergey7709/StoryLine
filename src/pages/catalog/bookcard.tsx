@@ -12,9 +12,8 @@ import {
 } from '@mantine/core';
 import { useState } from 'react';
 import { Rating } from '@mantine/core';
-import CartBar from '../../components/cartCount/cartCount';
 import { Spoiler } from '@mantine/core';
-
+import CartBar from '../../components/cartCount/CartBar';
 export const BookCard = () => {
   const [value, setValue] = useState(0);
   return (
@@ -34,6 +33,7 @@ export const BookCard = () => {
             alt="book img"
           />
         </Grid.Col>
+        <Grid.Col xs={12} sm={4} offsetXs={3} offsetSm={3} style={{ height: '30rem' }}></Grid.Col>
         <Grid.Col xs={12} sm={4} offsetXs={3} offsetSm={0}>
           <Grid gutter="sm">
             <Grid.Col xs={12} style={{ height: '5rem' }}>
@@ -62,7 +62,7 @@ export const BookCard = () => {
                 <Text fz={20} color="green">
                   Цена: 450 руб.
                 </Text>
-                <CartBar />
+                <CartBar initialQuantity={0} />
               </Group>
               <Button
                 variant="gradient"

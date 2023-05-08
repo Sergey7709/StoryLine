@@ -14,12 +14,13 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCurrentDate } from '../../helpers/getCurrentDate';
-import { useAppDispatch } from '../../redux/redux.hooks';
 import { useMutation } from 'react-query';
 import { FetchPostType, fetchPost } from '../../api/postApi';
 import { Post, PostCreate, PostUpdate } from '../../common/types';
-import { updateUserPosts } from '../../redux/authSlice';
 import { notifications } from '@mantine/notifications';
+
+import EmptyData from './assetsUserAccount/EmptyData';
+import { useCurrentUser } from '../../hooks/useCurrenUser';
 type UpdatePostArgs = {
   params: string;
   token: string;
@@ -38,10 +39,10 @@ type MyPostsProps = {
   token: string;
 };
 const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
-  const dispatch = useAppDispatch();
   const mutatePost = useMutation((args: UpdatePostArgs) =>
     fetchPost(args.type, args.params, args?.body, args.token),
   );
+  const getCurrentUser = useCurrentUser();
   const [currentPost, setCurrentPost] = useState<number | 'create'>(0);
   const [opened, { open, close }] = useDisclosure(false);
   const post: Post | PostCreate = useMemo(() => {
@@ -58,13 +59,13 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
       try {
         switch (type) {
           case 'post': {
-            const resultCreate = await mutatePost.mutateAsync({
+            await mutatePost.mutateAsync({
               type,
               params: 'post/create',
               body: postForm,
               token: token,
             });
-            dispatch(updateUserPosts(resultCreate));
+            getCurrentUser();
             break;
           }
           case 'put': {
@@ -73,23 +74,23 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
               ...postForm,
               id,
             };
-            const resultUpdate = await mutatePost.mutateAsync({
+            await mutatePost.mutateAsync({
               type,
               body: updatePostForm,
               params: 'post/' + id.toString(),
               token: token,
             });
-            dispatch(updateUserPosts(resultUpdate));
+            getCurrentUser();
             break;
           }
           case 'delete': {
             if (!id) throw new Error('Не верный ID поста');
-            const resultDelete = await mutatePost.mutateAsync({
+            await mutatePost.mutateAsync({
               type,
               params: 'post/' + id.toString(),
               token: token,
             });
-            dispatch(updateUserPosts(resultDelete));
+            getCurrentUser();
             break;
           }
           default:
@@ -114,7 +115,7 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
         });
       }
     },
-    [close, mutatePost, postForm, token, dispatch],
+    [close, getCurrentUser, mutatePost, postForm, token],
   );
 
   return (
@@ -172,6 +173,7 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
         }}>
         Добавить пост
       </Button>
+      {!posts.length && <EmptyData text="Вы не написали ни одного поста" />}
       <Grid>
         {posts.map((el) => (
           <Grid.Col span={4} key={el.id}>
