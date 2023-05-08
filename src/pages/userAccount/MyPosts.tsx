@@ -18,8 +18,9 @@ import { useMutation } from 'react-query';
 import { FetchPostType, fetchPost } from '../../api/postApi';
 import { Post, PostCreate, PostUpdate } from '../../common/types';
 import { notifications } from '@mantine/notifications';
-import { useCurrentUser } from '../../hooks/useAutoLogin';
+
 import EmptyData from './assetsUserAccount/EmptyData';
+import { useCurrentUser } from '../../hooks/useCurrenUser';
 type UpdatePostArgs = {
   params: string;
   token: string;
@@ -42,7 +43,6 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
     fetchPost(args.type, args.params, args?.body, args.token),
   );
   const getCurrentUser = useCurrentUser();
-
   const [currentPost, setCurrentPost] = useState<number | 'create'>(0);
   const [opened, { open, close }] = useDisclosure(false);
   const post: Post | PostCreate = useMemo(() => {

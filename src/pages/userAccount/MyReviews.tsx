@@ -17,9 +17,9 @@ import { useDisclosure } from '@mantine/hooks';
 import { useMutation } from 'react-query';
 import { FetchReviewType, fetchReview } from '../../api/reviewApi';
 import { getCurrentDate } from '../../helpers/getCurrentDate';
-import { useCurrentUser } from '../../hooks/useAutoLogin';
 import { useAppSelector } from '../../redux/redux.hooks';
 import EmptyData from './assetsUserAccount/EmptyData';
+import { useCurrentUser } from '../../hooks/useCurrenUser';
 type MyReviewsType = {};
 type FetchReviewArgs = {
   type: FetchReviewType;

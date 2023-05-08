@@ -1,14 +1,17 @@
 import { Group, Grid, RangeSlider } from '@mantine/core';
 import { useStyles } from './BooksListStyles';
+
 import { useQuery } from 'react-query';
 import { fetchItem } from '../../api/itemsApi';
 import { Item, ItemsResponse } from '../../common/types';
 import { useAppSelector } from '../../redux/redux.hooks';
 import { Loader } from '../../components/loader/Loader';
 import { BooksFilter } from './BooksFilter';
+
+import React from 'react';
 import SingleBookList from './SingleBookList';
 
-export const BooksList = () => {
+export const BooksList = React.memo(() => {
   const param = useAppSelector((state) => state.filter.param);
   const { data, isLoading } = useQuery<ItemsResponse>(['item', param], () => fetchItem(param));
   const { classes } = useStyles();
@@ -27,4 +30,4 @@ export const BooksList = () => {
       </Grid>
     </Grid>
   );
-};
+});
