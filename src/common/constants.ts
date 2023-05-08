@@ -44,7 +44,7 @@ export const CATEGORIES = [
   {
     link: "/books-list",
     label: "Новинки",
-    param: "all?sortBy=releaseDate&sortOrder=desc&limit=8",
+    param: "all?sortBy=releaseDate&sortOrder=desc&limit=1",
   },
   {
     link: "/books-list",
