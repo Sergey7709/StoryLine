@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { BASE_URL } from '../common/constants';
-import { PostCreate, PostUpdate } from '../common/types';
+import { PostCreate, PostUpdate, ReviewUpdate } from '../common/types';
 
-export type FetchPostType = 'post' | 'get' | 'put' | 'delete';
-export const fetchPost = async (
-  type: FetchPostType,
+export type FetchType = 'post' | 'get' | 'put' | 'delete';
+export const fetchHandler = async (
+  type: FetchType,
   params: string,
-  body?: PostCreate | PostUpdate,
+  body?: PostCreate | PostUpdate | ReviewUpdate,
   token?: string,
 ) => {
   const headers = {

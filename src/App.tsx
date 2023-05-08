@@ -16,7 +16,7 @@ import { Home } from './pages/home/home';
 import { Cart } from './pages/cart/cart';
 import { AboutUs } from './pages/aboutUs/aboutUs';
 import { BookstoreServices } from './pages/bookstoreServices/bookstoreServices';
-import { Favorites } from './pages/favorites/favorites';
+import { Favorites } from './pages/favorites/Favorites';
 import { ReaderBlogs } from './pages/readerBlogs/readerBlogs';
 import { BookCard } from './pages/catalog/Bookcard';
 

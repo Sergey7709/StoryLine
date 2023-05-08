@@ -15,14 +15,14 @@ import { ReviewUpdate } from '../../common/types';
 import { FC, memo, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { useMutation } from 'react-query';
-import { FetchReviewType, fetchReview } from '../../api/reviewApi';
+import { fetchHandler, FetchType } from '../../api/postOrReviewApi';
 import { getCurrentDate } from '../../helpers/getCurrentDate';
 import { useAppSelector } from '../../redux/redux.hooks';
 import EmptyData from './assetsUserAccount/EmptyData';
 import { useCurrentUser } from '../../hooks/useCurrenUser';
 type MyReviewsType = {};
 type FetchReviewArgs = {
-  type: FetchReviewType;
+  type: FetchType;
   params: string;
   body: ReviewUpdate;
   token: string;
@@ -41,12 +41,9 @@ const MyReviews: FC<MyReviewsType> = () => {
   const [review, setReview] = useState(initialReviewState);
   const getCurrentUser = useCurrentUser();
   const reviewMutation = useMutation((args: FetchReviewArgs) =>
-    fetchReview(args.type, args.params, args.body, args.token),
+    fetchHandler(args.type, args.params, args.body, args.token),
   );
-  const submitReview = async (
-    type: FetchReviewType,
-    item: { itemId: number; reviewId: number },
-  ) => {
+  const submitReview = async (type: FetchType, item: { itemId: number; reviewId: number }) => {
     if (!user) return;
     const params = `review/${item.itemId}/${item.reviewId}`;
     await reviewMutation.mutateAsync({ type, params, body: review, token: user.token });

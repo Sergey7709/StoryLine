@@ -15,7 +15,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCurrentDate } from '../../helpers/getCurrentDate';
 import { useMutation } from 'react-query';
-import { FetchPostType, fetchPost } from '../../api/postApi';
+import { FetchType, fetchHandler } from '../../api/postOrReviewApi';
 import { Post, PostCreate, PostUpdate } from '../../common/types';
 import { notifications } from '@mantine/notifications';
 
@@ -25,7 +25,7 @@ type UpdatePostArgs = {
   params: string;
   token: string;
   body?: PostUpdate | PostCreate;
-  type: FetchPostType;
+  type: FetchType;
 };
 const initialPostState = {
   description: '',
@@ -40,7 +40,7 @@ type MyPostsProps = {
 };
 const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
   const mutatePost = useMutation((args: UpdatePostArgs) =>
-    fetchPost(args.type, args.params, args?.body, args.token),
+    fetchHandler(args.type, args.params, args?.body, args.token),
   );
   const getCurrentUser = useCurrentUser();
   const [currentPost, setCurrentPost] = useState<number | 'create'>(0);
@@ -55,7 +55,7 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
   }, [post]);
 
   const submitPost = useCallback(
-    async (type: FetchPostType, id?: number) => {
+    async (type: FetchType, id?: number) => {
       try {
         switch (type) {
           case 'post': {
