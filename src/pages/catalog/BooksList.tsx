@@ -7,7 +7,6 @@ import {
   Group,
   Grid,
   ActionIcon,
-  RangeSlider,
 } from "@mantine/core";
 import { useStyles } from "./BooksListStyles";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
@@ -18,12 +17,22 @@ import { ItemsResponse } from "../../common/types";
 import { useAppSelector } from "../../redux/redux.hooks";
 import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
+import PriceRange from "./BooksNavigation";
+import { useState } from "react";
+import React from "react";
 
-export const BooksList = () => {
+export const BooksList = React.memo(() => {
   const param = useAppSelector((state) => state.filter.param);
   const { data, isLoading } = useQuery<ItemsResponse>(["item", param], () =>
     fetchItem(param)
   );
+
+  console.log("render BookList");
+
+  const handlePriceChange = (minPrice: number, maxPrice: number) => {
+    console.log("Минимальная цена:", minPrice);
+    console.log("Максимальная цена:", maxPrice);
+  };
 
   const { classes } = useStyles();
 
@@ -34,9 +43,9 @@ export const BooksList = () => {
   return (
     <Grid align="center">
       <Grid.Col span={12} mb={20}>
-        <Group ml={"20%"}>
+        <Group ml={"5%"}>
           <BooksFilter />
-          <RangeSlider w={200} size="md" color="green" min={0} max={2000} />
+          <PriceRange onPriceChange={handlePriceChange} />
         </Group>
       </Grid.Col>
       <Grid.Col span={12}>
@@ -138,4 +147,4 @@ export const BooksList = () => {
       </Grid.Col>
     </Grid>
   );
-};
+});

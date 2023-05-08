@@ -1,4 +1,5 @@
 import { Group, Text, Menu, UnstyledButton } from "@mantine/core";
+import React from "react";
 import { useState } from "react";
 
 type SortType = {
@@ -54,7 +55,7 @@ const menuData = [
   },
 ];
 
-export function BooksFilter() {
+export const BooksFilter = React.memo(() => {
   const [sortCategories, setSortCategories] = useState<SortType>(initialState);
 
   const sortHandler = (key: keyof SortType, value: string) => {
@@ -67,6 +68,7 @@ export function BooksFilter() {
   const param = `&${sortName}${sortRating}${sortCost}${sortData}${price}${priceEnd}`; //! тест
 
   console.log(param);
+  console.log("render BooksFilter");
 
   return (
     <Group position="center">
@@ -74,8 +76,8 @@ export function BooksFilter() {
         shadow="md"
         // withArrow
         width={370}
-        offset={0}
-        // position="right-start"
+        offset={3}
+        position="bottom-start"
         trigger="hover"
       >
         <Menu.Target>
@@ -98,7 +100,7 @@ export function BooksFilter() {
                 <Menu.Target>
                   <UnstyledButton>
                     <Text size="md" color="blue" weight={300}>
-                      {menuItem.title}
+                      {`${menuItem.title}`}
                     </Text>
                   </UnstyledButton>
                 </Menu.Target>
@@ -126,4 +128,4 @@ export function BooksFilter() {
       </Menu>
     </Group>
   );
-}
+});
