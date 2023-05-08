@@ -34,7 +34,6 @@ const initialReviewState: ReviewUpdate = {
   rate: 1,
 };
 const MyReviews: FC<MyReviewsType> = () => {
-  console.log('render review');
   const [opened, { open, close }] = useDisclosure(false);
   const user = useAppSelector((state) => state.auth.user);
   const [currentReview, setCurrentReview] = useState<null | { itemId: number; reviewId: number }>(
@@ -85,29 +84,28 @@ const MyReviews: FC<MyReviewsType> = () => {
         {user &&
           user.reviews.map((el) => (
             <Grid.Col span={4} key={el.id}>
-              <Card shadow="sm" padding="lg" radius="md" withBorder mt={10} w={410}>
+              <Card shadow="sm" padding="lg" radius="md" withBorder mt={10} w={230}>
                 <Card.Section>
                   <Flex justify="center">
                     <Image src={el.itemImageUrl} height={192} width={128} alt="Norway" mt={10} />
                   </Flex>
                 </Card.Section>
                 <Group position="apart" mt="md" mb="xs">
-                  <Text weight={500}>{el.itemTitle}</Text>
+                  <Text truncate>{el.itemTitle}</Text>
                   <Rating value={el.rate} readOnly />
                 </Group>
                 <Badge color="violet" variant="light" mb={10}>
                   {el.date}
                 </Badge>
-                <Text size="sm" color="dimmed">
+                <Text size="sm" color="dimmed" truncate>
                   {el.text}
                 </Text>
-                <Flex justify="space-between">
+                <Flex direction="column">
                   <Button
                     variant="light"
                     color="blue"
                     mt="md"
                     radius="md"
-                    mr={10}
                     loading={reviewMutation.isLoading}
                     onClick={() => {
                       open();
