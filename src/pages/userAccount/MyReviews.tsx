@@ -11,7 +11,7 @@ import {
   Text,
   Textarea,
 } from '@mantine/core';
-import { Review, ReviewUpdate } from '../../common/types';
+import { ReviewUpdate } from '../../common/types';
 import { FC, memo, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { useMutation } from 'react-query';
@@ -20,9 +20,7 @@ import { getCurrentDate } from '../../helpers/getCurrentDate';
 import { useCurrentUser } from '../../hooks/useAutoLogin';
 import { useAppSelector } from '../../redux/redux.hooks';
 import EmptyData from './assetsUserAccount/EmptyData';
-type MyReviewsType = {
-  reviews: Review[];
-};
+type MyReviewsType = {};
 type FetchReviewArgs = {
   type: FetchReviewType;
   params: string;
@@ -40,6 +38,7 @@ const MyReviews: FC<MyReviewsType> = () => {
   const [currentReview, setCurrentReview] = useState<null | { itemId: number; reviewId: number }>(
     null,
   );
+  const [review, setReview] = useState(initialReviewState);
   const getCurrentUser = useCurrentUser();
   const reviewMutation = useMutation((args: FetchReviewArgs) =>
     fetchReview(args.type, args.params, args.body, args.token),
@@ -54,7 +53,6 @@ const MyReviews: FC<MyReviewsType> = () => {
     getCurrentUser();
     close();
   };
-  const [review, setReview] = useState(initialReviewState);
   return (
     <>
       <Modal size="lg" opened={opened} onClose={close} centered>

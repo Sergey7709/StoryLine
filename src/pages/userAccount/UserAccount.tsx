@@ -29,7 +29,7 @@ const UserAccount = () => {
         <MyOrders orders={user.orderItems} />
       </Tabs.Panel>
       <Tabs.Panel value="reviews">
-        <MyReviews reviews={user.reviews} />
+        <MyReviews />
       </Tabs.Panel>
       <Tabs.Panel value="posts">
         <MyPosts token={user.token} posts={user.posts} />
