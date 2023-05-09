@@ -1,7 +1,7 @@
 import { Group, Text, Menu, UnstyledButton } from "@mantine/core";
 import { memo } from "react";
 import { menuSortData } from "../../common/constants";
-import { SortHandlerType, SortType } from "../../common/types";
+import { SortHandlerType } from "../../common/types";
 
 export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
   console.log("render BooksFilter");
@@ -44,12 +44,7 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                   {menuItem.options.map((option) => (
                     <Menu.Item
                       key={option.value}
-                      onClick={() =>
-                        sortHandler(
-                          menuItem.key as keyof SortType,
-                          option.value
-                        )
-                      }
+                      onClick={() => sortHandler(option.value)}
                     >
                       <Text size="md" color="violet" weight={300}>
                         {option.subtitle}

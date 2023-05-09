@@ -1,5 +1,3 @@
-import { SortType } from "./types";
-
 export const BASE_URL = "https://rest-api-books.onrender.com/";
 
 export const NAV_BUTTONS = [
@@ -41,7 +39,7 @@ export const CATEGORIES = [
   {
     link: "/books-list",
     label: "Все книги",
-    param: "all",
+    param: "all?", //!
   },
   {
     link: "/books-list",
@@ -91,24 +89,30 @@ export const menuSortData = [
     key: "sortName",
     title: "Наименованию",
     options: [
-      { value: "sortBy=title&sortOrder=asc", subtitle: "Наименованию А-Я" },
-      { value: "sortBy=title&sortOrder=desc", subtitle: "Наименованию Я-А" },
+      { value: "&sortBy=title&sortOrder=asc", subtitle: "Наименованию А-Я" },
+      { value: "&sortBy=title&sortOrder=desc", subtitle: "Наименованию Я-А" },
     ],
   },
   {
     key: "sortRating",
     title: "Рейтингу",
     options: [
-      { value: "asc", subtitle: "Рейтингу возрастанию" },
-      { value: "desc", subtitle: "Рейтингу убыванию" },
+      {
+        value: "&sortBy=averageRate&sortOrder=asc",
+        subtitle: "Рейтингу возрастанию",
+      },
+      {
+        value: "&sortBy=averageRate&sortOrder=desc",
+        subtitle: "Рейтингу убыванию",
+      },
     ],
   },
   {
     key: "sortCost",
     title: "Цене",
     options: [
-      { value: "asc", subtitle: "Цене возрастанию" },
-      { value: "desc", subtitle: "Цене убыванию" },
+      { value: "&sortBy=price&sortOrder=asc", subtitle: "Цене возрастанию" },
+      { value: "&sortBy=price&sortOrder=desc", subtitle: "Цене убыванию" },
     ],
   },
   {
@@ -116,19 +120,13 @@ export const menuSortData = [
     title: "Дате выхода",
     options: [
       {
-        value: "sortBy=releaseDate&sortOrder=asc",
+        value: "&sortBy=releaseDate&sortOrder=asc",
         subtitle: "Дате возрастанию",
       },
-      { value: "sortBy=releaseDate&sortOrder=desc", subtitle: "Дате убыванию" },
+      {
+        value: "&sortBy=releaseDate&sortOrder=desc",
+        subtitle: "Дате убыванию",
+      },
     ],
   },
 ];
-
-export const initialState: SortType = {
-  sortName: "",
-  sortRating: "",
-  sortCost: "",
-  sortData: "",
-  price: "",
-  priceEnd: "",
-};

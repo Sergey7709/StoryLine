@@ -84,20 +84,6 @@ export type OrderItem = {
   title: string;
 };
 
-export type SortType = {
-  sortName: string;
-  sortRating: string;
-  sortCost: string;
-  sortData: string;
-  price: string;
-  priceEnd: string;
-};
-
 export type SortHandlerType = {
-  sortHandler: (key: keyof SortType, value: string) => void;
-};
-
-export type SortPropsType = {
-  sortCategories: SortType;
-  sortHandler: (key: keyof SortType, value: string) => void;
+  sortHandler: (value: string) => void;
 };
