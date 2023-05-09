@@ -1,28 +1,18 @@
-import {
-  Badge,
-  Button,
-  Card,
-  Flex,
-  Grid,
-  Group,
-  Image,
-  Modal,
-  Rating,
-  Text,
-  Textarea,
-} from '@mantine/core';
+import { Badge, Button, Card, Flex, Grid, Group, Image, Modal, Rating, Text } from '@mantine/core';
 import { ReviewUpdate } from '../../common/types';
 import { FC, memo, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { useMutation } from 'react-query';
-import { FetchReviewType, fetchReview } from '../../api/reviewApi';
+import { fetchHandler, FetchType } from '../../api/postOrReviewApi';
 import { getCurrentDate } from '../../helpers/getCurrentDate';
 import { useAppSelector } from '../../redux/redux.hooks';
 import EmptyData from './assetsUserAccount/EmptyData';
 import { useCurrentUser } from '../../hooks/useCurrenUser';
+import ModalReviewFields from '../catalog/UI/ModalReviewFields';
+
 type MyReviewsType = {};
-type FetchReviewArgs = {
-  type: FetchReviewType;
+export type FetchReviewArgs = {
+  type: FetchType;
   params: string;
   body: ReviewUpdate;
   token: string;
@@ -38,15 +28,13 @@ const MyReviews: FC<MyReviewsType> = () => {
   const [currentReview, setCurrentReview] = useState<null | { itemId: number; reviewId: number }>(
     null,
   );
+
   const [review, setReview] = useState(initialReviewState);
   const getCurrentUser = useCurrentUser();
   const reviewMutation = useMutation((args: FetchReviewArgs) =>
-    fetchReview(args.type, args.params, args.body, args.token),
+    fetchHandler(args.type, args.params, args.body, args.token),
   );
-  const submitReview = async (
-    type: FetchReviewType,
-    item: { itemId: number; reviewId: number },
-  ) => {
+  const submitReview = async (type: FetchType, item: { itemId: number; reviewId: number }) => {
     if (!user) return;
     const params = `review/${item.itemId}/${item.reviewId}`;
     await reviewMutation.mutateAsync({ type, params, body: review, token: user.token });
@@ -56,17 +44,7 @@ const MyReviews: FC<MyReviewsType> = () => {
   return (
     <>
       <Modal size="lg" opened={opened} onClose={close} centered>
-        <Rating value={review.rate} onChange={(rate) => setReview((prev) => ({ ...prev, rate }))} />
-        <Textarea
-          onChange={(e) => setReview((prev) => ({ ...prev, text: e.target.value }))}
-          autosize
-          value={review.text}
-          placeholder="Пост"
-          mt={10}
-          mb={20}
-          size="sm"
-          color="dimmed"
-        />
+        <ModalReviewFields setReview={setReview} review={review} />
         <Button
           onClick={() => {
             submitReview('put', {

@@ -30,7 +30,9 @@ export type Item = {
   releaseDate: string;
   reviews: Review[];
   averageRate: number;
+  typeOfCover: string;
 };
+
 export type PostCreate = {
   description: string;
   postImageUrl: string;
@@ -51,6 +53,7 @@ export type Review = ReviewUpdate & {
   itemId: number;
   authorName: string;
   itemImageUrl: string;
+  userImageUrl: string;
   itemTitle: string;
   id: number;
 };

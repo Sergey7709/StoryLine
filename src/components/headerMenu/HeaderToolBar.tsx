@@ -2,10 +2,9 @@ import { Autocomplete, Avatar, Grid, Group, Modal, Image } from '@mantine/core';
 import { FC } from 'react';
 import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
 import { Authorization } from '../../pages/authorization/Authorization';
-import { userReceived } from '../../redux/authSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/redux.hooks';
+import { useAppSelector } from '../../redux/redux.hooks';
 import { useDisclosure } from '@mantine/hooks';
-import { IconSearch, IconLogin } from '@tabler/icons-react';
+import { IconSearch } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { AvatarIcon } from '../../assets/AvatarIcon';
 import { CartIcon } from '../../assets/CartIcon';
@@ -29,11 +28,6 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
   const [openedAuth, { open, close }] = useDisclosure(false);
   const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
-  const dispatch = useAppDispatch();
-  const logOut = () => {
-    dispatch(userReceived(null));
-    localStorage.clear();
-  };
 
   return (
     <>
@@ -64,12 +58,9 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
           <ThemeToggleIcon />
           <CartIcon />
           {isAuth ? (
-            <>
-              <IconLogin size={35} cursor="pointer" onClick={logOut} />
-              <Link to="/user-account">
-                <Avatar src={userAvatar} />
-              </Link>
-            </>
+            <Link to="/user-account">
+              <Avatar src={userAvatar} />
+            </Link>
           ) : (
             <AvatarIcon open={open} />
           )}
