@@ -1,3 +1,5 @@
+import { SortType } from "./types";
+
 export const BASE_URL = "https://rest-api-books.onrender.com/";
 
 export const NAV_BUTTONS = [
@@ -83,3 +85,50 @@ export const CATEGORIES = [
     param: "all?category=Искусство. Религия",
   },
 ];
+
+export const menuSortData = [
+  {
+    key: "sortName",
+    title: "Наименованию",
+    options: [
+      { value: "sortBy=title&sortOrder=asc", subtitle: "Наименованию А-Я" },
+      { value: "sortBy=title&sortOrder=desc", subtitle: "Наименованию Я-А" },
+    ],
+  },
+  {
+    key: "sortRating",
+    title: "Рейтингу",
+    options: [
+      { value: "asc", subtitle: "Рейтингу возрастанию" },
+      { value: "desc", subtitle: "Рейтингу убыванию" },
+    ],
+  },
+  {
+    key: "sortCost",
+    title: "Цене",
+    options: [
+      { value: "asc", subtitle: "Цене возрастанию" },
+      { value: "desc", subtitle: "Цене убыванию" },
+    ],
+  },
+  {
+    key: "sortData",
+    title: "Дате выхода",
+    options: [
+      {
+        value: "sortBy=releaseDate&sortOrder=asc",
+        subtitle: "Дате возрастанию",
+      },
+      { value: "sortBy=releaseDate&sortOrder=desc", subtitle: "Дате убыванию" },
+    ],
+  },
+];
+
+export const initialState: SortType = {
+  sortName: "",
+  sortRating: "",
+  sortCost: "",
+  sortData: "",
+  price: "",
+  priceEnd: "",
+};

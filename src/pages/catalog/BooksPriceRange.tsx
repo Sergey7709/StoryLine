@@ -20,14 +20,12 @@ const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
     const value = event.target.value;
     if (value.match(/^\d*$/)) {
       setMinPrice(value);
-      // onPriceChange(Number(value), Number(maxPrice));
     }
   };
   const handleMaxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.match(/^\d*$/)) {
       setMaxPrice(value);
-      // onPriceChange(Number(minPrice), Number(value));
     }
   };
 
