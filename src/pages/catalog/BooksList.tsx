@@ -12,14 +12,15 @@ import React, { useState } from "react";
 
 export const BooksList = React.memo(() => {
   const [value, setValue] = useState("");
+  const [priceSort, setPriceSort] = useState("");
   const param = useAppSelector((state) => state.filter.param);
   const { classes } = useStyles();
 
   const { data, isLoading } = useQuery<ItemsResponse>(
-    ["item", param, value],
-    // () => fetchItem(param)
-    () => fetchItem(`${param}${value}`)
+    ["item", param, value, priceSort],
+    () => fetchItem(`${param}${value}${priceSort}`)
   );
+  console.log(priceSort);
 
   const sortHandler = (value: string) => {
     setValue(value);
@@ -27,9 +28,8 @@ export const BooksList = React.memo(() => {
 
   console.log("render BookList");
 
-  const handlePriceChange = (minPrice: number, maxPrice: number) => {
-    console.log("Минимальная цена:", minPrice);
-    console.log("Максимальная цена:", maxPrice);
+  const handlePriceChange = (price: string) => {
+    setPriceSort(price);
   };
 
   if (isLoading) {

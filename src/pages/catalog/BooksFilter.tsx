@@ -11,14 +11,14 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
       <Menu
         shadow="md"
         // withArrow
-        width={370}
-        offset={3}
+        // width={370}
+        offset={4}
         position="bottom-start"
         trigger="hover"
       >
         <Menu.Target>
           <UnstyledButton>
-            <Text size={"md"} color="violet" weight={500}>
+            <Text size={"md"} color="blue" weight={500}>
               Сортировать книги по...
             </Text>
           </UnstyledButton>
@@ -35,7 +35,7 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
               >
                 <Menu.Target>
                   <UnstyledButton>
-                    <Text size="md" color="violet" weight={300}>
+                    <Text size="md" color="blue" weight={400}>
                       {`${menuItem.title}`}
                     </Text>
                   </UnstyledButton>
@@ -43,10 +43,11 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                 <Menu.Dropdown>
                   {menuItem.options.map((option) => (
                     <Menu.Item
+                      px={2}
                       key={option.value}
                       onClick={() => sortHandler(option.value)}
                     >
-                      <Text size="md" color="violet" weight={300}>
+                      <Text size="md" color="blue" weight={400}>
                         {option.subtitle}
                       </Text>
                     </Menu.Item>

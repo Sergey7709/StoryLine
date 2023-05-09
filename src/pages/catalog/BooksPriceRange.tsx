@@ -3,17 +3,18 @@ import React, { useEffect, useState } from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 
 type PriceRangeProps = {
-  onPriceChange: (minPrice: number, maxPrice: number) => void;
+  onPriceChange: (price: string) => void;
 };
 
 const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [debouncedMin] = useDebouncedValue(minPrice, 300);
-  const [debouncedMax] = useDebouncedValue(maxPrice, 300);
+  const [debouncedMin] = useDebouncedValue(minPrice, 100);
+  const [debouncedMax] = useDebouncedValue(maxPrice, 200);
 
   useEffect(() => {
-    onPriceChange(Number(minPrice), Number(maxPrice));
+    if (Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice))
+      onPriceChange(`&priceFrom=${debouncedMin}&priceTo=${debouncedMax}`);
   }, [debouncedMin, debouncedMax]);
 
   const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,24 +37,30 @@ const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
     <Grid w={400} justify="start" align="center">
       <Grid.Col>
         <Group noWrap spacing={5}>
-          <Text color="violet">Стоимость</Text>
-          <Text color="violet">от</Text>
+          <Text size="md" color="blue" weight={400}>
+            Стоимость
+          </Text>
+          <Text size="md" color="blue" weight={400}>
+            от
+          </Text>
           <Input
             value={minPrice}
             onChange={handleMinPriceChange}
             w={100}
             size="xs"
-            placeholder="min"
+            placeholder="минимум"
             error={isPriceNotValid}
           />
 
-          <Text color="violet">до</Text>
+          <Text size="md" color="blue" weight={400}>
+            до
+          </Text>
           <Input
             value={maxPrice}
             onChange={handleMaxPriceChange}
             w={100}
             size="xs"
-            placeholder="max"
+            placeholder="максимум"
           />
         </Group>
       </Grid.Col>
