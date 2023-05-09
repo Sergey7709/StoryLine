@@ -1,16 +1,4 @@
-import {
-  Badge,
-  Button,
-  Card,
-  Flex,
-  Grid,
-  Group,
-  Image,
-  Modal,
-  Rating,
-  Text,
-  Textarea,
-} from '@mantine/core';
+import { Badge, Button, Card, Flex, Grid, Group, Image, Modal, Rating, Text } from '@mantine/core';
 import { ReviewUpdate } from '../../common/types';
 import { FC, memo, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';

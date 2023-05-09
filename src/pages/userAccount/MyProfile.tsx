@@ -1,15 +1,25 @@
 import { FC, memo, useMemo } from 'react';
 import { Box, Text, Flex, Grid, Paper, RingProgress, Title, Modal } from '@mantine/core';
 import { Image } from '@mantine/core';
-import { IconSettings, IconUser } from '@tabler/icons-react';
+import { IconLogin, IconSettings, IconUser } from '@tabler/icons-react';
 import { checkRankLevel } from '../../helpers/checkRankLevel';
 import ChangeMyData from './assetsUserAccount/ChangeMyData';
 import { useDisclosure } from '@mantine/hooks';
 import { User } from '../../common/types';
+import { userReceived } from '../../redux/authSlice';
+import { useAppDispatch } from '../../redux/redux.hooks';
+import { Link, useNavigate } from 'react-router-dom';
 type MyProfileProps = {
   user: User;
 };
 const MyProfile: FC<MyProfileProps> = ({ user }) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const logOut = () => {
+    dispatch(userReceived(null));
+    localStorage.clear();
+    navigate('/');
+  };
   const [opened, { open, close }] = useDisclosure(false);
   const rank = useMemo(() => {
     const totalOrderPrice = user.orderItems.reduce((acc, curr) => acc + curr.totalPrice, 0);
@@ -39,6 +49,10 @@ const MyProfile: FC<MyProfileProps> = ({ user }) => {
                 </Text>
                 <Text mb={10} fw={700} display="flex">
                   <IconSettings opacity={0.7} cursor="pointer" onClick={open} /> Изменить мои данные
+                </Text>
+                <Text mb={10} fw={700} display="flex">
+                  <IconLogin opacity={0.7} cursor="pointer" onClick={logOut} />
+                  Выйти
                 </Text>
               </Box>
             </Flex>

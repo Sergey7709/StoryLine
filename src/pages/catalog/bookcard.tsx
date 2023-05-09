@@ -114,7 +114,7 @@ export const BookCard = () => {
       ) : (
         data && (
           <Grid gutter="lg">
-            <Grid.Col xs={12} sm={4} offsetXs={3} offsetSm={3} style={{ height: '5rem' }}>
+            <Grid.Col xs={12} sm={4} offsetXs={3} offsetSm={3}>
               <Title size="h3">{data.title}</Title>
             </Grid.Col>
             <Grid.Col xs={12} sm={4} offsetXs={3} offsetSm={3} style={{ height: '30rem' }}>
@@ -144,7 +144,7 @@ export const BookCard = () => {
                   <Text>ID товара: {data.id}</Text>
                 </Grid.Col>
                 <Grid.Col span={6} style={{ height: '10rem' }}>
-                  <Flex justify="center">
+                  <Flex justify="center" mb={10}>
                     <PricesDiscount price={data.price} discount={data.discount} />
                   </Flex>
                   <CartBar initialQuantity={0} />
