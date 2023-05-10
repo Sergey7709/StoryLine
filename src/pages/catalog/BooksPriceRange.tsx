@@ -1,61 +1,66 @@
-import { Grid, Group, Input, Text } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
-import { useDebouncedValue } from '@mantine/hooks';
+import { Grid, Group, Input, Text } from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { useDebouncedValue } from "@mantine/hooks";
 
 type PriceRangeProps = {
-  onPriceChange: (minPrice: number, maxPrice: number) => void;
+  onPriceChange: (price: string) => void;
 };
 
 const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
-  const [debouncedMin] = useDebouncedValue(minPrice, 300);
-  const [debouncedMax] = useDebouncedValue(maxPrice, 300);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [debouncedMin] = useDebouncedValue(minPrice, 100);
+  const [debouncedMax] = useDebouncedValue(maxPrice, 200);
 
   useEffect(() => {
-    onPriceChange(Number(minPrice), Number(maxPrice));
-  }, [debouncedMin, debouncedMax, onPriceChange, minPrice, maxPrice]);
+    if (Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice))
+      onPriceChange(`&priceFrom=${debouncedMin}&priceTo=${debouncedMax}`);
+  }, [debouncedMin, debouncedMax]);
 
   const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.match(/^\d*$/)) {
       setMinPrice(value);
-      // onPriceChange(Number(value), Number(maxPrice));
     }
   };
   const handleMaxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.match(/^\d*$/)) {
       setMaxPrice(value);
-      // onPriceChange(Number(minPrice), Number(value));
     }
   };
 
   const isPriceNotValid =
-    minPrice !== '' && maxPrice !== '' && Number(minPrice) >= Number(maxPrice);
+    minPrice !== "" && maxPrice !== "" && Number(minPrice) >= Number(maxPrice);
 
   return (
     <Grid w={400} justify="start" align="center">
       <Grid.Col>
         <Group noWrap spacing={5}>
-          <Text color="violet">Стоимость</Text>
-          <Text color="violet">от</Text>
+          <Text size="md" color="blue" weight={400}>
+            Стоимость
+          </Text>
+          <Text size="md" color="blue" weight={400}>
+            от
+          </Text>
           <Input
             value={minPrice}
             onChange={handleMinPriceChange}
             w={100}
             size="xs"
-            placeholder="min"
+            placeholder="минимум"
             error={isPriceNotValid}
           />
 
-          <Text color="violet">до</Text>
+          <Text size="md" color="blue" weight={400}>
+            до
+          </Text>
           <Input
             value={maxPrice}
             onChange={handleMaxPriceChange}
             w={100}
             size="xs"
-            placeholder="max"
+            placeholder="максимум"
           />
         </Group>
       </Grid.Col>

@@ -1,14 +1,14 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type InitialStateFilterSlice = {
   param: string;
 };
 const initialState: InitialStateFilterSlice = {
-  param: 'all',
+  param: "all?", //!
 };
 
 export const filterSlice = createSlice({
-  name: 'filterSlice',
+  name: "filterSlice",
   initialState,
   reducers: {
     currentFilter: (state, action: PayloadAction<string>) => {

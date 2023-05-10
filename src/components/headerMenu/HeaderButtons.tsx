@@ -1,9 +1,9 @@
-import { Menu, Flex, Center } from '@mantine/core';
-import { IconChevronDown } from '@tabler/icons-react';
-import { FC } from 'react';
-import { NavLink } from 'react-router-dom';
-import { NAV_BUTTONS } from '../../common/constants';
-import { MenuItem } from './MenuItem';
+import { Menu, Flex, Center } from "@mantine/core";
+import { IconChevronDown } from "@tabler/icons-react";
+import { FC } from "react";
+import { NavLink } from "react-router-dom";
+import { NAV_BUTTONS } from "../../common/constants";
+import { MenuItem } from "./MenuItem";
 
 type HeaderButtonsProps = {
   classes: {
@@ -24,14 +24,15 @@ const HeaderButtons: FC<HeaderButtonsProps> = ({ classes }) => {
       {NAV_BUTTONS.map((link) => (
         <Menu
           key={link.label}
-          trigger={'click'}
+          trigger={"click"}
           transitionProps={{ exitDuration: 0 }}
           withinPortal
           width="100%"
           position="bottom-start"
-          offset={0}>
+          offset={0}
+        >
           <Menu.Target>
-            {link.label === 'Каталог' ? (
+            {link.label === "Каталог" ? (
               <Flex align="center" className={classes.link}>
                 {link.label}
                 <IconChevronDown size="1rem" />
