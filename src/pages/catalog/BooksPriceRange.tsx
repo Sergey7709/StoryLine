@@ -9,8 +9,8 @@ type PriceRangeProps = {
 const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [debouncedMin] = useDebouncedValue(minPrice, 100);
-  const [debouncedMax] = useDebouncedValue(maxPrice, 200);
+  const [debouncedMin] = useDebouncedValue(minPrice, 1000);
+  const [debouncedMax] = useDebouncedValue(maxPrice, 1000);
 
   useEffect(() => {
     if (Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice))
