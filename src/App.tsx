@@ -8,7 +8,7 @@ import { Route, Routes } from "react-router-dom";
 import { Notifications } from "@mantine/notifications";
 import { AppShell, Header, Footer } from "@mantine/core";
 import { BooksList } from "./pages/catalog/BooksList";
-import { Error404 } from "./pages/error404/error404";
+import { Error404 } from "./pages/error404/Error404";
 import { useAutoLogin } from "./hooks/useAutoLogin";
 import UserAccount from "./pages/userAccount/UserAccount";
 import CustomScrollbar from "./components/customScrollbar/CustomScrollbar";
