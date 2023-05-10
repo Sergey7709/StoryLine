@@ -39,7 +39,7 @@ export const CATEGORIES = [
   {
     link: "/books-list",
     label: "Все книги",
-    param: "all",
+    param: "all?", //!
   },
   {
     link: "/books-list",
@@ -81,5 +81,52 @@ export const CATEGORIES = [
     link: "/books-list",
     label: "Искусство. Религия",
     param: "all?category=Искусство. Религия",
+  },
+];
+
+export const menuSortData = [
+  {
+    key: "sortName",
+    title: "Наименованию",
+    options: [
+      { value: "&sortBy=title&sortOrder=asc", subtitle: "Наименованию А-Я" },
+      { value: "&sortBy=title&sortOrder=desc", subtitle: "Наименованию Я-А" },
+    ],
+  },
+  {
+    key: "sortRating",
+    title: "Рейтингу",
+    options: [
+      {
+        value: "&sortBy=averageRate&sortOrder=asc",
+        subtitle: "Рейтингу возрастанию",
+      },
+      {
+        value: "&sortBy=averageRate&sortOrder=desc",
+        subtitle: "Рейтингу убыванию",
+      },
+    ],
+  },
+  {
+    key: "sortCost",
+    title: "Цене",
+    options: [
+      { value: "&sortBy=price&sortOrder=asc", subtitle: "Цене возрастанию" },
+      { value: "&sortBy=price&sortOrder=desc", subtitle: "Цене убыванию" },
+    ],
+  },
+  {
+    key: "sortData",
+    title: "Дате выхода",
+    options: [
+      {
+        value: "&sortBy=releaseDate&sortOrder=asc",
+        subtitle: "Дате возрастанию",
+      },
+      {
+        value: "&sortBy=releaseDate&sortOrder=desc",
+        subtitle: "Дате убыванию",
+      },
+    ],
   },
 ];

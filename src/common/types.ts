@@ -86,3 +86,7 @@ export type OrderItem = {
   count: number;
   title: string;
 };
+
+export type SortHandlerType = {
+  sortHandler: (value: string) => void;
+};

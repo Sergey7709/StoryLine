@@ -1,75 +1,9 @@
 import { Group, Text, Menu, UnstyledButton } from "@mantine/core";
-import { memo, useState } from "react";
-import { useStyles } from "./BooksListStyles";
+import { memo } from "react";
+import { menuSortData } from "../../common/constants";
+import { SortHandlerType } from "../../common/types";
 
-type SortType = {
-  sortName: string;
-  sortRating: string;
-  sortCost: string;
-  sortData: string;
-  price: string;
-  priceEnd: string;
-};
-
-const initialState: SortType = {
-  sortName: "",
-  sortRating: "",
-  sortCost: "",
-  sortData: "",
-  price: "",
-  priceEnd: "",
-};
-
-const menuData = [
-  {
-    key: "sortName",
-    title: "Наименованию",
-    options: [
-      { value: "asc", subtitle: "Наименованию А-Я" },
-      { value: "desc", subtitle: "Наименованию Я-А" },
-    ],
-  },
-  {
-    key: "sortRating",
-    title: "Рейтингу",
-    options: [
-      { value: "asc", subtitle: "Рейтингу возрастанию" },
-      { value: "desc", subtitle: "Рейтингу убыванию" },
-    ],
-  },
-  {
-    key: "sortCost",
-    title: "Цене",
-    options: [
-      { value: "asc", subtitle: "Цене возрастанию" },
-      { value: "desc", subtitle: "Цене убыванию" },
-    ],
-  },
-  {
-    key: "sortData",
-    title: "Дате выхода",
-    options: [
-      { value: "asc", subtitle: "Дате возрастанию" },
-      { value: "desc", subtitle: "Дате убыванию" },
-    ],
-  },
-];
-
-export const BooksFilter = memo(() => {
-  const [sortCategories, setSortCategories] = useState<SortType>(initialState);
-
-  const sortHandler = (key: keyof SortType, value: string) => {
-    setSortCategories((prevState) => ({ ...prevState, [key]: value }));
-  };
-
-  const { sortName, sortRating, sortCost, sortData, price, priceEnd } =
-    sortCategories;
-
-  const param = `&${sortName}${sortRating}${sortCost}${sortData}${price}${priceEnd}`; //! тест
-
-  const { classes } = useStyles();
-
-  console.log(param);
+export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
   console.log("render BooksFilter");
 
   return (
@@ -77,21 +11,21 @@ export const BooksFilter = memo(() => {
       <Menu
         shadow="md"
         // withArrow
-        width={370}
-        offset={3}
+        // width={370}
+        offset={4}
         position="bottom-start"
         trigger="hover"
       >
         <Menu.Target>
           <UnstyledButton>
-            <Text size={"md"} color="violet" weight={500}>
+            <Text size={"md"} color="blue" weight={500}>
               Сортировать книги по...
             </Text>
           </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown>
           <Group>
-            {menuData.map((menuItem) => (
+            {menuSortData.map((menuItem) => (
               <Menu
                 position="bottom"
                 trigger="hover"
@@ -101,7 +35,7 @@ export const BooksFilter = memo(() => {
               >
                 <Menu.Target>
                   <UnstyledButton>
-                    <Text size="md" color="violet" weight={300}>
+                    <Text size="md" color="blue" weight={400}>
                       {`${menuItem.title}`}
                     </Text>
                   </UnstyledButton>
@@ -109,15 +43,11 @@ export const BooksFilter = memo(() => {
                 <Menu.Dropdown>
                   {menuItem.options.map((option) => (
                     <Menu.Item
+                      px={2}
                       key={option.value}
-                      onClick={() =>
-                        sortHandler(
-                          menuItem.key as keyof SortType,
-                          option.value
-                        )
-                      }
+                      onClick={() => sortHandler(option.value)}
                     >
-                      <Text size="md" color="violet" weight={300}>
+                      <Text size="md" color="blue" weight={400}>
                         {option.subtitle}
                       </Text>
                     </Menu.Item>
