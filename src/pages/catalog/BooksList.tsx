@@ -9,16 +9,20 @@ import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
 import PriceRange from "./BooksPriceRange";
 import React, { useState } from "react";
+import { ServerError } from "../../components/errorNetwork/ServerError";
 
 export const BooksList = React.memo(() => {
   const [value, setValue] = useState("");
   const [priceSort, setPriceSort] = useState("");
   const param = useAppSelector((state) => state.filter.param);
   const { classes } = useStyles();
+  const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
 
-  const { data, isLoading } = useQuery<ItemsResponse>(
+  const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
+
+  const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
     ["item", param, value, priceSort],
-    () => fetchItem(`${param}${value}${priceSort}`)
+    () => fetchItem(`${sortLink}${value}${priceSort}`)
   );
   console.log(priceSort);
 
@@ -35,13 +39,21 @@ export const BooksList = React.memo(() => {
   if (isLoading) {
     return <Loader />;
   }
-  // console.log(data);
+
+  if (isLoadingError) {
+    return <ServerError />;
+  }
+
   return (
     <Grid>
       <Grid.Col span={12}>
         <Group ml={"2%"} mb={5}>
-          <BooksFilter sortHandler={sortHandler} />
-          <PriceRange onPriceChange={handlePriceChange} />
+          {param !== categoryNewBooks && (
+            <>
+              <BooksFilter sortHandler={sortHandler} />
+              <PriceRange onPriceChange={handlePriceChange} />
+            </>
+          )}
         </Group>
       </Grid.Col>
       <Grid.Col span={12}>

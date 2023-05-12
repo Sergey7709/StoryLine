@@ -1,8 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../common/constants";
 
-// export type ItemFetchType = "get" | "post";
-
 export const fetchItem = async (param: string) => {
   try {
     console.log(`${BASE_URL}item/${param}`);
