@@ -1,57 +1,6 @@
-import {
-  createStyles,
-  Title,
-  Text,
-  Button,
-  Container,
-  Group,
-  rem,
-} from "@mantine/core";
+import { Title, Text, Button, Container, Group } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-
-const useStyles = createStyles((theme) => ({
-  root: {
-    paddingTop: rem(80),
-    paddingBottom: rem(200),
-    backgroundColor: theme.fn.variant({
-      variant: "filled",
-      color: theme.primaryColor,
-    }).background,
-  },
-
-  label: {
-    textAlign: "center",
-    fontWeight: 900,
-    fontSize: rem(220),
-    lineHeight: 1,
-    marginBottom: `calc(${theme.spacing.xl} * 1.5)`,
-    color: theme.colors[theme.primaryColor][3],
-
-    [theme.fn.smallerThan("sm")]: {
-      fontSize: rem(120),
-    },
-  },
-
-  title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    textAlign: "center",
-    fontWeight: 900,
-    fontSize: rem(38),
-    color: theme.white,
-
-    [theme.fn.smallerThan("sm")]: {
-      fontSize: rem(32),
-    },
-  },
-
-  description: {
-    maxWidth: rem(540),
-    margin: "auto",
-    marginTop: theme.spacing.xl,
-    marginBottom: `calc(${theme.spacing.xl} * 1.5)`,
-    color: theme.colors[theme.primaryColor][1],
-  },
-}));
+import { useStyles } from "./ServerErrorStyles";
 
 export const ServerError = () => {
   const navigate = useNavigate();
