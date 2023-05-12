@@ -9,6 +9,7 @@ import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
 import PriceRange from "./BooksPriceRange";
 import React, { useState } from "react";
+import { ServerError } from "../../components/errorNetwork/ServerError";
 
 export const BooksList = React.memo(() => {
   const [value, setValue] = useState("");
@@ -19,7 +20,7 @@ export const BooksList = React.memo(() => {
 
   const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
 
-  const { data, isLoading } = useQuery<ItemsResponse>(
+  const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
     ["item", param, value, priceSort],
     () => fetchItem(`${sortLink}${value}${priceSort}`)
   );
@@ -37,6 +38,10 @@ export const BooksList = React.memo(() => {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (isLoadingError) {
+    return <ServerError />;
   }
 
   return (
