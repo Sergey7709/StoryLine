@@ -59,7 +59,7 @@ const SingleBookList: FC<SingleBookListProps> = ({ book }) => {
 
   const { mutateAsync } = useMutation(
     (param: string) => {
-      console.log("mutate:", param, "token:", user?.token);
+      console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
       return axios.post(`${BASE_URL}${param}`, undefined, {
         headers: {
           Authorization: user?.token ?? "",
@@ -111,11 +111,12 @@ const SingleBookList: FC<SingleBookListProps> = ({ book }) => {
       return;
     }
 
-    if (user?.token && favoriteBook === false) {
-      await mutateAsync(`user/favorites/${bookId}`);
-    }
-    if (user?.token && favoriteBook === true) {
-      await mutateAsync(`user/favorites-remove/${bookId}`);
+    if (user?.token) {
+      if (favoriteBook === false) {
+        await mutateAsync(`user/favorites/${bookId}`);
+      } else if (favoriteBook === true) {
+        await mutateAsync(`user/favorites-remove/${bookId}`);
+      }
     }
   };
 
