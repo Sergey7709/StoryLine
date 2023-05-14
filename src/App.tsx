@@ -4,22 +4,22 @@ import { Route, Routes } from 'react-router-dom';
 import { Notifications } from '@mantine/notifications';
 import { AppShell, Header, Footer } from '@mantine/core';
 import { BooksList } from './pages/catalog/BooksList';
-
 import { useAutoLogin } from './hooks/useAutoLogin';
 import UserAccount from './pages/userAccount/UserAccount';
 import CustomScrollbar from './components/customScrollbar/CustomScrollbar';
 import { ScrollToTopButton } from './components/scroll-to-top-button/ScrollToTopButton';
 import ChatBot from './components/chatBot/ChatBot';
-import HeaderMenu from './components/headerMenu/headerMenu';
+import { Stocks } from './pages/stocks/stocks';
+
+import { Favorites } from './pages/favorites/Favorites';
 import { AboutUs } from './pages/aboutUs/aboutUs';
 import { BookstoreServices } from './pages/bookstoreServices/bookstoreServices';
 import { Cart } from './pages/cart/cart';
 import { BookCard } from './pages/catalog/bookcard';
 import { Error404 } from './pages/error404/error404';
-import { Favorites } from './pages/favorites/Favorites';
 import { Home } from './pages/home/home';
 import { ReaderBlogs } from './pages/readerBlogs/readerBlogs';
-import { Stocks } from './pages/stocks/stocks';
+import HeaderMenu from './components/headerMenu/headerMenu';
 
 export default function App() {
   useAutoLogin();

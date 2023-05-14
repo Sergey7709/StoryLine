@@ -6,9 +6,8 @@ import {
   Modal,
   Image,
   Burger,
-  Transition,
-  Text,
   Paper,
+  Transition,
 } from '@mantine/core';
 import { FC } from 'react';
 import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
@@ -21,8 +20,8 @@ import { Link } from 'react-router-dom';
 import { CartIcon } from '../../assets/CartIcon';
 import { FavoritesIcon } from '../../assets/FavoritesIcon';
 import { ThemeToggleIcon } from '../../assets/ThemeToggleIcon';
-import HeaderButtons from './HeaderButtons';
 import { AvatarIcon } from '../../assets/avatarIcon';
+import HeaderButtons from './HeaderButtons';
 
 type HeaderToolBarProps = {
   classes: {
@@ -40,7 +39,6 @@ type HeaderToolBarProps = {
 
 const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
   const [openedAuth, { open, close }] = useDisclosure(false);
-  const [opened, { toggle }] = useDisclosure(false);
   const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
 
@@ -57,7 +55,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
               alt="Home image"
             />
           </Link>
-          <Text
+          {/* <Text
             w={120}
             fz="lg"
             fw={700}
@@ -65,13 +63,13 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
             pl={10}
             gradient={{ from: 'white', to: 'yellow', deg: 45 }}>
             МИР КНИГ
-          </Text>
+          </Text> */}
         </Group>
         <Modal size={500} opened={openedAuth} onClose={close} centered>
           <Authorization close={close} />
         </Modal>
       </Grid.Col>
-      <Grid.Col span={8}>
+      <Grid.Col span={10}>
         <Group spacing={12} align="center" position="right" mr={'5%'} mb={'0px'}>
           <Autocomplete
             className={classes.search_default}
@@ -91,16 +89,16 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
             <AvatarIcon open={open} />
           )}
           <FavoritesIcon />
-          <Burger
+          {/* <Burger
             opened={opened}
             onClick={toggle}
             className={classes.burger}
             size="lg"
             color="#fff"
-          />
+          /> */}
         </Group>
       </Grid.Col>
-      <Transition transition="pop-top-right" duration={100} mounted={opened}>
+      <Transition transition="pop-top-right" duration={100}>
         {(styles) => (
           <Paper className={classes.dropdown} withBorder style={styles}>
             <HeaderButtons classes={classes} />
