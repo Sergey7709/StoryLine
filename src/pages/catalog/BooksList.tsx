@@ -69,27 +69,28 @@ export const BooksList = React.memo(() => {
         color: "red",
         fz: "md",
       });
+
       handlers.open();
       return;
     }
 
-    if (user?.token) {
+    if (user) {
       if (favorite === false) {
         await mutateAsync(`user/favorites/${bookId}`);
-        isSuccess &&
-          notifications.show({
-            message: "Книга добавлена в избранное",
-            autoClose: 2000,
-            color: "green",
-          });
+
+        notifications.show({
+          message: "Книга добавлена в избранное",
+          autoClose: 2000,
+          color: "green",
+        });
       } else if (favorite === true) {
         await mutateAsync(`user/favorites-remove/${bookId}`);
-        isSuccess &&
-          notifications.show({
-            message: "Книга удалена из избранного",
-            autoClose: 2000,
-            color: "yellow",
-          });
+
+        notifications.show({
+          message: "Книга удалена из избранного",
+          autoClose: 2000,
+          color: "yellow",
+        });
       }
     }
   };

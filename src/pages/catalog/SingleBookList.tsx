@@ -18,6 +18,7 @@ import { Item } from "../../common/types";
 import { useStyles } from "./BooksListStyles";
 import { useDisclosure } from "@mantine/hooks";
 import PricesDiscount from "./UI/PricesDiscount";
+import React from "react";
 
 type SingleBookListProps = {
   favorite: boolean;
@@ -138,4 +139,4 @@ const SingleBookList: FC<SingleBookListProps> = ({
   );
 };
 
-export default SingleBookList;
+export default React.memo(SingleBookList);
