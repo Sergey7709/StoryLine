@@ -10,121 +10,31 @@ import {
   Text,
   Flex,
   Popover,
-  Modal,
 } from "@mantine/core";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { Item, User } from "../../common/types";
+import { Item } from "../../common/types";
 import { useStyles } from "./BooksListStyles";
 import { useDisclosure } from "@mantine/hooks";
 import PricesDiscount from "./UI/PricesDiscount";
-import { useAppSelector } from "../../redux/redux.hooks";
-import { useMutation } from "react-query";
-import axios from "axios";
-import { BASE_URL } from "../../common/constants";
-import { useCurrentUser } from "../../hooks/useCurrenUser";
-import { notifications } from "@mantine/notifications";
-import { Authorization } from "../authorization/Authorization";
 
 type SingleBookListProps = {
+  favorite: boolean;
+  favoritesHandler: (bookId: number, favorite: boolean) => void;
   book: Item;
 };
-const SingleBookList: FC<SingleBookListProps> = ({ book }) => {
+const SingleBookList: FC<SingleBookListProps> = ({
+  book,
+  favorite,
+  favoritesHandler,
+}) => {
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();
   const [opened, { close, open }] = useDisclosure(false);
 
-  const [openedAuth, handlers] = useDisclosure(false);
-
-  const getCurrentUser = useCurrentUser();
-
-  const user: User | null = useAppSelector((state) => state.auth.user);
-
-  const isFavorite =
-    user?.favoriteItems.some((el) => el.id === book.id) ?? false;
-
-  const [favoriteBook, setFavoriteBook] = useState<boolean>(isFavorite);
-
-  // useEffect(() => {
-  //   // setFavoriteBook(isFavorite);
-  //   console.log(
-  //     book.id,
-  //     "isFavorite:",
-  //     isFavorite,
-  //     "favoriteBook:",
-  //     favoriteBook
-  //   );
-  // }, [isFavorite]);
-
-  const { mutateAsync } = useMutation(
-    (param: string) => {
-      console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
-      return axios.post(`${BASE_URL}${param}`, undefined, {
-        headers: {
-          Authorization: user?.token ?? "",
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        if (favoriteBook === false) {
-          notifications.show({
-            message: "Книга добавлена в избранное",
-            autoClose: 2000,
-            color: "green",
-          });
-          console.log(" book is favorite");
-          getCurrentUser();
-          setFavoriteBook(true);
-        }
-        if (favoriteBook === true) {
-          notifications.show({
-            message: "Книга удалена из избранного",
-            autoClose: 2000,
-            color: "yellow",
-          });
-          console.log("book not favorite");
-          getCurrentUser();
-          setFavoriteBook(false);
-        }
-      },
-      onError: () => {
-        notifications.show({
-          message: "Ошибка при добавлении книги в избранное!",
-          autoClose: 2000,
-          color: "red",
-        });
-      },
-    }
-  );
-
-  const favoritesHandler = async (bookId: number) => {
-    if (!user) {
-      notifications.show({
-        message: "Войдите в аккаунт, что бы добавить книгу в избранное!",
-        autoClose: 5000,
-        color: "red",
-        fz: "md",
-      });
-      handlers.open();
-      return;
-    }
-
-    if (user?.token) {
-      if (favoriteBook === false) {
-        await mutateAsync(`user/favorites/${bookId}`);
-      } else if (favoriteBook === true) {
-        await mutateAsync(`user/favorites-remove/${bookId}`);
-      }
-    }
-  };
-
   return (
     <>
-      <Modal size={500} opened={openedAuth} onClose={handlers.close} centered>
-        <Authorization close={handlers.close} />
-      </Modal>
       <Grid.Col xs={6} sm={4} md={4} lg={3} xl={2} className={classes.gridCol}>
         <Card
           key={id}
@@ -163,18 +73,18 @@ const SingleBookList: FC<SingleBookListProps> = ({ book }) => {
               variant="transparent"
               className={classes.action_favorite}
             >
-              {favoriteBook === false && (
+              {favorite === false && (
                 <BsBookmarkCheck
                   className={classes.favorite_off}
                   size="4rem"
-                  onClick={() => favoritesHandler(id)}
+                  onClick={() => favoritesHandler(id, favorite)}
                 />
               )}
-              {favoriteBook === true && (
+              {favorite === true && (
                 <BsBookmarkCheckFill
                   className={classes.favorite_on}
                   size="4rem"
-                  onClick={() => favoritesHandler(id)}
+                  onClick={() => favoritesHandler(id, favorite)}
                 />
               )}
             </ActionIcon>
