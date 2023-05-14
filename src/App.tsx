@@ -14,7 +14,7 @@ import UserAccount from "./pages/userAccount/UserAccount";
 import CustomScrollbar from "./components/customScrollbar/CustomScrollbar";
 import { ScrollToTopButton } from "./components/scroll-to-top-button/ScrollToTopButton";
 import ChatBot from "./components/chatBot/ChatBot";
-import { Stocks } from "./pages/stocks/stocks";
+import { Stocks } from "./pages/stocks/Stocks";
 import HeaderMenu from "./components/headerMenu/HeaderMenu";
 import { Favorites } from "./pages/favorites/Favorites";
 import { AboutUs } from "./pages/aboutUs/AboutUs";
