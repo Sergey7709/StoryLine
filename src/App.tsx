@@ -10,17 +10,16 @@ import UserAccount from './pages/userAccount/UserAccount';
 import CustomScrollbar from './components/customScrollbar/CustomScrollbar';
 import { ScrollToTopButton } from './components/scroll-to-top-button/ScrollToTopButton';
 import ChatBot from './components/chatBot/ChatBot';
-import { Stocks } from './pages/stocks/stocks';
-
-import { Favorites } from './pages/favorites/Favorites';
 import HeaderMenu from './components/headerMenu/headerMenu';
 import { AboutUs } from './pages/aboutUs/aboutUs';
 import { BookstoreServices } from './pages/bookstoreServices/bookstoreServices';
 import { Cart } from './pages/cart/cart';
 import { BookCard } from './pages/catalog/bookcard';
 import { Error404 } from './pages/error404/error404';
+import { Favorites } from './pages/favorites/Favorites';
 import { Home } from './pages/home/home';
 import { ReaderBlogs } from './pages/readerBlogs/readerBlogs';
+import { Stocks } from './pages/stocks/stocks';
 
 export default function App() {
   useAutoLogin();

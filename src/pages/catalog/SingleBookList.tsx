@@ -10,8 +10,9 @@ import {
   Text,
   Flex,
   Popover,
+  Modal,
 } from '@mantine/core';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { Item, User } from '../../common/types';
@@ -22,9 +23,9 @@ import { useAppSelector } from '../../redux/redux.hooks';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 import { BASE_URL } from '../../common/constants';
-import { fetchFavorites } from '../../api/favoritesFecth';
-import { Error404 } from '../error404/error404';
 import { useCurrentUser } from '../../hooks/useCurrenUser';
+import { notifications } from '@mantine/notifications';
+import { Authorization } from '../authorization/Authorization';
 
 type SingleBookListProps = {
   book: Item;
@@ -33,32 +34,96 @@ const SingleBookList: FC<SingleBookListProps> = ({ book }) => {
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();
   const [opened, { close, open }] = useDisclosure(false);
-  const getCurrentUser = useCurrentUser();
-  const [favoriteBook, setFavoriteBook] = useState<boolean>(false);
-  const user = useAppSelector((state) => state.auth.user);
 
-  const { mutateAsync, isSuccess, isError, isLoading } = useMutation(
-    (args: { id: string; token: string; params: string }) =>
-      fetchFavorites(`user/${args.params}/${args.id}`, args.token),
+  const [openedAuth, handlers] = useDisclosure(false);
+
+  const getCurrentUser = useCurrentUser();
+
+  const user: User | null = useAppSelector((state) => state.auth.user);
+
+  const isFavorite = user?.favoriteItems.some((el) => el.id === book.id) ?? false;
+
+  const [favoriteBook, setFavoriteBook] = useState<boolean>(isFavorite);
+
+  // useEffect(() => {
+  //   // setFavoriteBook(isFavorite);
+  //   console.log(
+  //     book.id,
+  //     "isFavorite:",
+  //     isFavorite,
+  //     "favoriteBook:",
+  //     favoriteBook
+  //   );
+  // }, [isFavorite]);
+
+  const { mutateAsync } = useMutation(
+    (param: string) => {
+      console.log('mutate:', param, 'token:', user?.token, user?.favoriteItems);
+      return axios.post(`${BASE_URL}${param}`, undefined, {
+        headers: {
+          Authorization: user?.token ?? '',
+        },
+      });
+    },
+    {
+      onSuccess: () => {
+        if (favoriteBook === false) {
+          notifications.show({
+            message: 'Книга добавлена в избранное',
+            autoClose: 2000,
+            color: 'green',
+          });
+          console.log(' book is favorite');
+          getCurrentUser();
+          setFavoriteBook(true);
+        }
+        if (favoriteBook === true) {
+          notifications.show({
+            message: 'Книга удалена из избранного',
+            autoClose: 2000,
+            color: 'yellow',
+          });
+          console.log('book not favorite');
+          getCurrentUser();
+          setFavoriteBook(false);
+        }
+      },
+      onError: () => {
+        notifications.show({
+          message: 'Ошибка при добавлении книги в избранное!',
+          autoClose: 2000,
+          color: 'red',
+        });
+      },
+    },
   );
-  const favoritesHandler = async (bookId: number, token: string, type: string) => {
+
+  const favoritesHandler = async (bookId: number) => {
     if (!user) {
+      notifications.show({
+        message: 'Войдите в аккаунт, что бы добавить книгу в избранное!',
+        autoClose: 5000,
+        color: 'red',
+        fz: 'md',
+      });
+      handlers.open();
       return;
     }
-    const isFavorite = user.favoriteItems.some((el) => el.id === bookId);
-    setFavoriteBook(isFavorite);
 
-    if (!isFavorite) {
-      await mutateAsync({ id: bookId.toString(), token, params: type });
-      getCurrentUser();
-    } else {
-      await mutateAsync({ id: bookId.toString(), token, params: type });
-      getCurrentUser();
+    if (user?.token) {
+      if (favoriteBook === false) {
+        await mutateAsync(`user/favorites/${bookId}`);
+      } else if (favoriteBook === true) {
+        await mutateAsync(`user/favorites-remove/${bookId}`);
+      }
     }
   };
 
   return (
     <>
+      <Modal size={500} opened={openedAuth} onClose={handlers.close} centered>
+        <Authorization close={handlers.close} />
+      </Modal>
       <Grid.Col xs={6} sm={4} md={4} lg={3} xl={2} className={classes.gridCol}>
         <Card key={id} className={classes.card} shadow="sm" padding="md" radius="md" withBorder>
           <Group position="center">
@@ -76,15 +141,16 @@ const SingleBookList: FC<SingleBookListProps> = ({ book }) => {
                 (оценило: {reviews.length})
               </Text>
             </Flex>
+
             <ActionIcon variant="transparent" className={classes.action_favorite}>
-              {!favoriteBook && (
+              {favoriteBook === false && (
                 <BsBookmarkCheck
                   className={classes.favorite_off}
                   size="4rem"
                   onClick={async () => favoritesHandler(id, user?.token ?? '', 'favorites')}
                 />
               )}
-              {favoriteBook && (
+              {favoriteBook === true && (
                 <BsBookmarkCheckFill
                   className={classes.favorite_on}
                   size="4rem"
