@@ -12,7 +12,7 @@ import {
   Popover,
   Modal,
 } from '@mantine/core';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState, useEffect, useMemo } from 'react';
 import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { Item, User } from '../../common/types';
@@ -41,20 +41,12 @@ const SingleBookList: FC<SingleBookListProps> = ({ book }) => {
 
   const user: User | null = useAppSelector((state) => state.auth.user);
 
-  const isFavorite = user?.favoriteItems.some((el) => el.id === book.id) ?? false;
+  const [favoriteBook, setFavoriteBook] = useState<boolean>(false);
 
-  const [favoriteBook, setFavoriteBook] = useState<boolean>(isFavorite);
-
-  // useEffect(() => {
-  //   // setFavoriteBook(isFavorite);
-  //   console.log(
-  //     book.id,
-  //     "isFavorite:",
-  //     isFavorite,
-  //     "favoriteBook:",
-  //     favoriteBook
-  //   );
-  // }, [isFavorite]);
+  useEffect(() => {
+    console.log('render book single');
+    setFavoriteBook(user?.favoriteItems.some((el) => el.id === book.id) ?? false);
+  }, [book.id, user]);
 
   const { mutateAsync } = useMutation(
     (param: string) => {
@@ -147,14 +139,14 @@ const SingleBookList: FC<SingleBookListProps> = ({ book }) => {
                 <BsBookmarkCheck
                   className={classes.favorite_off}
                   size="4rem"
-                  onClick={async () => favoritesHandler(id, user?.token ?? '', 'favorites')}
+                  onClick={async () => favoritesHandler(id)}
                 />
               )}
               {favoriteBook === true && (
                 <BsBookmarkCheckFill
                   className={classes.favorite_on}
                   size="4rem"
-                  onClick={() => favoritesHandler(id, user?.token ?? '', 'favorites-remove')}
+                  onClick={() => favoritesHandler(id)}
                 />
               )}
             </ActionIcon>
