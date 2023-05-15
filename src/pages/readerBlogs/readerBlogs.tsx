@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const ReaderBlogs = () => {
   return <div> Блоги читателей </div>;

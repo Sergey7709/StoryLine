@@ -10,6 +10,7 @@ import {
   Text,
   Flex,
   Popover,
+<<<<<<< Updated upstream
 } from "@mantine/core";
 import { FC } from "react";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
@@ -19,17 +20,23 @@ import { useStyles } from "./BooksListStyles";
 import { useDisclosure } from "@mantine/hooks";
 import PricesDiscount from "./UI/PricesDiscount";
 import React from "react";
+=======
+} from '@mantine/core';
+import { FC } from 'react';
+import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import { Item } from '../../common/types';
+import { useStyles } from './BooksListStyles';
+import { useDisclosure } from '@mantine/hooks';
+import PricesDiscount from './UI/PricesDiscount';
+>>>>>>> Stashed changes
 
 type SingleBookListProps = {
+  book: Item;
   favorite: boolean;
   favoritesHandler: (bookId: number, favorite: boolean) => void;
-  book: Item;
 };
-const SingleBookList: FC<SingleBookListProps> = ({
-  book,
-  favorite,
-  favoritesHandler,
-}) => {
+const SingleBookList: FC<SingleBookListProps> = ({ book, favorite, favoritesHandler }) => {
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();
   const [opened, { close, open }] = useDisclosure(false);
@@ -37,43 +44,26 @@ const SingleBookList: FC<SingleBookListProps> = ({
   return (
     <>
       <Grid.Col xs={6} sm={4} md={4} lg={3} xl={2} className={classes.gridCol}>
-        <Card
-          key={id}
-          className={classes.card}
-          shadow="sm"
-          padding="md"
-          radius="md"
-          withBorder
-        >
+        <Card key={id} className={classes.card} shadow="sm" padding="md" radius="md" withBorder>
           <Group position="center">
             <Link to={`/books-list/${id}`}>
-              <Image
-                width={"8rem"}
-                height={"12rem"}
-                src={book.itemImageUrl}
-                alt="book img"
-              />
+              <Image width={'8rem'} height={'12rem'} src={book.itemImageUrl} alt="book img" />
             </Link>
             {discount > 0 && (
-              <Badge
-                className={classes.discount}
-                color="orange"
-                variant="filled"
-              >
-                <Text fz={"md"} fw={500}>{`-${discount}%`}</Text>
+              <Badge className={classes.discount} color="orange" variant="filled">
+                <Text fz={'md'} fw={500}>{`-${discount}%`}</Text>
               </Badge>
             )}
             <Flex>
               <Rating value={book.averageRate} readOnly />
-              <Text ml={5} fz={13} color="dimmed">
-                (оценило: {reviews.length})
-              </Text>
+              {reviews && (
+                <Text ml={5} fz={13} color="dimmed">
+                  (оценило: {reviews.length})
+                </Text>
+              )}
             </Flex>
 
-            <ActionIcon
-              variant="transparent"
-              className={classes.action_favorite}
-            >
+            <ActionIcon variant="transparent" className={classes.action_favorite}>
               {favorite === false && (
                 <BsBookmarkCheck
                   className={classes.favorite_off}
@@ -97,24 +87,13 @@ const SingleBookList: FC<SingleBookListProps> = ({
               </Text>
             </Grid.Col>
             <Grid.Col span={12}>
-              <Popover
-                width={200}
-                position="bottom"
-                withArrow
-                shadow="md"
-                opened={opened}
-              >
+              <Popover width={200} position="bottom" withArrow shadow="md" opened={opened}>
                 <Popover.Target>
-                  <Text
-                    weight={500}
-                    lineClamp={1}
-                    onMouseEnter={open}
-                    onMouseLeave={close}
-                  >
+                  <Text weight={500} lineClamp={1} onMouseEnter={open} onMouseLeave={close}>
                     {book.title}
                   </Text>
                 </Popover.Target>
-                <Popover.Dropdown sx={{ pointerEvents: "none" }}>
+                <Popover.Dropdown sx={{ pointerEvents: 'none' }}>
                   <Text>{book.title}</Text>
                 </Popover.Dropdown>
               </Popover>
@@ -126,11 +105,10 @@ const SingleBookList: FC<SingleBookListProps> = ({
           <Button
             className={classes.buy}
             variant="gradient"
-            gradient={{ from: "teal", to: "blue", deg: 60 }}
+            gradient={{ from: 'teal', to: 'blue', deg: 60 }}
             color="blue"
             radius="md"
-            w={"12rem"}
-          >
+            w={'12rem'}>
             КУПИТЬ
           </Button>
         </Card>
