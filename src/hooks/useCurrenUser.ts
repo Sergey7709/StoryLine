@@ -14,7 +14,9 @@ export const useCurrentUser = () => {
   });
   const getCurrentUser = async () => {
     const data = await mutateAsync();
-    if (data !== null) dispatch(userReceived(data));
+    if (data !== null) {
+      dispatch(userReceived(data));
+    }
   };
   return getCurrentUser;
 };

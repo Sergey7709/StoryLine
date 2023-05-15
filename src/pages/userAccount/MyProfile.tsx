@@ -8,7 +8,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { User } from '../../common/types';
 import { userReceived } from '../../redux/authSlice';
 import { useAppDispatch } from '../../redux/redux.hooks';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 type MyProfileProps = {
   user: User;
 };

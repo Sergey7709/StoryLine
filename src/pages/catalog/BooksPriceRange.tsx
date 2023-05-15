@@ -1,21 +1,21 @@
-import { Grid, Group, Input, Text } from "@mantine/core";
-import React, { useEffect, useState } from "react";
-import { useDebouncedValue } from "@mantine/hooks";
+import { Grid, Group, Input, Text } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
+import { useDebouncedValue } from '@mantine/hooks';
 
 type PriceRangeProps = {
   onPriceChange: (price: string) => void;
 };
 
 const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
   const [debouncedMin] = useDebouncedValue(minPrice, 1000);
   const [debouncedMax] = useDebouncedValue(maxPrice, 1000);
 
   useEffect(() => {
     if (Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice))
       onPriceChange(`&priceFrom=${debouncedMin}&priceTo=${debouncedMax}`);
-  }, [debouncedMin, debouncedMax]);
+  }, [debouncedMin, debouncedMax, minPrice, maxPrice, onPriceChange]);
 
   const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -31,7 +31,7 @@ const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
   };
 
   const isPriceNotValid =
-    minPrice !== "" && maxPrice !== "" && Number(minPrice) >= Number(maxPrice);
+    minPrice !== '' && maxPrice !== '' && Number(minPrice) >= Number(maxPrice);
 
   return (
     <Grid w={400} justify="start" align="center">

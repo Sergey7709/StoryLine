@@ -18,7 +18,6 @@ export const apiSlice = createApi({
     prepareHeaders: async (headers, { getState }) => {
       const data = (await getState()) as RootState;
       if (data.api.mutations) {
-        console.log(data);
         headers.set('Authorization', '');
       }
       return headers;

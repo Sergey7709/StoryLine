@@ -1,11 +1,9 @@
-import { Group, Text, Menu, UnstyledButton } from "@mantine/core";
-import { memo } from "react";
-import { menuSortData } from "../../common/constants";
-import { SortHandlerType } from "../../common/types";
+import { Group, Text, Menu, UnstyledButton } from '@mantine/core';
+import { memo } from 'react';
+import { menuSortData } from '../../common/constants';
+import { SortHandlerType } from '../../common/types';
 
 export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
-  console.log("render BooksFilter");
-
   return (
     <Group position="center">
       <Menu
@@ -14,11 +12,10 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
         // width={370}
         offset={4}
         position="bottom-start"
-        trigger="hover"
-      >
+        trigger="hover">
         <Menu.Target>
           <UnstyledButton>
-            <Text size={"md"} color="blue" weight={500}>
+            <Text size={'md'} color="blue" weight={500}>
               Сортировать книги по...
             </Text>
           </UnstyledButton>
@@ -26,13 +23,7 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
         <Menu.Dropdown>
           <Group>
             {menuSortData.map((menuItem) => (
-              <Menu
-                position="bottom"
-                trigger="hover"
-                width={140}
-                offset={5}
-                key={menuItem.key}
-              >
+              <Menu position="bottom" trigger="hover" width={140} offset={5} key={menuItem.key}>
                 <Menu.Target>
                   <UnstyledButton>
                     <Text size="md" color="blue" weight={400}>
@@ -42,11 +33,7 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                 </Menu.Target>
                 <Menu.Dropdown>
                   {menuItem.options.map((option) => (
-                    <Menu.Item
-                      px={2}
-                      key={option.value}
-                      onClick={() => sortHandler(option.value)}
-                    >
+                    <Menu.Item px={2} key={option.value} onClick={() => sortHandler(option.value)}>
                       <Text size="md" color="blue" weight={400}>
                         {option.subtitle}
                       </Text>
