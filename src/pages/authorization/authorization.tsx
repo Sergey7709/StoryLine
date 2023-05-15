@@ -9,6 +9,7 @@ import { userReceived } from '../../redux/authSlice';
 import { notifications } from '@mantine/notifications';
 import { useSaveTokenLocalStorage } from '../../hooks/useSaveTokenLocalStorage';
 import { User } from '../../common/types';
+import { useNavigate } from 'react-router-dom';
 
 type FetchAuthArgs = {
   body: BodyFetchUserRequest | BodyRegisterUserRequest;
@@ -19,7 +20,7 @@ type AuthorizationProps = {
 };
 export const Authorization: FC<AuthorizationProps> = ({ close }) => {
   const [, saveToken] = useSaveTokenLocalStorage();
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [remember, setRemember] = useState(true);
   const [isRegister, setIsRegister] = useState(true);
@@ -71,10 +72,12 @@ export const Authorization: FC<AuthorizationProps> = ({ close }) => {
             body: newUser,
           });
         }
+
         if (result?.token) {
           dispatch(userReceived(result));
           if (typeof saveToken === 'function' && remember) saveToken(result.token);
           close();
+          navigate('/');
           notifications.show({
             color: 'green',
             autoClose: 3000,
@@ -106,7 +109,7 @@ export const Authorization: FC<AuthorizationProps> = ({ close }) => {
         });
       }
     },
-    [form, isRegister, authUserMutation, dispatch, saveToken, remember, close],
+    [form, isRegister, authUserMutation, dispatch, saveToken, remember, close, navigate],
   );
 
   return (
