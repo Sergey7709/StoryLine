@@ -66,7 +66,7 @@ const SingleBookList: FC<SingleBookListProps> = ({
             <Flex>
               <Rating value={book.averageRate} readOnly />
               <Text ml={5} fz={13} color="dimmed">
-                (оценило: {reviews.length})
+                {reviews ? `оценило: ${reviews.length}` : ""}
               </Text>
             </Flex>
 

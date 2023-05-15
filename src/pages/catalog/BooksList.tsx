@@ -8,7 +8,7 @@ import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
 import PriceRange from "./BooksPriceRange";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ServerError } from "../../components/errorNetwork/ServerError";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import axios from "axios";
@@ -38,7 +38,8 @@ export const BooksList = React.memo(() => {
   // console.log(priceSort);
 
   //!----
-  const { mutateAsync, isSuccess } = useMutation(
+
+  const { mutateAsync } = useMutation(
     (param: string) => {
       // console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
       return axios.post(`${BASE_URL}${param}`, undefined, {
@@ -61,39 +62,42 @@ export const BooksList = React.memo(() => {
     }
   );
 
-  const favoritesHandler = async (bookId: number, favorite: boolean) => {
-    if (!user) {
-      notifications.show({
-        message: "Войдите в аккаунт, что бы добавить книгу в избранное!",
-        autoClose: 5000,
-        color: "red",
-        fz: "md",
-      });
-
-      handlers.open();
-      return;
-    }
-
-    if (user) {
-      if (favorite === false) {
-        await mutateAsync(`user/favorites/${bookId}`);
-
+  const favoritesHandler = useCallback(
+    async (bookId: number, favorite: boolean) => {
+      if (!user) {
         notifications.show({
-          message: "Книга добавлена в избранное",
-          autoClose: 2000,
-          color: "green",
+          message: "Войдите в аккаунт, что бы добавить книгу в избранное!",
+          autoClose: 5000,
+          color: "red",
+          fz: "md",
         });
-      } else if (favorite === true) {
-        await mutateAsync(`user/favorites-remove/${bookId}`);
 
-        notifications.show({
-          message: "Книга удалена из избранного",
-          autoClose: 2000,
-          color: "yellow",
-        });
+        handlers.open();
+        return;
       }
-    }
-  };
+
+      if (user) {
+        if (favorite === false) {
+          await mutateAsync(`user/favorites/${bookId}`);
+
+          notifications.show({
+            message: "Книга добавлена в избранное",
+            autoClose: 2000,
+            color: "green",
+          });
+        } else if (favorite === true) {
+          await mutateAsync(`user/favorites-remove/${bookId}`);
+
+          notifications.show({
+            message: "Книга удалена из избранного",
+            autoClose: 2000,
+            color: "yellow",
+          });
+        }
+      }
+    },
+    [user, handlers, mutateAsync]
+  );
 
   const books = data?.items.map((book: Item) => (
     <SingleBookList
