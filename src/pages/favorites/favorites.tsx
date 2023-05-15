@@ -67,25 +67,33 @@ export const Favorites = () => {
   };
   return (
     <>
-      <Flex justify={"center"} align={"center"}>
-        <Title color="yellow" order={1}>
-          МОИ ИЗБРАННЫЕ КНИГИ
-        </Title>
-      </Flex>
-      <Space h="md" />
-      {user?.favoriteItems.length ? (
-        <Grid pl={5}>
-          {user?.favoriteItems.map((book) => (
-            <SingleBookList
-              key={book.id}
-              book={book}
-              favorite={true}
-              favoritesHandler={favoritesHandler}
-            />
-          ))}
-        </Grid>
-      ) : (
-        <EmptyData text="У вас нет избранных товаров" />
+      {!user && (
+        <EmptyData text="Зарегистрируйтесь или авторизируйтесь для добавления книг в избранное" />
+      )}
+
+      {user && (
+        <>
+          <Flex justify={"center"} align={"center"}>
+            <Title color="yellow" order={1}>
+              МОИ ИЗБРАННЫЕ КНИГИ
+            </Title>
+          </Flex>
+          <Space h="md" />
+          {user?.favoriteItems.length ? (
+            <Grid pl={5}>
+              {user?.favoriteItems.map((favoriteBook) => (
+                <SingleBookList
+                  key={favoriteBook.id}
+                  book={favoriteBook}
+                  favorite={true}
+                  favoritesHandler={favoritesHandler}
+                />
+              ))}
+            </Grid>
+          ) : (
+            <EmptyData text="У вас нет избранных товаров" />
+          )}
+        </>
       )}
     </>
   );
