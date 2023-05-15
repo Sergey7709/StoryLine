@@ -9,20 +9,20 @@ import {
   Paper,
   Text,
   Transition,
-} from '@mantine/core';
-import { FC } from 'react';
-import { DATA_FOR_AUTO_COMPLETE } from '../../common/constants';
-import { Authorization } from '../../pages/authorization/Authorization';
-import { useAppSelector } from '../../redux/redux.hooks';
-import { useDisclosure } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons-react';
-import { Link } from 'react-router-dom';
+} from "@mantine/core";
+import { FC } from "react";
+import { DATA_FOR_AUTO_COMPLETE } from "../../common/constants";
+import { Authorization } from "../../pages/authorization/Authorization";
+import { useAppSelector } from "../../redux/redux.hooks";
+import { useDisclosure } from "@mantine/hooks";
+import { IconSearch } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 
-import { CartIcon } from '../../assets/CartIcon';
-import { FavoritesIcon } from '../../assets/FavoritesIcon';
-import { ThemeToggleIcon } from '../../assets/ThemeToggleIcon';
-import HeaderButtons from './HeaderButtons';
-import { AvatarIcon } from '../../assets/avatarIcon';
+import { CartIcon } from "../../assets/CartIcon";
+import { FavoritesIcon } from "../../assets/FavoritesIcon";
+import { ThemeToggleIcon } from "../../assets/ThemeToggleIcon";
+import HeaderButtons from "./HeaderButtons";
+import { AvatarIcon } from "../../assets/AvatarIcon";
 
 type HeaderToolBarProps = {
   classes: {
@@ -62,7 +62,8 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
             fw={700}
             variant="gradient"
             pl={10}
-            gradient={{ from: 'white', to: 'yellow', deg: 45 }}>
+            gradient={{ from: "white", to: "yellow", deg: 45 }}
+          >
             МИР КНИГ
           </Text>
         </Group>
@@ -71,7 +72,13 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
         </Modal>
       </Grid.Col>
       <Grid.Col span={8}>
-        <Group spacing={12} align="center" position="right" mr={'5%'} mb={'0px'}>
+        <Group
+          spacing={12}
+          align="center"
+          position="right"
+          mr={"5%"}
+          mb={"0px"}
+        >
           <Autocomplete
             className={classes.search_default}
             placeholder="Search"
