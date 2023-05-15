@@ -6,6 +6,7 @@ import MyReviews from './MyReviews';
 import MyPosts from './MyPosts';
 import { useAppSelector } from '../../redux/redux.hooks';
 import { Favorites } from '../favorites/Favorites';
+
 const UserAccount = () => {
   const user = useAppSelector((state) => state.auth.user);
   const [activeTab, setActiveTab] = useState<string | null>('profile');

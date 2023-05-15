@@ -7,6 +7,7 @@ import {
   Image,
   Burger,
   Paper,
+  Text,
   Transition,
 } from '@mantine/core';
 import { FC } from 'react';
@@ -55,7 +56,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
               alt="Home image"
             />
           </Link>
-          {/* <Text
+          <Text
             w={120}
             fz="lg"
             fw={700}
@@ -63,7 +64,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
             pl={10}
             gradient={{ from: 'white', to: 'yellow', deg: 45 }}>
             МИР КНИГ
-          </Text> */}
+          </Text>
         </Group>
         <Modal size={500} opened={openedAuth} onClose={close} centered>
           <Authorization close={close} />
@@ -98,7 +99,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
           /> */}
         </Group>
       </Grid.Col>
-      <Transition transition="pop-top-right" duration={100}>
+      <Transition transition="pop-top-right" duration={100} mounted={false}>
         {(styles) => (
           <Paper className={classes.dropdown} withBorder style={styles}>
             <HeaderButtons classes={classes} />
