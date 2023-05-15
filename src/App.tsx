@@ -15,14 +15,14 @@ import CustomScrollbar from "./components/customScrollbar/CustomScrollbar";
 import { ScrollToTopButton } from "./components/scroll-to-top-button/ScrollToTopButton";
 import ChatBot from "./components/chatBot/ChatBot";
 import { Stocks } from "./pages/stocks/Stocks";
-import HeaderMenu from "./components/headerMenu/HeaderMenu";
 import { Favorites } from "./pages/favorites/Favorites";
 import { AboutUs } from "./pages/aboutUs/AboutUs";
 import { BookstoreServices } from "./pages/bookstoreServices/BookstoreServices";
 import { Cart } from "./pages/cart/Cart";
-import { BookCard } from "./pages/catalog/Bookcard";
 import { Home } from "./pages/home/Home";
-import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
+import HeaderMenu from "./components/headerMenu/headerMenu";
+import { BookCard } from "./pages/catalog/bookcard";
+import { ReaderBlogs } from "./pages/readerBlogs/readerBlogs";
 
 export default function App() {
   useAutoLogin();
