@@ -1,4 +1,4 @@
-import { Group, Grid, Modal } from "@mantine/core";
+import { Group, Grid, Modal, Flex, Title } from "@mantine/core";
 import { useStyles } from "./BooksListStyles";
 import { useMutation, useQuery } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
@@ -114,34 +114,40 @@ export const BooksList = React.memo(() => {
     setPriceSort(price);
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isLoadingError) {
-    return <ServerError />;
-  }
+  console.log("render BookList");
+  console.log(user?.favoriteItems);
 
   return (
-    <Grid>
-      <Modal size={500} opened={openedAuth} onClose={handlers.close} centered>
-        <Authorization close={handlers.close} />
-      </Modal>
-      <Grid.Col span={12}>
-        <Group ml={"2%"} mb={5}>
-          {param !== categoryNewBooks && (
-            <>
-              <BooksFilter sortHandler={sortHandler} />
-              <PriceRange onPriceChange={handlePriceChange} />
-            </>
-          )}
-        </Group>
-      </Grid.Col>
-      <Grid.Col span={12}>
-        <Grid className={classes.grid} align="center">
-          {data && books}
-        </Grid>
-      </Grid.Col>
-    </Grid>
+    <>
+      {isLoading && <Loader />}
+      {isLoadingError && <ServerError />}
+      {param === categoryNewBooks && (
+        <Flex justify={"center"} align={"center"}>
+          <Title color="green" order={1}>
+            КНИЖНЫЕ НОВИНКИ
+          </Title>
+        </Flex>
+      )}
+      <Grid>
+        <Modal size={500} opened={openedAuth} onClose={handlers.close} centered>
+          <Authorization close={handlers.close} />
+        </Modal>
+        <Grid.Col span={12}>
+          <Group ml={"2%"} mb={5}>
+            {param !== categoryNewBooks && (
+              <>
+                <BooksFilter sortHandler={sortHandler} />
+                <PriceRange onPriceChange={handlePriceChange} />
+              </>
+            )}
+          </Group>
+        </Grid.Col>
+        <Grid.Col span={12}>
+          <Grid className={classes.grid} align="center">
+            {data && books}
+          </Grid>
+        </Grid.Col>
+      </Grid>
+    </>
   );
 });
