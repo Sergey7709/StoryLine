@@ -68,7 +68,7 @@ export const Favorites = () => {
   return (
     <>
       <Flex justify={"center"} align={"center"}>
-        <Title color="green" order={1}>
+        <Title color="yellow" order={1}>
           МОИ ИЗБРАННЫЕ КНИГИ
         </Title>
       </Flex>
