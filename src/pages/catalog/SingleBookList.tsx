@@ -44,11 +44,13 @@ const SingleBookList: FC<SingleBookListProps> = ({ book, favorite, favoritesHand
             )}
             <Flex>
               <Rating value={book.averageRate} readOnly />
+
               {reviews && (
                 <Text ml={5} fz={13} color="dimmed">
                   (оценило: {reviews.length})
                 </Text>
               )}
+
             </Flex>
 
             <ActionIcon variant="transparent" className={classes.action_favorite}>

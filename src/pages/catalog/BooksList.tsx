@@ -1,3 +1,4 @@
+
 import { Group, Grid, Modal } from '@mantine/core';
 import { useStyles } from './BooksListStyles';
 import { useMutation, useQuery } from 'react-query';
@@ -16,6 +17,7 @@ import { BASE_URL } from '../../common/constants';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
 import { Authorization } from '../authorization/Authorization';
+
 
 export const BooksList = React.memo(() => {
   const getCurrentUser = useCurrentUser(); //!
@@ -38,7 +40,8 @@ export const BooksList = React.memo(() => {
   // console.log(priceSort);
 
   //!----
-  const { mutateAsync, isSuccess } = useMutation(
+
+  const { mutateAsync } = useMutation(
     (param: string) => {
       // console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
       return axios.post(`${BASE_URL}${param}`, undefined, {
@@ -58,6 +61,7 @@ export const BooksList = React.memo(() => {
       },
     },
   );
+
 
   const favoritesHandler = async (bookId: number, favorite: boolean) => {
     if (!user) {
@@ -93,6 +97,7 @@ export const BooksList = React.memo(() => {
       getCurrentUser();
     }
   };
+
 
   const books = data?.items.map((book: Item) => (
     <SingleBookList
