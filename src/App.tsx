@@ -14,13 +14,14 @@ import CustomScrollbar from "./components/customScrollbar/CustomScrollbar";
 import { ScrollToTopButton } from "./components/scroll-to-top-button/ScrollToTopButton";
 import ChatBot from "./components/chatBot/ChatBot";
 import { Stocks } from "./pages/stocks/Stocks";
-import HeaderMenu from "./components/headerMenu/HeaderMenu";
 import { Favorites } from "./pages/favorites/Favorites";
 import { AboutUs } from "./pages/aboutUs/AboutUs";
 import { BookstoreServices } from "./pages/bookstoreServices/BookstoreServices";
 import { Cart } from "./pages/cart/Cart";
-import { BookCard } from "./pages/catalog/Bookcard";
 import { Home } from "./pages/home/Home";
+import HeaderMenu from "./components/headerMenu/HeaderMenu";
+import { BookCard } from "./pages/catalog/Bookcard";
+import { Error404 } from "./pages/error404/Error404";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
 
 export default function App() {

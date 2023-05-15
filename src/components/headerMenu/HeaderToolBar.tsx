@@ -40,6 +40,7 @@ type HeaderToolBarProps = {
 
 const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
   const [openedAuth, { open, close }] = useDisclosure(false);
+  const [opened, { toggle }] = useDisclosure(false);
   const userAvatar = useAppSelector((state) => state.auth.user?.userImageUrl);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
 
@@ -97,16 +98,16 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
             <AvatarIcon open={open} />
           )}
           <FavoritesIcon />
-          {/* <Burger
+          <Burger
             opened={opened}
             onClick={toggle}
             className={classes.burger}
             size="lg"
             color="#fff"
-          /> */}
+          />
         </Group>
       </Grid.Col>
-      <Transition transition="pop-top-right" duration={100} mounted={false}>
+      <Transition transition="pop-top-right" duration={100} mounted={opened}>
         {(styles) => (
           <Paper className={classes.dropdown} withBorder style={styles}>
             <HeaderButtons classes={classes} />
