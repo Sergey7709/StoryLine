@@ -20,8 +20,8 @@ import { Link } from 'react-router-dom';
 import { CartIcon } from '../../assets/CartIcon';
 import { FavoritesIcon } from '../../assets/FavoritesIcon';
 import { ThemeToggleIcon } from '../../assets/ThemeToggleIcon';
-import { AvatarIcon } from '../../assets/avatarIcon';
 import HeaderButtons from './HeaderButtons';
+import { AvatarIcon } from '../../assets/avatarIcon';
 
 type HeaderToolBarProps = {
   classes: {
@@ -69,7 +69,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
           <Authorization close={close} />
         </Modal>
       </Grid.Col>
-      <Grid.Col span={10}>
+      <Grid.Col span={8}>
         <Group spacing={12} align="center" position="right" mr={'5%'} mb={'0px'}>
           <Autocomplete
             className={classes.search_default}

@@ -11,7 +11,7 @@ import {
   Flex,
   Popover,
 } from '@mantine/core';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { Item } from '../../common/types';
@@ -20,9 +20,9 @@ import { useDisclosure } from '@mantine/hooks';
 import PricesDiscount from './UI/PricesDiscount';
 
 type SingleBookListProps = {
+  book: Item;
   favorite: boolean;
   favoritesHandler: (bookId: number, favorite: boolean) => void;
-  book: Item;
 };
 const SingleBookList: FC<SingleBookListProps> = ({ book, favorite, favoritesHandler }) => {
   const { id, discount, reviews, price } = book;
@@ -44,9 +44,11 @@ const SingleBookList: FC<SingleBookListProps> = ({ book, favorite, favoritesHand
             )}
             <Flex>
               <Rating value={book.averageRate} readOnly />
-              <Text ml={5} fz={13} color="dimmed">
-                (оценило: {reviews.length})
-              </Text>
+              {reviews && (
+                <Text ml={5} fz={13} color="dimmed">
+                  (оценило: {reviews.length})
+                </Text>
+              )}
             </Flex>
 
             <ActionIcon variant="transparent" className={classes.action_favorite}>
@@ -103,4 +105,4 @@ const SingleBookList: FC<SingleBookListProps> = ({ book, favorite, favoritesHand
   );
 };
 
-export default SingleBookList;
+export default React.memo(SingleBookList);

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Tabs } from '@mantine/core';
 import MyProfile from './MyProfile';
-import MyFavorites from './MyFavorites';
 import MyOrders from './MyOrders';
 import MyReviews from './MyReviews';
 import MyPosts from './MyPosts';
 import { useAppSelector } from '../../redux/redux.hooks';
+import { Favorites } from '../favorites/Favorites';
 const UserAccount = () => {
   const user = useAppSelector((state) => state.auth.user);
   const [activeTab, setActiveTab] = useState<string | null>('profile');
@@ -24,7 +24,7 @@ const UserAccount = () => {
         <MyProfile user={user} />
       </Tabs.Panel>
       <Tabs.Panel value="favorites">
-        <MyFavorites favorites={user.favoriteItems} />
+        <Favorites />
       </Tabs.Panel>
       <Tabs.Panel value="orders">
         <MyOrders orders={user.orderItems} />

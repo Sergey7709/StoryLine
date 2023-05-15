@@ -48,9 +48,7 @@ export const BooksList = React.memo(() => {
       });
     },
     {
-      onSuccess: () => {
-        getCurrentUser();
-      },
+      onSuccess: () => {},
       onError: () => {
         notifications.show({
           message: 'Ошибка при добавлении книги в избранное!',
@@ -69,11 +67,12 @@ export const BooksList = React.memo(() => {
         color: 'red',
         fz: 'md',
       });
+
       handlers.open();
       return;
     }
 
-    if (user?.token) {
+    if (user) {
       if (favorite === false) {
         await mutateAsync(`user/favorites/${bookId}`);
         isSuccess &&
@@ -91,6 +90,7 @@ export const BooksList = React.memo(() => {
             color: 'yellow',
           });
       }
+      getCurrentUser();
     }
   };
 
@@ -120,9 +120,6 @@ export const BooksList = React.memo(() => {
   if (isLoadingError) {
     return <ServerError />;
   }
-
-  console.log('render BookList');
-  console.log(user?.favoriteItems);
 
   return (
     <Grid>
