@@ -65,7 +65,7 @@ export const Favorites = () => {
       getCurrentUser();
     }
   };
-  //!
+  //!!!
   return (
     <>
       {!user && (
