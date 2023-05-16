@@ -1,21 +1,28 @@
-import { Grid, Group, Input, Text } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
-import { useDebouncedValue } from '@mantine/hooks';
+import { Button, Grid, Group, Input, Text } from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { useDebouncedValue } from "@mantine/hooks";
 
 type PriceRangeProps = {
   onPriceChange: (price: string) => void;
 };
 
 const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const [debouncedMin] = useDebouncedValue(minPrice, 1000);
   const [debouncedMax] = useDebouncedValue(maxPrice, 1000);
+  const [reset, setReset] = useState(false);
 
   useEffect(() => {
-    if (Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice))
+    if (reset) {
+      setMinPrice("");
+      setMaxPrice("");
+      onPriceChange("");
+      setReset(false);
+    } else if (Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice)) {
       onPriceChange(`&priceFrom=${debouncedMin}&priceTo=${debouncedMax}`);
-  }, [debouncedMin, debouncedMax, minPrice, maxPrice, onPriceChange]);
+    }
+  }, [debouncedMin, debouncedMax, minPrice, maxPrice, reset, onPriceChange]);
 
   const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -23,6 +30,7 @@ const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
       setMinPrice(value);
     }
   };
+
   const handleMaxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.match(/^\d*$/)) {
@@ -30,8 +38,12 @@ const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
     }
   };
 
+  const handleReset = () => {
+    setReset(true);
+  };
+
   const isPriceNotValid =
-    minPrice !== '' && maxPrice !== '' && Number(minPrice) >= Number(maxPrice);
+    minPrice !== "" && maxPrice !== "" && Number(minPrice) >= Number(maxPrice);
 
   return (
     <Grid w={400} justify="start" align="center">
@@ -62,6 +74,15 @@ const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
             size="xs"
             placeholder="максимум"
           />
+
+          <Button
+            onClick={handleReset}
+            size="xs"
+            variant="gradient"
+            gradient={{ from: "red", to: "violet", deg: 60 }}
+          >
+            Сбросить
+          </Button>
         </Group>
       </Grid.Col>
     </Grid>
