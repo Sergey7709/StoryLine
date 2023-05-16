@@ -8,7 +8,7 @@ import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
 import PriceRange from "./BooksPriceRange";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ServerError } from "../../components/errorNetwork/ServerError";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import axios from "axios";
@@ -38,8 +38,13 @@ export const BooksList = React.memo(() => {
   // console.log(priceSort);
 
   //!----
+  const [idLoad, setIdLoad] = useState<Array<number>>([]); //!
 
-  const { mutateAsync } = useMutation(
+  const {
+    mutateAsync,
+    isLoading: loading,
+    isSuccess,
+  } = useMutation(
     (param: string) => {
       // console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
       return axios.post(`${BASE_URL}${param}`, undefined, {
@@ -60,40 +65,50 @@ export const BooksList = React.memo(() => {
     }
   );
 
-  const favoritesHandler = async (bookId: number, favorite: boolean) => {
-    if (!user) {
-      notifications.show({
-        message: "Войдите в аккаунт, что бы добавить книгу в избранное!",
-        autoClose: 5000,
-        color: "red",
-        fz: "md",
-      });
+  const favoritesHandler = useCallback(
+    async (bookId: number, favorite: boolean) => {
+      setIdLoad([...idLoad, bookId]); //!
 
-      handlers.open();
-      return;
-    }
-
-    if (user) {
-      if (favorite === false) {
-        await mutateAsync(`user/favorites/${bookId}`);
-
+      if (!user) {
         notifications.show({
-          message: "Книга добавлена в избранное",
-          autoClose: 2000,
-          color: "green",
+          message: "Войдите в аккаунт, что бы добавить книгу в избранное!",
+          autoClose: 5000,
+          color: "red",
+          fz: "md",
         });
-      } else if (favorite === true) {
-        await mutateAsync(`user/favorites-remove/${bookId}`);
 
-        notifications.show({
-          message: "Книга удалена из избранного",
-          autoClose: 2000,
-          color: "yellow",
-        });
+        handlers.open();
+        return;
       }
-      getCurrentUser();
-    }
-  };
+
+      if (user) {
+        if (favorite === false) {
+          await mutateAsync(`user/favorites/${bookId}`, {
+            onSuccess: () => {
+              notifications.show({
+                message: "Книга добавлена в избранное",
+                autoClose: 2000,
+                color: "green",
+              });
+            },
+          });
+        } else if (favorite === true) {
+          await mutateAsync(`user/favorites-remove/${bookId}`, {
+            onSuccess: () => {
+              notifications.show({
+                message: "Книга удалена из избранного",
+                autoClose: 2000,
+                color: "yellow",
+              });
+            },
+          });
+        }
+        getCurrentUser();
+        isSuccess && setIdLoad(idLoad.filter((el) => el === bookId)); //!
+      }
+    },
+    [user, getCurrentUser, handlers, mutateAsync]
+  );
 
   const books = data?.items.map((book: Item) => (
     <SingleBookList
@@ -101,6 +116,7 @@ export const BooksList = React.memo(() => {
       book={book}
       key={book.id}
       favoritesHandler={favoritesHandler}
+      loading={idLoad.includes(book.id) ? loading : false}
     />
   ));
 
@@ -116,12 +132,13 @@ export const BooksList = React.memo(() => {
 
   console.log("render BookList");
   console.log(user?.favoriteItems);
+  loading && console.log("load");
 
   return (
     <>
       {isLoading && <Loader />}
       {isLoadingError && <ServerError />}
-      {param === categoryNewBooks && (
+      {!isLoading && param === categoryNewBooks && (
         <Flex justify={"center"} align={"center"}>
           <Title color="green" order={1}>
             КНИЖНЫЕ НОВИНКИ
