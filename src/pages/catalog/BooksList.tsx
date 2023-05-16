@@ -8,7 +8,7 @@ import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
 import PriceRange from "./BooksPriceRange";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { ServerError } from "../../components/errorNetwork/ServerError";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import axios from "axios";
@@ -107,28 +107,30 @@ export const BooksList = React.memo(() => {
         isSuccess && setIdLoad(idLoad.filter((el) => el === bookId)); //!
       }
     },
-    [user, getCurrentUser, handlers, mutateAsync]
+    [idLoad, user, handlers, getCurrentUser, isSuccess, mutateAsync]
   );
 
-  const books = data?.items.map((book: Item) => (
-    <SingleBookList
-      favorite={user?.favoriteItems.some((el) => el.id === book.id) ?? false}
-      book={book}
-      key={book.id}
-      favoritesHandler={favoritesHandler}
-      loading={idLoad.includes(book.id) ? loading : false}
-    />
-  ));
+  const books = useMemo(() => {
+    return data?.items.map((book: Item) => (
+      <SingleBookList
+        favorite={user?.favoriteItems.some((el) => el.id === book.id) ?? false}
+        book={book}
+        key={book.id}
+        favoritesHandler={favoritesHandler}
+        loading={idLoad.includes(book.id) ? loading : false}
+      />
+    ));
+  }, [data, favoritesHandler, idLoad, loading, user?.favoriteItems]);
 
   //!---
 
-  const sortHandler = (value: string) => {
+  const sortHandler = useCallback((value: string) => {
     setValue(value);
-  };
+  }, []);
 
-  const handlePriceChange = (price: string) => {
+  const handlePriceChange = useCallback((price: string) => {
     setPriceSort(price);
-  };
+  }, []);
 
   console.log("render BookList");
   console.log(user?.favoriteItems);
