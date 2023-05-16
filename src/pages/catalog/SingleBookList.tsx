@@ -36,6 +36,8 @@ const SingleBookList: FC<SingleBookListProps> = ({
   const { classes } = useStyles();
   const [opened, { close, open }] = useDisclosure(false);
 
+  console.log("render single");
+
   return (
     <>
       <Grid.Col xs={6} sm={4} md={4} lg={3} xl={2} className={classes.gridCol}>

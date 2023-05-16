@@ -104,7 +104,7 @@ export const BooksList = React.memo(() => {
           });
         }
         getCurrentUser();
-        isSuccess && setIdLoad([]); //!
+        isSuccess && setIdLoad(idLoad.filter((el) => el === bookId)); //!
       }
     },
     [user, getCurrentUser, handlers, mutateAsync]
