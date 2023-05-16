@@ -38,7 +38,6 @@ export const BooksList = React.memo(() => {
   // console.log(priceSort);
 
   //!----
-
   const {
     mutateAsync,
     isSuccess,
@@ -127,12 +126,13 @@ export const BooksList = React.memo(() => {
 
   console.log("render BookList");
   console.log(user?.favoriteItems);
+  loading && console.log("load");
 
   return (
     <>
       {isLoading && <Loader />}
       {isLoadingError && <ServerError />}
-      {param === categoryNewBooks && (
+      {!isLoading && param === categoryNewBooks && (
         <Flex justify={"center"} align={"center"}>
           <Title color="green" order={1}>
             КНИЖНЫЕ НОВИНКИ

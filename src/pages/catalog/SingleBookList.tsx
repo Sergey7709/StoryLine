@@ -83,36 +83,41 @@ const SingleBookList: FC<SingleBookListProps> = ({
             >
               {favorite === false && (
                 <>
-                  {/* <BsBookmarkCheck
-                    className={classes.favorite_off}
-                    size="4rem"
-                    onClick={() => favoritesHandler(id, favorite)}
-                  /> */}
-                  {loading && <Loader color="grape" size="sm" />}
-                  {isSuccess && (
+                  {!loading && (
                     <BsBookmarkCheck
                       className={classes.favorite_off}
                       size="4rem"
                       onClick={() => favoritesHandler(id, favorite)}
                     />
                   )}
+
+                  {loading && <Loader color="grape" size="sm" />}
+                  {/* {isSuccess && (
+                    <BsBookmarkCheck
+                      className={classes.favorite_off}
+                      size="4rem"
+                      onClick={() => favoritesHandler(id, favorite)}
+                    />
+                  )} */}
                 </>
               )}
               {favorite === true && (
                 <>
-                  {/* <BsBookmarkCheckFill
-                    className={classes.favorite_on}
-                    size="4rem"
-                    onClick={() => favoritesHandler(id, favorite)}
-                  /> */}
-                  {loading && <Loader color="grape" size="sm" />}
-                  {isSuccess && (
+                  {!loading && (
                     <BsBookmarkCheckFill
                       className={classes.favorite_on}
                       size="4rem"
                       onClick={() => favoritesHandler(id, favorite)}
                     />
                   )}
+                  {loading && <Loader color="grape" size="sm" />}
+                  {/* {isSuccess && (
+                    <BsBookmarkCheckFill
+                      className={classes.favorite_on}
+                      size="4rem"
+                      onClick={() => favoritesHandler(id, favorite)}
+                    />
+                  )} */}
                 </>
               )}
             </ActionIcon>
