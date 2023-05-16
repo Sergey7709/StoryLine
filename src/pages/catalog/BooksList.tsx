@@ -38,9 +38,13 @@ export const BooksList = React.memo(() => {
   // console.log(priceSort);
 
   //!----
-  const [idLoad, setIdLoad] = useState<number>(0);
+  const [idLoad, setIdLoad] = useState<Array<number>>([]); //!
 
-  const { mutateAsync, isLoading: loading } = useMutation(
+  const {
+    mutateAsync,
+    isLoading: loading,
+    isSuccess,
+  } = useMutation(
     (param: string) => {
       // console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
       return axios.post(`${BASE_URL}${param}`, undefined, {
@@ -63,7 +67,7 @@ export const BooksList = React.memo(() => {
 
   const favoritesHandler = useCallback(
     async (bookId: number, favorite: boolean) => {
-      setIdLoad(bookId); //!
+      setIdLoad([...idLoad, bookId]); //!
 
       if (!user) {
         notifications.show({
@@ -100,6 +104,7 @@ export const BooksList = React.memo(() => {
           });
         }
         getCurrentUser();
+        isSuccess && setIdLoad([]); //!
       }
     },
     [user, getCurrentUser, handlers, mutateAsync]
@@ -111,7 +116,7 @@ export const BooksList = React.memo(() => {
       book={book}
       key={book.id}
       favoritesHandler={favoritesHandler}
-      loading={idLoad === book.id ? loading : false}
+      loading={idLoad.includes(book.id) ? loading : false}
     />
   ));
 
