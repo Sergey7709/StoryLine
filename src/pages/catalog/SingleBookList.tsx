@@ -25,14 +25,12 @@ type SingleBookListProps = {
   favorite: boolean;
   favoritesHandler: (bookId: number, favorite: boolean) => void;
   loading?: boolean;
-  isSuccess?: boolean;
 };
 const SingleBookList: FC<SingleBookListProps> = ({
   book,
   favorite,
   favoritesHandler,
   loading,
-  isSuccess,
 }) => {
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();
@@ -92,13 +90,6 @@ const SingleBookList: FC<SingleBookListProps> = ({
                   )}
 
                   {loading && <Loader color="grape" size="sm" />}
-                  {/* {isSuccess && (
-                    <BsBookmarkCheck
-                      className={classes.favorite_off}
-                      size="4rem"
-                      onClick={() => favoritesHandler(id, favorite)}
-                    />
-                  )} */}
                 </>
               )}
               {favorite === true && (
@@ -111,13 +102,6 @@ const SingleBookList: FC<SingleBookListProps> = ({
                     />
                   )}
                   {loading && <Loader color="grape" size="sm" />}
-                  {/* {isSuccess && (
-                    <BsBookmarkCheckFill
-                      className={classes.favorite_on}
-                      size="4rem"
-                      onClick={() => favoritesHandler(id, favorite)}
-                    />
-                  )} */}
                 </>
               )}
             </ActionIcon>
@@ -171,4 +155,4 @@ const SingleBookList: FC<SingleBookListProps> = ({
   );
 };
 
-export default SingleBookList;
+export default React.memo(SingleBookList);

@@ -38,11 +38,9 @@ export const BooksList = React.memo(() => {
   // console.log(priceSort);
 
   //!----
-  const {
-    mutateAsync,
-    isSuccess,
-    isLoading: loading,
-  } = useMutation(
+  const [idLoad, setIdLoad] = useState<number>(0);
+
+  const { mutateAsync, isLoading: loading } = useMutation(
     (param: string) => {
       // console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
       return axios.post(`${BASE_URL}${param}`, undefined, {
@@ -65,6 +63,8 @@ export const BooksList = React.memo(() => {
 
   const favoritesHandler = useCallback(
     async (bookId: number, favorite: boolean) => {
+      setIdLoad(bookId); //!
+
       if (!user) {
         notifications.show({
           message: "Войдите в аккаунт, что бы добавить книгу в избранное!",
@@ -79,28 +79,30 @@ export const BooksList = React.memo(() => {
 
       if (user) {
         if (favorite === false) {
-          await mutateAsync(`user/favorites/${bookId}`);
-
-          isSuccess &&
-            notifications.show({
-              message: "Книга добавлена в избранное",
-              autoClose: 2000,
-              color: "green",
-            });
+          await mutateAsync(`user/favorites/${bookId}`, {
+            onSuccess: () => {
+              notifications.show({
+                message: "Книга добавлена в избранное",
+                autoClose: 2000,
+                color: "green",
+              });
+            },
+          });
         } else if (favorite === true) {
-          await mutateAsync(`user/favorites-remove/${bookId}`);
-
-          isSuccess &&
-            notifications.show({
-              message: "Книга удалена из избранного",
-              autoClose: 2000,
-              color: "yellow",
-            });
+          await mutateAsync(`user/favorites-remove/${bookId}`, {
+            onSuccess: () => {
+              notifications.show({
+                message: "Книга удалена из избранного",
+                autoClose: 2000,
+                color: "yellow",
+              });
+            },
+          });
         }
         getCurrentUser();
       }
     },
-    [mutateAsync]
+    [user, getCurrentUser, handlers, mutateAsync]
   );
 
   const books = data?.items.map((book: Item) => (
@@ -109,8 +111,7 @@ export const BooksList = React.memo(() => {
       book={book}
       key={book.id}
       favoritesHandler={favoritesHandler}
-      loading={loading}
-      isSuccess={isSuccess}
+      loading={idLoad === book.id ? loading : false}
     />
   ));
 
