@@ -54,7 +54,7 @@ export const BooksList = React.memo(() => {
       });
     },
     {
-      onSuccess: () => {},
+      // onSuccess: () => {},
       onError: () => {
         notifications.show({
           message: "Ошибка при добавлении книги в избранное!",
@@ -84,27 +84,28 @@ export const BooksList = React.memo(() => {
       if (user) {
         if (favorite === false) {
           await mutateAsync(`user/favorites/${bookId}`, {
-            onSuccess: () => {
-              notifications.show({
-                message: "Книга добавлена в избранное",
-                autoClose: 2000,
-                color: "green",
-              });
-            },
+            // onSuccess: () => {
+            //   notifications.show({
+            //     message: "Книга добавлена в избранное",
+            //     autoClose: 2000,
+            //     color: "green",
+            //   });
+            // },
           });
         } else if (favorite === true) {
           await mutateAsync(`user/favorites-remove/${bookId}`, {
-            onSuccess: () => {
-              notifications.show({
-                message: "Книга удалена из избранного",
-                autoClose: 2000,
-                color: "yellow",
-              });
-            },
+            // onSuccess: () => {
+            //   notifications.show({
+            //     message: "Книга удалена из избранного",
+            //     autoClose: 2000,
+            //     color: "yellow",
+            //   });
+            // },
           });
         }
-        getCurrentUser();
-        isSuccess && setIdLoad(idLoad.filter((el) => el === bookId)); //!
+
+        await getCurrentUser();
+        setIdLoad((idLoad) => idLoad.filter((el) => el !== bookId)); //!
       }
     },
     [idLoad, user, handlers, getCurrentUser, isSuccess, mutateAsync]

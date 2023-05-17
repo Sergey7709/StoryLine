@@ -81,29 +81,22 @@ const SingleBookList: FC<SingleBookListProps> = ({
               variant="transparent"
               className={classes.action_favorite}
             >
-              {favorite === false && (
+              {loading ? (
+                <Loader color="grape" size="xs" />
+              ) : (
                 <>
-                  {!loading ? (
-                    <BsBookmarkCheck
-                      className={classes.favorite_off}
-                      size="4rem"
-                      onClick={() => favoritesHandler(id, favorite)}
-                    />
-                  ) : (
-                    <Loader color="grape" size="sm" />
-                  )}
-                </>
-              )}
-              {favorite === true && (
-                <>
-                  {!loading ? (
+                  {favorite ? (
                     <BsBookmarkCheckFill
                       className={classes.favorite_on}
                       size="4rem"
                       onClick={() => favoritesHandler(id, favorite)}
                     />
                   ) : (
-                    <Loader color="grape" size="sm" />
+                    <BsBookmarkCheck
+                      className={classes.favorite_off}
+                      size="4rem"
+                      onClick={() => favoritesHandler(id, favorite)}
+                    />
                   )}
                 </>
               )}
