@@ -78,11 +78,7 @@ export const BooksList = React.memo(() => {
 
   console.log("idLoad:", idLoad);
 
-  const {
-    mutateAsync,
-    isLoading: loading,
-    isSuccess,
-  } = useMutation(
+  const { mutateAsync, isLoading: loading } = useMutation(
     (param: string) => {
       // console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
       return axios.post(`${BASE_URL}${param}`, undefined, {
@@ -130,7 +126,7 @@ export const BooksList = React.memo(() => {
         setIdLoad((idLoad) => idLoad.filter((el) => el !== bookId)); //!
       }
     },
-    [idLoad, user, handlers, getCurrentUser, isSuccess, mutateAsync]
+    [idLoad, user, handlers, getCurrentUser, mutateAsync]
   );
 
   const books = useMemo(() => {
