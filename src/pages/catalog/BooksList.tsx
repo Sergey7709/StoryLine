@@ -23,19 +23,55 @@ export const BooksList = React.memo(() => {
   const [openedAuth, handlers] = useDisclosure(false); //!
 
   const [value, setValue] = useState("");
-  const [priceSort, setPriceSort] = useState("");
+  // const [priceSort, setPriceSort] = useState("");
+
+  const [sortMinMaxPrice, setSortMinMaxPrice] = useState<Array<number>>([]); //!
+  const [minPrice, maxPrice] = sortMinMaxPrice; //!
+
   const param = useAppSelector((state) => state.filter.param);
   const { classes } = useStyles();
   const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
+
+  const priceSort = "";
+  // minPrice > 0 ? `&priceFrom=${minPrice }&priceTo=${maxPrice}` : ""; //! править здесь
 
   const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
 
   const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
     ["item", param, value, priceSort],
     () => fetchItem(`${sortLink}${value}${priceSort}`)
-  );
+  ); //!
 
   // console.log(priceSort);
+  // console.log(data);
+  // console.log(sortMinMaxPrice);
+
+  const dataDiscount = data?.items.filter((book) => {
+    // const discountedPrice =
+    //   book.price - Math.round((book.price / 100) * book.discount);
+    // console.log("book.discount", book.discount);
+    // console.log(
+    //   "book:",
+    //   book.title,
+    //   "discount:",
+    //   book.discount,
+    //   "цена книги",
+    //   book.discount !== 0
+    //     ? discountedPrice >= minPrice && discountedPrice <= maxPrice
+    //     : book.price
+    // );
+    if (book.discount !== 0) {
+      const discountedPrice =
+        book.price - Math.round((book.price / 100) * book.discount);
+      return discountedPrice >= minPrice && discountedPrice <= maxPrice;
+    } else {
+      return book.price >= minPrice && book.price <= maxPrice;
+    }
+  }); //!
+
+  console.log("minPrice", minPrice, "maxPrice", maxPrice);
+  // console.log("dataDiscount", dataDiscount);
+  // console.log("массив с учетом скидки:", dataDiscount);
 
   //!----
   const [idLoad, setIdLoad] = useState<Array<number>>([]); //!
@@ -83,25 +119,9 @@ export const BooksList = React.memo(() => {
 
       if (user) {
         if (favorite === false) {
-          await mutateAsync(`user/favorites/${bookId}`, {
-            // onSuccess: () => {
-            //   notifications.show({
-            //     message: "Книга добавлена в избранное",
-            //     autoClose: 2000,
-            //     color: "green",
-            //   });
-            // },
-          });
+          await mutateAsync(`user/favorites/${bookId}`, {});
         } else if (favorite === true) {
-          await mutateAsync(`user/favorites-remove/${bookId}`, {
-            // onSuccess: () => {
-            //   notifications.show({
-            //     message: "Книга удалена из избранного",
-            //     autoClose: 2000,
-            //     color: "yellow",
-            //   });
-            // },
-          });
+          await mutateAsync(`user/favorites-remove/${bookId}`, {});
         }
 
         await getCurrentUser();
@@ -112,16 +132,25 @@ export const BooksList = React.memo(() => {
   );
 
   const books = useMemo(() => {
-    return data?.items.map((book: Item) => (
-      <SingleBookList
-        favorite={user?.favoriteItems.some((el) => el.id === book.id) ?? false}
-        book={book}
-        key={book.id}
-        favoritesHandler={favoritesHandler}
-        loading={idLoad.includes(book.id) ? loading : false}
-      />
-    ));
-  }, [data, favoritesHandler, idLoad, loading, user?.favoriteItems]);
+    const filteredBooks = minPrice > 0 ? dataDiscount : data?.items; //!
+    return filteredBooks?.map(
+      (
+        book: Item //!
+      ) => (
+        // return data?.items.map((book: Item) => (
+        <SingleBookList
+          favorite={
+            user?.favoriteItems.some((el) => el.id === book.id) ?? false
+          }
+          book={book}
+          key={book.id}
+          favoritesHandler={favoritesHandler}
+          loading={idLoad.includes(book.id) ? loading : false}
+        />
+      )
+    );
+    // }, [data, favoritesHandler, idLoad, loading, user?.favoriteItems,]);
+  }, [data, favoritesHandler, idLoad, loading, user?.favoriteItems]); //!
 
   //!---
 
@@ -129,13 +158,20 @@ export const BooksList = React.memo(() => {
     setValue(value);
   }, []);
 
-  const handlePriceChange = useCallback((price: string) => {
-    setPriceSort(price);
-  }, []);
+  // const handlePriceChange = useCallback((price: string) => {
+  //   setPriceSort(price);
+  // }, []);
+
+  const handlePriceChange = useCallback(
+    (priceMin: number, priceMax: number) => {
+      setSortMinMaxPrice([priceMin, priceMax]);
+    },
+    []
+  ); //!
 
   console.log("render BookList");
-  console.log(user?.favoriteItems);
-  loading && console.log("load");
+  console.log("избранных книг:", user?.favoriteItems);
+  // loading && console.log("load");
 
   return (
     <>
