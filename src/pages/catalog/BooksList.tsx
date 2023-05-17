@@ -101,7 +101,7 @@ export const BooksList = React.memo(() => {
     }
   );
 
-  const favoritesHandler = useCallback(
+  const favoritesChange = useCallback(
     async (bookId: number, favorite: boolean) => {
       setIdLoad([...idLoad, bookId]); //!
 
@@ -144,13 +144,13 @@ export const BooksList = React.memo(() => {
           }
           book={book}
           key={book.id}
-          favoritesHandler={favoritesHandler}
+          favoritesChange={favoritesChange}
           loading={idLoad.includes(book.id) ? loading : false}
         />
       )
     );
     // }, [data, favoritesHandler, idLoad, loading, user?.favoriteItems,]);
-  }, [data, favoritesHandler, idLoad, loading, user?.favoriteItems]); //!
+  }, [data, favoritesChange, idLoad, loading, user?.favoriteItems]); //!
 
   //!---
 

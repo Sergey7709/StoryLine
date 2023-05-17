@@ -32,7 +32,7 @@ export const Favorites = () => {
     }
   );
 
-  const favoritesHandler = async (bookId: number, favorite: boolean) => {
+  const favoritesChange = async (bookId: number, favorite: boolean) => {
     if (!user) {
       notifications.show({
         message: "Войдите в аккаунт, что бы добавить книгу в избранное!",
@@ -87,7 +87,7 @@ export const Favorites = () => {
                   key={favoriteBook.id}
                   book={favoriteBook}
                   favorite={true}
-                  favoritesHandler={favoritesHandler}
+                  favoritesChange={favoritesChange}
                 />
               ))}
             </Grid>
