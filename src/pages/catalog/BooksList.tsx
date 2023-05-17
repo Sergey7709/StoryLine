@@ -76,6 +76,8 @@ export const BooksList = React.memo(() => {
   //!----
   const [idLoad, setIdLoad] = useState<Array<number>>([]); //!
 
+  console.log("idLoad:", idLoad);
+
   const {
     mutateAsync,
     isLoading: loading,
@@ -93,7 +95,7 @@ export const BooksList = React.memo(() => {
       // onSuccess: () => {},
       onError: () => {
         notifications.show({
-          message: "Ошибка при добавлении книги в избранное!",
+          message: "Ошибка при добавлении или удалении книги в избранном!",
           autoClose: 2000,
           color: "red",
         });
@@ -124,7 +126,7 @@ export const BooksList = React.memo(() => {
           await mutateAsync(`user/favorites-remove/${bookId}`, {});
         }
 
-        await getCurrentUser();
+        getCurrentUser();
         setIdLoad((idLoad) => idLoad.filter((el) => el !== bookId)); //!
       }
     },
