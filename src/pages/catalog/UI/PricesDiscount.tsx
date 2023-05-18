@@ -19,8 +19,6 @@ const PricesDiscount: FC<PricesDiscountProps> = ({ discount, price }) => {
       </Text>
       {discount ? (
         <Text ml={30} weight={600} size="lg" color="red">
-          {/* {`${price - Math.round(price / discount)}`}&#8381; */}
-          {/* {`${price - Math.round((price / 100) * discount)}`}&#8381; */}
           {`${discount}`}&#8381;
         </Text>
       ) : (

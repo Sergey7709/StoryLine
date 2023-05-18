@@ -23,22 +23,20 @@ export const BooksList = React.memo(() => {
   const [openedAuth, handlers] = useDisclosure(false); //!
 
   const [value, setValue] = useState("");
-  // const [priceSort, setPriceSort] = useState("");
 
   const [sortMinMaxPrice, setSortMinMaxPrice] = useState<Array<number>>([]); //!
   const [minPrice, maxPrice] = sortMinMaxPrice; //!
+  const [maxDiscount, setMaxDiscount] = useState<number>(0); //!
+  const [idLoad, setIdLoad] = useState<Array<number>>([]); //!
 
   const param = useAppSelector((state) => state.filter.param);
   const { classes } = useStyles();
   const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
 
-  const [maxDiscount, setMaxDiscount] = useState(0);
-
   const priceSort =
-    // minPrice > 0 ? `&priceFrom=${minPrice}&priceTo=${maxPrice}` : ""; //! править здесь
     minPrice > 0
       ? `&priceFrom=${minPrice}&priceTo=${maxPrice + maxDiscount}`
-      : ""; //! править здесь
+      : ""; //!
 
   const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
 
@@ -56,51 +54,32 @@ export const BooksList = React.memo(() => {
         setMaxDiscount(newMinDiscount);
         return newMinDiscount;
       }, 0);
-  }, [data, maxDiscount]);
+  }, [data]);
 
-  console.log("maxDiscount:", maxDiscount);
-
+  // console.log("maxDiscount:", maxDiscount);
   // console.log(priceSort);
   // console.log(data);
   // console.log(sortMinMaxPrice);
 
-  const dataDiscount = data?.items.filter((book) => {
-    // console.log(book);
-    // const discountedPrice =
-    //   book.price - Math.round((book.price / 100) * book.discount);
-    // console.log("book.discount", book.discount);
-    // console.log(
-    //   "book:",
-    //   book.title,
-    //   "discount:",
-    //   book.discount,
-    //   "цена книги",
-    //   book.discount !== 0
-    //     ? discountedPrice >= minPrice && discountedPrice <= maxPrice
-    //     : book.price
-    // );
-    // if (book.discount !== 0) {
-    //   const discountedPrice =
-    //     book.price - Math.round((book.price / 100) * book.discount);
-    //   return discountedPrice >= minPrice && discountedPrice <= maxPrice;
-    // } else {
-    //   return book.price >= minPrice && book.price <= maxPrice;
-    // }
-    if (book.discount !== 0) {
-      return book.discount >= minPrice && book.discount <= maxPrice;
-    } else {
-      return book.price >= minPrice && book.price <= maxPrice;
-    }
-  }); //!
+  const dataDiscount = useMemo(
+    () =>
+      data?.items.filter((book) => {
+        if (book.discount !== 0) {
+          return book.discount >= minPrice && book.discount <= maxPrice;
+        } else {
+          return book.price >= minPrice && book.price <= maxPrice;
+        }
+      }),
+    [data?.items]
+  ); //!
 
-  console.log("minPrice", minPrice, "maxPrice", maxPrice);
+  // console.log("minPrice", minPrice, "maxPrice", maxPrice);
   // console.log("dataDiscount", dataDiscount);
   // console.log("массив с учетом скидки:", dataDiscount);
 
   //!----
-  const [idLoad, setIdLoad] = useState<Array<number>>([]); //!
 
-  console.log("idLoad:", idLoad);
+  // console.log("idLoad:", idLoad);
 
   const { mutateAsync, isLoading: loading } = useMutation(
     (param: string) => {
@@ -159,7 +138,6 @@ export const BooksList = React.memo(() => {
       (
         book: Item //!
       ) => (
-        // return data?.items.map((book: Item) => (
         <SingleBookList
           favorite={
             user?.favoriteItems.some((el) => el.id === book.id) ?? false
@@ -171,18 +149,21 @@ export const BooksList = React.memo(() => {
         />
       )
     );
-    // }, [data, favoritesHandler, idLoad, loading, user?.favoriteItems,]);
-  }, [data, favoritesChange, idLoad, loading, user?.favoriteItems]); //!
+  }, [
+    data?.items,
+    dataDiscount,
+    favoritesChange,
+    idLoad,
+    loading,
+    minPrice,
+    user?.favoriteItems,
+  ]); //!
 
   //!---
 
   const sortHandler = useCallback((value: string) => {
     setValue(value);
   }, []);
-
-  // const handlePriceChange = useCallback((price: string) => {
-  //   setPriceSort(price);
-  // }, []);
 
   const handlePriceChange = useCallback(
     (priceMin: number, priceMax: number) => {
@@ -191,8 +172,8 @@ export const BooksList = React.memo(() => {
     []
   ); //!
 
-  console.log("render BookList");
-  console.log("избранных книг:", user?.favoriteItems);
+  // console.log("render BookList");
+  // console.log("избранных книг:", user?.favoriteItems);
   // loading && console.log("load");
 
   return (
