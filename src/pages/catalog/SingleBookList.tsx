@@ -75,7 +75,9 @@ const SingleBookList: FC<SingleBookListProps> = ({
                 color="orange"
                 variant="filled"
               >
-                <Text fz={"md"} fw={500}>{`-${discount}%`}</Text>
+                <Text fz={"md"} fw={500}>{`-${
+                  ((price - discount) / price) * 100
+                }%`}</Text>
               </Badge>
             )}
             <Flex>

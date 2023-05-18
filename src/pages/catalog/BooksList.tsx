@@ -8,7 +8,7 @@ import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
 import PriceRange from "./BooksPriceRange";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ServerError } from "../../components/errorNetwork/ServerError";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import axios from "axios";
@@ -32,8 +32,13 @@ export const BooksList = React.memo(() => {
   const { classes } = useStyles();
   const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
 
-  const priceSort = "";
-  // minPrice > 0 ? `&priceFrom=${minPrice }&priceTo=${maxPrice}` : ""; //! править здесь
+  const [maxDiscount, setMaxDiscount] = useState(0);
+
+  const priceSort =
+    // minPrice > 0 ? `&priceFrom=${minPrice}&priceTo=${maxPrice}` : ""; //! править здесь
+    minPrice > 0
+      ? `&priceFrom=${minPrice}&priceTo=${maxPrice + maxDiscount}`
+      : ""; //! править здесь
 
   const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
 
@@ -42,11 +47,25 @@ export const BooksList = React.memo(() => {
     () => fetchItem(`${sortLink}${value}${priceSort}`)
   ); //!
 
+  useEffect(() => {
+    data?.items
+      ?.filter((book) => book.discount > 0)
+      .reduce((minDiscount, book) => {
+        const newMinDiscount =
+          book.discount > minDiscount ? book.discount : minDiscount;
+        setMaxDiscount(newMinDiscount);
+        return newMinDiscount;
+      }, 0);
+  }, [data, maxDiscount]);
+
+  console.log("maxDiscount:", maxDiscount);
+
   // console.log(priceSort);
   // console.log(data);
   // console.log(sortMinMaxPrice);
 
   const dataDiscount = data?.items.filter((book) => {
+    // console.log(book);
     // const discountedPrice =
     //   book.price - Math.round((book.price / 100) * book.discount);
     // console.log("book.discount", book.discount);
@@ -60,10 +79,15 @@ export const BooksList = React.memo(() => {
     //     ? discountedPrice >= minPrice && discountedPrice <= maxPrice
     //     : book.price
     // );
+    // if (book.discount !== 0) {
+    //   const discountedPrice =
+    //     book.price - Math.round((book.price / 100) * book.discount);
+    //   return discountedPrice >= minPrice && discountedPrice <= maxPrice;
+    // } else {
+    //   return book.price >= minPrice && book.price <= maxPrice;
+    // }
     if (book.discount !== 0) {
-      const discountedPrice =
-        book.price - Math.round((book.price / 100) * book.discount);
-      return discountedPrice >= minPrice && discountedPrice <= maxPrice;
+      return book.discount >= minPrice && book.discount <= maxPrice;
     } else {
       return book.price >= minPrice && book.price <= maxPrice;
     }
