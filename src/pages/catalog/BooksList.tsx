@@ -22,7 +22,7 @@ export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user); //!
   const [openedAuth, handlers] = useDisclosure(false); //!
 
-  const [value, setValue] = useState("");
+  const [valueSort, setValueSort] = useState("");
 
   const [sortMinMaxPrice, setSortMinMaxPrice] = useState<Array<number>>([]); //!
   const [minPrice, maxPrice] = sortMinMaxPrice; //!
@@ -41,8 +41,8 @@ export const BooksList = React.memo(() => {
   const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
 
   const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
-    ["item", param, value, priceSort],
-    () => fetchItem(`${sortLink}${value}${priceSort}`)
+    ["item", param, valueSort, priceSort],
+    () => fetchItem(`${sortLink}${valueSort}${priceSort}`)
   ); //!
 
   useEffect(() => {
@@ -161,13 +161,14 @@ export const BooksList = React.memo(() => {
 
   //!---
 
-  const sortHandler = useCallback((value: string) => {
-    setValue(value);
+  const sortHandler = useCallback((valueSort: string) => {
+    setValueSort(valueSort);
   }, []);
 
   const handlePriceChange = useCallback(
     (priceMin: number, priceMax: number) => {
       setSortMinMaxPrice([priceMin, priceMax]);
+      setValueSort("");
     },
     []
   ); //!
@@ -196,7 +197,7 @@ export const BooksList = React.memo(() => {
             {param !== categoryNewBooks && (
               <>
                 <BooksFilter sortHandler={sortHandler} />
-                <PriceRange onPriceChange={handlePriceChange} />
+                <PriceRange handlePriceChange={handlePriceChange} />
               </>
             )}
           </Group>

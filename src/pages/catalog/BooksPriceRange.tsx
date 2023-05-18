@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 
 type PriceRangeProps = {
-  onPriceChange: (priceMin: number, priceMax: number) => void; //!
+  handlePriceChange: (priceMin: number, priceMax: number) => void; //!
 };
 
-const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
+const PriceRange = ({ handlePriceChange }: PriceRangeProps) => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [debouncedMin] = useDebouncedValue(minPrice, 1000);
@@ -17,12 +17,19 @@ const PriceRange = ({ onPriceChange }: PriceRangeProps) => {
     if (reset) {
       setMinPrice("");
       setMaxPrice("");
-      onPriceChange(0, 100000000);
+      handlePriceChange(0, 100000000);
       setReset(false);
     } else if (Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice)) {
-      onPriceChange(Number(debouncedMin), Number(debouncedMax)); //!
+      handlePriceChange(Number(debouncedMin), Number(debouncedMax)); //!
     }
-  }, [debouncedMin, debouncedMax, minPrice, maxPrice, reset, onPriceChange]);
+  }, [
+    debouncedMin,
+    debouncedMax,
+    minPrice,
+    maxPrice,
+    reset,
+    handlePriceChange,
+  ]);
 
   const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
