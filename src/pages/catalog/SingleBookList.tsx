@@ -11,7 +11,7 @@ import {
   Flex,
   Popover,
 } from "@mantine/core";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { Item } from "../../common/types";
@@ -23,15 +23,26 @@ import { Loader } from "@mantine/core";
 type SingleBookListProps = {
   book: Item;
   favorite: boolean;
-  favoritesHandler: (bookId: number, favorite: boolean) => void;
+  favoritesChange: (bookId: number, favorite: boolean) => void;
   loading?: boolean;
 };
 const SingleBookList: FC<SingleBookListProps> = ({
   book,
   favorite,
-  favoritesHandler,
+  favoritesChange,
   loading,
 }) => {
+  const [favoriteState, setFavoriteState] = useState(favorite); //!
+
+  useEffect(() => {
+    setFavoriteState(favorite);
+  }, [favorite]); //!
+
+  const handleFavorites = () => {
+    setFavoriteState(!favoriteState);
+    favoritesChange(book.id, favoriteState);
+  }; //!
+
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();
   const [opened, { close, open }] = useDisclosure(false);
@@ -64,7 +75,9 @@ const SingleBookList: FC<SingleBookListProps> = ({
                 color="orange"
                 variant="filled"
               >
-                <Text fz={"md"} fw={500}>{`-${discount}%`}</Text>
+                <Text fz={"md"} fw={500}>{`-${
+                  ((price - discount) / price) * 100
+                }%`}</Text>
               </Badge>
             )}
             <Flex>
@@ -85,17 +98,17 @@ const SingleBookList: FC<SingleBookListProps> = ({
                 <Loader color="grape" size="xs" />
               ) : (
                 <>
-                  {favorite ? (
+                  {favoriteState ? (
                     <BsBookmarkCheckFill
                       className={classes.favorite_on}
                       size="4rem"
-                      onClick={() => favoritesHandler(id, favorite)}
+                      onClick={handleFavorites}
                     />
                   ) : (
                     <BsBookmarkCheck
                       className={classes.favorite_off}
                       size="4rem"
-                      onClick={() => favoritesHandler(id, favorite)}
+                      onClick={handleFavorites}
                     />
                   )}
                 </>

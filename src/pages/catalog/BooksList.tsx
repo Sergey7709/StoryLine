@@ -8,7 +8,7 @@ import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
 import PriceRange from "./BooksPriceRange";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ServerError } from "../../components/errorNetwork/ServerError";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import axios from "axios";
@@ -22,29 +22,66 @@ export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user); //!
   const [openedAuth, handlers] = useDisclosure(false); //!
 
-  const [value, setValue] = useState("");
-  const [priceSort, setPriceSort] = useState("");
+  const [valueSort, setValueSort] = useState("");
+
+  const [sortMinMaxPrice, setSortMinMaxPrice] = useState<Array<number>>([]); //!
+  const [minPrice, maxPrice] = sortMinMaxPrice; //!
+  const [maxDiscount, setMaxDiscount] = useState<number>(0); //!
+  const [idLoad, setIdLoad] = useState<Array<number>>([]); //!
+
   const param = useAppSelector((state) => state.filter.param);
   const { classes } = useStyles();
   const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
 
+  const priceSort =
+    minPrice > 0
+      ? `&priceFrom=${minPrice}&priceTo=${maxPrice + maxDiscount}`
+      : ""; //!
+
   const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
 
   const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
-    ["item", param, value, priceSort],
-    () => fetchItem(`${sortLink}${value}${priceSort}`)
-  );
+    ["item", param, valueSort, priceSort],
+    () => fetchItem(`${sortLink}${valueSort}${priceSort}`)
+  ); //!
 
+  useEffect(() => {
+    data?.items
+      ?.filter((book) => book.discount > 0)
+      .reduce((minDiscount, book) => {
+        const newMinDiscount =
+          book.discount > minDiscount ? book.discount : minDiscount;
+        setMaxDiscount(newMinDiscount);
+        return newMinDiscount;
+      }, 0);
+  }, [data]);
+
+  // console.log("maxDiscount:", maxDiscount);
   // console.log(priceSort);
+  // console.log(data);
+  // console.log(sortMinMaxPrice);
+
+  const dataDiscount = useMemo(
+    () =>
+      data?.items.filter((book) => {
+        if (book.discount !== 0) {
+          return book.discount >= minPrice && book.discount <= maxPrice;
+        } else {
+          return book.price >= minPrice && book.price <= maxPrice;
+        }
+      }),
+    [data?.items]
+  ); //!
+
+  // console.log("minPrice", minPrice, "maxPrice", maxPrice);
+  // console.log("dataDiscount", dataDiscount);
+  // console.log("массив с учетом скидки:", dataDiscount);
 
   //!----
-  const [idLoad, setIdLoad] = useState<Array<number>>([]); //!
 
-  const {
-    mutateAsync,
-    isLoading: loading,
-    isSuccess,
-  } = useMutation(
+  // console.log("idLoad:", idLoad);
+
+  const { mutateAsync, isLoading: loading } = useMutation(
     (param: string) => {
       // console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
       return axios.post(`${BASE_URL}${param}`, undefined, {
@@ -57,7 +94,7 @@ export const BooksList = React.memo(() => {
       // onSuccess: () => {},
       onError: () => {
         notifications.show({
-          message: "Ошибка при добавлении книги в избранное!",
+          message: "Ошибка при добавлении или удалении книги в избранном!",
           autoClose: 2000,
           color: "red",
         });
@@ -65,7 +102,7 @@ export const BooksList = React.memo(() => {
     }
   );
 
-  const favoritesHandler = useCallback(
+  const favoritesChange = useCallback(
     async (bookId: number, favorite: boolean) => {
       setIdLoad([...idLoad, bookId]); //!
 
@@ -83,59 +120,62 @@ export const BooksList = React.memo(() => {
 
       if (user) {
         if (favorite === false) {
-          await mutateAsync(`user/favorites/${bookId}`, {
-            // onSuccess: () => {
-            //   notifications.show({
-            //     message: "Книга добавлена в избранное",
-            //     autoClose: 2000,
-            //     color: "green",
-            //   });
-            // },
-          });
+          await mutateAsync(`user/favorites/${bookId}`, {});
         } else if (favorite === true) {
-          await mutateAsync(`user/favorites-remove/${bookId}`, {
-            // onSuccess: () => {
-            //   notifications.show({
-            //     message: "Книга удалена из избранного",
-            //     autoClose: 2000,
-            //     color: "yellow",
-            //   });
-            // },
-          });
+          await mutateAsync(`user/favorites-remove/${bookId}`, {});
         }
 
-        await getCurrentUser();
+        getCurrentUser();
         setIdLoad((idLoad) => idLoad.filter((el) => el !== bookId)); //!
       }
     },
-    [idLoad, user, handlers, getCurrentUser, isSuccess, mutateAsync]
+    [idLoad, user, handlers, getCurrentUser, mutateAsync]
   );
 
   const books = useMemo(() => {
-    return data?.items.map((book: Item) => (
-      <SingleBookList
-        favorite={user?.favoriteItems.some((el) => el.id === book.id) ?? false}
-        book={book}
-        key={book.id}
-        favoritesHandler={favoritesHandler}
-        loading={idLoad.includes(book.id) ? loading : false}
-      />
-    ));
-  }, [data, favoritesHandler, idLoad, loading, user?.favoriteItems]);
+    const filteredBooks = minPrice > 0 ? dataDiscount : data?.items; //!
+    return filteredBooks?.map(
+      (
+        book: Item //!
+      ) => (
+        <SingleBookList
+          favorite={
+            user?.favoriteItems.some((el) => el.id === book.id) ?? false
+          }
+          book={book}
+          key={book.id}
+          favoritesChange={favoritesChange}
+          loading={idLoad.includes(book.id) ? loading : false}
+        />
+      )
+    );
+  }, [
+    data?.items,
+    dataDiscount,
+    favoritesChange,
+    idLoad,
+    loading,
+    minPrice,
+    user?.favoriteItems,
+  ]); //!
 
   //!---
 
-  const sortHandler = useCallback((value: string) => {
-    setValue(value);
+  const sortHandler = useCallback((valueSort: string) => {
+    setValueSort(valueSort);
   }, []);
 
-  const handlePriceChange = useCallback((price: string) => {
-    setPriceSort(price);
-  }, []);
+  const handlePriceChange = useCallback(
+    (priceMin: number, priceMax: number) => {
+      setSortMinMaxPrice([priceMin, priceMax]);
+      setValueSort("");
+    },
+    []
+  ); //!
 
-  console.log("render BookList");
-  console.log(user?.favoriteItems);
-  loading && console.log("load");
+  // console.log("render BookList");
+  // console.log("избранных книг:", user?.favoriteItems);
+  // loading && console.log("load");
 
   return (
     <>
@@ -157,7 +197,7 @@ export const BooksList = React.memo(() => {
             {param !== categoryNewBooks && (
               <>
                 <BooksFilter sortHandler={sortHandler} />
-                <PriceRange onPriceChange={handlePriceChange} />
+                <PriceRange handlePriceChange={handlePriceChange} />
               </>
             )}
           </Group>
