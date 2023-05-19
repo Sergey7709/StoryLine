@@ -18,8 +18,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { Authorization } from "../authorization/Authorization";
 
 export const BooksList = React.memo(() => {
-  const getCurrentUser = useCurrentUser();
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
+  const getCurrentUser = useCurrentUser();
+
   const [openedAuth, handlers] = useDisclosure(false);
 
   const [valueSort, setValueSort] = useState("");
@@ -27,10 +28,6 @@ export const BooksList = React.memo(() => {
   const [sortMinMaxPrice, setSortMinMaxPrice] = useState<Array<number>>([]);
   const [minPrice, maxPrice] = sortMinMaxPrice;
   const [maxDiscount, setMaxDiscount] = useState<number>(0);
-
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
 
   const param = useAppSelector((state) => state.filter.param);
   const { classes } = useStyles();
@@ -57,6 +54,10 @@ export const BooksList = React.memo(() => {
         return newMinDiscount;
       }, 0);
   }, [data]);
+
+  // useEffect(() => {
+  //   getCurrentUser();
+  // }, []); //!
 
   // console.log({ data });
   // console.log("maxDiscount:", maxDiscount);
@@ -129,6 +130,8 @@ export const BooksList = React.memo(() => {
   );
 
   const books = useMemo(() => {
+    // console.log("books single in Booklist");
+    // console.log("user", user?.name, user?.favoriteItems);
     const filteredBooks = minPrice > 0 ? dataDiscount : data?.items;
     return filteredBooks?.map((book: Item) => (
       <SingleBookList
@@ -138,7 +141,7 @@ export const BooksList = React.memo(() => {
         favoritesChange={favoritesChange}
       />
     ));
-  }, [data?.items]);
+  }, [data?.items, user]);
 
   const sortHandler = useCallback((valueSort: string) => {
     setValueSort(valueSort);
@@ -152,9 +155,8 @@ export const BooksList = React.memo(() => {
     []
   );
 
-  // console.log("render BookList");
+  console.log("render BookList");
   // console.log("избранных книг:", user?.favoriteItems);
-  // loading && console.log("load");
 
   return (
     <>

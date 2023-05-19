@@ -25,7 +25,9 @@ import { Error404 } from "./pages/error404/Error404";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
 
 export default function App() {
+  console.log("render App");
   useAutoLogin();
+
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));

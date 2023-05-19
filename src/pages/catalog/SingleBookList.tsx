@@ -11,7 +11,7 @@ import {
   Flex,
   Popover,
 } from "@mantine/core";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { Item } from "../../common/types";
@@ -38,9 +38,11 @@ const SingleBookList: FC<SingleBookListProps> = ({
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();
 
-  console.log("render single");
-  // console.log("favoriteState", favoriteState);
-  // console.log("favorite", favorite);
+  useEffect(() => {
+    setFavoriteState(favorite);
+  }, [favorite]);
+
+  console.log("render single"); //!
 
   return (
     <>
