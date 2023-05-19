@@ -11,43 +11,36 @@ import {
   Flex,
   Popover,
 } from "@mantine/core";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { Item } from "../../common/types";
 import { useStyles } from "./BooksListStyles";
-import { useDisclosure } from "@mantine/hooks";
 import PricesDiscount from "./UI/PricesDiscount";
-import { Loader } from "@mantine/core";
 
 type SingleBookListProps = {
   book: Item;
   favorite: boolean;
   favoritesChange: (bookId: number, favorite: boolean) => void;
-  loading?: boolean;
 };
 const SingleBookList: FC<SingleBookListProps> = ({
   book,
   favorite,
   favoritesChange,
-  loading,
 }) => {
-  const [favoriteState, setFavoriteState] = useState(favorite); //!
+  const [favoriteState, setFavoriteState] = useState(favorite);
 
-  useEffect(() => {
-    setFavoriteState(favorite);
-  }, [favorite]); //!
-
-  const handleFavorites = () => {
+  const handleFavorites = useCallback(() => {
     setFavoriteState(!favoriteState);
     favoritesChange(book.id, favoriteState);
-  }; //!
+  }, [book.id, favoriteState, favoritesChange]);
 
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();
-  const [opened, { close, open }] = useDisclosure(false);
 
   console.log("render single");
+  // console.log("favoriteState", favoriteState);
+  // console.log("favorite", favorite);
 
   return (
     <>
@@ -94,25 +87,21 @@ const SingleBookList: FC<SingleBookListProps> = ({
               variant="transparent"
               className={classes.action_favorite}
             >
-              {loading ? (
-                <Loader color="grape" size="xs" />
+              {/* //! исправить на один элемент без повтора */}
+              {favoriteState ? (
+                <BsBookmarkCheckFill
+                  className={classes.favorite_on}
+                  size="4rem"
+                  onClick={handleFavorites}
+                />
               ) : (
-                <>
-                  {favoriteState ? (
-                    <BsBookmarkCheckFill
-                      className={classes.favorite_on}
-                      size="4rem"
-                      onClick={handleFavorites}
-                    />
-                  ) : (
-                    <BsBookmarkCheck
-                      className={classes.favorite_off}
-                      size="4rem"
-                      onClick={handleFavorites}
-                    />
-                  )}
-                </>
+                <BsBookmarkCheck
+                  className={classes.favorite_off}
+                  size="4rem"
+                  onClick={handleFavorites}
+                />
               )}
+              {/* //! */}
             </ActionIcon>
           </Group>
           <Grid mt={10} pl={10} mb={5} gutter={0}>
@@ -127,14 +116,14 @@ const SingleBookList: FC<SingleBookListProps> = ({
                 position="bottom"
                 withArrow
                 shadow="md"
-                opened={opened}
+                // opened={opened}
               >
                 <Popover.Target>
                   <Text
                     weight={500}
                     lineClamp={1}
-                    onMouseEnter={open}
-                    onMouseLeave={close}
+                    // onMouseEnter={open}
+                    // onMouseLeave={close}
                   >
                     {book.title}
                   </Text>

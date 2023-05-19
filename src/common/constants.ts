@@ -131,3 +131,4 @@ export const menuSortData = [
     ],
   },
 ];
+export const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
