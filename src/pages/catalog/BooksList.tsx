@@ -164,7 +164,11 @@ export const BooksList = React.memo(() => {
       {isLoadingError && <ServerError />}
       {!isLoading && param === categoryNewBooks && (
         <Flex justify={"center"} align={"center"}>
-          <Title color="green" order={1}>
+          <Title
+            variant="gradient"
+            gradient={{ from: "indigo", to: "green", deg: 45 }}
+            order={1}
+          >
             КНИЖНЫЕ НОВИНКИ
           </Title>
         </Flex>
