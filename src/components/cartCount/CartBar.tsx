@@ -28,13 +28,19 @@ const CartBar = () => {
 
   return (
     // <div className="cart">
-    <Flex gap="5px" justify={"center"}>
+    <Flex gap="5px">
       <Button size="xs" variant="outline" px={13} onClick={decrement}>
         <Text align="center" fz={"lg"}>
           -
         </Text>
       </Button>
-      <ActionIcon size={30} px={20} variant="outline" color="blue" radius="sm">
+      <ActionIcon
+        size={30}
+        px={20}
+        variant="outline"
+        color="indigo.4"
+        radius="sm"
+      >
         <NumberInput
           hideControls
           color="green"

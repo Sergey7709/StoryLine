@@ -1,4 +1,4 @@
-import { Group, Grid, Modal, Flex, Title } from "@mantine/core";
+import { Group, Grid, Modal, Flex, Title, Divider } from "@mantine/core";
 import { useStyles } from "./BooksListStyles";
 import { useMutation, useQuery } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
@@ -64,6 +64,7 @@ export const BooksList = React.memo(() => {
   // console.log(priceSort);
   // console.log(data);
   // console.log(sortMinMaxPrice);
+  // console.log(user);
 
   const dataDiscount = useMemo(
     () =>
@@ -178,6 +179,7 @@ export const BooksList = React.memo(() => {
           <Authorization close={handlers.close} />
         </Modal>
         <Grid.Col span={12}>
+          <Divider size="xs" variant="solid" color="gray" />
           <Group ml={"2%"} mb={5}>
             {param !== categoryNewBooks && (
               <>
