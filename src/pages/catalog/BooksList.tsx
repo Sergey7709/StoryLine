@@ -122,10 +122,13 @@ export const BooksList = React.memo(() => {
       if (user) {
         if (favorite === false) {
           await mutateAsync(`user/favorites/${bookId}`, {});
+          console.log("add favorite");
         } else if (favorite === true) {
           await mutateAsync(`user/favorites-remove/${bookId}`, {});
+          console.log("del favorite");
         }
       }
+      getCurrentUser();
     },
     [user, handlers, getCurrentUser, mutateAsync]
   );

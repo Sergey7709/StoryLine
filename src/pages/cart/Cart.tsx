@@ -26,8 +26,8 @@ export const Cart = () => {
   console.log("cart", cart);
   return (
     <>
-      <Container size="100%" h={"100vh"} px="xs" py={"lg"}>
-        <Grid pl={"5%"}>
+      <Container size="100%" h={"100%"} px="xs" py={"lg"}>
+        <Grid pl={"3%"}>
           <Grid.Col span={12}>
             <Title order={1} pb={10}>
               Корзина товаров
@@ -37,13 +37,12 @@ export const Cart = () => {
           </Grid.Col>
 
           {cart.map((book) => (
-            <Grid.Col xl={3} lg={4} md={5} sm={6}>
+            <Grid.Col xl={3} lg={4} md={4} sm={6} xs={6} key={book.id}>
               <Card
-                key={book.id}
                 shadow="sm"
                 padding="xs"
                 radius="md"
-                w={310}
+                w={300}
                 h={325}
                 withBorder
               >
