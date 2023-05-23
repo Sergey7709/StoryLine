@@ -17,6 +17,8 @@ import { Link } from "react-router-dom";
 import { Item } from "../../common/types";
 import { useStyles } from "./BooksListStyles";
 import PricesDiscount from "./UI/PricesDiscount";
+import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
+import { addCartItems } from "../../redux/cartSlice";
 
 type SingleBookListProps = {
   book: Item;
@@ -30,10 +32,18 @@ const SingleBookList: FC<SingleBookListProps> = ({
 }) => {
   const [favoriteState, setFavoriteState] = useState(favorite);
 
+  const cart = useAppSelector((state) => state.cart.cartItems); //!
+  const dispatch = useAppDispatch(); //!
+
   const handleFavorites = useCallback(() => {
     setFavoriteState(!favoriteState);
     favoritesChange(book.id, favoriteState);
   }, [book.id, favoriteState, favoritesChange]);
+
+  const handleAddCartItem = () => {
+    console.log("add cart", book);
+    dispatch(addCartItems(book));
+  }; //!
 
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();
@@ -42,7 +52,7 @@ const SingleBookList: FC<SingleBookListProps> = ({
     setFavoriteState(favorite);
   }, [favorite]);
 
-  console.log("render single"); //!
+  console.log("render single");
 
   return (
     <>
@@ -146,8 +156,9 @@ const SingleBookList: FC<SingleBookListProps> = ({
             color="blue"
             radius="md"
             w={"12rem"}
+            onClick={handleAddCartItem}
           >
-            КУПИТЬ
+            В КОРЗИНУ
           </Button>
         </Card>
       </Grid.Col>

@@ -8,26 +8,38 @@ import {
   Text,
   rem,
 } from "@mantine/core";
+import { useAppDispatch } from "../../redux/redux.hooks";
+import {
+  decrementCartItem,
+  handleChangeCountItem,
+  incrementCartItem,
+} from "../../redux/cartSlice";
 
-const CartBar = () => {
-  const [quantity, setQuantity] = useState<number>(1);
+type CartBarProps = {
+  bookId?: number;
+  cartCount?: number;
+};
+
+const CartBar = ({ bookId = 0, cartCount = 1 }: CartBarProps) => {
+  const dispatch = useAppDispatch();
 
   const increment = () => {
-    setQuantity((prevQuantity: number) => prevQuantity + 1);
+    dispatch(incrementCartItem(bookId));
   };
 
   const decrement = () => {
-    if (quantity > 1) {
-      setQuantity((prevQuantity: number) => prevQuantity - 1);
+    if (cartCount > 1) {
+      dispatch(decrementCartItem(bookId));
     }
   };
 
-  const handleQuantityChange = (value: number | "") => {
-    setQuantity(value === "" ? 1 : Number(value));
+  const handleChangeCount = (value: number | "") => {
+    value === ""
+      ? dispatch(handleChangeCountItem({ id: bookId, count: 1 }))
+      : dispatch(handleChangeCountItem({ id: bookId, count: Number(value) }));
   };
 
   return (
-    // <div className="cart">
     <Flex gap="5px">
       <Button size="xs" variant="outline" px={13} onClick={decrement}>
         <Text align="center" fz={"lg"}>
@@ -47,9 +59,9 @@ const CartBar = () => {
           variant="unstyled"
           min={1}
           max={100}
-          value={quantity}
+          value={cartCount}
           styles={{ input: { width: rem(54), textAlign: "center" } }}
-          onChange={handleQuantityChange}
+          onChange={handleChangeCount}
         />
       </ActionIcon>
 
@@ -59,7 +71,6 @@ const CartBar = () => {
         </Text>
       </Button>
     </Flex>
-    // </div>
   );
 };
 

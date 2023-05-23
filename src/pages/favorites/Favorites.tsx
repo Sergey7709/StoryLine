@@ -65,7 +65,7 @@ export const Favorites = () => {
       getCurrentUser();
     }
   };
-  //!!!
+
   return (
     <>
       {!user && (
@@ -75,7 +75,12 @@ export const Favorites = () => {
       {user && (
         <>
           <Flex justify={"center"} align={"center"}>
-            <Title color="yellow" order={1}>
+            <Title
+              pb={"sm"}
+              variant="gradient"
+              gradient={{ from: "indigo", to: "green", deg: 45 }}
+              order={1}
+            >
               МОИ ИЗБРАННЫЕ КНИГИ
             </Title>
           </Flex>

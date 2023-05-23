@@ -164,22 +164,26 @@ export const BooksList = React.memo(() => {
       {isLoading && <Loader />}
       {isLoadingError && <ServerError />}
       {!isLoading && param === categoryNewBooks && (
-        <Flex justify={"center"} align={"center"}>
-          <Title
-            variant="gradient"
-            gradient={{ from: "indigo", to: "green", deg: 45 }}
-            order={1}
-          >
-            КНИЖНЫЕ НОВИНКИ
-          </Title>
-        </Flex>
+        <Grid>
+          <Grid.Col span={12}>
+            <Title
+              pb={"sm"}
+              align="center"
+              variant="gradient"
+              gradient={{ from: "indigo", to: "green", deg: 45 }}
+              order={1}
+            >
+              КНИЖНЫЕ НОВИНКИ
+            </Title>
+            <Divider size="xs" variant="solid" color="gray" />
+          </Grid.Col>
+        </Grid>
       )}
       <Grid>
         <Modal size={500} opened={openedAuth} onClose={handlers.close} centered>
           <Authorization close={handlers.close} />
         </Modal>
         <Grid.Col span={12}>
-          <Divider size="xs" variant="solid" color="gray" />
           <Group ml={"2%"} mb={5}>
             {param !== categoryNewBooks && (
               <>
