@@ -1,3 +1,5 @@
+import { InitialStateCartSlice } from "./types";
+
 export const BASE_URL = "https://rest-api-books.onrender.com/";
 // export const BASE_URL = "http://localhost:5555/";
 
@@ -132,3 +134,30 @@ export const menuSortData = [
   },
 ];
 export const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
+
+export const updateCartTotals = (
+  state: InitialStateCartSlice,
+  price: number,
+  type: string
+) => {
+  switch (type) {
+    case "add":
+      state.totalCount += 1;
+      state.totalPrice = price;
+      break;
+    case "increment":
+      state.totalCount += 1;
+      state.totalPrice += price;
+      break;
+    case "decrement":
+      state.totalCount -= 1;
+      state.totalPrice -= price;
+      break;
+    default:
+      break;
+  }
+};
+
+export const updateLocalStorage = (state: InitialStateCartSlice) => {
+  localStorage.setItem("cartItems", JSON.stringify(state));
+};

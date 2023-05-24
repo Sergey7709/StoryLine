@@ -90,3 +90,18 @@ export type OrderItem = {
 export type SortHandlerType = {
   sortHandler: (value: string) => void;
 };
+
+export type CartItem = Item & {
+  count: number;
+};
+
+export type InitialStateCartSlice = {
+  cartItems: CartItem[];
+  totalCount: number;
+  totalPrice: number;
+};
+
+export type handleChangeCountItemProps = {
+  id: number;
+  count: number;
+};

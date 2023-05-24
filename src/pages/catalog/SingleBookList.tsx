@@ -32,8 +32,7 @@ const SingleBookList: FC<SingleBookListProps> = ({
 }) => {
   const [favoriteState, setFavoriteState] = useState(favorite);
 
-  const cart = useAppSelector((state) => state.cart.cartItems); //!
-  const dispatch = useAppDispatch(); //!
+  const dispatch = useAppDispatch();
 
   const handleFavorites = useCallback(() => {
     setFavoriteState(!favoriteState);
@@ -41,9 +40,9 @@ const SingleBookList: FC<SingleBookListProps> = ({
   }, [book.id, favoriteState, favoritesChange]);
 
   const handleAddCartItem = () => {
-    console.log("add cart", book);
+    // console.log("Добавлен товар в корзину", book);
     dispatch(addCartItems(book));
-  }; //!
+  };
 
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();

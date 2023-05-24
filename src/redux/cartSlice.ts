@@ -1,44 +1,20 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Review } from "../common/types";
+import {
+  CartItem,
+  InitialStateCartSlice,
+  Item,
+  handleChangeCountItemProps,
+} from "../common/types";
+import { updateCartTotals, updateLocalStorage } from "../common/constants";
 
-type Item = {
-  id: number;
-  inStock: boolean;
-  title: string;
-  itemImageUrl: string;
-  description: string;
-  price: number;
-  category: string;
-  publisher: string;
-  genre: string;
-  pagesCount: number;
-  discount: number;
-  authorBook: string;
-  releaseDate: string;
-  reviews: Review[];
-  averageRate: number;
-  typeOfCover: string;
-};
-
-export type CartItem = Item & {
-  count: number;
-};
-
-type InitialStateCartSlice = {
-  cartItems: CartItem[];
-  totalCount: number;
-  totalPrice: number;
-};
-
-type handleChangeCountItemProps = {
-  id: number;
-  count: number;
-};
+const initialStateFromStorage = JSON.parse(
+  localStorage.getItem("cartItems") ?? "null"
+);
 
 const initialState: InitialStateCartSlice = {
-  cartItems: [],
-  totalCount: 0,
-  totalPrice: 0,
+  cartItems: initialStateFromStorage ? initialStateFromStorage.cartItems : [],
+  totalCount: initialStateFromStorage ? initialStateFromStorage.totalCount : 0,
+  totalPrice: initialStateFromStorage ? initialStateFromStorage.totalPrice : 0,
 };
 
 const calculatePrice = (item: CartItem) => {
@@ -48,29 +24,6 @@ const calculatePrice = (item: CartItem) => {
 const findCartItemById = (cartItems: CartItem[], id: number) =>
   cartItems.find((item) => item.id === id);
 
-const updateCartTotals = (
-  state: InitialStateCartSlice,
-  price: number,
-  type: string
-) => {
-  switch (type) {
-    case "add":
-      state.totalCount += 1;
-      state.totalPrice = price;
-      break;
-    case "increment":
-      state.totalCount += 1;
-      state.totalPrice += price;
-      break;
-    case "decrement":
-      state.totalCount -= 1;
-      state.totalPrice -= price;
-      break;
-    default:
-      break;
-  }
-};
-
 export const cartSlice = createSlice({
   name: "cartSlice",
   initialState,
@@ -78,7 +31,7 @@ export const cartSlice = createSlice({
     addCartItems: (state, action: PayloadAction<Item>) => {
       const { discount, price, id } = action.payload;
 
-      const incrementTotal = state.totalPrice + (discount ? discount : price);
+      const incrementTotal = state.totalPrice + (discount || price);
 
       const cartItem = findCartItemById(state.cartItems, id);
 
@@ -92,6 +45,7 @@ export const cartSlice = createSlice({
         });
         updateCartTotals(state, incrementTotal, "add");
       }
+      updateLocalStorage(state);
     },
     incrementCartItem: (state, action: PayloadAction<number>) => {
       const cartItem = findCartItemById(state.cartItems, action.payload);
@@ -100,6 +54,7 @@ export const cartSlice = createSlice({
         cartItem.count += 1;
         updateCartTotals(state, calculatePrice(cartItem), "increment");
       }
+      updateLocalStorage(state);
     },
 
     decrementCartItem: (state, action: PayloadAction<number>) => {
@@ -109,6 +64,7 @@ export const cartSlice = createSlice({
         cartItem.count -= 1;
         updateCartTotals(state, calculatePrice(cartItem), "decrement");
       }
+      updateLocalStorage(state);
     },
 
     handleChangeCountItem: (
@@ -119,6 +75,7 @@ export const cartSlice = createSlice({
       if (cartItem) {
         cartItem.count = action.payload.count;
       }
+      updateLocalStorage(state);
     },
 
     deleteCartItems: (state, action: PayloadAction<number>) => {
@@ -132,6 +89,7 @@ export const cartSlice = createSlice({
       state.cartItems = state.cartItems.filter(
         (item) => item.id !== action.payload
       );
+      updateLocalStorage(state);
     },
   },
 });
