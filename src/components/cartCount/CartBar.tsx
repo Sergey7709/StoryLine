@@ -1,5 +1,3 @@
-import { useState } from "react";
-import styles from "./cart.module.css";
 import {
   ActionIcon,
   Button,
@@ -41,7 +39,13 @@ const CartBar = ({ bookId = 0, cartCount = 1 }: CartBarProps) => {
 
   return (
     <Flex gap="5px">
-      <Button size="xs" variant="outline" px={13} onClick={decrement}>
+      <Button
+        disabled={cartCount === 1}
+        size="xs"
+        variant="outline"
+        px={13}
+        onClick={decrement}
+      >
         <Text align="center" fz={"lg"}>
           -
         </Text>

@@ -18,12 +18,13 @@ import { deleteCartItems } from "../../redux/cartSlice";
 
 export const Cart = () => {
   const user = useAppSelector((state) => state.auth.user);
-  const cart = useAppSelector((state) => state.cart.cartItems);
+  const cart = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
   const handleDeleteCartItem = (bookID: number) => {
     dispatch(deleteCartItems(bookID));
   }; //!
-  console.log("cart", cart);
+  console.log("cart", cart.cartItems);
+  console.log("totalCount", cart.totalCount, "totalPrice", cart.totalPrice);
   return (
     <>
       <Container size="100%" h={"100%"} px="xs" py={"lg"}>
@@ -36,7 +37,7 @@ export const Cart = () => {
             <Space h="xl" />
           </Grid.Col>
 
-          {cart.map((book) => (
+          {cart.cartItems.map((book) => (
             <Grid.Col xl={3} lg={4} md={4} sm={6} xs={6} key={book.id}>
               <Card
                 shadow="sm"
@@ -67,7 +68,7 @@ export const Cart = () => {
                 </Badge> */}
                     <Badge color="cyan" size="lg" radius="xs" variant="outline">
                       <Text color="black" w={130}>{`ЦЕНА: ${
-                        book.discount ? book.discount : book.price
+                        book.discount || book.price
                       } руб.`}</Text>
                     </Badge>
                     <Space h="xs" />
@@ -81,9 +82,7 @@ export const Cart = () => {
                 </Badge> */}
                     <Badge color="cyan" size="lg" radius="xs" variant="outline">
                       <Text color="black" w={130}>{`СУММА: ${
-                        book.discount
-                          ? book.discount * book.count
-                          : book.price * book.count
+                        book.discount * book.count || book.price * book.count
                       } руб.`}</Text>
                     </Badge>
                     <Space h="lg" />
@@ -128,6 +127,14 @@ export const Cart = () => {
               </Card>
             </Grid.Col>
           ))}
+          <Grid.Col span={12} py={0}>
+            <Title order={3}>{`Итого кол-во: ${cart.totalCount} шт.`}</Title>
+          </Grid.Col>
+          <Grid.Col span={12} py={0}>
+            <Title
+              order={3}
+            >{`Итого сумма заказа: ${cart.totalPrice} руб. `}</Title>
+          </Grid.Col>
         </Grid>
       </Container>
     </>
