@@ -25,12 +25,12 @@ const CartBar = ({ book, cartCount = 0 }: CartBarProps) => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.cartItems);
 
-  const item = cartItems.some((item) => item.id === book.id); //!
+  const item = cartItems.some((item) => item.id === book.id);
 
   const increment = () => {
     console.log("incr", "item", item);
     item ? dispatch(incrementCartItem(book.id)) : dispatch(addCartItems(book));
-  }; //!
+  };
 
   const decrement = () => {
     if (cartCount > 1) {
@@ -41,20 +41,15 @@ const CartBar = ({ book, cartCount = 0 }: CartBarProps) => {
   const handleChangeCount = (value: number | "") => {
     if (!item) {
       dispatch(handleChangeCountItem({ book, count: Number(value) }));
-    } //!
-    else {
+    } else {
       dispatch(handleChangeCountItem({ book, count: Number(value) }));
     }
-
-    // value === ""
-    //   ? dispatch(handleChangeCountItem({ id: book.id, count: 1 }))
-    //   : dispatch(handleChangeCountItem({ id: book.id, count: Number(value) }));
   };
 
   return (
     <Flex gap="5px">
       <Button
-        disabled={cartCount === 1}
+        disabled={cartCount <= 1}
         size="xs"
         variant="outline"
         px={13}

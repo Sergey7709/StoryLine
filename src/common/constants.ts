@@ -1,4 +1,9 @@
-import { InitialStateCartSlice } from "./types";
+import { PayloadAction } from "@reduxjs/toolkit";
+import {
+  CartItem,
+  InitialStateCartSlice,
+  handleChangeCountItemProps,
+} from "./types";
 
 export const BASE_URL = "https://rest-api-books.onrender.com/";
 // export const BASE_URL = "http://localhost:5555/";
@@ -154,7 +159,7 @@ export const updateCartTotals = (
       state.totalCount -= 1;
       state.totalPrice -= totalPrice;
       break;
-    case "handleChange": //!
+    case "handleChange":
       state.totalCount = count;
       state.totalPrice = totalPrice;
       break;
@@ -166,3 +171,30 @@ export const updateCartTotals = (
 export const updateLocalStorage = (state: InitialStateCartSlice) => {
   localStorage.setItem("cartItems", JSON.stringify(state));
 };
+
+export const findCartItemById = (cartItems: CartItem[], id: number) =>
+  cartItems.find((item) => item.id === id); //!
+
+export const handleChangeTotal = (
+  state: InitialStateCartSlice,
+  action: PayloadAction<handleChangeCountItemProps>
+) => {
+  const cartItem = findCartItemById(state.cartItems, action.payload.book.id);
+
+  const cartItemCount = cartItem?.count || 0;
+  const cartItemPrice = cartItem?.discount
+    ? cartItemCount * cartItem.discount
+    : cartItemCount * (cartItem?.price || 0);
+
+  const bookCount = action.payload.count;
+  const bookPrice = action.payload.book.discount
+    ? action.payload.book.discount * bookCount
+    : action.payload.book.price * bookCount;
+
+  const incrementTotalPrice = state.totalPrice - cartItemPrice + bookPrice;
+
+  const incrementTotalCount =
+    state.totalCount - (cartItem?.count ?? 0) + action.payload.count;
+
+  return { incrementTotalPrice, incrementTotalCount, cartItem };
+}; //!

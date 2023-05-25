@@ -34,7 +34,7 @@ import ModalReviewFields from "./UI/ModalReviewFields";
 export const BookCard = () => {
   const navigate = useNavigate();
 
-  const cartItems = useAppSelector((state) => state.cart.cartItems); //!
+  const cartItems = useAppSelector((state) => state.cart.cartItems);
   const { totalPrice, totalCount } = useAppSelector((state) => state.cart);
   console.log("totalPrice", totalPrice, "totalCount ", totalCount);
 
@@ -48,7 +48,7 @@ export const BookCard = () => {
     fetchItem
   );
 
-  const count = cartItems.find((item) => item.id === data?.id)?.count; //!
+  const count = cartItems.find((item) => item.id === data?.id)?.count;
 
   useEffect(() => {
     if (slug.id) mutateAsync(slug.id);

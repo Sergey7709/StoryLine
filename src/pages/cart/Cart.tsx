@@ -10,17 +10,13 @@ import {
   Badge,
   Container,
 } from "@mantine/core";
-import React from "react";
 import CartBar from "../../components/cartCount/CartBar";
-import { notifications } from "@mantine/notifications";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import { deleteCartItems } from "../../redux/cartSlice";
 import { CartItem } from "../../common/types";
 import { Link } from "react-router-dom";
 
 export const Cart = () => {
-  const user = useAppSelector((state) => state.auth.user);
-
   const cart = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
