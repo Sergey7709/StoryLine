@@ -12,9 +12,14 @@ import {
   calculatePrice,
 } from "../common/constants";
 
-const initialStateFromStorage = JSON.parse(
-  localStorage.getItem("cartItems") ?? "null"
-);
+// const initialStateFromStorage = JSON.parse(
+//   localStorage.getItem("cartItems") ?? "null"
+// );
+
+const cartItemsFromStorage = localStorage.getItem("cartItems");
+const initialStateFromStorage = cartItemsFromStorage
+  ? JSON.parse(cartItemsFromStorage)
+  : null;
 
 const initialState: InitialStateCartSlice = {
   cartItems: initialStateFromStorage ? initialStateFromStorage.cartItems : [],
