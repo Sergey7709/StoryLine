@@ -198,3 +198,7 @@ export const handleChangeTotal = (
 
   return { incrementTotalPrice, incrementTotalCount, cartItem };
 }; //!
+
+export const calculatePrice = (item: CartItem) => {
+  return item.discount || item.price;
+};

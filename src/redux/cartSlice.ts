@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
-  CartItem,
   InitialStateCartSlice,
   Item,
   handleChangeCountItemProps,
@@ -10,6 +9,7 @@ import {
   findCartItemById,
   updateCartTotals,
   updateLocalStorage,
+  calculatePrice,
 } from "../common/constants";
 
 const initialStateFromStorage = JSON.parse(
@@ -20,10 +20,6 @@ const initialState: InitialStateCartSlice = {
   cartItems: initialStateFromStorage ? initialStateFromStorage.cartItems : [],
   totalCount: initialStateFromStorage ? initialStateFromStorage.totalCount : 0,
   totalPrice: initialStateFromStorage ? initialStateFromStorage.totalPrice : 0,
-};
-
-const calculatePrice = (item: CartItem) => {
-  return item.discount || item.price;
 };
 
 export const cartSlice = createSlice({
