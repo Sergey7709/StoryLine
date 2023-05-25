@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import { Item } from "../../common/types";
 import { useStyles } from "./BooksListStyles";
 import PricesDiscount from "./UI/PricesDiscount";
-import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
+import { useAppDispatch } from "../../redux/redux.hooks";
 import { addCartItems } from "../../redux/cartSlice";
 
 type SingleBookListProps = {

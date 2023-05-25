@@ -6,35 +6,49 @@ import {
   Text,
   rem,
 } from "@mantine/core";
-import { useAppDispatch } from "../../redux/redux.hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import {
+  addCartItems,
   decrementCartItem,
   handleChangeCountItem,
   incrementCartItem,
 } from "../../redux/cartSlice";
+import { Item } from "../../common/types";
 
 type CartBarProps = {
-  bookId?: number;
-  cartCount?: number;
+  book: Item;
+  cartCount: number | undefined;
 };
 
-const CartBar = ({ bookId = 0, cartCount = 1 }: CartBarProps) => {
+const CartBar = ({ book, cartCount = 0 }: CartBarProps) => {
+  // console.log("bookId", book.id, "cartCount", cartCount);
   const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.cartItems);
+
+  const item = cartItems.some((item) => item.id === book.id); //!
 
   const increment = () => {
-    dispatch(incrementCartItem(bookId));
-  };
+    console.log("incr", "item", item);
+    item ? dispatch(incrementCartItem(book.id)) : dispatch(addCartItems(book));
+  }; //!
 
   const decrement = () => {
     if (cartCount > 1) {
-      dispatch(decrementCartItem(bookId));
+      dispatch(decrementCartItem(book.id));
     }
   };
 
   const handleChangeCount = (value: number | "") => {
-    value === ""
-      ? dispatch(handleChangeCountItem({ id: bookId, count: 1 }))
-      : dispatch(handleChangeCountItem({ id: bookId, count: Number(value) }));
+    if (!item) {
+      dispatch(handleChangeCountItem({ book, count: Number(value) }));
+    } //!
+    else {
+      dispatch(handleChangeCountItem({ book, count: Number(value) }));
+    }
+
+    // value === ""
+    //   ? dispatch(handleChangeCountItem({ id: book.id, count: 1 }))
+    //   : dispatch(handleChangeCountItem({ id: book.id, count: Number(value) }));
   };
 
   return (

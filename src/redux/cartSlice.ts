@@ -71,11 +71,55 @@ export const cartSlice = createSlice({
       state,
       action: PayloadAction<handleChangeCountItemProps>
     ) => {
-      const cartItem = findCartItemById(state.cartItems, action.payload.id);
+      // const cartItem = findCartItemById(state.cartItems, action.payload.id);
+      // if (cartItem) {
+      //   cartItem.count = action.payload.count;
+      // }
+      // updateLocalStorage(state);
+
+      const cartItem = findCartItemById(
+        state.cartItems,
+        action.payload.book.id
+      ); //!
+
+      const cartItemCount = cartItem?.count || 0;
+      const cartItemPrice = cartItem?.discount
+        ? cartItemCount * cartItem.discount
+        : cartItemCount * (cartItem?.price || 0);
+
+      const bookCount = action.payload.count;
+      const bookPrice = action.payload.book.discount
+        ? action.payload.book.discount * bookCount
+        : action.payload.book.price * bookCount;
+
+      const incrementTotalPrice = state.totalPrice - cartItemPrice + bookPrice; //!
+
+      const incrementTotalCount =
+        state.totalCount - (cartItem?.count ?? 0) + action.payload.count;
+
       if (cartItem) {
         cartItem.count = action.payload.count;
+        updateCartTotals(
+          state,
+          incrementTotalPrice,
+          "handleChange",
+          // action.payload.count
+          incrementTotalCount //!
+        ); //!
+        updateLocalStorage(state); //!
+      } else {
+        state.cartItems.push({
+          ...action.payload.book,
+          count: action.payload.count,
+        });
+        updateCartTotals(
+          state,
+          incrementTotalPrice,
+          "handleChange",
+          action.payload.count
+        ); //!
+        updateLocalStorage(state); //!
       }
-      updateLocalStorage(state);
     },
 
     deleteCartItems: (state, action: PayloadAction<number>) => {

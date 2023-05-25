@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import { Rating } from "@mantine/core";
 import CartBar from "../../components/cartCount/CartBar";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
 import { Loader } from "../../components/loader/Loader";
@@ -32,6 +32,12 @@ import PricesDiscount from "./UI/PricesDiscount";
 import ModalReviewFields from "./UI/ModalReviewFields";
 
 export const BookCard = () => {
+  const navigate = useNavigate();
+
+  const cartItems = useAppSelector((state) => state.cart.cartItems); //!
+  const { totalPrice, totalCount } = useAppSelector((state) => state.cart);
+  console.log("totalPrice", totalPrice, "totalCount ", totalCount);
+
   const initialReviewState = {
     date: getCurrentDate(),
     text: "",
@@ -41,6 +47,8 @@ export const BookCard = () => {
   const { mutateAsync, data, isLoading } = useMutation<Item, string, string>(
     fetchItem
   );
+
+  const count = cartItems.find((item) => item.id === data?.id)?.count; //!
 
   useEffect(() => {
     if (slug.id) mutateAsync(slug.id);
@@ -164,14 +172,16 @@ export const BookCard = () => {
                       discount={data.discount}
                     />
                   </Flex>
-                  <CartBar />
+                  <CartBar book={data} cartCount={count} />
+
                   <Button
+                    onClick={() => navigate("/cart")}
                     variant="gradient"
                     mt={10}
                     fullWidth
                     gradient={{ from: "teal", to: "lime", deg: 105 }}
                   >
-                    КУПИТЬ
+                    <Text>ОФОРМИТЬ</Text>
                   </Button>
                 </Grid.Col>
               </Grid>

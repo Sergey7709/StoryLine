@@ -137,21 +137,26 @@ export const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
 
 export const updateCartTotals = (
   state: InitialStateCartSlice,
-  price: number,
-  type: string
+  totalPrice: number,
+  type: string,
+  count = 1 //!
 ) => {
   switch (type) {
     case "add":
       state.totalCount += 1;
-      state.totalPrice = price;
+      state.totalPrice = totalPrice;
       break;
     case "increment":
       state.totalCount += 1;
-      state.totalPrice += price;
+      state.totalPrice += totalPrice;
       break;
     case "decrement":
       state.totalCount -= 1;
-      state.totalPrice -= price;
+      state.totalPrice -= totalPrice;
+      break;
+    case "handleChange": //!
+      state.totalCount = count;
+      state.totalPrice = totalPrice;
       break;
     default:
       break;

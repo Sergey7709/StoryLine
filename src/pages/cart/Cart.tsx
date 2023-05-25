@@ -16,6 +16,7 @@ import { notifications } from "@mantine/notifications";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import { deleteCartItems } from "../../redux/cartSlice";
 import { CartItem } from "../../common/types";
+import { Link } from "react-router-dom";
 
 export const Cart = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -65,12 +66,14 @@ export const Cart = () => {
               >
                 <Grid gutter="sm">
                   <Grid.Col span={5} color="gray">
-                    <Image
-                      width={100}
-                      height={150}
-                      src={book.itemImageUrl}
-                      alt="book img"
-                    />
+                    <Link to={`/books-list/${book.id}`}>
+                      <Image
+                        width={100}
+                        height={150}
+                        src={book.itemImageUrl}
+                        alt="book img"
+                      />
+                    </Link>
                   </Grid.Col>
 
                   <Grid.Col span={7}>
@@ -87,7 +90,7 @@ export const Cart = () => {
                       } руб.`}</Text>
                     </Badge>
                     <Space h="lg" />
-                    <CartBar bookId={book.id} cartCount={book.count} />
+                    <CartBar book={book} cartCount={book.count} />
                     <Space h="xs" />
                   </Grid.Col>
 

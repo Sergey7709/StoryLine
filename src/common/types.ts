@@ -101,7 +101,12 @@ export type InitialStateCartSlice = {
   totalPrice: number;
 };
 
+// export type handleChangeCountItemProps = {
+//   id: number;
+//   count: number;
+// };
+
 export type handleChangeCountItemProps = {
-  id: number;
+  book: Item;
   count: number;
-};
+}; //!
