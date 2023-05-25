@@ -26,9 +26,6 @@ const calculatePrice = (item: CartItem) => {
   return item.discount || item.price;
 };
 
-// export const findCartItemById = (cartItems: CartItem[], id: number) =>
-//   cartItems.find((item) => item.id === id);
-
 export const cartSlice = createSlice({
   name: "cartSlice",
   initialState,
@@ -76,51 +73,24 @@ export const cartSlice = createSlice({
       state,
       action: PayloadAction<handleChangeCountItemProps>
     ) => {
-      // const cartItem = findCartItemById(
-      //   state.cartItems,
-      //   action.payload.book.id
-      // );
-
-      // const cartItemCount = cartItem?.count || 0;
-      // const cartItemPrice = cartItem?.discount
-      //   ? cartItemCount * cartItem.discount
-      //   : cartItemCount * (cartItem?.price || 0);
-
-      // const bookCount = action.payload.count;
-      // const bookPrice = action.payload.book.discount
-      //   ? action.payload.book.discount * bookCount
-      //   : action.payload.book.price * bookCount;
-
-      // const incrementTotalPrice = state.totalPrice - cartItemPrice + bookPrice;
-
-      // const incrementTotalCount =
-      //   state.totalCount - (cartItem?.count ?? 0) + action.payload.count;
-
       const { incrementTotalPrice, incrementTotalCount, cartItem } =
         handleChangeTotal(state, action);
 
       if (cartItem) {
         cartItem.count = action.payload.count;
-        updateCartTotals(
-          state,
-          incrementTotalPrice,
-          "handleChange",
-          incrementTotalCount
-        );
-        updateLocalStorage(state);
       } else {
         state.cartItems.push({
           ...action.payload.book,
           count: action.payload.count,
         });
-        updateCartTotals(
-          state,
-          incrementTotalPrice,
-          "handleChange",
-          action.payload.count
-        );
-        updateLocalStorage(state);
       }
+      updateCartTotals(
+        state,
+        incrementTotalPrice,
+        "handleChange",
+        incrementTotalCount
+      );
+      updateLocalStorage(state);
     },
 
     deleteCartItems: (state, action: PayloadAction<number>) => {
@@ -129,11 +99,15 @@ export const cartSlice = createSlice({
         state.totalCount -= cartItem.count;
         state.totalPrice -=
           cartItem.count * (cartItem.discount || cartItem.price);
+        state.cartItems = state.cartItems.filter(
+          (item) => item.id !== action.payload
+        );
+      } else if (action.payload === 0) {
+        state.cartItems = [];
+        state.totalCount = 0;
+        state.totalPrice = 0;
       }
 
-      state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload
-      );
       updateLocalStorage(state);
     },
   },

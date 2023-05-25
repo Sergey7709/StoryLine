@@ -48,7 +48,7 @@ export const BookCard = () => {
     fetchItem
   );
 
-  const count = cartItems.find((item) => item.id === data?.id)?.count;
+  const count = cartItems.find((item) => item.id === data?.id)?.count; //!
 
   useEffect(() => {
     if (slug.id) mutateAsync(slug.id);

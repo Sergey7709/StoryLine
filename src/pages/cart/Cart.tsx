@@ -9,12 +9,14 @@ import {
   Divider,
   Badge,
   Container,
+  Group,
+  UnstyledButton,
 } from "@mantine/core";
 import CartBar from "../../components/cartCount/CartBar";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import { deleteCartItems } from "../../redux/cartSlice";
 import { CartItem } from "../../common/types";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export const Cart = () => {
   const cart = useAppSelector((state) => state.cart);
@@ -43,10 +45,22 @@ export const Cart = () => {
       <Container size="100%" h={"100%"} px="xs" py={"lg"}>
         <Grid pl={"3%"}>
           <Grid.Col span={12}>
-            <Title order={1} pb={10}>
-              Корзина товаров
-            </Title>
-            <Divider size="xs" variant="solid" color="gray" />
+            <Group spacing="xs">
+              <Title order={1} pb={10}>
+                Корзина товаров
+              </Title>
+              <Divider size="xs" variant="solid" color="gray" />
+              <UnstyledButton>
+                <Badge
+                  color="black"
+                  onClick={() => {
+                    handleDeleteCartItem(0);
+                  }}
+                >
+                  <Text> очистить всю корзину</Text>
+                </Badge>
+              </UnstyledButton>
+            </Group>
             <Space h="xl" />
           </Grid.Col>
 
@@ -99,17 +113,21 @@ export const Cart = () => {
                   </Grid.Col>
 
                   <Grid.Col span={12} pr={10} h={75} py={0}>
-                    <Text
-                      py={0}
-                      sx={{ fontFamily: "Greycliff CF, sans-serif" }}
-                      ta="start"
-                      fz="lg"
-                      fw={700}
-                      italic
-                      lineClamp={2}
-                    >
-                      {`${book.title}`}
-                    </Text>
+                    <NavLink to={`/books-list/${book.id}`}>
+                      <UnstyledButton>
+                        <Text
+                          py={0}
+                          sx={{ fontFamily: "Greycliff CF, sans-serif" }}
+                          ta="start"
+                          fz="lg"
+                          fw={700}
+                          italic
+                          lineClamp={2}
+                        >
+                          {`${book.title}`}
+                        </Text>
+                      </UnstyledButton>
+                    </NavLink>
                     <Divider my={5} />
                   </Grid.Col>
                   <Grid.Col span={12} py={0}>
