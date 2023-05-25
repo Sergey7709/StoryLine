@@ -4,7 +4,7 @@ type InitialStateFilterSlice = {
   param: string;
 };
 const initialState: InitialStateFilterSlice = {
-  param: "all?", //!
+  param: "all?",
 };
 
 export const filterSlice = createSlice({

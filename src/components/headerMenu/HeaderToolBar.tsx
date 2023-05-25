@@ -74,11 +74,12 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
       </Grid.Col>
       <Grid.Col span={8}>
         <Group
-          spacing={12}
+          spacing={10}
           align="center"
           position="right"
           mr={"5%"}
           mb={"0px"}
+          px={0}
         >
           <Autocomplete
             className={classes.search_default}

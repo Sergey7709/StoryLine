@@ -1,4 +1,4 @@
-import { Group, Grid, Modal, Flex, Title } from "@mantine/core";
+import { Group, Grid, Modal, Flex, Title, Divider } from "@mantine/core";
 import { useStyles } from "./BooksListStyles";
 import { useMutation, useQuery } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
@@ -18,8 +18,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { Authorization } from "../authorization/Authorization";
 
 export const BooksList = React.memo(() => {
-  const getCurrentUser = useCurrentUser();
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
+  const getCurrentUser = useCurrentUser();
+
   const [openedAuth, handlers] = useDisclosure(false);
 
   const [valueSort, setValueSort] = useState("");
@@ -27,10 +28,6 @@ export const BooksList = React.memo(() => {
   const [sortMinMaxPrice, setSortMinMaxPrice] = useState<Array<number>>([]);
   const [minPrice, maxPrice] = sortMinMaxPrice;
   const [maxDiscount, setMaxDiscount] = useState<number>(0);
-
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
 
   const param = useAppSelector((state) => state.filter.param);
   const { classes } = useStyles();
@@ -58,11 +55,16 @@ export const BooksList = React.memo(() => {
       }, 0);
   }, [data]);
 
+  // useEffect(() => {
+  //   getCurrentUser();
+  // }, []); //!
+
   // console.log({ data });
   // console.log("maxDiscount:", maxDiscount);
   // console.log(priceSort);
   // console.log(data);
   // console.log(sortMinMaxPrice);
+  // console.log(user);
 
   const dataDiscount = useMemo(
     () =>
@@ -120,15 +122,20 @@ export const BooksList = React.memo(() => {
       if (user) {
         if (favorite === false) {
           await mutateAsync(`user/favorites/${bookId}`, {});
+          console.log("add favorite");
         } else if (favorite === true) {
           await mutateAsync(`user/favorites-remove/${bookId}`, {});
+          console.log("del favorite");
         }
       }
+      getCurrentUser();
     },
     [user, handlers, getCurrentUser, mutateAsync]
   );
 
   const books = useMemo(() => {
+    // console.log("books single in Booklist");
+    // console.log("user", user?.name, user?.favoriteItems);
     const filteredBooks = minPrice > 0 ? dataDiscount : data?.items;
     return filteredBooks?.map((book: Item) => (
       <SingleBookList
@@ -138,7 +145,7 @@ export const BooksList = React.memo(() => {
         favoritesChange={favoritesChange}
       />
     ));
-  }, [data?.items]);
+  }, [data?.items, user]);
 
   const sortHandler = useCallback((valueSort: string) => {
     setValueSort(valueSort);
@@ -152,20 +159,28 @@ export const BooksList = React.memo(() => {
     []
   );
 
-  // console.log("render BookList");
+  console.log("render BookList");
   // console.log("избранных книг:", user?.favoriteItems);
-  // loading && console.log("load");
 
   return (
     <>
       {isLoading && <Loader />}
       {isLoadingError && <ServerError />}
       {!isLoading && param === categoryNewBooks && (
-        <Flex justify={"center"} align={"center"}>
-          <Title color="green" order={1}>
-            КНИЖНЫЕ НОВИНКИ
-          </Title>
-        </Flex>
+        <Grid>
+          <Grid.Col span={12}>
+            <Title
+              pb={"sm"}
+              align="center"
+              variant="gradient"
+              gradient={{ from: "indigo", to: "green", deg: 45 }}
+              order={1}
+            >
+              КНИЖНЫЕ НОВИНКИ
+            </Title>
+            <Divider size="xs" variant="solid" color="gray" />
+          </Grid.Col>
+        </Grid>
       )}
       <Grid>
         <Modal size={500} opened={openedAuth} onClose={handlers.close} centered>

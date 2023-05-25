@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { BASE_URL } from "../../common/constants";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import { useAppSelector } from "../../redux/redux.hooks";
-import { Flex, Grid, Space } from "@mantine/core";
+import { Divider, Flex, Grid, Space } from "@mantine/core";
 import SingleBookList from "../catalog/SingleBookList";
 import EmptyData from "../userAccount/assetsUserAccount/EmptyData";
 import { Title } from "@mantine/core";
@@ -65,7 +65,7 @@ export const Favorites = () => {
       getCurrentUser();
     }
   };
-  //!!!
+
   return (
     <>
       {!user && (
@@ -75,10 +75,16 @@ export const Favorites = () => {
       {user && (
         <>
           <Flex justify={"center"} align={"center"}>
-            <Title color="yellow" order={1}>
+            <Title
+              pb={"sm"}
+              variant="gradient"
+              gradient={{ from: "indigo", to: "green", deg: 45 }}
+              order={1}
+            >
               МОИ ИЗБРАННЫЕ КНИГИ
             </Title>
           </Flex>
+          <Divider size="xs" variant="solid" color="gray" />
           <Space h="md" />
           {user?.favoriteItems.length ? (
             <Grid pl={5}>

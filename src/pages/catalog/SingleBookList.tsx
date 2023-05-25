@@ -11,12 +11,14 @@ import {
   Flex,
   Popover,
 } from "@mantine/core";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { Item } from "../../common/types";
 import { useStyles } from "./BooksListStyles";
 import PricesDiscount from "./UI/PricesDiscount";
+import { useAppDispatch } from "../../redux/redux.hooks";
+import { addCartItems } from "../../redux/cartSlice";
 
 type SingleBookListProps = {
   book: Item;
@@ -30,17 +32,26 @@ const SingleBookList: FC<SingleBookListProps> = ({
 }) => {
   const [favoriteState, setFavoriteState] = useState(favorite);
 
+  const dispatch = useAppDispatch();
+
   const handleFavorites = useCallback(() => {
     setFavoriteState(!favoriteState);
     favoritesChange(book.id, favoriteState);
   }, [book.id, favoriteState, favoritesChange]);
 
+  const handleAddCartItem = () => {
+    // console.log("Добавлен товар в корзину", book);
+    dispatch(addCartItems(book));
+  };
+
   const { id, discount, reviews, price } = book;
   const { classes } = useStyles();
 
+  useEffect(() => {
+    setFavoriteState(favorite);
+  }, [favorite]);
+
   console.log("render single");
-  // console.log("favoriteState", favoriteState);
-  // console.log("favorite", favorite);
 
   return (
     <>
@@ -144,8 +155,9 @@ const SingleBookList: FC<SingleBookListProps> = ({
             color="blue"
             radius="md"
             w={"12rem"}
+            onClick={handleAddCartItem}
           >
-            КУПИТЬ
+            В КОРЗИНУ
           </Button>
         </Card>
       </Grid.Col>
