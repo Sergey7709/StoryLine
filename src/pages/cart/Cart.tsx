@@ -27,8 +27,8 @@ export const Cart = () => {
     dispatch(deleteCartItems(bookID));
   };
 
-  console.log("cart", cart.cartItems);
-  console.log("totalCount", cart.totalCount, "totalPrice", cart.totalPrice);
+  // console.log("cart", cart.cartItems);
+  // console.log("totalCount", cart.totalCount, "totalPrice", cart.totalPrice);
 
   if (cart.cartItems.length === 0) {
     return (
@@ -100,7 +100,7 @@ export const Cart = () => {
                       } руб.`}</Text>
                     </Badge>
                     <Space h="lg" />
-                    <CartBar book={book} cartCount={book.count} />
+                    <CartBar book={book} />
                     <Space h="xs" />
                   </Grid.Col>
 

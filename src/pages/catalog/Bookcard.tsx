@@ -30,13 +30,17 @@ import { notifications } from "@mantine/notifications";
 import { getCurrentDate } from "../../helpers/getCurrentDate";
 import PricesDiscount from "./UI/PricesDiscount";
 import ModalReviewFields from "./UI/ModalReviewFields";
+import { useDispatch } from "react-redux";
+import { addCartItems, handleChangeCountItem } from "../../redux/cartSlice";
 
 export const BookCard = () => {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch(); //!
+
   const cartItems = useAppSelector((state) => state.cart.cartItems);
-  const { totalPrice, totalCount } = useAppSelector((state) => state.cart);
-  console.log("totalPrice", totalPrice, "totalCount ", totalCount);
+
+  const [countBar, setCountBar] = useState<number>(1);
 
   const initialReviewState = {
     date: getCurrentDate(),
@@ -48,7 +52,26 @@ export const BookCard = () => {
     fetchItem
   );
 
-  const count = cartItems.find((item) => item.id === data?.id)?.count; //!
+  const book = data && { ...data };
+
+  const itemCart = cartItems.find((item) => item.id === book?.id); //!
+  // console.log("itemCountCart", itemCountCart);
+  // console.log("countBar", countBar);
+
+  const handleAddCartItem = () => {
+    if (itemCart) {
+      book && dispatch(handleChangeCountItem({ book, count: countBar }));
+    } //!
+    else {
+      data && dispatch(addCartItems(data));
+    }
+
+    navigate("/cart");
+  }; //!
+
+  const incrementCountBar = () => setCountBar((prevCount) => prevCount + 1); //!
+  const decrementCountBar = () => setCountBar((prevCount) => prevCount - 1); //!
+  const handleChangeCountBar = (value: number) => setCountBar(value);
 
   useEffect(() => {
     if (slug.id) mutateAsync(slug.id);
@@ -172,10 +195,17 @@ export const BookCard = () => {
                       discount={data.discount}
                     />
                   </Flex>
-                  <CartBar book={data} cartCount={count} />
+
+                  <CartBar
+                    book={data}
+                    countBar={countBar}
+                    incrementCountBar={incrementCountBar}
+                    decrementCountBar={decrementCountBar}
+                    handleChangeCountBar={handleChangeCountBar}
+                  />
 
                   <Button
-                    onClick={() => navigate("/cart")}
+                    onClick={handleAddCartItem}
                     variant="gradient"
                     mt={10}
                     fullWidth

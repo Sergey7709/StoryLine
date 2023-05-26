@@ -8,7 +8,6 @@ import {
 } from "@mantine/core";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import {
-  addCartItems,
   decrementCartItem,
   handleChangeCountItem,
   incrementCartItem,
@@ -17,32 +16,58 @@ import { Item } from "../../common/types";
 
 type CartBarProps = {
   book: Item;
-  cartCount: number | undefined;
+  countBar?: number;
+  incrementCountBar?: () => void;
+  decrementCountBar?: () => void;
+  handleChangeCountBar?: (value: number) => void;
 };
 
-const CartBar = ({ book, cartCount = 0 }: CartBarProps) => {
+const CartBar = ({
+  book,
+  countBar,
+  incrementCountBar,
+  decrementCountBar,
+  handleChangeCountBar,
+}: CartBarProps) => {
   // console.log("bookId", book.id, "cartCount", cartCount);
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.cartItems);
 
   const item = cartItems.some((item) => item.id === book.id);
 
-  const increment = () => {
-    console.log("incr", "item", item);
-    item ? dispatch(incrementCartItem(book.id)) : dispatch(addCartItems(book));
+  const itemCount = cartItems.find((item) => item.id === book?.id)?.count; //!
+
+  const cartCount = countBar || itemCount || 1; //!
+
+  // console.log("cartCount", cartCount, "countBar", countBar);
+
+  const handleIncrementClick = () => {
+    if (incrementCountBar) {
+      incrementCountBar();
+      console.log("incrementCountBar");
+    } else {
+      dispatch(incrementCartItem(book.id));
+    }
   };
 
-  const decrement = () => {
-    if (cartCount > 1) {
+  const handleDecrementClick = () => {
+    if (decrementCountBar) {
+      decrementCountBar();
+    } else if (cartCount > 1) {
       dispatch(decrementCartItem(book.id));
     }
   };
 
   const handleChangeCount = (value: number | "") => {
-    if (!item) {
-      dispatch(handleChangeCountItem({ book, count: Number(value) }));
-    } else {
-      dispatch(handleChangeCountItem({ book, count: Number(value) }));
+    if (!countBar && item) {
+      dispatch(
+        handleChangeCountItem({
+          book,
+          count: Number(value) < 1 || "" ? 1 : Number(value),
+        })
+      );
+    } else if (handleChangeCountBar) {
+      handleChangeCountBar(Number(value) < 1 || "" ? 1 : Number(value));
     }
   };
 
@@ -53,7 +78,7 @@ const CartBar = ({ book, cartCount = 0 }: CartBarProps) => {
         size="xs"
         variant="outline"
         px={13}
-        onClick={decrement}
+        onClick={handleDecrementClick}
       >
         <Text align="center" fz={"lg"}>
           -
@@ -78,7 +103,12 @@ const CartBar = ({ book, cartCount = 0 }: CartBarProps) => {
         />
       </ActionIcon>
 
-      <Button size="xs" variant="outline" px={11} onClick={increment}>
+      <Button
+        size="xs"
+        variant="outline"
+        px={11}
+        onClick={handleIncrementClick}
+      >
         <Text align="center" fz={"lg"}>
           +
         </Text>
