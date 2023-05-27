@@ -79,26 +79,28 @@ const CartBar = ({
         variant="outline"
         px={13}
         onClick={handleDecrementClick}
+        color="cyan"
       >
         <Text align="center" fz={"lg"}>
           -
         </Text>
       </Button>
-      <ActionIcon
-        size={30}
-        px={20}
-        variant="outline"
-        color="indigo.4"
-        radius="sm"
-      >
+      <ActionIcon size={30} px={20} variant="outline" color="cyan">
         <NumberInput
           hideControls
-          color="green"
           variant="unstyled"
           min={1}
           max={100}
           value={cartCount}
-          styles={{ input: { width: rem(54), textAlign: "center" } }}
+          styles={{
+            input: {
+              width: rem(39),
+              height: rem(28),
+              textAlign: "center",
+              fontSize: "14px",
+              fontWeight: "bold",
+            },
+          }}
           onChange={handleChangeCount}
         />
       </ActionIcon>
@@ -108,6 +110,7 @@ const CartBar = ({
         variant="outline"
         px={11}
         onClick={handleIncrementClick}
+        color="cyan"
       >
         <Text align="center" fz={"lg"}>
           +

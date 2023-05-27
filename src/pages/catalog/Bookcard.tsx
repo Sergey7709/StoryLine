@@ -55,15 +55,15 @@ export const BookCard = () => {
   const book = data && { ...data };
 
   const itemCart = cartItems.find((item) => item.id === book?.id); //!
-  console.log("itemCart", itemCart);
-  console.log("countBar", countBar);
+  // console.log("itemCart", itemCart);
+  // console.log("countBar", countBar);
 
   const incrementCountBar = () => setCountBar((prevCount) => prevCount + 1); //!
   const decrementCountBar = () => setCountBar((prevCount) => prevCount - 1); //!
   const handleChangeCountBar = (value: number) => setCountBar(value); //!
 
   const handleAddCartItem = () => {
-    if (countBar === 1) {
+    if (countBar === 1 && !itemCart) {
       data && dispatch(addCartItems(data));
     } else {
       book && dispatch(handleChangeCountItem({ book, count: countBar }));

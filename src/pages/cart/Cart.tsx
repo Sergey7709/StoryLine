@@ -87,15 +87,15 @@ export const Cart = () => {
                   </Grid.Col>
 
                   <Grid.Col span={7}>
-                    <Badge color="cyan" size="lg" radius="xs" variant="outline">
-                      <Text color="black" w={130}>{`ЦЕНА: ${
+                    <Badge color="cyan" size="lg" radius="xs" variant="filled">
+                      <Text w={130}>{`ЦЕНА: ${
                         book.discount || book.price
                       } руб.`}</Text>
                     </Badge>
                     <Space h="xs" />
 
-                    <Badge color="cyan" size="lg" radius="xs" variant="outline">
-                      <Text color="black" w={130}>{`СУММА: ${
+                    <Badge color="cyan" size="lg" radius="xs" variant="filled">
+                      <Text w={130}>{`СУММА: ${
                         book.discount * book.count || book.price * book.count
                       } руб.`}</Text>
                     </Badge>

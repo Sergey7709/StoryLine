@@ -130,7 +130,8 @@ export const BooksList = React.memo(() => {
       }
       getCurrentUser();
     },
-    [user, handlers, getCurrentUser, mutateAsync]
+    // [user, handlers, getCurrentUser, mutateAsync]
+    [mutateAsync]
   );
 
   const books = useMemo(() => {
