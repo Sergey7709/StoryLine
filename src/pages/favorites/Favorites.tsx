@@ -8,10 +8,17 @@ import { Divider, Flex, Grid, Space } from "@mantine/core";
 import SingleBookList from "../catalog/SingleBookList";
 import EmptyData from "../userAccount/assetsUserAccount/EmptyData";
 import { Title } from "@mantine/core";
+import { useEffect } from "react";
 
 export const Favorites = () => {
   const user = useAppSelector((state) => state.auth.user);
+
   const getCurrentUser = useCurrentUser();
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   const { mutateAsync } = useMutation(
     (param: string) => {
       return axios.post(`${BASE_URL}${param}`, undefined, {
@@ -21,7 +28,10 @@ export const Favorites = () => {
       });
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        getCurrentUser();
+      },
+
       onError: () => {
         notifications.show({
           message: "Ошибка при добавлении книги в избранное!",
@@ -62,8 +72,8 @@ export const Favorites = () => {
           color: "yellow",
         });
       }
-      getCurrentUser();
     }
+    // getCurrentUser();
   };
 
   return (
