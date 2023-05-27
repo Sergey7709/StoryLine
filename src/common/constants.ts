@@ -201,4 +201,4 @@ export const handleChangeTotal = (
 
 export const calculatePrice = (item: CartItem) => {
   return item.discount || item.price;
-};
+}; //!

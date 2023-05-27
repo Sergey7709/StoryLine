@@ -2,7 +2,7 @@ import { Group, Grid, Modal, Flex, Title, Divider } from "@mantine/core";
 import { useStyles } from "./BooksListStyles";
 import { useMutation, useQuery } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
-import { Item, ItemsResponse, User } from "../../common/types";
+import { ItemsResponse, User } from "../../common/types";
 import { useAppSelector } from "../../redux/redux.hooks";
 import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
@@ -10,16 +10,15 @@ import SingleBookList from "./SingleBookList";
 import PriceRange from "./BooksPriceRange";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ServerError } from "../../components/errorNetwork/ServerError";
-import { useCurrentUser } from "../../hooks/useCurrenUser";
 import axios from "axios";
 import { BASE_URL, categoryNewBooks } from "../../common/constants";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { Authorization } from "../authorization/Authorization";
+import { useCurrentUser } from "../../hooks/useCurrenUser";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
-  const getCurrentUser = useCurrentUser();
 
   const [openedAuth, handlers] = useDisclosure(false);
 
@@ -55,17 +54,6 @@ export const BooksList = React.memo(() => {
       }, 0);
   }, [data]);
 
-  // useEffect(() => {
-  //   getCurrentUser();
-  // }, []); //!
-
-  // console.log({ data });
-  // console.log("maxDiscount:", maxDiscount);
-  // console.log(priceSort);
-  // console.log(data);
-  // console.log(sortMinMaxPrice);
-  // console.log(user);
-
   const dataDiscount = useMemo(
     () =>
       data?.items.filter((book) => {
@@ -78,13 +66,8 @@ export const BooksList = React.memo(() => {
     [data?.items]
   );
 
-  // console.log("minPrice", minPrice, "maxPrice", maxPrice);
-  // console.log("dataDiscount", dataDiscount);
-  // console.log("массив с учетом скидки:", dataDiscount);
-
-  const { mutateAsync, isLoading: loading } = useMutation(
+  const { mutateAsync } = useMutation(
     (param: string) => {
-      // console.log("mutate:", param, "token:", user?.token, user?.favoriteItems);
       return axios.post(`${BASE_URL}${param}`, undefined, {
         headers: {
           Authorization: user?.token ?? "",
@@ -128,24 +111,28 @@ export const BooksList = React.memo(() => {
           console.log("del favorite");
         }
       }
-      getCurrentUser();
     },
-    [user, handlers, getCurrentUser, mutateAsync]
+
+    [mutateAsync, user?.favoriteItems]
   );
 
   const books = useMemo(() => {
-    // console.log("books single in Booklist");
-    // console.log("user", user?.name, user?.favoriteItems);
-    const filteredBooks = minPrice > 0 ? dataDiscount : data?.items;
-    return filteredBooks?.map((book: Item) => (
-      <SingleBookList
-        favorite={user?.favoriteItems.some((el) => el.id === book.id) ?? false}
-        book={book}
-        key={book.id}
-        favoritesChange={favoritesChange}
-      />
-    ));
-  }, [data?.items, user]);
+    const filteredBooks = user && minPrice > 0 ? dataDiscount : data?.items;
+
+    return filteredBooks?.map((book) => {
+      const isFavorite =
+        user?.favoriteItems.some((el) => el.id === book.id) || false;
+
+      return (
+        <SingleBookList
+          favorite={isFavorite}
+          book={book}
+          key={book.id}
+          favoritesChange={favoritesChange}
+        />
+      );
+    });
+  }, [data?.items, user?.favoriteItems]); //!
 
   const sortHandler = useCallback((valueSort: string) => {
     setValueSort(valueSort);

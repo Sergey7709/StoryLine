@@ -27,8 +27,8 @@ export const Cart = () => {
     dispatch(deleteCartItems(bookID));
   };
 
-  console.log("cart", cart.cartItems);
-  console.log("totalCount", cart.totalCount, "totalPrice", cart.totalPrice);
+  // console.log("cart", cart.cartItems);
+  // console.log("totalCount", cart.totalCount, "totalPrice", cart.totalPrice);
 
   if (cart.cartItems.length === 0) {
     return (
@@ -87,20 +87,20 @@ export const Cart = () => {
                   </Grid.Col>
 
                   <Grid.Col span={7}>
-                    <Badge color="cyan" size="lg" radius="xs" variant="outline">
-                      <Text color="black" w={130}>{`ЦЕНА: ${
+                    <Badge color="cyan" size="lg" radius="xs" variant="filled">
+                      <Text w={130}>{`ЦЕНА: ${
                         book.discount || book.price
                       } руб.`}</Text>
                     </Badge>
                     <Space h="xs" />
 
-                    <Badge color="cyan" size="lg" radius="xs" variant="outline">
-                      <Text color="black" w={130}>{`СУММА: ${
+                    <Badge color="cyan" size="lg" radius="xs" variant="filled">
+                      <Text w={130}>{`СУММА: ${
                         book.discount * book.count || book.price * book.count
                       } руб.`}</Text>
                     </Badge>
                     <Space h="lg" />
-                    <CartBar book={book} cartCount={book.count} />
+                    <CartBar book={book} />
                     <Space h="xs" />
                   </Grid.Col>
 
