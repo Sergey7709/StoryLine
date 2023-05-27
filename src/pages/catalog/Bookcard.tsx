@@ -55,23 +55,22 @@ export const BookCard = () => {
   const book = data && { ...data };
 
   const itemCart = cartItems.find((item) => item.id === book?.id); //!
-  // console.log("itemCountCart", itemCountCart);
-  // console.log("countBar", countBar);
-
-  const handleAddCartItem = () => {
-    if (itemCart) {
-      book && dispatch(handleChangeCountItem({ book, count: countBar }));
-    } //!
-    else {
-      data && dispatch(addCartItems(data));
-    }
-
-    navigate("/cart");
-  }; //!
+  console.log("itemCart", itemCart);
+  console.log("countBar", countBar);
 
   const incrementCountBar = () => setCountBar((prevCount) => prevCount + 1); //!
   const decrementCountBar = () => setCountBar((prevCount) => prevCount - 1); //!
-  const handleChangeCountBar = (value: number) => setCountBar(value);
+  const handleChangeCountBar = (value: number) => setCountBar(value); //!
+
+  const handleAddCartItem = () => {
+    if (countBar === 1) {
+      data && dispatch(addCartItems(data));
+    } else {
+      book && dispatch(handleChangeCountItem({ book, count: countBar }));
+    } //!
+
+    navigate("/cart");
+  }; //!
 
   useEffect(() => {
     if (slug.id) mutateAsync(slug.id);

@@ -145,7 +145,7 @@ export const BooksList = React.memo(() => {
         favoritesChange={favoritesChange}
       />
     ));
-  }, [data?.items, user]);
+  }, [data?.items, user]); //! исправить перерисовку 66 раз
 
   const sortHandler = useCallback((valueSort: string) => {
     setValueSort(valueSort);
