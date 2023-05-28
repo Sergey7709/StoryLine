@@ -33,9 +33,10 @@ export const Cart = () => {
   const handleDeleteCartItem = (bookID: number) => {
     dispatch(deleteCartItems(bookID));
   };
+  // const id = Number(Date.now());
 
   const order = {
-    id: 2, //! исправить на uuid
+    id: 2, //! исправить
     userId: user?.id,
     userName: user?.name,
     userEmail: user?.email,
