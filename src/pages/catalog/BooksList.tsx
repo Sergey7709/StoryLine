@@ -15,7 +15,6 @@ import { BASE_URL, categoryNewBooks } from "../../common/constants";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { Authorization } from "../authorization/Authorization";
-import { useCurrentUser } from "../../hooks/useCurrenUser";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);

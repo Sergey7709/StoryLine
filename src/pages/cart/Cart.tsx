@@ -17,8 +17,15 @@ import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import { deleteCartItems } from "../../redux/cartSlice";
 import { CartItem } from "../../common/types";
 import { Link, NavLink } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
+import axios from "axios";
+import { useMutation } from "react-query";
+import { BASE_URL } from "../../common/constants";
+import { useCallback } from "react";
 
 export const Cart = () => {
+  const user = useAppSelector((state) => state.auth.user);
+
   const cart = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
@@ -26,6 +33,58 @@ export const Cart = () => {
   const handleDeleteCartItem = (bookID: number) => {
     dispatch(deleteCartItems(bookID));
   };
+
+  const order = {
+    id: 2, //! исправить на uuid
+    userId: user?.id,
+    userName: user?.name,
+    userEmail: user?.email,
+    userPhone: user?.phone,
+    userAddress: user?.address,
+    items: [...cart.cartItems],
+    date: new Date(),
+    totalPrice: cart.totalPrice,
+  }; //!
+  console.log("order", order);
+
+  const { mutateAsync } = useMutation(
+    (param: string) => {
+      return axios.post(`${BASE_URL}${param}`, order, {
+        headers: {
+          Authorization: user?.token ?? "",
+        },
+      });
+    },
+    {
+      onSuccess: () => {
+        notifications.show({
+          message: "Заказ успешно отправлен!",
+          autoClose: 2000,
+          color: "red",
+        });
+        // getCurrentUser();
+      },
+      onError: () => {
+        notifications.show({
+          message: "Ошибка при добавлении заказа!",
+          autoClose: 2000,
+          color: "red",
+        });
+      },
+    }
+  ); //! перенести в api
+
+  const handleAddOrder = useCallback(async () => {
+    if (user?.token) {
+      await mutateAsync(`order`);
+
+      notifications.show({
+        message: "Книга добавлена в избранное",
+        autoClose: 2000,
+        color: "green",
+      });
+    }
+  }, []); //!
 
   // console.log("cart", cart.cartItems);
   // console.log("totalCount", cart.totalCount, "totalPrice", cart.totalPrice);
@@ -60,6 +119,9 @@ export const Cart = () => {
                   <Text> очистить всю корзину</Text>
                 </Badge>
               </UnstyledButton>
+              <Button onClick={handleAddOrder}>
+                <Text>ОФОРМИТЬ ЗАКАЗ</Text>{" "}
+              </Button>
             </Group>
             <Space h="xl" />
           </Grid.Col>

@@ -88,7 +88,7 @@ export const BookCard = () => {
       return notifications.show({
         color: "red",
         autoClose: 3000,
-        title: "Отзывы могут оставлять только зарегестрированные пользователи",
+        title: "Отзывы могут оставлять только зарегистрированные пользователи",
         message: "",
       });
     }
@@ -210,7 +210,7 @@ export const BookCard = () => {
                     fullWidth
                     gradient={{ from: "teal", to: "lime", deg: 105 }}
                   >
-                    <Text>ОФОРМИТЬ</Text>
+                    <Text>В КОРЗИНУ</Text>
                   </Button>
                 </Grid.Col>
               </Grid>
