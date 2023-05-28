@@ -33,16 +33,31 @@ export const Cart = () => {
   const handleDeleteCartItem = (bookID: number) => {
     dispatch(deleteCartItems(bookID));
   };
-  // const id = Number(Date.now());
+  const idOrder = (Number(Date.now()) % 1000) + 100; //!
+
+  const newCartItems = cart.cartItems.map((book) =>
+    JSON.stringify({
+      imageUrl: book.itemImageUrl,
+      price: book.discount ? book.discount : book.price,
+      count: book.count,
+      title: book.title,
+    })
+  ); //!
+
+  console.log(user?.id);
+  // const newCartItemsJson = JSON.stringify(newCartItems); //!
+
+  // console.log("newCartItems", newCartItems); //!
+  // console.log("newCartItemsJson", newCartItemsJson); //!
 
   const order = {
-    id: 2, //! исправить
+    id: idOrder,
     userId: user?.id,
     userName: user?.name,
     userEmail: user?.email,
     userPhone: user?.phone,
     userAddress: user?.address,
-    items: [...cart.cartItems],
+    items: [...newCartItems],
     date: new Date(),
     totalPrice: cart.totalPrice,
   }; //!
@@ -52,6 +67,7 @@ export const Cart = () => {
     (param: string) => {
       return axios.post(`${BASE_URL}${param}`, order, {
         headers: {
+          "Content-Type": "application/json",
           Authorization: user?.token ?? "",
         },
       });
@@ -79,11 +95,11 @@ export const Cart = () => {
     if (user?.token) {
       await mutateAsync(`order`);
 
-      notifications.show({
-        message: "Книга добавлена в избранное",
-        autoClose: 2000,
-        color: "green",
-      });
+      // notifications.show({
+      //   message: "Книга добавлена в избранное",
+      //   autoClose: 2000,
+      //   color: "green",
+      // });
     }
   }, []); //!
 

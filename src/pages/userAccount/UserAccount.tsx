@@ -1,17 +1,37 @@
-import { useState } from 'react';
-import { Tabs } from '@mantine/core';
-import MyProfile from './MyProfile';
-import MyOrders from './MyOrders';
-import MyReviews from './MyReviews';
-import MyPosts from './MyPosts';
-import { useAppSelector } from '../../redux/redux.hooks';
-import { Favorites } from '../favorites/Favorites';
+import { useState } from "react";
+import { Tabs } from "@mantine/core";
+import MyProfile from "./MyProfile";
+import MyOrders from "./MyOrders";
+import MyReviews from "./MyReviews";
+import MyPosts from "./MyPosts";
+import { useAppSelector } from "../../redux/redux.hooks";
+import { Favorites } from "../favorites/Favorites";
 
 const UserAccount = () => {
   const user = useAppSelector((state) => state.auth.user);
-  const [activeTab, setActiveTab] = useState<string | null>('profile');
-  console.log(user);
-  if (!user) return <div>Только для авториизованных пользователей</div>;
+  const [activeTab, setActiveTab] = useState<string | null>("profile");
+  // console.log(user?.orderItems); //!
+  // const arrayB = user?.orderItems.map((el) => el.items);
+  // const arrayB = user?.orderItems.map((el) =>
+  //   JSON.parse(JSON.stringify(el.items))
+  // ); //!
+  // const arrayB = user?.orderItems.map((el) => {
+  //   return { ...el, items: JSON.parse(JSON.stringify(el.items)) };
+  // });
+  // const arrayB = user?.orderItems.flatMap((el) =>
+  //   JSON.parse(JSON.stringify(el.items))
+  // );
+  // const arrayB = user?.orderItems.filter((el) => el.id === 530);
+  // const arrayOfObjects = arrayB?.map((item: any) => item.items);
+  // const arrayOfObjects2 = arrayOfObjects?.map((item: string) =>
+  //   JSON.parse(item)
+  // );
+  // console.log(arrayOfObjects2);
+
+  // console.log(arrayB); //!
+  // console.log(user?.reviews); //!
+
+  if (!user) return <div>Только для авторизованных пользователей</div>;
   return (
     <Tabs value={activeTab} onTabChange={setActiveTab} color="violet">
       <Tabs.List position="center" grow>
