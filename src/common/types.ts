@@ -70,7 +70,7 @@ export type Order = {
   userEmail: string;
   userPhone: string;
   userAddress: string;
-  items: OrderItem[];
+  items: string;
   date: string;
   totalPrice: number;
 };

@@ -7,27 +7,7 @@ type MyOrdersProps = {
   orders: Order[];
 };
 const MyOrders: FC<MyOrdersProps> = ({ orders }) => {
-  const filteredOrders = orders.filter((el) => el.id === 530); //!
-  const itemsArray = filteredOrders?.map((item: any) => item.items); //!
-  // const filteredOrders = orders.filter((el) => el.id === 530); //!
-  // const itemsArray = orders?.map((item: any) => item.items); //!
-  const parsedItemsArrayItems = itemsArray?.map((item: string) =>
-    JSON.parse(item)
-  ); //!
-
-  // const parsedItemsArray = orders.map((order: Order) => ({
-  //   ...order,
-  //   items: parsedItemsArrayItems,
-  // }));
-
-  const parsedItemsArray = filteredOrders.map((order: Order) => ({
-    ...order,
-    items: parsedItemsArrayItems,
-  }));
-
-  console.log(parsedItemsArray); //!
-
-  const rows = parsedItemsArray.map((el) => (
+  const rows = orders.map((el) => (
     <tr key={el.id}>
       <td>{el.id}</td>
       <td>{el.totalPrice} &#8381;</td>

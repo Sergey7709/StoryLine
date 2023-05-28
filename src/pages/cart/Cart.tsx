@@ -35,20 +35,14 @@ export const Cart = () => {
   };
   const idOrder = (Number(Date.now()) % 1000) + 100; //!
 
-  const newCartItems = cart.cartItems.map((book) =>
-    JSON.stringify({
-      imageUrl: book.itemImageUrl,
-      price: book.discount ? book.discount : book.price,
-      count: book.count,
-      title: book.title,
-    })
-  ); //!
+  const cartItems = cart.cartItems.map((book) => ({
+    imageUrl: book.itemImageUrl,
+    price: book.discount ? book.discount : book.price,
+    count: book.count,
+    title: book.title,
+  })); //!
 
-  console.log(user?.id);
-  // const newCartItemsJson = JSON.stringify(newCartItems); //!
-
-  // console.log("newCartItems", newCartItems); //!
-  // console.log("newCartItemsJson", newCartItemsJson); //!
+  console.log(user?.id); //!
 
   const order = {
     id: idOrder,
@@ -57,7 +51,7 @@ export const Cart = () => {
     userEmail: user?.email,
     userPhone: user?.phone,
     userAddress: user?.address,
-    items: [...newCartItems],
+    items: JSON.stringify([...cartItems]),
     date: new Date(),
     totalPrice: cart.totalPrice,
   }; //!
@@ -77,7 +71,7 @@ export const Cart = () => {
         notifications.show({
           message: "Заказ успешно отправлен!",
           autoClose: 2000,
-          color: "red",
+          color: "green",
         });
         // getCurrentUser();
       },
