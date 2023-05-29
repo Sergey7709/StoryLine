@@ -22,6 +22,10 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { BASE_URL } from "../../common/constants";
 import { useCallback } from "react";
+import { idOrder } from "../../common/commonFunctions";
+import { usePostOrder } from "../../api/usePostOrder";
+import { EmptyCart } from "./EmptyCart";
+import { ActiveCart } from "./ActiveCart";
 
 export const Cart = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -30,70 +34,38 @@ export const Cart = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleDeleteCartItem = (bookID: number) => {
-    dispatch(deleteCartItems(bookID));
-  };
-  const idOrder = (Number(Date.now()) % 1000) + 100; //!
-
-  const cartItems = cart.cartItems.map((book) => ({
+  const orderItems = cart.cartItems.map((book) => ({
     imageUrl: book.itemImageUrl,
     price: book.discount ? book.discount : book.price,
     count: book.count,
     title: book.title,
   })); //!
 
-  console.log(user?.id); //!
+  console.log(user?.id, JSON.stringify([...orderItems])); //!
 
-  const order = {
+  const OrderData = {
     id: idOrder,
     userId: user?.id,
     userName: user?.name,
     userEmail: user?.email,
     userPhone: user?.phone,
     userAddress: user?.address,
-    items: JSON.stringify([...cartItems]),
+    items: JSON.stringify([...orderItems]),
     date: new Date(),
     totalPrice: cart.totalPrice,
   }; //!
-  console.log("order", order);
+  console.log("order", OrderData);
 
-  const { mutateAsync } = useMutation(
-    (param: string) => {
-      return axios.post(`${BASE_URL}${param}`, order, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: user?.token ?? "",
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        notifications.show({
-          message: "Заказ успешно отправлен!",
-          autoClose: 2000,
-          color: "green",
-        });
-        // getCurrentUser();
-      },
-      onError: () => {
-        notifications.show({
-          message: "Ошибка при добавлении заказа!",
-          autoClose: 2000,
-          color: "red",
-        });
-      },
-    }
-  ); //! перенести в api
+  const orderMutation = usePostOrder(BASE_URL, OrderData, user);
+  const { mutateAsync } = orderMutation; //!!!!
+
+  const handleDeleteCartItem = (bookID: number) => {
+    dispatch(deleteCartItems(bookID));
+  };
 
   const handleAddOrder = useCallback(async () => {
     if (user?.token) {
-      await mutateAsync(`order`);
-
-      // notifications.show({
-      //   message: "Книга добавлена в избранное",
-      //   autoClose: 2000,
-      //   color: "green",
-      // });
+      mutateAsync(`order`);
     }
   }, []); //!
 
@@ -113,7 +85,19 @@ export const Cart = () => {
   return (
     <>
       <Container size="100%" h={"100%"} px="xs" py={"lg"}>
-        <Grid pl={"3%"}>
+        {cart.cartItems.length === 0 ? (
+          <EmptyCart />
+        ) : (
+          <ActiveCart
+            handleDeleteCartItem={handleDeleteCartItem}
+            handleAddOrder={handleAddOrder}
+            cartItems={cart.cartItems}
+            totalCount={cart.totalCount}
+            totalPrice={cart.totalPrice}
+          />
+        )}
+
+        {/* <Grid pl={"3%"}>
           <Grid.Col span={12}>
             <Group spacing="xs">
               <Title order={1} pb={10}>
@@ -131,7 +115,7 @@ export const Cart = () => {
                 </Badge>
               </UnstyledButton>
               <Button onClick={handleAddOrder}>
-                <Text>ОФОРМИТЬ ЗАКАЗ</Text>{" "}
+                <Text>ОФОРМИТЬ ЗАКАЗ</Text>
               </Button>
             </Group>
             <Space h="xl" />
@@ -226,7 +210,7 @@ export const Cart = () => {
               order={3}
             >{`Итого сумма заказа: ${cart.totalPrice} руб. `}</Title>
           </Grid.Col>
-        </Grid>
+        </Grid> */}
       </Container>
     </>
   );

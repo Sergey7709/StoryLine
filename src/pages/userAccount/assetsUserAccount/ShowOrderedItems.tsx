@@ -2,7 +2,7 @@ import { Popover, Image, Text, Flex } from "@mantine/core";
 import { FC } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import styles from "../user-account.module.css";
-import { CartItem, OrderItem } from "../../../common/types";
+import { CartItem } from "../../../common/types";
 
 type Props = {
   books: string;

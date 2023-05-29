@@ -101,12 +101,19 @@ export type InitialStateCartSlice = {
   totalPrice: number;
 };
 
-// export type handleChangeCountItemProps = {
-//   id: number;
-//   count: number;
-// };
-
 export type handleChangeCountItemProps = {
   book: Item;
   count: number;
-}; //!
+};
+
+export type OrderData = {
+  id: number;
+  userId: number | undefined;
+  userName: string | undefined;
+  userEmail: string | undefined;
+  userPhone: string | undefined;
+  userAddress: string | undefined;
+  items: string;
+  date: Date;
+  totalPrice: number;
+};
