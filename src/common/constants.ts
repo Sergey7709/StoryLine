@@ -34,7 +34,7 @@ export const DATA_FOR_AUTO_COMPLETE = [
   "Riot",
   "Svelte",
   "Blitz",
-];
+]; //!
 
 export const CATEGORIES = [
   {

@@ -125,3 +125,11 @@ export type ActiveCartProps = {
   totalCount: number;
   totalPrice: number;
 };
+
+export type CartBarProps = {
+  book: Item;
+  countBar?: number;
+  incrementCountBar?: () => void;
+  decrementCountBar?: () => void;
+  handleChangeCountBar?: (value: number) => void;
+};
