@@ -117,3 +117,11 @@ export type OrderData = {
   date: Date;
   totalPrice: number;
 };
+
+export type ActiveCartProps = {
+  handleDeleteCartItem: (bookID: number) => void;
+  handleAddOrder: () => void;
+  cartItems: CartItem[];
+  totalCount: number;
+  totalPrice: number;
+};

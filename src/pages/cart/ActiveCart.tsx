@@ -13,18 +13,11 @@ import {
 } from "@mantine/core";
 import { FC } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { CartItem } from "../../common/types";
+import { ActiveCartProps, CartItem } from "../../common/types";
 import CartBar from "../../components/cartCount/CartBar";
 
-type ActiveCartProps = {
-  handleDeleteCartItem: (bookID: number) => void;
-  handleAddOrder: () => void;
-  cartItems: CartItem[];
-  totalCount: number;
-  totalPrice: number;
-};
-
 export const ActiveCart: FC<ActiveCartProps> = (props) => {
+  console.log("render activecart");
   const {
     handleDeleteCartItem,
     handleAddOrder,
