@@ -12,7 +12,6 @@ import {
   Flex,
 } from "@mantine/core";
 import { Rating } from "@mantine/core";
-import CartBar from "../../components/cartCount/CartBar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
@@ -32,6 +31,7 @@ import PricesDiscount from "./UI/PricesDiscount";
 import ModalReviewFields from "./UI/ModalReviewFields";
 import { useDispatch } from "react-redux";
 import { addCartItems, handleChangeCountItem } from "../../redux/cartSlice";
+import { CartCount } from "../../components/cartCount/CartCount";
 
 export const BookCard = () => {
   const navigate = useNavigate();
@@ -195,7 +195,7 @@ export const BookCard = () => {
                     />
                   </Flex>
 
-                  <CartBar
+                  <CartCount
                     book={data}
                     countBar={countBar}
                     incrementCountBar={incrementCountBar}

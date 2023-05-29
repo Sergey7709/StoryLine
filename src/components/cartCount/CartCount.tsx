@@ -8,7 +8,7 @@ import { CartBarProps } from "../../common/types";
 import { FC } from "react";
 import { CounterButton } from "./CounterButton";
 
-const CartBar: FC<CartBarProps> = ({
+export const CartCount: FC<CartBarProps> = ({
   book,
   countBar,
   incrementCountBar,
@@ -67,4 +67,4 @@ const CartBar: FC<CartBarProps> = ({
   );
 };
 
-export default CartBar;
+// export default CartCount;
