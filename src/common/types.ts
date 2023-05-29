@@ -70,7 +70,7 @@ export type Order = {
   userEmail: string;
   userPhone: string;
   userAddress: string;
-  items: OrderItem[];
+  items: string;
   date: string;
   totalPrice: number;
 };
@@ -101,12 +101,27 @@ export type InitialStateCartSlice = {
   totalPrice: number;
 };
 
-// export type handleChangeCountItemProps = {
-//   id: number;
-//   count: number;
-// };
-
 export type handleChangeCountItemProps = {
   book: Item;
   count: number;
-}; //!
+};
+
+export type OrderData = {
+  id: number;
+  userId: number | undefined;
+  userName: string | undefined;
+  userEmail: string | undefined;
+  userPhone: string | undefined;
+  userAddress: string | undefined;
+  items: string;
+  date: Date;
+  totalPrice: number;
+};
+
+export type ActiveCartProps = {
+  handleDeleteCartItem: (bookID: number) => void;
+  handleAddOrder: () => void;
+  cartItems: CartItem[];
+  totalCount: number;
+  totalPrice: number;
+};

@@ -1,8 +1,8 @@
-import { Table } from '@mantine/core';
-import ShowOrderedItems from './assetsUserAccount/ShowOrderedItems';
-import { FC, memo } from 'react';
-import { Order } from '../../common/types';
-import EmptyData from './assetsUserAccount/EmptyData';
+import { Table } from "@mantine/core";
+import ShowOrderedItems from "./assetsUserAccount/ShowOrderedItems";
+import { FC, memo } from "react";
+import { Order } from "../../common/types";
+import EmptyData from "./assetsUserAccount/EmptyData";
 type MyOrdersProps = {
   orders: Order[];
 };

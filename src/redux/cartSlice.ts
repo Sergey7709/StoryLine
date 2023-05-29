@@ -10,7 +10,7 @@ import {
   updateCartTotals,
   updateLocalStorage,
   calculatePrice,
-} from "../common/constants";
+} from "../common/commonFunctions";
 
 const cartItemsFromStorage = localStorage.getItem("cartItems");
 const initialStateFromStorage = cartItemsFromStorage

@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { BASE_URL } from '../common/constants';
+import axios from "axios";
+import { BASE_URL } from "../common/constants";
 
 type Params = string;
 export const fetchFavorites = async (params: Params, token: string) => {
   const headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     Authorization: token,
   };
   try {
