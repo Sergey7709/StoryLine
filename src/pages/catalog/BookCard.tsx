@@ -32,11 +32,12 @@ import ModalReviewFields from "./UI/ModalReviewFields";
 import { useDispatch } from "react-redux";
 import { addCartItems, handleChangeCountItem } from "../../redux/cartSlice";
 import { CartCount } from "../../components/cartCount/CartCount";
+import { BookCardLayout } from "./BookCardLayout";
 
 export const BookCard = () => {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch(); //!
+  const dispatch = useDispatch();
 
   const cartItems = useAppSelector((state) => state.cart.cartItems);
 
@@ -54,31 +55,33 @@ export const BookCard = () => {
 
   const book = data && { ...data };
 
-  const itemCart = cartItems.find((item) => item.id === book?.id); //!
+  const itemCart = cartItems.find((item) => item.id === book?.id);
   // console.log("itemCart", itemCart);
   // console.log("countBar", countBar);
 
-  const incrementCountBar = () => setCountBar((prevCount) => prevCount + 1); //!
-  const decrementCountBar = () => setCountBar((prevCount) => prevCount - 1); //!
-  const handleChangeCountBar = (value: number) => setCountBar(value); //!
+  const incrementCountBar = () => setCountBar((prevCount) => prevCount + 1);
+  const decrementCountBar = () => setCountBar((prevCount) => prevCount - 1);
+  const handleChangeCountBar = (value: number) => setCountBar(value);
 
   const handleAddCartItem = () => {
     if (countBar === 1 && !itemCart) {
       data && dispatch(addCartItems(data));
     } else {
       book && dispatch(handleChangeCountItem({ book, count: countBar }));
-    } //!
+    }
 
     navigate("/cart");
-  }; //!
+  };
 
   useEffect(() => {
     if (slug.id) mutateAsync(slug.id);
   }, [mutateAsync, slug.id]);
+
   const user = useAppSelector((state) => state.auth.user);
   const getCurrentUser = useCurrentUser();
   const [opened, { close, open }] = useDisclosure(false);
   const [review, setReview] = useState<ReviewUpdate>(initialReviewState);
+
   const reviewMutation = useMutation((args: FetchReviewArgs) =>
     fetchHandler(args.type, args.params, args.body, args.token)
   );
@@ -132,8 +135,25 @@ export const BookCard = () => {
   };
 
   return (
-    <Container my="xl">
-      <Modal size="lg" opened={opened} onClose={close} centered>
+    // <Container my="xl">
+    <>
+      <BookCardLayout
+        data={data}
+        isLoading={isLoading}
+        countBar={countBar}
+        incrementCountBar={incrementCountBar}
+        decrementCountBar={decrementCountBar}
+        handleChangeCountBar={handleChangeCountBar}
+        handleAddCartItem={handleAddCartItem}
+        opened={opened}
+        close={close}
+        setReview={setReview}
+        review={review}
+        submitReview={submitReview}
+        reviewMutation={reviewMutation}
+        open={open}
+      />
+      {/* <Modal size="lg" opened={opened} onClose={close} centered>
         <ModalReviewFields setReview={setReview} review={review} />
         <Button
           onClick={() => {
@@ -235,6 +255,7 @@ export const BookCard = () => {
           </Grid>
         )
       )}
-    </Container>
+    </Container> */}
+    </>
   );
 };
