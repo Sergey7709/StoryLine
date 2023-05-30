@@ -12,34 +12,15 @@ import {
   Text,
   Container,
 } from "@mantine/core";
-import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { CartCount } from "../../components/cartCount/CartCount";
 import EmptyData from "../userAccount/assetsUserAccount/EmptyData";
 import ReviewsList from "./ReviewsList";
 import ModalReviewFields from "./UI/ModalReviewFields";
 import PricesDiscount from "./UI/PricesDiscount";
-import { Item, ReviewUpdate } from "../../common/types";
-import { UseMutationResult } from "react-query/types/react/types";
-import { FetchReviewArgs } from "../userAccount/MyReviews";
+import { BookCardLayoutProps } from "../../common/types";
 import { Loader } from "../../components/loader/Loader";
-
-type BookCardLayoutProps = {
-  data: Item | undefined;
-  isLoading: boolean;
-  countBar: number;
-  incrementCountBar: () => void;
-  decrementCountBar: () => void;
-  handleChangeCountBar: (value: number) => void;
-  handleAddCartItem: () => void;
-  opened: boolean;
-  close: () => void;
-  setReview: React.Dispatch<React.SetStateAction<ReviewUpdate>>;
-  review: ReviewUpdate;
-  submitReview: (itemId: number) => Promise<void>;
-  reviewMutation: UseMutationResult<any, unknown, FetchReviewArgs, unknown>;
-  open: () => void;
-};
+import { FC } from "react";
 
 export const BookCardLayout: FC<BookCardLayoutProps> = (props) => {
   const {
