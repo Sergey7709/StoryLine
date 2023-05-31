@@ -28,7 +28,7 @@ const sortSlice = createSlice({
       state.maxDiscount = action.payload;
     },
     setSearchBooksValue: (state, action: PayloadAction<string>) => {
-      state.searchBooksValue = action.payload;
+      state.searchBooksValue = `${action.payload}`;
     },
   },
 });

@@ -1,4 +1,4 @@
-import { Group, Grid, Modal, Flex, Title, Divider } from "@mantine/core";
+import { Group, Grid, Modal, Title, Divider } from "@mantine/core";
 import { useStyles } from "./BooksListStyles";
 import { useMutation, useQuery } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
@@ -8,7 +8,7 @@ import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
 import PriceRange from "./BooksPriceRange";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { ServerError } from "../../components/errorNetwork/ServerError";
 import axios from "axios";
 import { BASE_URL, categoryNewBooks } from "../../common/constants";
@@ -45,9 +45,14 @@ export const BooksList = React.memo(() => {
   const [openedAuth, handlers] = useDisclosure(false);
 
   const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
-    ["item", param, valueSort, priceSort],
-    () => fetchItem(`${sortLink}${valueSort}${priceSort}`)
+    ["item", param, valueSort, priceSort, searchBooksValue],
+    () => fetchItem(`${sortLink}${valueSort}${priceSort}${searchBooksValue}`) //!
   );
+
+  console.log(`sortLink ${sortLink}`);
+  console.log(`valueSort ${valueSort}`);
+  console.log(`priceSort ${priceSort}`);
+  console.log(`searchBooksValue ${searchBooksValue}`);
 
   useEffect(() => {
     data?.items

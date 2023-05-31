@@ -1,51 +1,46 @@
-import React, { ChangeEvent, useState } from "react";
-import { useQuery } from "react-query";
-import { Item } from "../common/types";
-import { fetchItem } from "../api/itemsApi";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Input, Tooltip } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { TiDeleteOutline } from "react-icons/ti";
-import { useAppSelector } from "../redux/redux.hooks";
 import { useDispatch } from "react-redux";
 import { setSearchBooksValue } from "../redux/sortSlice";
+import { currentFilter } from "../redux/filterSlice";
 
-type BookSearchResponse = {
-  data: Item[];
+type classesProps = {
+  classes: string;
 };
 
-const BookSearch: React.FC = () => {
-  const { searchBooksValue } = useAppSelector((state) => state.sort);
-
+const BookSearch = ({ classes }: classesProps) => {
   const dispatch = useDispatch();
 
-  // const [searchBooksValue, setSearchBooksValue] = useState("");
+  const [value, setValue] = useState<string>("");
 
-  const [debouncedBooks] = useDebouncedValue(searchBooksValue, 1500);
+  const [debouncedBooks] = useDebouncedValue<string>(value, 1500);
 
-  const { data } = useQuery<BookSearchResponse>(
-    ["bookSearch", debouncedBooks],
-    () => fetchItem(`all?title=${debouncedBooks}`)
-  );
+  useEffect(() => {
+    if (debouncedBooks !== "") {
+      dispatch(setSearchBooksValue(`title=${debouncedBooks}`));
+      dispatch(currentFilter("all?"));
+    } else {
+      dispatch(setSearchBooksValue(""));
+    }
+  }, [debouncedBooks]);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    // setSearchBooksValue(event.currentTarget.value);
-    dispatch(setSearchBooksValue(event.currentTarget.value));
+    setValue(event.currentTarget.value);
   };
 
   const handleClearSerch = () => {
-    dispatch(setSearchBooksValue(""));
-    // setSearchBooksValue("");
+    setValue("");
   };
-  console.log("data", data);
-  // console.log("data", debouncedBooks);
 
   return (
     <>
       <Input
-        className={""}
-        placeholder="Введите название книги для поиска"
-        value={searchBooksValue}
+        className={classes}
+        placeholder="поиск"
+        value={value}
         icon={<IconSearch size="1rem" stroke={1.5} />}
         size="md"
         m={0}
