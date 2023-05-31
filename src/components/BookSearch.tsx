@@ -6,15 +6,22 @@ import { Input, Tooltip } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { TiDeleteOutline } from "react-icons/ti";
+import { useAppSelector } from "../redux/redux.hooks";
+import { useDispatch } from "react-redux";
+import { setSearchBooksValue } from "../redux/sortSlice";
 
 type BookSearchResponse = {
   data: Item[];
 };
 
 const BookSearch: React.FC = () => {
-  const [searchBooks, setSearchBooks] = useState("");
+  const { searchBooksValue } = useAppSelector((state) => state.sort);
 
-  const [debouncedBooks] = useDebouncedValue(searchBooks, 1500);
+  const dispatch = useDispatch();
+
+  // const [searchBooksValue, setSearchBooksValue] = useState("");
+
+  const [debouncedBooks] = useDebouncedValue(searchBooksValue, 1500);
 
   const { data } = useQuery<BookSearchResponse>(
     ["bookSearch", debouncedBooks],
@@ -22,11 +29,13 @@ const BookSearch: React.FC = () => {
   );
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchBooks(event.currentTarget.value);
+    // setSearchBooksValue(event.currentTarget.value);
+    dispatch(setSearchBooksValue(event.currentTarget.value));
   };
 
   const handleClearSerch = () => {
-    setSearchBooks("");
+    dispatch(setSearchBooksValue(""));
+    // setSearchBooksValue("");
   };
   console.log("data", data);
   // console.log("data", debouncedBooks);
@@ -36,13 +45,18 @@ const BookSearch: React.FC = () => {
       <Input
         className={""}
         placeholder="Введите название книги для поиска"
-        value={searchBooks}
+        value={searchBooksValue}
         icon={<IconSearch size="1rem" stroke={1.5} />}
         size="md"
         m={0}
         onChange={(event: ChangeEvent<HTMLInputElement>) => handleSearch(event)}
         rightSection={
-          <Tooltip label="This is public" position="top-end" withArrow>
+          <Tooltip
+            label="Очистить поле ввода"
+            bg={"cyan"}
+            position="top-end"
+            withArrow
+          >
             <div>
               <TiDeleteOutline
                 size="1.2rem"

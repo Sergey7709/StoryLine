@@ -24,21 +24,12 @@ import {
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
 
-  const [openedAuth, handlers] = useDisclosure(false);
-
-  const { valueSort, sortMinMaxPrice, maxDiscount } = useAppSelector(
-    (state) => state.sort
-  ); //!
-
-  const dispatch = useAppDispatch(); //!
-
-  // const [valueSort, setValueSort] = useState("");
-  // const [sortMinMaxPrice, setSortMinMaxPrice] = useState<Array<number>>([]);
-  const [minPrice, maxPrice] = sortMinMaxPrice;
-  // const [maxDiscount, setMaxDiscount] = useState<number>(0);
-
   const param = useAppSelector((state) => state.filter.param);
-  const { classes } = useStyles();
+
+  const { valueSort, sortMinMaxPrice, maxDiscount, searchBooksValue } =
+    useAppSelector((state) => state.sort);
+
+  const [minPrice, maxPrice] = sortMinMaxPrice;
 
   const priceSort =
     minPrice > 0
@@ -46,6 +37,12 @@ export const BooksList = React.memo(() => {
       : "";
 
   const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
+
+  const dispatch = useAppDispatch();
+
+  const { classes } = useStyles();
+
+  const [openedAuth, handlers] = useDisclosure(false);
 
   const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
     ["item", param, valueSort, priceSort],
@@ -58,8 +55,7 @@ export const BooksList = React.memo(() => {
       .reduce((minDiscount, book) => {
         const newMinDiscount =
           book.discount > minDiscount ? book.discount : minDiscount;
-        // setMaxDiscount(newMinDiscount);
-        dispatch(setMaxDiscount(newMinDiscount)); //!
+        dispatch(setMaxDiscount(newMinDiscount));
         return newMinDiscount;
       }, 0);
   }, [data]);
@@ -145,22 +141,18 @@ export const BooksList = React.memo(() => {
   }, [data?.items, user?.favoriteItems]);
 
   const sortHandler = useCallback((valueSort: string) => {
-    // setValueSort(valueSort);
-    dispatch(setValueSort(valueSort)); //!
+    dispatch(setValueSort(valueSort));
   }, []);
 
   const handlePriceChange = useCallback(
     (priceMin: number, priceMax: number) => {
-      // setSortMinMaxPrice([priceMin, priceMax]);
-      dispatch(setSortMinMaxPrice([priceMin, priceMax])); //!
-      // setValueSort("");
+      dispatch(setSortMinMaxPrice([priceMin, priceMax]));
       dispatch(setValueSort(""));
     },
     []
   );
 
   console.log("render BookList");
-  // console.log("избранных книг:", user?.favoriteItems);
 
   return (
     <>
