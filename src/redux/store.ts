@@ -1,6 +1,7 @@
 import filter from "./filterSlice";
 import auth from "./authSlice";
 import cart from "./cartSlice";
+import sort from "./sortSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./apiSlice";
 
@@ -9,6 +10,7 @@ export const store = configureStore({
     auth,
     filter,
     cart,
+    sort,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

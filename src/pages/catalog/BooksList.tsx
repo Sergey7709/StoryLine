@@ -3,7 +3,7 @@ import { useStyles } from "./BooksListStyles";
 import { useMutation, useQuery } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
 import { ItemsResponse, User } from "../../common/types";
-import { useAppSelector } from "../../redux/redux.hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import { Loader } from "../../components/loader/Loader";
 import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
@@ -15,17 +15,27 @@ import { BASE_URL, categoryNewBooks } from "../../common/constants";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { Authorization } from "../authorization/Authorization";
+import {
+  setMaxDiscount,
+  setSortMinMaxPrice,
+  setValueSort,
+} from "../../redux/sortSlice";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
 
   const [openedAuth, handlers] = useDisclosure(false);
 
-  const [valueSort, setValueSort] = useState("");
+  const { valueSort, sortMinMaxPrice, maxDiscount } = useAppSelector(
+    (state) => state.sort
+  ); //!
 
-  const [sortMinMaxPrice, setSortMinMaxPrice] = useState<Array<number>>([]);
+  const dispatch = useAppDispatch(); //!
+
+  // const [valueSort, setValueSort] = useState("");
+  // const [sortMinMaxPrice, setSortMinMaxPrice] = useState<Array<number>>([]);
   const [minPrice, maxPrice] = sortMinMaxPrice;
-  const [maxDiscount, setMaxDiscount] = useState<number>(0);
+  // const [maxDiscount, setMaxDiscount] = useState<number>(0);
 
   const param = useAppSelector((state) => state.filter.param);
   const { classes } = useStyles();
@@ -48,7 +58,8 @@ export const BooksList = React.memo(() => {
       .reduce((minDiscount, book) => {
         const newMinDiscount =
           book.discount > minDiscount ? book.discount : minDiscount;
-        setMaxDiscount(newMinDiscount);
+        // setMaxDiscount(newMinDiscount);
+        dispatch(setMaxDiscount(newMinDiscount)); //!
         return newMinDiscount;
       }, 0);
   }, [data]);
@@ -131,16 +142,19 @@ export const BooksList = React.memo(() => {
         />
       );
     });
-  }, [data?.items, user?.favoriteItems]); //!
+  }, [data?.items, user?.favoriteItems]);
 
   const sortHandler = useCallback((valueSort: string) => {
-    setValueSort(valueSort);
+    // setValueSort(valueSort);
+    dispatch(setValueSort(valueSort)); //!
   }, []);
 
   const handlePriceChange = useCallback(
     (priceMin: number, priceMax: number) => {
-      setSortMinMaxPrice([priceMin, priceMax]);
-      setValueSort("");
+      // setSortMinMaxPrice([priceMin, priceMax]);
+      dispatch(setSortMinMaxPrice([priceMin, priceMax])); //!
+      // setValueSort("");
+      dispatch(setValueSort(""));
     },
     []
   );

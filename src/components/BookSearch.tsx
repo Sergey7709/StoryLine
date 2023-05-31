@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useQuery } from "react-query";
 import { Item } from "../common/types";
 import { fetchItem } from "../api/itemsApi";
-import { Autocomplete } from "@mantine/core";
+import { Input, Tooltip } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
-import { DATA_FOR_AUTO_COMPLETE } from "../common/constants";
 import { useDebouncedValue } from "@mantine/hooks";
+import { TiDeleteOutline } from "react-icons/ti";
 
 type BookSearchResponse = {
   data: Item[];
@@ -14,31 +14,44 @@ type BookSearchResponse = {
 const BookSearch: React.FC = () => {
   const [searchBooks, setSearchBooks] = useState("");
 
-  const [debouncedBooks] = useDebouncedValue(searchBooks, 1000);
+  const [debouncedBooks] = useDebouncedValue(searchBooks, 1500);
 
   const { data } = useQuery<BookSearchResponse>(
     ["bookSearch", debouncedBooks],
     () => fetchItem(`all?title=${debouncedBooks}`)
   );
 
-  const handleSearch = (event: string) => {
-    setSearchBooks(event);
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchBooks(event.currentTarget.value);
   };
 
-  // console.log("data", debouncedBooks);
+  const handleClearSerch = () => {
+    setSearchBooks("");
+  };
   console.log("data", data);
-  // console.log(`all?title=${debouncedBooks}`);
+  // console.log("data", debouncedBooks);
 
   return (
     <>
-      <Autocomplete
+      <Input
         className={""}
-        placeholder="Search"
+        placeholder="Введите название книги для поиска"
+        value={searchBooks}
         icon={<IconSearch size="1rem" stroke={1.5} />}
         size="md"
-        data={DATA_FOR_AUTO_COMPLETE}
         m={0}
-        onChange={(event) => handleSearch(event)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => handleSearch(event)}
+        rightSection={
+          <Tooltip label="This is public" position="top-end" withArrow>
+            <div>
+              <TiDeleteOutline
+                size="1.2rem"
+                style={{ display: "block", opacity: 0.5 }}
+                onClick={handleClearSerch}
+              />
+            </div>
+          </Tooltip>
+        }
       />
     </>
   );
