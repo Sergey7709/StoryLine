@@ -1,3 +1,6 @@
+import { UseMutationResult } from "react-query";
+import { FetchReviewArgs } from "../pages/userAccount/MyReviews";
+
 export type User = {
   id: number;
   isAdmin: boolean;
@@ -124,4 +127,33 @@ export type ActiveCartProps = {
   cartItems: CartItem[];
   totalCount: number;
   totalPrice: number;
+};
+
+export type CartBarProps = {
+  book: Item;
+  countBar?: number;
+  incrementCountBar?: () => void;
+  decrementCountBar?: () => void;
+  handleChangeCountBar?: (value: number) => void;
+};
+
+export type BookCardLayoutProps = {
+  data: Item | undefined;
+  isLoading: boolean;
+  countBar: number;
+  incrementCountBar: () => void;
+  decrementCountBar: () => void;
+  handleChangeCountBar: (value: number) => void;
+  handleAddCartItem: () => void;
+  opened: boolean;
+  close: () => void;
+  setReview: React.Dispatch<React.SetStateAction<ReviewUpdate>>;
+  review: ReviewUpdate;
+  submitReview: (itemId: number) => Promise<void>;
+  reviewMutation: UseMutationResult<any, unknown, FetchReviewArgs, unknown>;
+  open: () => void;
+};
+
+export type HandlersProps = {
+  readonly open: () => void;
 };

@@ -14,7 +14,7 @@ import {
 import { FC } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ActiveCartProps, CartItem } from "../../common/types";
-import CartBar from "../../components/cartCount/CartBar";
+import { CartCount } from "../../components/cartCount/CartCount";
 
 export const ActiveCart: FC<ActiveCartProps> = (props) => {
   console.log("render activecart");
@@ -79,7 +79,7 @@ export const ActiveCart: FC<ActiveCartProps> = (props) => {
                   } руб.`}</Text>
                 </Badge>
                 <Space h="lg" />
-                <CartBar book={book} />
+                <CartCount book={book} />
                 <Space h="xs" />
               </Grid.Col>
 

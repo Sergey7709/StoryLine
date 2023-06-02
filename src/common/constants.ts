@@ -25,17 +25,6 @@ export const NAV_BUTTONS = [
   },
 ];
 
-export const DATA_FOR_AUTO_COMPLETE = [
-  "Pushkin",
-  "Harry",
-  "Angular",
-  "Vue",
-  "Next",
-  "Riot",
-  "Svelte",
-  "Blitz",
-];
-
 export const CATEGORIES = [
   {
     link: "/books-list",

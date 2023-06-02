@@ -20,9 +20,9 @@ import { BookstoreServices } from "./pages/bookstoreServices/BookstoreServices";
 import { Cart } from "./pages/cart/Cart";
 import { Home } from "./pages/home/Home";
 import HeaderMenu from "./components/headerMenu/HeaderMenu";
-import { BookCard } from "./pages/catalog/Bookcard";
 import { Error404 } from "./pages/error404/Error404";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
+import { BookCard } from "./pages/catalog/BookCard";
 
 export default function App() {
   console.log("render App");

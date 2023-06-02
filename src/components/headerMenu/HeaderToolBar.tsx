@@ -11,11 +11,9 @@ import {
   Transition,
 } from "@mantine/core";
 import { FC } from "react";
-import { DATA_FOR_AUTO_COMPLETE } from "../../common/constants";
 import { Authorization } from "../../pages/authorization/Authorization";
 import { useAppSelector } from "../../redux/redux.hooks";
 import { useDisclosure } from "@mantine/hooks";
-import { IconSearch } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
 import { CartIcon } from "../../assets/CartIcon";
@@ -23,6 +21,7 @@ import { FavoritesIcon } from "../../assets/FavoritesIcon";
 import { ThemeToggleIcon } from "../../assets/ThemeToggleIcon";
 import HeaderButtons from "./HeaderButtons";
 import { AvatarIcon } from "../../assets/AvatarIcon";
+import BookSearch from "../BookSearch";
 
 type HeaderToolBarProps = {
   classes: {
@@ -81,14 +80,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
           mb={"0px"}
           px={0}
         >
-          <Autocomplete
-            className={classes.search_default}
-            placeholder="Search"
-            icon={<IconSearch size="1rem" stroke={1.5} />}
-            size="md"
-            data={DATA_FOR_AUTO_COMPLETE}
-            m={0}
-          />
+          <BookSearch classes={classes.search_default} />
           <ThemeToggleIcon />
           <CartIcon />
           {isAuth ? (
@@ -112,13 +104,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
         {(styles) => (
           <Paper className={classes.dropdown} withBorder style={styles}>
             <HeaderButtons classes={classes} />
-            <Autocomplete
-              className={classes.search_alt}
-              placeholder="Search"
-              icon={<IconSearch size="1rem" stroke={1.5} />}
-              size="md"
-              data={DATA_FOR_AUTO_COMPLETE}
-            />
+            <BookSearch classes={classes.search_alt} />
           </Paper>
         )}
       </Transition>
