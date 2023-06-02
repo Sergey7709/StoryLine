@@ -2,10 +2,26 @@ import { IconShoppingCart } from "@tabler/icons-react";
 import { ActionIcon, Badge } from "@mantine/core";
 import styles from "./cartIcon.module.css";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../redux/redux.hooks";
+import { useAppDispatch, useAppSelector } from "../redux/redux.hooks";
+import { InitialStateCartSlice } from "../common/types";
+import { useEffect } from "react";
+import { loadInitialStateFromStorage } from "../redux/cartSlice";
 
 export function CartIcon() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(loadInitialStateFromStorage());
+  }, []);
+
   const cartTotalCount = useAppSelector((state) => state.cart.totalCount);
+
+  // const cart = useAppSelector((state) => state.cart); //!
+
+  // const cartItemsFromStorage = localStorage.getItem("cartItems"); //!
+  // const parsedCartData: InitialStateCartSlice =
+  //   cartItemsFromStorage !== null ? JSON.parse(cartItemsFromStorage) : cart; //!
+
+  // const cartTotalCount = parsedCartData.totalCount; //!
 
   return (
     <Link to={"/cart"}>

@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   InitialStateCartSlice,
   Item,
@@ -12,16 +12,34 @@ import {
   calculatePrice,
 } from "../common/commonFunctions";
 
-const cartItemsFromStorage = localStorage.getItem("cartItems");
-const initialStateFromStorage = cartItemsFromStorage
-  ? JSON.parse(cartItemsFromStorage)
-  : null;
+// const cartItemsFromStorage = localStorage.getItem("cartItems");
+// const initialStateFromStorage = cartItemsFromStorage
+//   ? JSON.parse(cartItemsFromStorage)
+//   : null;
+
+// const initialState: InitialStateCartSlice = {
+//   cartItems: initialStateFromStorage ? initialStateFromStorage.cartItems : [],
+//   totalCount: initialStateFromStorage ? initialStateFromStorage.totalCount : 0,
+//   totalPrice: initialStateFromStorage ? initialStateFromStorage.totalPrice : 0,
+// };
+
+const loadInitialStateFromStorage = createAsyncThunk(
+  "cartSlice/loadInitialStateFromStorage",
+  async () => {
+    const cartItemsFromStorage = localStorage.getItem("cartItems");
+    const initialStateFromStorage = cartItemsFromStorage
+      ? JSON.parse(cartItemsFromStorage)
+      : null;
+
+    return initialStateFromStorage;
+  }
+); //!
 
 const initialState: InitialStateCartSlice = {
-  cartItems: initialStateFromStorage ? initialStateFromStorage.cartItems : [],
-  totalCount: initialStateFromStorage ? initialStateFromStorage.totalCount : 0,
-  totalPrice: initialStateFromStorage ? initialStateFromStorage.totalPrice : 0,
-};
+  cartItems: [],
+  totalCount: 0,
+  totalPrice: 0,
+}; //!
 
 export const cartSlice = createSlice({
   name: "cartSlice",
@@ -108,6 +126,17 @@ export const cartSlice = createSlice({
       updateLocalStorage(state);
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(loadInitialStateFromStorage.fulfilled, (state, action) => {
+      const initialStateFromStorage = action.payload;
+
+      if (initialStateFromStorage) {
+        state.cartItems = initialStateFromStorage.cartItems;
+        state.totalCount = initialStateFromStorage.totalCount;
+        state.totalPrice = initialStateFromStorage.totalPrice;
+      }
+    });
+  }, //!
 });
 
 export const {
@@ -117,4 +146,7 @@ export const {
   decrementCartItem,
   handleChangeCountItem,
 } = cartSlice.actions;
+
+export { loadInitialStateFromStorage }; //!
+
 export default cartSlice.reducer;
