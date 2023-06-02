@@ -8,10 +8,11 @@ import { useEffect } from "react";
 import { loadInitialStateFromStorage } from "../redux/cartSlice";
 
 export function CartIcon() {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch(); //!
+
   useEffect(() => {
     dispatch(loadInitialStateFromStorage());
-  }, []);
+  }, []); //!
 
   const cartTotalCount = useAppSelector((state) => state.cart.totalCount);
 

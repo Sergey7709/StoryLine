@@ -49,9 +49,9 @@ export const Cart = () => {
   //   title: book.title,
   // })); //!
 
-  useEffect(() => {
-    dispatch(loadInitialStateFromStorage());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(loadInitialStateFromStorage());
+  // }, []); //!
 
   const orderItems = cart.cartItems.map((book) => ({
     imageUrl: book.itemImageUrl,
