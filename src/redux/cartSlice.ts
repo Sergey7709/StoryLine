@@ -116,15 +116,18 @@ export const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(loadInitialStateFromStorage.fulfilled, (state, action) => {
-      const initialStateFromStorage = action.payload;
+    builder.addCase(
+      loadInitialStateFromStorage.fulfilled,
+      (state, action: PayloadAction<InitialStateCartSlice>) => {
+        const initialStateFromStorage = action.payload;
 
-      if (initialStateFromStorage) {
-        state.cartItems = initialStateFromStorage.cartItems;
-        state.totalCount = initialStateFromStorage.totalCount;
-        state.totalPrice = initialStateFromStorage.totalPrice;
+        if (initialStateFromStorage) {
+          state.cartItems = initialStateFromStorage.cartItems;
+          state.totalCount = initialStateFromStorage.totalCount;
+          state.totalPrice = initialStateFromStorage.totalPrice;
+        }
       }
-    });
+    );
   },
 });
 
