@@ -33,26 +33,7 @@ export const BooksList = React.memo(() => {
         }`
       : "";
 
-  // const requestLink =
-  //   param === categoryNewBooks
-  //     ? categoryNewBooks
-  //     : `${param}${categorySort}${priceSort}`;
-
-  // const requestBookList =
-  //   searchBooksValue.length > 0 ? searchBooksValue : requestLink;
-
-  // const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
-  //   ["item", requestBookList],
-  //   () => fetchItem(requestBookList)
-  // );
-
-  const { data, isLoading, isLoadingError } = useGetBookList(
-    categoryNewBooks,
-    param,
-    categorySort,
-    priceSort,
-    searchBooksValue
-  );
+  const { data, isLoading, isLoadingError } = useGetBookList();
 
   useEffect(() => {
     data?.items
