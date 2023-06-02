@@ -12,7 +12,7 @@ type initialStateSortSlice = {
 
 const initialState: initialStateSortSlice = {
   categorySort: "",
-  sortMinMaxPrice: [0, 0], //???
+  sortMinMaxPrice: [0, 0],
   maxDiscount: 0,
   searchBooksValue: "",
   reset: false,

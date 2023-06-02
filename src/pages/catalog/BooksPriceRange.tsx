@@ -8,21 +8,15 @@ import {
   setMinPrice,
   setReset,
   setCategorySort,
-  setSearchBooksValue,
 } from "../../redux/sortSlice";
 
-// type PriceRangeProps = {
-//   handlePriceChange: (priceMin: number, priceMax: number) => void;
-// };
-
-// const PriceRange = ({ handlePriceChange }: PriceRangeProps) => {
 const PriceRange = () => {
   const { reset, minPrice, maxPrice } = useAppSelector((state) => state.sort); //!
   const dispatch = useDispatch(); //!
 
   const [min, setMin] = useState("");
   const [max, setMax] = useState("");
-  // const [reset, setReset] = useState(false);
+
   const [debouncedMin] = useDebouncedValue(min, 1000);
   const [debouncedMax] = useDebouncedValue(max, 1000);
 
@@ -30,14 +24,8 @@ const PriceRange = () => {
     if (reset) {
       setMin("");
       setMax("");
-      // dispatch(setMinPrice("")); //!
-      // dispatch(setMaxPrice("")); //!
-      // handlePriceChange(0, 100000000);
-      // setReset(false);
       dispatch(setReset(false));
     } else {
-      console.log("dispatch");
-      // handlePriceChange(Number(debouncedMin), Number(debouncedMax));
       dispatch(setMinPrice(debouncedMin));
       dispatch(setMaxPrice(debouncedMax));
     }
@@ -47,7 +35,6 @@ const PriceRange = () => {
     const value = event.target.value;
     if (value.match(/^\d*$/)) {
       setMin(value);
-      // dispatch(setMinPrice(value)); //!
     }
   };
 
@@ -55,17 +42,14 @@ const PriceRange = () => {
     const value = event.target.value;
     if (value.match(/^\d*$/)) {
       setMax(value);
-      // dispatch(setMaxPrice(value)); //!
     }
   };
 
   const handleReset = () => {
-    // setReset(true);
     dispatch(setMinPrice(""));
     dispatch(setMaxPrice(""));
-    dispatch(setReset(true)); //!
-    dispatch(setCategorySort("")); //!
-    // dispatch(setSearchBooksValue(""));
+    dispatch(setReset(true));
+    dispatch(setCategorySort(""));
   };
 
   const isPriceNotValid =

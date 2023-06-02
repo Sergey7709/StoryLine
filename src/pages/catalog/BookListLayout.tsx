@@ -16,7 +16,6 @@ type BookListLayoutProps = {
   openedAuth: boolean;
   handlersClose: () => void;
   sortHandler: (valueSort: string) => void;
-  // handlePriceChange: (priceMin: number, priceMax: number) => void;
   clasess: string;
   data: ItemsResponse | undefined;
   books: JSX.Element[] | undefined;
@@ -32,13 +31,11 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
     openedAuth,
     handlersClose,
     sortHandler,
-    // handlePriceChange,
     clasess,
     data,
     books,
   } = props;
 
-  // console.log("isLoading", isLoading);
   return (
     <>
       {isLoading && <Loader />}
@@ -68,10 +65,7 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
             {param !== categoryNewBooks && (
               <>
                 {!searchBooksValue && <BooksFilter sortHandler={sortHandler} />}
-                {!searchBooksValue && (
-                  // <PriceRange handlePriceChange={handlePriceChange} />
-                  <PriceRange />
-                )}
+                {!searchBooksValue && <PriceRange />}
               </>
             )}
           </Group>

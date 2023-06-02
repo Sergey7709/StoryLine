@@ -1,16 +1,10 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Input, Tooltip } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { TiDeleteOutline } from "react-icons/ti";
 import { useDispatch } from "react-redux";
-import {
-  setReset,
-  setSearchBooksValue,
-  setSortMinMaxPrice,
-  setCategorySort,
-} from "../redux/sortSlice";
-import { currentFilter } from "../redux/filterSlice";
+import { setSearchBooksValue } from "../redux/sortSlice";
 
 type classesProps = {
   classes: string;

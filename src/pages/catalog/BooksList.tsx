@@ -8,16 +8,9 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import axios from "axios";
 import { BASE_URL, categoryNewBooks } from "../../common/constants";
 import { notifications } from "@mantine/notifications";
-import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
+import { useDisclosure } from "@mantine/hooks";
 
-import {
-  setMaxDiscount,
-  setMaxPrice,
-  setMinPrice,
-  setSortMinMaxPrice,
-  setCategorySort,
-  setReset,
-} from "../../redux/sortSlice";
+import { setMaxDiscount, setCategorySort } from "../../redux/sortSlice";
 import { BookListLayout } from "./BookListLayout";
 
 export const BooksList = React.memo(() => {
@@ -25,24 +18,10 @@ export const BooksList = React.memo(() => {
 
   const param = useAppSelector((state) => state.filter.param);
 
-  const {
-    categorySort,
-    sortMinMaxPrice,
-    maxDiscount,
-    searchBooksValue,
-    minPrice,
-    maxPrice,
-  } = useAppSelector((state) => state.sort);
-
-  // const [minPrice, maxPrice] = sortMinMaxPrice;
-
-  const [debouncedMin] = useDebouncedValue(minPrice, 1500); //!
-  const [debouncedMax] = useDebouncedValue(maxPrice, 1500); //!
-  // console.log("debouncedMin", debouncedMin, "debouncedMax", debouncedMax);
+  const { categorySort, maxDiscount, searchBooksValue, minPrice, maxPrice } =
+    useAppSelector((state) => state.sort);
 
   const priceSort =
-    // Number(debouncedMin) > 0 && Number(debouncedMax) >= Number(debouncedMin) //!
-    // Number(debouncedMin) > 0 && Number(debouncedMax) >= Number(debouncedMin) //!
     Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice)
       ? `&priceFrom=${Number(minPrice)}&priceTo=${
           Number(maxPrice) + Number(maxDiscount)
@@ -55,37 +34,18 @@ export const BooksList = React.memo(() => {
 
   const [openedAuth, handlers] = useDisclosure(false);
 
-  // const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
   const requestLink =
     param === categoryNewBooks
       ? categoryNewBooks
       : `${param}${categorySort}${priceSort}`;
 
   const requestBookList =
-    searchBooksValue.length > 0
-      ? `${searchBooksValue}`
-      : // : `${sortLink}${categorySort}${priceSort}`; //!
-        `${requestLink}`; //!
+    searchBooksValue.length > 0 ? `${searchBooksValue}` : `${requestLink}`;
 
   const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
-    [
-      "item",
-      // param,
-      // categorySort,
-      // priceSort,
-      // requestLink,
-      // searchBooksValue,
-      requestBookList,
-      // debouncedMax,
-      // debouncedMin,
-    ],
-    // () => fetchItem(`${sortLink}${valueSort}${priceSort}${searchBooksValue}`) //!
+    ["item", requestBookList],
     () => fetchItem(requestBookList) //!
   );
-
-  // console.log(`${requestBookList}`);
-  // console.log(data?.items);
-  // console.log(`${sortLink}${valueSort}${priceSort}${searchBooksValue}`);
 
   useEffect(() => {
     data?.items
@@ -190,18 +150,6 @@ export const BooksList = React.memo(() => {
     dispatch(setCategorySort(valueSort));
   }, []);
 
-  // const handlePriceChange = useCallback(
-  //   (priceMin: number, priceMax: number) => {
-  //     // dispatch(setSortMinMaxPrice([priceMin, priceMax]));
-  //     // dispatch(setMinPrice(priceMin.toString()));
-  //     // dispatch(setMaxPrice(priceMax.toString()));
-  //     // dispatch(setValueSort(""));
-  //   },
-  //   []
-  // );
-
-  // console.log("render BookList");
-
   return (
     <>
       <BookListLayout
@@ -210,7 +158,6 @@ export const BooksList = React.memo(() => {
         openedAuth={openedAuth}
         handlersClose={handlers.close}
         sortHandler={sortHandler}
-        // handlePriceChange={handlePriceChange}
         clasess={classes.grid}
         data={data}
         books={books}
