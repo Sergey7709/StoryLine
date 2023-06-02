@@ -12,6 +12,7 @@ import { useDisclosure } from "@mantine/hooks";
 
 import { setMaxDiscount, setCategorySort } from "../../redux/sortSlice";
 import { BookListLayout } from "./BookListLayout";
+import { usePostFavorites } from "../../api/usePostFavorites";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
@@ -75,55 +76,59 @@ export const BooksList = React.memo(() => {
     [data?.items]
   );
 
-  const { mutateAsync } = useMutation(
-    (param: string) => {
-      return axios.post(`${BASE_URL}${param}`, undefined, {
-        headers: {
-          Authorization: user?.token ?? "",
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        console.log("favorite action");
-      },
-      onError: () => {
-        notifications.show({
-          message: "Ошибка при добавлении или удалении книги в избранном!",
-          autoClose: 2000,
-          color: "red",
-        });
-      },
-    }
-  );
+  // const { mutateAsync } = useMutation(
+  //   (param: string) => {
+  //     return axios.post(`${BASE_URL}${param}`, undefined, {
+  //       headers: {
+  //         Authorization: user?.token ?? "",
+  //       },
+  //     });
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       console.log("favorite action");
+  //     },
+  //     onError: () => {
+  //       notifications.show({
+  //         message: "Ошибка при добавлении или удалении книги в избранном!",
+  //         autoClose: 2000,
+  //         color: "red",
+  //       });
+  //     },
+  //   }
+  // );
 
-  const favoritesChange = useCallback(
-    async (bookId: number, favorite: boolean) => {
-      if (!user) {
-        notifications.show({
-          message: "Войдите в аккаунт, что бы добавить книгу в избранное!",
-          autoClose: 5000,
-          color: "red",
-          fz: "md",
-        });
+  // const favoritesChange = useCallback(
+  //   async (bookId: number, favorite: boolean) => {
+  //     if (!user) {
+  //       notifications.show({
+  //         message: "Войдите в аккаунт, что бы добавить книгу в избранное!",
+  //         autoClose: 5000,
+  //         color: "red",
+  //         fz: "md",
+  //       });
 
-        handlers.open();
-        return;
-      }
+  //       handlers.open();
+  //       return;
+  //     }
 
-      if (user) {
-        if (favorite === false) {
-          await mutateAsync(`user/favorites/${bookId}`, {});
-          console.log("add favorite");
-        } else if (favorite === true) {
-          await mutateAsync(`user/favorites-remove/${bookId}`, {});
-          console.log("del favorite");
-        }
-      }
-    },
+  //     if (user) {
+  //       if (favorite === false) {
+  //         await mutateAsync(`user/favorites/${bookId}`, {});
+  //         console.log("add favorite");
+  //       } else if (favorite === true) {
+  //         await mutateAsync(`user/favorites-remove/${bookId}`, {});
+  //         console.log("del favorite");
+  //       }
+  //     }
+  //   },
 
-    [mutateAsync, user?.favoriteItems]
-  );
+  //   [mutateAsync, user?.favoriteItems]
+  // );
+
+  // const favoritesChange = usePostFavorites(user, handlers);//!
+
+  const { favoritesChange } = usePostFavorites(handlers);
 
   const books = useMemo(() => {
     const filteredBooks =
