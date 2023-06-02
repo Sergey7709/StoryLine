@@ -12,17 +12,6 @@ import {
   calculatePrice,
 } from "../common/commonFunctions";
 
-// const cartItemsFromStorage = localStorage.getItem("cartItems");
-// const initialStateFromStorage = cartItemsFromStorage
-//   ? JSON.parse(cartItemsFromStorage)
-//   : null;
-
-// const initialState: InitialStateCartSlice = {
-//   cartItems: initialStateFromStorage ? initialStateFromStorage.cartItems : [],
-//   totalCount: initialStateFromStorage ? initialStateFromStorage.totalCount : 0,
-//   totalPrice: initialStateFromStorage ? initialStateFromStorage.totalPrice : 0,
-// };
-
 const loadInitialStateFromStorage = createAsyncThunk(
   "cartSlice/loadInitialStateFromStorage",
   async () => {
@@ -33,13 +22,13 @@ const loadInitialStateFromStorage = createAsyncThunk(
 
     return initialStateFromStorage;
   }
-); //!
+);
 
 const initialState: InitialStateCartSlice = {
   cartItems: [],
   totalCount: 0,
   totalPrice: 0,
-}; //!
+};
 
 export const cartSlice = createSlice({
   name: "cartSlice",
@@ -136,7 +125,7 @@ export const cartSlice = createSlice({
         state.totalPrice = initialStateFromStorage.totalPrice;
       }
     });
-  }, //!
+  },
 });
 
 export const {
@@ -147,6 +136,6 @@ export const {
   handleChangeCountItem,
 } = cartSlice.actions;
 
-export { loadInitialStateFromStorage }; //!
+export { loadInitialStateFromStorage }; //! экспорт в компонент CartIcon
 
 export default cartSlice.reducer;
