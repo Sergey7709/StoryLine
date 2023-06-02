@@ -1,6 +1,4 @@
 import { useStyles } from "./BooksListStyles";
-import { fetchItem } from "../../api/itemsApi";
-import { ItemsResponse, User } from "../../common/types";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import SingleBookList from "./SingleBookList";
 import React, { useCallback, useEffect, useMemo } from "react";
@@ -8,17 +6,11 @@ import { useDisclosure } from "@mantine/hooks";
 import { setMaxDiscount, setCategorySort } from "../../redux/sortSlice";
 import { BookListLayout } from "./BookListLayout";
 import { usePostFavorites } from "../../api/usePostFavorites";
-import { categoryNewBooks } from "../../common/constants";
-import { useQuery } from "react-query";
 import { useGetBookList } from "../../api/useGetBookList";
+import { User } from "../../common/types";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
-
-  const param = useAppSelector((state) => state.filter.param);
-
-  const { categorySort, maxDiscount, searchBooksValue, minPrice, maxPrice } =
-    useAppSelector((state) => state.sort);
 
   const dispatch = useAppDispatch();
 
@@ -26,14 +18,17 @@ export const BooksList = React.memo(() => {
 
   const [openedAuth, handlers] = useDisclosure(false);
 
-  const priceSort =
-    Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice)
-      ? `&priceFrom=${Number(minPrice)}&priceTo=${
-          Number(maxPrice) + Number(maxDiscount)
-        }`
-      : "";
+  const { favoritesChange } = usePostFavorites(handlers);
 
-  const { data, isLoading, isLoadingError } = useGetBookList();
+  const {
+    data,
+    isLoading,
+    isLoadingError,
+    minPrice,
+    maxPrice,
+    searchBooksValue,
+    param,
+  } = useGetBookList();
 
   useEffect(() => {
     data?.items
@@ -63,11 +58,9 @@ export const BooksList = React.memo(() => {
     [data?.items]
   );
 
-  const { favoritesChange } = usePostFavorites(handlers);
-
   const books = useMemo(() => {
     const filteredBooks =
-      user && Number(minPrice) > 0 && searchBooksValue.length === 0 //!
+      user && Number(minPrice) > 0 && searchBooksValue.length === 0
         ? dataDiscount
         : data?.items;
 
