@@ -1,42 +1,53 @@
-import { Group, Grid, Modal, Title, Divider } from "@mantine/core";
 import { useStyles } from "./BooksListStyles";
 import { useMutation, useQuery } from "react-query";
 import { fetchItem } from "../../api/itemsApi";
 import { ItemsResponse, User } from "../../common/types";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
-import { Loader } from "../../components/loader/Loader";
-import { BooksFilter } from "./BooksFilter";
 import SingleBookList from "./SingleBookList";
-import PriceRange from "./BooksPriceRange";
 import React, { useCallback, useEffect, useMemo } from "react";
-import { ServerError } from "../../components/errorNetwork/ServerError";
 import axios from "axios";
 import { BASE_URL, categoryNewBooks } from "../../common/constants";
 import { notifications } from "@mantine/notifications";
-import { useDisclosure } from "@mantine/hooks";
-import { Authorization } from "../authorization/Authorization";
+import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
+
 import {
   setMaxDiscount,
+  setMaxPrice,
+  setMinPrice,
   setSortMinMaxPrice,
-  setValueSort,
+  setCategorySort,
+  setReset,
 } from "../../redux/sortSlice";
+import { BookListLayout } from "./BookListLayout";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
 
   const param = useAppSelector((state) => state.filter.param);
 
-  const { valueSort, sortMinMaxPrice, maxDiscount, searchBooksValue } =
-    useAppSelector((state) => state.sort);
+  const {
+    categorySort,
+    sortMinMaxPrice,
+    maxDiscount,
+    searchBooksValue,
+    minPrice,
+    maxPrice,
+  } = useAppSelector((state) => state.sort);
 
-  const [minPrice, maxPrice] = sortMinMaxPrice;
+  // const [minPrice, maxPrice] = sortMinMaxPrice;
+
+  const [debouncedMin] = useDebouncedValue(minPrice, 1500); //!
+  const [debouncedMax] = useDebouncedValue(maxPrice, 1500); //!
+  // console.log("debouncedMin", debouncedMin, "debouncedMax", debouncedMax);
 
   const priceSort =
-    minPrice > 0
-      ? `&priceFrom=${minPrice}&priceTo=${maxPrice + maxDiscount}`
+    // Number(debouncedMin) > 0 && Number(debouncedMax) >= Number(debouncedMin) //!
+    // Number(debouncedMin) > 0 && Number(debouncedMax) >= Number(debouncedMin) //!
+    Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice)
+      ? `&priceFrom=${Number(minPrice)}&priceTo=${
+          Number(maxPrice) + Number(maxDiscount)
+        }`
       : "";
-
-  const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
 
   const dispatch = useAppDispatch();
 
@@ -44,15 +55,37 @@ export const BooksList = React.memo(() => {
 
   const [openedAuth, handlers] = useDisclosure(false);
 
+  // const sortLink = param === categoryNewBooks ? categoryNewBooks : param;
+  const requestLink =
+    param === categoryNewBooks
+      ? categoryNewBooks
+      : `${param}${categorySort}${priceSort}`;
+
+  const requestBookList =
+    searchBooksValue.length > 0
+      ? `${searchBooksValue}`
+      : // : `${sortLink}${categorySort}${priceSort}`; //!
+        `${requestLink}`; //!
+
   const { data, isLoading, isLoadingError } = useQuery<ItemsResponse>(
-    ["item", param, valueSort, priceSort, searchBooksValue],
-    () => fetchItem(`${sortLink}${valueSort}${priceSort}${searchBooksValue}`) //!
+    [
+      "item",
+      // param,
+      // categorySort,
+      // priceSort,
+      // requestLink,
+      // searchBooksValue,
+      requestBookList,
+      // debouncedMax,
+      // debouncedMin,
+    ],
+    // () => fetchItem(`${sortLink}${valueSort}${priceSort}${searchBooksValue}`) //!
+    () => fetchItem(requestBookList) //!
   );
 
-  console.log(`sortLink ${sortLink}`);
-  console.log(`valueSort ${valueSort}`);
-  console.log(`priceSort ${priceSort}`);
-  console.log(`searchBooksValue ${searchBooksValue}`);
+  // console.log(`${requestBookList}`);
+  // console.log(data?.items);
+  // console.log(`${sortLink}${valueSort}${priceSort}${searchBooksValue}`);
 
   useEffect(() => {
     data?.items
@@ -69,9 +102,14 @@ export const BooksList = React.memo(() => {
     () =>
       data?.items.filter((book) => {
         if (book.discount !== 0) {
-          return book.discount >= minPrice && book.discount <= maxPrice;
+          return (
+            book.discount >= Number(minPrice) &&
+            book.discount <= Number(maxPrice)
+          );
         } else {
-          return book.price >= minPrice && book.price <= maxPrice;
+          return (
+            book.price >= Number(minPrice) && book.price <= Number(maxPrice)
+          );
         }
       }),
     [data?.items]
@@ -128,7 +166,10 @@ export const BooksList = React.memo(() => {
   );
 
   const books = useMemo(() => {
-    const filteredBooks = user && minPrice > 0 ? dataDiscount : data?.items;
+    const filteredBooks =
+      user && Number(minPrice) > 0 && searchBooksValue.length === 0 //!
+        ? dataDiscount
+        : data?.items;
 
     return filteredBooks?.map((book) => {
       const isFavorite =
@@ -146,59 +187,35 @@ export const BooksList = React.memo(() => {
   }, [data?.items, user?.favoriteItems]);
 
   const sortHandler = useCallback((valueSort: string) => {
-    dispatch(setValueSort(valueSort));
+    dispatch(setCategorySort(valueSort));
   }, []);
 
-  const handlePriceChange = useCallback(
-    (priceMin: number, priceMax: number) => {
-      dispatch(setSortMinMaxPrice([priceMin, priceMax]));
-      dispatch(setValueSort(""));
-    },
-    []
-  );
+  // const handlePriceChange = useCallback(
+  //   (priceMin: number, priceMax: number) => {
+  //     // dispatch(setSortMinMaxPrice([priceMin, priceMax]));
+  //     // dispatch(setMinPrice(priceMin.toString()));
+  //     // dispatch(setMaxPrice(priceMax.toString()));
+  //     // dispatch(setValueSort(""));
+  //   },
+  //   []
+  // );
 
-  console.log("render BookList");
+  // console.log("render BookList");
 
   return (
     <>
-      {isLoading && <Loader />}
-      {isLoadingError && <ServerError />}
-      {!isLoading && param === categoryNewBooks && (
-        <Grid>
-          <Grid.Col span={12}>
-            <Title
-              pb={"sm"}
-              align="center"
-              variant="gradient"
-              gradient={{ from: "indigo", to: "green", deg: 45 }}
-              order={1}
-            >
-              КНИЖНЫЕ НОВИНКИ
-            </Title>
-            <Divider size="xs" variant="solid" color="gray" />
-          </Grid.Col>
-        </Grid>
-      )}
-      <Grid>
-        <Modal size={500} opened={openedAuth} onClose={handlers.close} centered>
-          <Authorization close={handlers.close} />
-        </Modal>
-        <Grid.Col span={12}>
-          <Group ml={"2%"} mb={5}>
-            {param !== categoryNewBooks && (
-              <>
-                <BooksFilter sortHandler={sortHandler} />
-                <PriceRange handlePriceChange={handlePriceChange} />
-              </>
-            )}
-          </Group>
-        </Grid.Col>
-        <Grid.Col span={12}>
-          <Grid className={classes.grid} align="center">
-            {data && books}
-          </Grid>
-        </Grid.Col>
-      </Grid>
+      <BookListLayout
+        isLoading={isLoading}
+        isLoadingError={isLoadingError}
+        openedAuth={openedAuth}
+        handlersClose={handlers.close}
+        sortHandler={sortHandler}
+        // handlePriceChange={handlePriceChange}
+        clasess={classes.grid}
+        data={data}
+        books={books}
+        param={param}
+      />
     </>
   );
 });

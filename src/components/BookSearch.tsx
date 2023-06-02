@@ -4,7 +4,12 @@ import { IconSearch } from "@tabler/icons-react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { TiDeleteOutline } from "react-icons/ti";
 import { useDispatch } from "react-redux";
-import { setSearchBooksValue } from "../redux/sortSlice";
+import {
+  setReset,
+  setSearchBooksValue,
+  setSortMinMaxPrice,
+  setCategorySort,
+} from "../redux/sortSlice";
 import { currentFilter } from "../redux/filterSlice";
 
 type classesProps = {
@@ -20,12 +25,11 @@ const BookSearch = ({ classes }: classesProps) => {
 
   useEffect(() => {
     if (debouncedBooks !== "") {
-      dispatch(setSearchBooksValue(`title=${debouncedBooks}`));
-      dispatch(currentFilter("all?"));
+      dispatch(setSearchBooksValue(`all?title=${debouncedBooks}`));
     } else {
       dispatch(setSearchBooksValue(""));
     }
-  }, [debouncedBooks]);
+  }, [debouncedBooks, dispatch]);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.currentTarget.value);
@@ -57,6 +61,7 @@ const BookSearch = ({ classes }: classesProps) => {
                 size="1.2rem"
                 style={{ display: "block", opacity: 0.5 }}
                 onClick={handleClearSerch}
+                cursor={"pointer"}
               />
             </div>
           </Tooltip>

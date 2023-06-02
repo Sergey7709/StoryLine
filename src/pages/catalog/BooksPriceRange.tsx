@@ -1,52 +1,71 @@
 import { Button, Grid, Group, Input, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useDebouncedValue } from "@mantine/hooks";
+import { useAppSelector } from "../../redux/redux.hooks";
+import { useDispatch } from "react-redux";
+import {
+  setMaxPrice,
+  setMinPrice,
+  setReset,
+  setCategorySort,
+  setSearchBooksValue,
+} from "../../redux/sortSlice";
 
-type PriceRangeProps = {
-  handlePriceChange: (priceMin: number, priceMax: number) => void;
-};
+// type PriceRangeProps = {
+//   handlePriceChange: (priceMin: number, priceMax: number) => void;
+// };
 
-const PriceRange = ({ handlePriceChange }: PriceRangeProps) => {
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [debouncedMin] = useDebouncedValue(minPrice, 1000);
-  const [debouncedMax] = useDebouncedValue(maxPrice, 1000);
-  const [reset, setReset] = useState(false);
+// const PriceRange = ({ handlePriceChange }: PriceRangeProps) => {
+const PriceRange = () => {
+  const { reset, minPrice, maxPrice } = useAppSelector((state) => state.sort); //!
+  const dispatch = useDispatch(); //!
+
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
+  // const [reset, setReset] = useState(false);
+  const [debouncedMin] = useDebouncedValue(min, 1000);
+  const [debouncedMax] = useDebouncedValue(max, 1000);
 
   useEffect(() => {
     if (reset) {
-      setMinPrice("");
-      setMaxPrice("");
-      handlePriceChange(0, 100000000);
-      setReset(false);
-    } else if (Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice)) {
-      handlePriceChange(Number(debouncedMin), Number(debouncedMax));
+      setMin("");
+      setMax("");
+      // dispatch(setMinPrice("")); //!
+      // dispatch(setMaxPrice("")); //!
+      // handlePriceChange(0, 100000000);
+      // setReset(false);
+      dispatch(setReset(false));
+    } else {
+      console.log("dispatch");
+      // handlePriceChange(Number(debouncedMin), Number(debouncedMax));
+      dispatch(setMinPrice(debouncedMin));
+      dispatch(setMaxPrice(debouncedMax));
     }
-  }, [
-    debouncedMin,
-    debouncedMax,
-    minPrice,
-    maxPrice,
-    reset,
-    handlePriceChange,
-  ]);
+  }, [debouncedMin, debouncedMax, reset]);
 
   const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.match(/^\d*$/)) {
-      setMinPrice(value);
+      setMin(value);
+      // dispatch(setMinPrice(value)); //!
     }
   };
 
   const handleMaxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.match(/^\d*$/)) {
-      setMaxPrice(value);
+      setMax(value);
+      // dispatch(setMaxPrice(value)); //!
     }
   };
 
   const handleReset = () => {
-    setReset(true);
+    // setReset(true);
+    dispatch(setMinPrice(""));
+    dispatch(setMaxPrice(""));
+    dispatch(setReset(true)); //!
+    dispatch(setCategorySort("")); //!
+    // dispatch(setSearchBooksValue(""));
   };
 
   const isPriceNotValid =
@@ -63,7 +82,7 @@ const PriceRange = ({ handlePriceChange }: PriceRangeProps) => {
             от
           </Text>
           <Input
-            value={minPrice}
+            value={min}
             onChange={handleMinPriceChange}
             w={100}
             size="xs"
@@ -75,7 +94,7 @@ const PriceRange = ({ handlePriceChange }: PriceRangeProps) => {
             до
           </Text>
           <Input
-            value={maxPrice}
+            value={max}
             onChange={handleMaxPriceChange}
             w={100}
             size="xs"
