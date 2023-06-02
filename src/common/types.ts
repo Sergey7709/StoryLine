@@ -153,3 +153,7 @@ export type BookCardLayoutProps = {
   reviewMutation: UseMutationResult<any, unknown, FetchReviewArgs, unknown>;
   open: () => void;
 };
+
+export type HandlersProps = {
+  readonly open: () => void;
+};
