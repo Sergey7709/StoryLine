@@ -23,6 +23,7 @@ import HeaderMenu from "./components/headerMenu/HeaderMenu";
 import { Error404 } from "./pages/error404/Error404";
 import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
 import { BookCard } from "./pages/catalog/BookCard";
+import { ReaderBlogsCard } from "./pages/readerBlogs/ReaderBlogsCard";
 
 export default function App() {
   console.log("render App");
@@ -67,6 +68,7 @@ export default function App() {
                 element={<BookstoreServices />}
               />
               <Route path={"/reader-blogs"} element={<ReaderBlogs />} />
+              <Route path={"/reader-blogs/:id"} element={<ReaderBlogsCard />} />
               <Route path={"/about-us"} element={<AboutUs />} />
               <Route path={"/books-list"} element={<BooksList />} />
               <Route path={"/books-list/:id"} element={<BookCard />} />

@@ -48,7 +48,7 @@ const SingleBookList: FC<SingleBookListProps> = React.memo(
       setFavoriteState(favorite);
     }, [favorite]);
 
-    // console.log("render single");
+    console.log("render single");
 
     return (
       <>

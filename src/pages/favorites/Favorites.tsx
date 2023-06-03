@@ -84,7 +84,7 @@ export const Favorites = React.memo(() => {
 
   return (
     <>
-      {!user && <></>}
+      {!user && <>Зарегестрируйтесь, что бы добавить в избранное</>}
       {user && (
         <>
           <Flex justify={"center"} align={"center"}>
