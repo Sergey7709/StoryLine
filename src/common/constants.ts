@@ -27,48 +27,48 @@ export const NAV_BUTTONS = [
 
 export const CATEGORIES = [
   {
-    link: "/books-list",
+    link: "/books-list/Все книги",
     label: "Все книги",
     param: "all?",
   },
   {
-    link: "/books-list",
+    link: "/books-list/Новинки",
     label: "Новинки",
     param: "all?sortBy=releaseDate&sortOrder=desc&limit=8",
   },
   {
-    link: "/books-list",
+    link: "/books-list/Художественная литература",
     label: "Художественная литература",
     param: "all?category=Художественная литература",
   },
   {
-    link: "/books-list",
+    link: "/books-list/Научная и научно-популярная литература",
     label: "Научная и научно-популярная литература",
     param: "all?category=Научная и научно-популярная литература",
   },
   {
-    link: "/books-list",
+    link: "/books-list/Бизнес",
     label: "Бизнес",
     param: "all?category=Бизнес",
   },
   {
-    link: "/books-list",
+    link: "/books-list/Детская литература",
     label: "Детская литература",
     param: "all?category=Детская литература",
   },
 
   {
-    link: "/books-list",
+    link: "/books-list/Путешествия. Хобби. Досуг",
     label: "Путешествия. Хобби. Досуг",
     param: "all?category=Путешествия. Хобби. Досуг",
   },
   {
-    link: "/books-list",
+    link: "/books-list/Компьютерная литература",
     label: "Компьютерная литература",
     param: "all?category=Компьютерная литература",
   },
   {
-    link: "/books-list",
+    link: "/books-list/Искусство. Религия",
     label: "Искусство. Религия",
     param: "all?category=Искусство. Религия",
   },

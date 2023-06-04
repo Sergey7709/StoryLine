@@ -84,7 +84,7 @@ export const ReaderBlogs = () => {
   }, [post]);
 
   const { data, isLoading, isError, isSuccess } = useQuery(
-    ["readerBlogs", currentPost, mutatePost],
+    ["readerBlogs", mutatePost],
     () => fetchHandler("get", params)
   ); //???
 

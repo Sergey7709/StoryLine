@@ -70,7 +70,7 @@ export default function App() {
               <Route path={"/reader-blogs"} element={<ReaderBlogs />} />
               <Route path={"/reader-blogs/:id"} element={<ReaderBlogsCard />} />
               <Route path={"/about-us"} element={<AboutUs />} />
-              <Route path={"/books-list"} element={<BooksList />} />
+              <Route path={"/books-list/:link"} element={<BooksList />} />
               <Route path={"/books-list/:id"} element={<BookCard />} />
               <Route path={"/user-account"} element={<UserAccount />} />
               <Route path={"*"} element={<Error404 />} />

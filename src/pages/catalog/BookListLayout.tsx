@@ -8,6 +8,7 @@ import PriceRange from "./BooksPriceRange";
 import { ItemsResponse } from "../../common/types";
 import { Loader } from "../../components/loader/Loader";
 import { useAppSelector } from "../../redux/redux.hooks";
+import { useParams } from "react-router-dom";
 
 type BookListLayoutProps = {
   isLoading: boolean;
@@ -23,6 +24,8 @@ type BookListLayoutProps = {
 
 export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
   const { searchBooksValue } = useAppSelector((state) => state.sort);
+
+  const { link } = useParams();
 
   const {
     isLoading,
@@ -40,22 +43,23 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
     <>
       {isLoading && <Loader />}
       {isLoadingError && <ServerError />}
-      {!isLoading && param === categoryNewBooks && (
+      {
         <Grid>
           <Grid.Col span={12}>
             <Title
               pb={"sm"}
               align="center"
               variant="gradient"
-              gradient={{ from: "indigo", to: "green", deg: 45 }}
+              gradient={{ from: "coral", to: "red", deg: 45 }}
               order={1}
             >
-              КНИЖНЫЕ НОВИНКИ
+              {link?.toLocaleUpperCase()}
             </Title>
             <Divider size="xs" variant="solid" color="gray" />
           </Grid.Col>
         </Grid>
-      )}
+      }
+
       <Grid>
         <Modal size={500} opened={openedAuth} onClose={handlersClose} centered>
           <Authorization close={handlersClose} />
