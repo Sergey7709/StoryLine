@@ -7,18 +7,15 @@ import {
   UpdatePostArgs,
   initialPostState,
 } from "../../common/types";
-import { Grid, Button, Text, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { useAppSelector } from "../../redux/redux.hooks";
-import { Authorization } from "../authorization/Authorization";
 import { Loader } from "../../components/loader/Loader";
-import { GiNotebook } from "react-icons/gi";
 import { ReaderBlogsModalForm } from "./ReaderBlogsModalForm";
 import { paramsReaderBlogs } from "../../common/constants";
 import { usePostReaderBlogs } from "../../api/usePostReaderBlogs";
 import { ReaderBlogsLayout } from "./ReaderBlogsLayout";
-import { GoBackButton } from "../../components/GoBackButton";
+import { ReaderBlogsButton } from "./ReaderBlogsButton";
 
 export const ReaderBlogs = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -69,51 +66,31 @@ export const ReaderBlogs = () => {
 
   return (
     <>
-      {isLoading && <Loader />}
-
-      <ReaderBlogsModalForm
-        opened={opened}
-        close={close}
-        postForm={postForm}
-        setPostForm={setPostForm}
-        currentPost={currentPost}
-        mutatePost={mutatePost}
-        submitPost={submitPost}
-      />
-
-      <Grid pr={"sm"} pb={"md"} mt={10} gutter={"sm"} justify={"flex-start"}>
-        <Grid.Col span="content">
-          <GoBackButton
-            variant={"gradient"}
-            size={"xs"}
-            gradient={{ from: "indigo", to: "cyan" }}
-            text={"ВЕРНУТЬСЯ"}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <ReaderBlogsModalForm
+            opened={opened}
+            close={close}
+            postForm={postForm}
+            setPostForm={setPostForm}
+            currentPost={currentPost}
+            mutatePost={mutatePost}
+            submitPost={submitPost}
+            onAuth={onAuth}
+            closeAuth={closeAuth}
           />
-        </Grid.Col>
-        <Grid.Col span="content">
-          <Button
-            size="xs"
-            // variant="light"
-            color="teal"
-            onClick={() => {
-              addPostHandler();
-            }}
-          >
-            <GiNotebook size={25} />
-            <Text fw={"bold"}> ДОБАВИТЬ ПОСТ</Text>
-          </Button>
-        </Grid.Col>
-      </Grid>
 
-      <Modal size={500} opened={onAuth} onClose={closeAuth} centered>
-        <Authorization close={closeAuth} />
-      </Modal>
+          <ReaderBlogsButton addPostHandler={addPostHandler} />
 
-      <ReaderBlogsLayout
-        data={data}
-        open={open}
-        setCurrentPost={setCurrentPost}
-      />
+          <ReaderBlogsLayout
+            data={data}
+            open={open}
+            setCurrentPost={setCurrentPost}
+          />
+        </>
+      )}
     </>
   );
 };

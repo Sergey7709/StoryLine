@@ -77,7 +77,7 @@ export const BooksList = React.memo(() => {
         />
       );
     });
-  }, [data?.items, user?.favoriteItems]);
+  }, [data?.items, dataDiscount, user?.favoriteItems]);
 
   const sortHandler = useCallback((valueSort: string) => {
     dispatch(setCategorySort(valueSort));

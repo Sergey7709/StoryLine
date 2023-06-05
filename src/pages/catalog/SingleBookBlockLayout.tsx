@@ -12,7 +12,6 @@ import {
   Image,
   Text,
 } from "@mantine/core";
-import React from "react";
 import { GiBookmarklet } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import PricesDiscount from "./UI/PricesDiscount";

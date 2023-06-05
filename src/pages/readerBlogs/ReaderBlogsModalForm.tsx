@@ -3,6 +3,7 @@ import React from "react";
 import { Post, PostCreate, UpdatePostArgs } from "../../common/types";
 import { UseMutationResult } from "react-query";
 import { FetchType } from "../../api/postOrReviewApi";
+import { Authorization } from "../authorization/Authorization";
 
 type ReaderBlogsModalFormProps = {
   opened: boolean;
@@ -12,6 +13,8 @@ type ReaderBlogsModalFormProps = {
   currentPost: number | "create";
   mutatePost: UseMutationResult<any, unknown, UpdatePostArgs, unknown>;
   submitPost: (type: FetchType, id?: number) => Promise<void>;
+  onAuth: boolean;
+  closeAuth: () => void;
 };
 
 export const ReaderBlogsModalForm: React.FC<ReaderBlogsModalFormProps> = (
@@ -25,9 +28,15 @@ export const ReaderBlogsModalForm: React.FC<ReaderBlogsModalFormProps> = (
     currentPost,
     mutatePost,
     submitPost,
+    onAuth,
+    closeAuth,
   } = props;
   return (
     <>
+      <Modal size={500} opened={onAuth} onClose={closeAuth} centered>
+        <Authorization close={closeAuth} />
+      </Modal>
+
       <Modal size="lg" opened={opened} onClose={close} centered>
         <Input
           onChange={(e) =>
