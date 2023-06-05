@@ -10,6 +10,10 @@ import {
   Text,
   Flex,
   Popover,
+  Tooltip,
+  ThemeIcon,
+  HoverCard,
+  UnstyledButton,
 } from "@mantine/core";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
@@ -19,6 +23,13 @@ import { useStyles } from "./BooksListStyles";
 import PricesDiscount from "./UI/PricesDiscount";
 import { useAppDispatch } from "../../redux/redux.hooks";
 import { addCartItems } from "../../redux/cartSlice";
+import {
+  GiBookmark,
+  GiBookmarklet,
+  GiBurningBook,
+  GiChainedHeart,
+} from "react-icons/gi";
+import { useDisclosure } from "@mantine/hooks";
 
 type SingleBookListProps = {
   book: Item;
@@ -30,6 +41,8 @@ const SingleBookList: FC<SingleBookListProps> = React.memo(
     const [favoriteState, setFavoriteState] = useState(favorite);
 
     const dispatch = useAppDispatch();
+
+    const [opened, { close, open }] = useDisclosure(false);
 
     const handleFavoritesChange = useCallback(() => {
       setFavoriteState(!favoriteState);
@@ -69,7 +82,7 @@ const SingleBookList: FC<SingleBookListProps> = React.memo(
             withBorder
           >
             <Group position="center">
-              <Link to={`/books-list/${id}`}>
+              <Link to={`/book-card/${id}`}>
                 <Image
                   width={"8rem"}
                   height={"12rem"}
@@ -98,27 +111,32 @@ const SingleBookList: FC<SingleBookListProps> = React.memo(
                 )}
               </Flex>
 
-              <ActionIcon
-                variant="transparent"
-                className={classes.action_favorite}
+              <Tooltip
+                label={
+                  favoriteState
+                    ? "Удалить из избранного"
+                    : "Добавить в избранное"
+                }
+                color="cyan"
+                position="bottom"
+                withArrow
+                transitionProps={{ transition: "skew-up", duration: 300 }}
               >
-                {/* //! исправить на один элемент без повтора */}
-                {favoriteState ? (
-                  <BsBookmarkCheckFill
-                    className={classes.favorite_on}
+                <ActionIcon
+                  variant="transparent"
+                  className={classes.action_favorite}
+                >
+                  <GiBookmarklet
+                    className={
+                      favoriteState ? classes.favorite_on : classes.favorite_off
+                    }
                     size="4rem"
                     onClick={handleFavoritesChange}
                   />
-                ) : (
-                  <BsBookmarkCheck
-                    className={classes.favorite_off}
-                    size="4rem"
-                    onClick={handleFavoritesChange}
-                  />
-                )}
-                {/* //! */}
-              </ActionIcon>
+                </ActionIcon>
+              </Tooltip>
             </Group>
+
             <Grid mt={10} pl={10} mb={5} gutter={0}>
               <Grid.Col span={12}>
                 <Text align="start" size="sm" color="dimmed" lineClamp={1}>
@@ -126,14 +144,16 @@ const SingleBookList: FC<SingleBookListProps> = React.memo(
                 </Text>
               </Grid.Col>
               <Grid.Col span={12}>
-                <Popover
+                {/* <Popover
                   width={200}
                   position="bottom"
                   withArrow
                   shadow="md"
                   // opened={opened}
                 >
-                  <Popover.Target>
+                  <Popover.Target> */}
+                <Link to={`/book-card/${id}`}>
+                  <UnstyledButton>
                     <Text
                       weight={500}
                       lineClamp={1}
@@ -142,11 +162,13 @@ const SingleBookList: FC<SingleBookListProps> = React.memo(
                     >
                       {book.title}
                     </Text>
-                  </Popover.Target>
+                  </UnstyledButton>
+                </Link>
+                {/* </Popover.Target>
                   <Popover.Dropdown sx={{ pointerEvents: "none" }}>
                     <Text>{book.title}</Text>
                   </Popover.Dropdown>
-                </Popover>
+                </Popover> */}
               </Grid.Col>
             </Grid>
             <Flex justify="space-between">

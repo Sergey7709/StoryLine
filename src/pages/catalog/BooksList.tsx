@@ -8,6 +8,7 @@ import { BookListLayout } from "./BookListLayout";
 import { usePostFavorites } from "../../api/usePostFavorites";
 import { useGetBookList } from "../../api/useGetBookList";
 import { User } from "../../common/types";
+import { Container } from "@mantine/core";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);

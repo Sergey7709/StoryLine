@@ -17,7 +17,12 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
       >
         <Menu.Target>
           <UnstyledButton>
-            <Text size={"md"} color="blue" weight={500}>
+            <Text
+              size={"md"}
+              variant="gradient"
+              gradient={{ from: "coral", to: "red", deg: 45 }}
+              weight={500}
+            >
               Сортировать книги по...
             </Text>
           </UnstyledButton>
@@ -34,7 +39,12 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
               >
                 <Menu.Target>
                   <UnstyledButton>
-                    <Text size="md" color="blue" weight={400}>
+                    <Text
+                      size="md"
+                      variant="gradient"
+                      gradient={{ from: "coral", to: "red", deg: 45 }}
+                      weight={400}
+                    >
                       {`${menuItem.title}`}
                     </Text>
                   </UnstyledButton>
@@ -46,7 +56,12 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                       key={option.value}
                       onClick={() => sortHandler(option.value)}
                     >
-                      <Text size="md" color="blue" weight={400}>
+                      <Text
+                        size="md"
+                        variant="gradient"
+                        gradient={{ from: "coral", to: "red", deg: 45 }}
+                        weight={400}
+                      >
                         {option.subtitle}
                       </Text>
                     </Menu.Item>

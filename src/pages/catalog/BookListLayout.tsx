@@ -9,6 +9,7 @@ import { ItemsResponse } from "../../common/types";
 import { Loader } from "../../components/loader/Loader";
 import { useAppSelector } from "../../redux/redux.hooks";
 import { useParams } from "react-router-dom";
+import { GoBackButton } from "../../components/GoBackButton";
 
 type BookListLayoutProps = {
   isLoading: boolean;
@@ -43,22 +44,6 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
     <>
       {isLoading && <Loader />}
       {isLoadingError && <ServerError />}
-      {
-        <Grid>
-          <Grid.Col span={12}>
-            <Title
-              pb={"sm"}
-              align="center"
-              variant="gradient"
-              gradient={{ from: "coral", to: "red", deg: 45 }}
-              order={1}
-            >
-              {link?.toLocaleUpperCase()}
-            </Title>
-            <Divider size="xs" variant="solid" color="gray" />
-          </Grid.Col>
-        </Grid>
-      }
 
       <Grid>
         <Modal size={500} opened={openedAuth} onClose={handlersClose} centered>
@@ -66,13 +51,40 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
         </Modal>
         <Grid.Col span={12}>
           <Group ml={"2%"} mb={5}>
-            {param !== categoryNewBooks && (
+            {param !== categoryNewBooks ? (
               <>
+                <GoBackButton
+                  variant={"gradient"}
+                  size={"xs"}
+                  gradient={{ from: "yellow", to: "orange" }}
+                  text={"ВЕРНУТЬСЯ"}
+                />
                 {!searchBooksValue && <BooksFilter sortHandler={sortHandler} />}
                 {!searchBooksValue && <PriceRange />}
               </>
+            ) : (
+              <GoBackButton
+                variant={"gradient"}
+                size={"xs"}
+                gradient={{ from: "yellow", to: "orange" }}
+                text={"ВЕРНУТЬСЯ"}
+              />
             )}
+            <Grid>
+              <Grid.Col span={12}>
+                <Title
+                  align="center"
+                  variant="gradient"
+                  gradient={{ from: "coral", to: "red", deg: 45 }}
+                  order={2}
+                  italic
+                >
+                  {link?.toLocaleUpperCase()}
+                </Title>
+              </Grid.Col>
+            </Grid>
           </Group>
+          <Divider color={"coral"} size="xs" variant="solid" />
         </Grid.Col>
         <Grid.Col span={12}>
           <Grid className={clasess} align="center">

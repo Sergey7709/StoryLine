@@ -43,11 +43,11 @@ export const useStyles = createStyles((theme) => ({
     fill: "crimson",
     "&:hover": {
       transform: "scale(1.05)",
-      fill: "cadetblue",
+      fill: "gray",
     },
   },
   favorite_off: {
-    fill: "cadetblue",
+    fill: "gray.1",
     "&:hover": {
       transform: "scale(1.05)",
       fill: "crimson",

@@ -15,6 +15,7 @@ import { FC } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ActiveCartProps, CartItem } from "../../common/types";
 import { CartCount } from "../../components/cartCount/CartCount";
+import { GoBackButton } from "../../components/GoBackButton";
 
 export const ActiveCart: FC<ActiveCartProps> = (props) => {
   console.log("render activecart");
@@ -32,19 +33,26 @@ export const ActiveCart: FC<ActiveCartProps> = (props) => {
           <Title order={1} pb={10}>
             Корзина товаров
           </Title>
-          <Divider size="xs" variant="solid" color="gray" />
-          <UnstyledButton>
-            <Badge
-              color="black"
-              onClick={() => {
-                handleDeleteCartItem(0);
-              }}
-            >
-              <Text> очистить всю корзину</Text>
-            </Badge>
-          </UnstyledButton>
-          <Button onClick={handleAddOrder}>
+
+          <GoBackButton
+            variant={"gradient"}
+            size={"xs"}
+            gradient={{ from: "yellow", to: "orange" }}
+            text={"ВЕРНУТЬСЯ"}
+          />
+
+          <Button size="xs" color="teal" onClick={handleAddOrder}>
             <Text>ОФОРМИТЬ ЗАКАЗ</Text>
+          </Button>
+
+          <Button
+            size="xs"
+            color="red"
+            onClick={() => {
+              handleDeleteCartItem(0);
+            }}
+          >
+            <Text tt="uppercase"> очистить всю корзину</Text>
           </Button>
         </Group>
         <Space h="xl" />

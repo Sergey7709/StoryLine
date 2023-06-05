@@ -1,5 +1,7 @@
 import { UseMutationResult } from "react-query";
 import { FetchReviewArgs } from "../pages/userAccount/MyReviews";
+import { getCurrentDate } from "../helpers/getCurrentDate";
+import { FetchType } from "../api/postOrReviewApi";
 
 export type User = {
   id: number;
@@ -156,4 +158,30 @@ export type BookCardLayoutProps = {
 
 export type HandlersProps = {
   readonly open: () => void;
+};
+
+export const initialPostState = {
+  description: "",
+  postImageUrl: "",
+  title: "",
+  likes: 0,
+  date: getCurrentDate(),
+}; //!
+
+export type UpdatePostArgs = {
+  params: string;
+  token: string;
+  body?: PostUpdate | PostCreate;
+  type: FetchType;
+}; //!
+
+export type MyPostsProps = {
+  posts: Post[];
+  token: string;
+}; //!
+
+export type PostReaderBlogs = {
+  mutatePost: UseMutationResult<any, unknown, UpdatePostArgs, unknown>;
+  postForm: PostCreate | Post;
+  close: () => void;
 };

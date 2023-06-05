@@ -12,7 +12,7 @@ import {
   Text,
   Container,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CartCount } from "../../components/cartCount/CartCount";
 import EmptyData from "../userAccount/assetsUserAccount/EmptyData";
 import ReviewsList from "./ReviewsList";
@@ -21,6 +21,7 @@ import PricesDiscount from "./UI/PricesDiscount";
 import { BookCardLayoutProps } from "../../common/types";
 import { Loader } from "../../components/loader/Loader";
 import { FC } from "react";
+import { GoBackButton } from "../../components/GoBackButton";
 
 export const BookCardLayout: FC<BookCardLayoutProps> = (props) => {
   const {
@@ -53,9 +54,14 @@ export const BookCardLayout: FC<BookCardLayoutProps> = (props) => {
           Написать отзыв
         </Button>
       </Modal>
-      <Link to="/books-list">
-        <Button>Назад</Button>
-      </Link>
+
+      <GoBackButton
+        variant={"gradient"}
+        size={"xs"}
+        gradient={{ from: "indigo", to: "cyan" }}
+        text={"ВЕРНУТЬСЯ"}
+      />
+
       {isLoading ? (
         <Loader />
       ) : (

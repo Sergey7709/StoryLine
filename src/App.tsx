@@ -71,7 +71,7 @@ export default function App() {
               <Route path={"/reader-blogs/:id"} element={<ReaderBlogsCard />} />
               <Route path={"/about-us"} element={<AboutUs />} />
               <Route path={"/books-list/:link"} element={<BooksList />} />
-              <Route path={"/books-list/:id"} element={<BookCard />} />
+              <Route path={"/book-card/:id"} element={<BookCard />} />
               <Route path={"/user-account"} element={<UserAccount />} />
               <Route path={"*"} element={<Error404 />} />
             </Routes>
