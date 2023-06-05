@@ -29,20 +29,18 @@ import {
   GiBurningBook,
   GiChainedHeart,
 } from "react-icons/gi";
-import { useDisclosure } from "@mantine/hooks";
+import { SingleBookBlockLayout } from "./SingleBookBlockLayout";
 
 type SingleBookListProps = {
   book: Item;
   favorite: boolean;
   favoritesChange: (bookId: number, favorite: boolean) => void;
 };
-const SingleBookList: FC<SingleBookListProps> = React.memo(
+const SingleBookBlock: FC<SingleBookListProps> = React.memo(
   ({ book, favorite, favoritesChange }) => {
     const [favoriteState, setFavoriteState] = useState(favorite);
 
     const dispatch = useAppDispatch();
-
-    const [opened, { close, open }] = useDisclosure(false);
 
     const handleFavoritesChange = useCallback(() => {
       setFavoriteState(!favoriteState);
@@ -65,7 +63,18 @@ const SingleBookList: FC<SingleBookListProps> = React.memo(
 
     return (
       <>
-        <Grid.Col
+        <SingleBookBlockLayout
+          id={id}
+          classes={classes}
+          book={book}
+          discount={discount}
+          price={price}
+          reviews={reviews}
+          favoriteState={favoriteState}
+          handleFavoritesChange={handleFavoritesChange}
+          handleAddCartItem={handleAddCartItem}
+        />
+        {/* <Grid.Col
           xs={6}
           sm={4}
           md={4}
@@ -144,31 +153,13 @@ const SingleBookList: FC<SingleBookListProps> = React.memo(
                 </Text>
               </Grid.Col>
               <Grid.Col span={12}>
-                {/* <Popover
-                  width={200}
-                  position="bottom"
-                  withArrow
-                  shadow="md"
-                  // opened={opened}
-                >
-                  <Popover.Target> */}
                 <Link to={`/book-card/${id}`}>
                   <UnstyledButton>
-                    <Text
-                      weight={500}
-                      lineClamp={1}
-                      // onMouseEnter={open}
-                      // onMouseLeave={close}
-                    >
+                    <Text weight={500} lineClamp={1}>
                       {book.title}
                     </Text>
                   </UnstyledButton>
                 </Link>
-                {/* </Popover.Target>
-                  <Popover.Dropdown sx={{ pointerEvents: "none" }}>
-                    <Text>{book.title}</Text>
-                  </Popover.Dropdown>
-                </Popover> */}
               </Grid.Col>
             </Grid>
             <Flex justify="space-between">
@@ -186,10 +177,10 @@ const SingleBookList: FC<SingleBookListProps> = React.memo(
               В КОРЗИНУ
             </Button>
           </Card>
-        </Grid.Col>
+        </Grid.Col> */}
       </>
     );
   }
 );
 
-export default SingleBookList;
+export default SingleBookBlock;

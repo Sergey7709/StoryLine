@@ -1,8 +1,8 @@
-import React, { FC, memo } from 'react';
-import { Item } from '../../common/types';
-import SingleBookList from '../catalog/SingleBookList';
-import EmptyData from './assetsUserAccount/EmptyData';
-import { useAppSelector } from '../../redux/redux.hooks';
+import React, { FC, memo } from "react";
+import { Item } from "../../common/types";
+import SingleBookList from "../catalog/SingleBookBlock";
+import EmptyData from "./assetsUserAccount/EmptyData";
+import { useAppSelector } from "../../redux/redux.hooks";
 type MyFavoritesProps = {
   favorites: Item[];
 };

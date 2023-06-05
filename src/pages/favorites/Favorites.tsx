@@ -5,7 +5,7 @@ import { BASE_URL } from "../../common/constants";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import { useAppSelector } from "../../redux/redux.hooks";
 import { Divider, Flex, Grid, Space } from "@mantine/core";
-import SingleBookList from "../catalog/SingleBookList";
+import SingleBookList from "../catalog/SingleBookBlock";
 import EmptyData from "../userAccount/assetsUserAccount/EmptyData";
 import { Title } from "@mantine/core";
 import { useCallback, useEffect, useMemo } from "react";

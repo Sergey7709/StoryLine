@@ -1,6 +1,6 @@
 import { useStyles } from "./BooksListStyles";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
-import SingleBookList from "./SingleBookList";
+import SingleBookBlock from "./SingleBookBlock";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { setMaxDiscount, setCategorySort } from "../../redux/sortSlice";
@@ -8,7 +8,6 @@ import { BookListLayout } from "./BookListLayout";
 import { usePostFavorites } from "../../api/usePostFavorites";
 import { useGetBookList } from "../../api/useGetBookList";
 import { User } from "../../common/types";
-import { Container } from "@mantine/core";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
@@ -70,7 +69,7 @@ export const BooksList = React.memo(() => {
         user?.favoriteItems.some((el) => el.id === book.id) || false;
 
       return (
-        <SingleBookList
+        <SingleBookBlock
           favorite={isFavorite}
           book={book}
           key={book.id}
