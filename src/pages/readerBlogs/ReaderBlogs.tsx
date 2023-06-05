@@ -30,10 +30,10 @@ export const ReaderBlogs = () => {
 
   const [opened, { open, close }] = useDisclosure(false);
 
-  const [onAuth, { open: openAuth, close: closeAuth }] = useDisclosure(false); //???
+  const [onAuth, { open: openAuth, close: closeAuth }] = useDisclosure(false);
 
   const post: Post | PostCreate = useMemo(() => {
-    const findPost = user?.posts.find((el: Post) => el.id === currentPost); //???
+    const findPost = user?.posts.find((el: Post) => el.id === currentPost);
     return currentPost === "create" || findPost === undefined
       ? initialPostState
       : findPost;

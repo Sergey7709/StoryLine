@@ -166,22 +166,34 @@ export const initialPostState = {
   title: "",
   likes: 0,
   date: getCurrentDate(),
-}; //!
+};
 
 export type UpdatePostArgs = {
   params: string;
   token: string;
   body?: PostUpdate | PostCreate;
   type: FetchType;
-}; //!
+};
 
 export type MyPostsProps = {
   posts: Post[];
   token: string;
-}; //!
+};
 
 export type PostReaderBlogs = {
   mutatePost: UseMutationResult<any, unknown, UpdatePostArgs, unknown>;
   postForm: PostCreate | Post;
   close: () => void;
+};
+
+export type ReaderBlogsModalFormProps = {
+  opened: boolean;
+  close: () => void;
+  postForm: PostCreate | Post;
+  setPostForm: React.Dispatch<React.SetStateAction<PostCreate | Post>>;
+  currentPost: number | "create";
+  mutatePost: UseMutationResult<any, unknown, UpdatePostArgs, unknown>;
+  submitPost: (type: FetchType, id?: number) => Promise<void>;
+  onAuth: boolean;
+  closeAuth: () => void;
 };

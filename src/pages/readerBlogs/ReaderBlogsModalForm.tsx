@@ -1,21 +1,7 @@
 import { Modal, Input, Textarea, Box, Button } from "@mantine/core";
 import React from "react";
-import { Post, PostCreate, UpdatePostArgs } from "../../common/types";
-import { UseMutationResult } from "react-query";
-import { FetchType } from "../../api/postOrReviewApi";
+import { ReaderBlogsModalFormProps } from "../../common/types";
 import { Authorization } from "../authorization/Authorization";
-
-type ReaderBlogsModalFormProps = {
-  opened: boolean;
-  close: () => void;
-  postForm: PostCreate | Post;
-  setPostForm: React.Dispatch<React.SetStateAction<PostCreate | Post>>;
-  currentPost: number | "create";
-  mutatePost: UseMutationResult<any, unknown, UpdatePostArgs, unknown>;
-  submitPost: (type: FetchType, id?: number) => Promise<void>;
-  onAuth: boolean;
-  closeAuth: () => void;
-};
 
 export const ReaderBlogsModalForm: React.FC<ReaderBlogsModalFormProps> = (
   props

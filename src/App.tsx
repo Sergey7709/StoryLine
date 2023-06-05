@@ -68,7 +68,10 @@ export default function App() {
                 element={<BookstoreServices />}
               />
               <Route path={"/reader-blogs"} element={<ReaderBlogs />} />
-              <Route path={"/reader-blogs/:id"} element={<ReaderBlogsCard />} />
+              <Route
+                path={"/reader-blog-card/:id"}
+                element={<ReaderBlogsCard />}
+              />
               <Route path={"/about-us"} element={<AboutUs />} />
               <Route path={"/books-list/:link"} element={<BooksList />} />
               <Route path={"/book-card/:id"} element={<BookCard />} />

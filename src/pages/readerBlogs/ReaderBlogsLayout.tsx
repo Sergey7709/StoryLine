@@ -7,7 +7,6 @@ import {
   Badge,
   Image,
   Text,
-  BackgroundImage,
   Divider,
   Tooltip,
 } from "@mantine/core";
@@ -60,7 +59,8 @@ export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
             </Card.Section>
 
             <Group position="apart" mt="md" mb="xs">
-              <NavLink to={`/reader-blogs/${el.id}`}>
+              {/* <NavLink to={`/reader-blogs/${el.id}`}> */}
+              <NavLink to={`/reader-blog-card/${el.id}`}>
                 <UnstyledButton>
                   <Text lineClamp={2} weight={500}>
                     {el.title}
