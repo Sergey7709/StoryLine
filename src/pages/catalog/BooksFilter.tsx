@@ -1,4 +1,4 @@
-import { Group, Text, Menu, UnstyledButton } from "@mantine/core";
+import { Group, Text, Menu, UnstyledButton, Space } from "@mantine/core";
 import { memo } from "react";
 import { menuSortData } from "../../common/constants";
 import { SortHandlerType } from "../../common/types";
@@ -9,8 +9,7 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
     <Group position="center">
       <Menu
         shadow="md"
-        // withArrow
-        // width={370}
+        width={"100%"} //!
         offset={4}
         position="bottom-start"
         trigger="hover"
@@ -21,7 +20,6 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
               size={"md"}
               variant="gradient"
               gradient={{ from: "coral", to: "red", deg: 45 }}
-              weight={500}
             >
               Сортировать книги по...
             </Text>
@@ -31,19 +29,22 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
           <Group>
             {menuSortData.map((menuItem) => (
               <Menu
-                position="bottom"
+                position="bottom-start"
                 trigger="hover"
-                width={140}
-                offset={5}
+                width={300}
+                offset={2}
                 key={menuItem.key}
               >
                 <Menu.Target>
                   <UnstyledButton>
                     <Text
+                      w={"28vh"} //!
+                      pl={"20%"} //!
                       size="md"
                       variant="gradient"
                       gradient={{ from: "coral", to: "red", deg: 45 }}
                       weight={400}
+                      fw={"bold"}
                     >
                       {`${menuItem.title}`}
                     </Text>
@@ -52,11 +53,12 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                 <Menu.Dropdown>
                   {menuItem.options.map((option) => (
                     <Menu.Item
-                      px={2}
+                      px={5}
                       key={option.value}
                       onClick={() => sortHandler(option.value)}
                     >
                       <Text
+                        ml={"10%"} //!
                         size="md"
                         variant="gradient"
                         gradient={{ from: "coral", to: "red", deg: 45 }}

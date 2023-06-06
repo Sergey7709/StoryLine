@@ -7,12 +7,11 @@ import {
   Badge,
   Image,
   Text,
-  Divider,
   Tooltip,
 } from "@mantine/core";
-import { AiOutlineLike } from "react-icons/ai";
+import { AiTwotoneLike } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Post } from "../../common/types";
 import { useStyles } from "./ReaderBlogsStyle";
 import { useAppSelector } from "../../redux/redux.hooks";
@@ -43,23 +42,25 @@ export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
             h={480}
             withBorder
             className={classes.card}
+            // sx={(theme) => ({
+            //   backgroundColor:
+            //     theme.colorScheme === "dark"
+            //       ? theme.colors.dark[5]
+            //       : theme.colors.green[5],
+            // })}
           >
             <Card.Section>
-              <Link to={`/reader-blogs/${el.id}`}>
+              <NavLink to={`/reader-blog-card/${el.id}`}>
                 <Image
                   src={el.postImageUrl}
-                  // mt={20}
-                  // maw={180}
-                  // mx="auto"
                   height={250}
                   width={350}
                   alt="Post-IMG"
                 />
-              </Link>
+              </NavLink>
             </Card.Section>
 
             <Group position="apart" mt="md" mb="xs">
-              {/* <NavLink to={`/reader-blogs/${el.id}`}> */}
               <NavLink to={`/reader-blog-card/${el.id}`}>
                 <UnstyledButton>
                   <Text lineClamp={2} weight={500}>
@@ -69,18 +70,16 @@ export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
               </NavLink>
             </Group>
 
-            <Text lineClamp={4} size="sm" color="dimmed">
+            <Text lineClamp={4} size="sm" color="gray.7">
               {el.description}
             </Text>
 
             <Card.Section>
-              <Divider mx="sm" />
-
               <Group position="left" spacing={5} ml={15} mt={"md"}>
                 <Text color="violet"> Автор: {el.authorName} </Text>
 
                 <ActionIcon color="green" variant="light">
-                  <AiOutlineLike size={30} />
+                  <AiTwotoneLike size={30} />
                   <Text fz={15}>{el.likes}</Text>
                 </ActionIcon>
 

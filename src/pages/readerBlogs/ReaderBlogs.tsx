@@ -16,6 +16,7 @@ import { paramsReaderBlogs } from "../../common/constants";
 import { usePostReaderBlogs } from "../../api/usePostReaderBlogs";
 import { ReaderBlogsLayout } from "./ReaderBlogsLayout";
 import { ReaderBlogsButton } from "./ReaderBlogsButton";
+import { Grid } from "@mantine/core";
 
 export const ReaderBlogs = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -69,7 +70,16 @@ export const ReaderBlogs = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <>
+        <Grid
+        // m={-16}
+        // sx={(theme) => ({
+        //   height: "200vh",
+        //   backgroundColor:
+        //     theme.colorScheme === "dark"
+        //       ? theme.colors.dark[5]
+        //       : theme.colors.green[3],
+        // })}
+        >
           <ReaderBlogsModalForm
             opened={opened}
             close={close}
@@ -89,7 +99,7 @@ export const ReaderBlogs = () => {
             open={open}
             setCurrentPost={setCurrentPost}
           />
-        </>
+        </Grid>
       )}
     </>
   );

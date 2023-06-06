@@ -51,7 +51,7 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
         </Modal>
         <Grid.Col span={12}>
           <Group ml={"2%"} mb={5}>
-            {param !== categoryNewBooks ? (
+            {!isLoading && param !== categoryNewBooks ? (
               <>
                 <GoBackButton
                   variant={"gradient"}
@@ -59,16 +59,19 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
                   gradient={{ from: "yellow", to: "orange" }}
                   text={"ВЕРНУТЬСЯ"}
                 />
+
                 {!searchBooksValue && <BooksFilter sortHandler={sortHandler} />}
                 {!searchBooksValue && <PriceRange />}
               </>
             ) : (
-              <GoBackButton
-                variant={"gradient"}
-                size={"xs"}
-                gradient={{ from: "yellow", to: "orange" }}
-                text={"ВЕРНУТЬСЯ"}
-              />
+              !isLoading && (
+                <GoBackButton
+                  variant={"gradient"}
+                  size={"xs"}
+                  gradient={{ from: "yellow", to: "orange" }}
+                  text={"ВЕРНУТЬСЯ"}
+                />
+              )
             )}
             <Grid>
               <Grid.Col span={12}>
@@ -79,15 +82,15 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
                   order={2}
                   italic
                 >
-                  {link?.toLocaleUpperCase()}
+                  {!isLoading && link?.toLocaleUpperCase()}
                 </Title>
               </Grid.Col>
             </Grid>
           </Group>
-          <Divider color={"coral"} size="xs" variant="solid" />
+          {!isLoading && <Divider color={"coral"} size="xs" variant="solid" />}
         </Grid.Col>
         <Grid.Col span={12}>
-          <Grid className={clasess} align="center">
+          <Grid className={clasess} align="start">
             {data && books}
           </Grid>
         </Grid.Col>

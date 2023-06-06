@@ -58,7 +58,6 @@ export const SingleBookBlockLayout = (props: SingleBookBlockLayoutProps) => {
         shadow="sm"
         padding="md"
         radius="md"
-        withBorder
       >
         <Group position="center">
           <Link to={`/book-card/${id}`}>
