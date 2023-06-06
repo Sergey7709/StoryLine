@@ -63,7 +63,7 @@ export const ActiveCart: FC<ActiveCartProps> = (props) => {
           <Card shadow="sm" padding="xs" radius="md" w={300} h={325} withBorder>
             <Grid gutter="sm">
               <Grid.Col span={5} color="gray">
-                <Link to={`/books-list/${book.id}`}>
+                <Link to={`/book-card/${book.id}`}>
                   <Image
                     width={100}
                     height={150}
@@ -100,7 +100,7 @@ export const ActiveCart: FC<ActiveCartProps> = (props) => {
               </Grid.Col>
 
               <Grid.Col span={12} pr={10} h={75} py={0}>
-                <NavLink to={`/books-list/${book.id}`}>
+                <NavLink to={`/book-card/${book.id}`}>
                   <UnstyledButton>
                     <Text
                       py={0}
