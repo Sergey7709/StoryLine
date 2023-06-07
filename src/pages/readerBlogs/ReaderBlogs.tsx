@@ -17,7 +17,6 @@ import { usePostReaderBlogs } from "../../api/usePostReaderBlogs";
 import { ReaderBlogsLayout } from "./ReaderBlogsLayout";
 import { ReaderBlogsButton } from "./ReaderBlogsButton";
 import { Grid } from "@mantine/core";
-import { useCurrentUser } from "../../hooks/useCurrenUser";
 
 export const ReaderBlogs = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -30,7 +29,6 @@ export const ReaderBlogs = () => {
 
   const [addLike, setAddLike] = useState(false); //!
 
-  // const getCurrentUser = useCurrentUser(); //!
   const queryClient = useQueryClient(); //!
 
   const [postForm, setPostForm] = useState<Post | PostCreate>(initialPostState);
@@ -50,24 +48,8 @@ export const ReaderBlogs = () => {
     setPostForm(post);
   }, [post]);
 
-  // useEffect(() => {
-  //   if (addLike) {
-  //     user?.token &&
-  //       mutatePost.mutateAsync({
-  //         type: "put",
-  //         params: `post/${currentPost}`,
-  //         body: postForm,
-  //         token: user.token,
-  //       });
-  //     setAddLike(false);
-  //     // getCurrentUser();
-  //   }
-  // }, [addLike]); //!
-
-  const { data, isLoading } = useQuery<Post[]>(
-    // ["readerBlogs", mutatePost.isSuccess],
-    ["readerBlogs"],
-    () => fetchHandler("get", paramsReaderBlogs)
+  const { data, isLoading } = useQuery<Post[]>(["readerBlogs"], () =>
+    fetchHandler("get", paramsReaderBlogs)
   ); //! вынести в api
 
   useEffect(() => {
@@ -86,36 +68,7 @@ export const ReaderBlogs = () => {
       }
     };
     updatePostLike();
-  }, [addLike]);
-
-  // useEffect(() => {
-  //   const updatePostLike = () => {
-  //     if (addLike) {
-  //       if (user?.token) {
-  //         fetchHandler("put", `post/${currentPost}`, postForm, user.token);
-  //         queryClient.invalidateQueries(["readerBlogs"]);
-  //         // mutatePost.mutateAsync(
-  //         //   {
-  //         //     type: "put",
-  //         //     params: `post/${currentPost}`,
-  //         //     body: postForm,
-  //         //     token: user.token,
-  //         //   },
-  //         //   {
-  //         //     onSuccess: () => {
-  //         //       // queryClient.invalidateQueries(["readerBlogs"]);
-  //         //       setAddLike(false);
-  //         //     },
-  //         //   }
-  //         // );
-  //       }
-
-  //       // getCurrentUser();
-  //     }
-  //   };
-
-  //   updatePostLike();
-  // }, [addLike]);//!
+  }, [addLike]); //!
 
   const submitPost = usePostReaderBlogs({ mutatePost, postForm, close });
 
@@ -134,35 +87,34 @@ export const ReaderBlogs = () => {
     }
   };
 
-  const addCurrentPost = (id: number) => {
+  const addCurrentPostHadler = useCallback((id: number) => {
     setCurrentPost(id);
-  }; //!
+  }, []); //!
 
-  const addLikeHandler = ({
-    description,
-    postImageUrl,
-    title,
-    date,
-    likes,
-    id,
-  }: PostCreate & {
-    id: number;
-  }) => {
-    setAddLike(true);
-    setCurrentPost(id);
-    setPostForm({
+  const addLikeHandler = useCallback(
+    ({
       description,
       postImageUrl,
       title,
       date,
-      likes: likes + 1,
+      likes,
       id,
-    });
-  }; //!
-
-  // console.log("postForm.likes", postForm.likes); //!
-  console.log("isLoading", isLoading);
-  // console.log("addLike", addLike); //!
+    }: PostCreate & {
+      id: number;
+    }) => {
+      setAddLike(true);
+      setCurrentPost(id);
+      setPostForm({
+        description,
+        postImageUrl,
+        title,
+        date,
+        likes: likes + 1,
+        id,
+      });
+    },
+    []
+  ); //!
 
   return (
     <>
@@ -187,9 +139,8 @@ export const ReaderBlogs = () => {
           <ReaderBlogsLayout
             data={data}
             open={open}
-            addCurrentPost={addCurrentPost}
+            addCurrentPostHadler={addCurrentPostHadler}
             addLikeHandler={addLikeHandler}
-            // likeLoad={mutatePost.isLoading}
           />
         </Grid>
       )}

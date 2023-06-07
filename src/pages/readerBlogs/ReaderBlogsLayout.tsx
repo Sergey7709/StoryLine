@@ -14,14 +14,13 @@ import { CiEdit } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
 import { Post, PostCreate } from "../../common/types";
 import { useStyles } from "./ReaderBlogsStyle";
-import React from "react";
+import React, { memo } from "react";
 import { useAppSelector } from "../../redux/redux.hooks";
 
 type ReaderBlogsLayoutType = {
   data: Post[] | undefined;
   open: () => void;
-  addCurrentPost: (id: number) => void;
-  // likeLoad: boolean;
+  addCurrentPostHadler: (id: number) => void;
   addLikeHandler: ({
     description,
     postImageUrl,
@@ -34,8 +33,8 @@ type ReaderBlogsLayoutType = {
   }) => void;
 };
 
-export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
-  const { data, open, addLikeHandler, addCurrentPost } = props;
+export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
+  const { data, open, addLikeHandler, addCurrentPostHadler } = props;
 
   const user = useAppSelector((state) => state.auth.user);
 
@@ -44,6 +43,7 @@ export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
   // const sortData = data?.sort((postFirst, postEnd) => {
   //   return Number(postFirst.date) - Number(postEnd.date);
   // });
+  console.log("render layout");
 
   return (
     <Grid>
@@ -118,7 +118,7 @@ export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
                     <ActionIcon
                       onClick={() => {
                         open();
-                        addCurrentPost(el.id);
+                        addCurrentPostHadler(el.id);
                       }}
                       variant="light"
                       color="red"
@@ -138,4 +138,4 @@ export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
       ))}
     </Grid>
   );
-};
+});
