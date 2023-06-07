@@ -12,22 +12,38 @@ import {
 import { AiTwotoneLike } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
-import { Post } from "../../common/types";
+import { Post, PostCreate } from "../../common/types";
 import { useStyles } from "./ReaderBlogsStyle";
+import React from "react";
 import { useAppSelector } from "../../redux/redux.hooks";
 
 type ReaderBlogsLayoutType = {
-  data: Post[];
+  data: Post[] | undefined;
   open: () => void;
-  setCurrentPost: React.Dispatch<React.SetStateAction<number | "create">>;
+  addCurrentPost: (id: number) => void;
+  // likeLoad: boolean;
+  addLikeHandler: ({
+    description,
+    postImageUrl,
+    title,
+    date,
+    likes,
+    id,
+  }: PostCreate & {
+    id: number;
+  }) => void;
 };
 
 export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
-  const { data, open, setCurrentPost } = props;
+  const { data, open, addLikeHandler, addCurrentPost } = props;
 
   const user = useAppSelector((state) => state.auth.user);
 
   const { classes } = useStyles();
+
+  // const sortData = data?.sort((postFirst, postEnd) => {
+  //   return Number(postFirst.date) - Number(postEnd.date);
+  // });
 
   return (
     <Grid>
@@ -42,12 +58,6 @@ export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
             h={480}
             withBorder
             className={classes.card}
-            // sx={(theme) => ({
-            //   backgroundColor:
-            //     theme.colorScheme === "dark"
-            //       ? theme.colors.dark[5]
-            //       : theme.colors.green[5],
-            // })}
           >
             <Card.Section>
               <NavLink to={`/reader-blog-card/${el.id}`}>
@@ -78,8 +88,22 @@ export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
               <Group position="left" spacing={5} ml={15} mt={"md"}>
                 <Text color="violet"> Автор: {el.authorName} </Text>
 
-                <ActionIcon color="green" variant="light">
-                  <AiTwotoneLike size={30} />
+                <ActionIcon
+                  size={40}
+                  color="green"
+                  variant="subtle"
+                  onClick={() =>
+                    addLikeHandler({
+                      description: el.description,
+                      postImageUrl: el.postImageUrl,
+                      title: el.title,
+                      date: el.date,
+                      likes: el.likes,
+                      id: el.id,
+                    })
+                  }
+                >
+                  <AiTwotoneLike size={15} />
                   <Text fz={15}>{el.likes}</Text>
                 </ActionIcon>
 
@@ -94,7 +118,7 @@ export const ReaderBlogsLayout = (props: ReaderBlogsLayoutType) => {
                     <ActionIcon
                       onClick={() => {
                         open();
-                        setCurrentPost(el.id);
+                        addCurrentPost(el.id);
                       }}
                       variant="light"
                       color="red"
