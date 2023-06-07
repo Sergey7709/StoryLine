@@ -42,7 +42,7 @@ export const ReaderBlogs = () => {
     return currentPost === "create" || findPost === undefined
       ? initialPostState
       : findPost;
-  }, [user?.posts]);
+  }, [currentPost, user?.posts]);
 
   useEffect(() => {
     setPostForm(post);
@@ -64,6 +64,8 @@ export const ReaderBlogs = () => {
           );
           queryClient.refetchQueries(["readerBlogs"]);
           setAddLike(false);
+          // setCurrentPost(0);
+          // setPostForm(initialPostState);
         }
       }
     };
