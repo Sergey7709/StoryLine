@@ -17,6 +17,7 @@ export const ReaderBlogsModalForm: React.FC<ReaderBlogsModalFormProps> = (
     onAuth,
     closeAuth,
   } = props;
+
   return (
     <>
       <Modal size={500} opened={onAuth} onClose={closeAuth} centered>

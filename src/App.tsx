@@ -44,42 +44,50 @@ export default function App() {
         withNormalizeCSS
       >
         <Notifications />
+
         <AppShell
           header={
-            <Header height={{ base: 100, md: 100 }} p="md">
+            <Header fixed={false} height={{ base: 100, md: 100 }} p="md">
               <HeaderMenu />
             </Header>
           }
-          footer={
-            <Footer height={60} p="md">
-              © 2023 World of books. All rights reserved.
-            </Footer>
-          }
+          // footer={
+          //   <Footer
+          //     fixed={false}
+          //     position={{ bottom: 0, left: 0 }}
+          //     height={50}
+          //     p="md"
+          //   >
+          //     © 2023 World of books. All rights reserved.
+          //   </Footer>
+          // }
         >
           <ChatBot />
-          <CustomScrollbar>
-            <Routes>
-              <Route path={"/"} element={<Home />} />
-              <Route path={"/cart"} element={<Cart />} />
-              <Route path={"/favorites"} element={<Favorites />} />
-              <Route path={"/stocks"} element={<Stocks />} />
-              <Route
-                path={"/bookstores-services"}
-                element={<BookstoreServices />}
-              />
-              <Route path={"/reader-blogs"} element={<ReaderBlogs />} />
-              <Route
-                path={"/reader-blog-card/:id"}
-                element={<ReaderBlogsCard />}
-              />
-              <Route path={"/about-us"} element={<AboutUs />} />
-              <Route path={"/books-list/:link"} element={<BooksList />} />
-              <Route path={"/book-card/:id"} element={<BookCard />} />
-              <Route path={"/user-account"} element={<UserAccount />} />
-              <Route path={"*"} element={<Error404 />} />
-            </Routes>
-            <ScrollToTopButton />
-          </CustomScrollbar>
+
+          {/* <CustomScrollbar> */}
+          <Routes>
+            <Route path={"/"} element={<Home />} />
+            <Route path={"/cart"} element={<Cart />} />
+            <Route path={"/favorites"} element={<Favorites />} />
+            <Route path={"/stocks"} element={<Stocks />} />
+            <Route
+              path={"/bookstores-services"}
+              element={<BookstoreServices />}
+            />
+            <Route path={"/reader-blogs"} element={<ReaderBlogs />} />
+            <Route
+              path={"/reader-blog-card/:id"}
+              element={<ReaderBlogsCard />}
+            />
+            <Route path={"/about-us"} element={<AboutUs />} />
+            <Route path={"/books-list/:link"} element={<BooksList />} />
+            <Route path={"/book-card/:id"} element={<BookCard />} />
+            <Route path={"/user-account"} element={<UserAccount />} />
+            <Route path={"*"} element={<Error404 />} />
+          </Routes>
+
+          <ScrollToTopButton />
+          {/* </CustomScrollbar> */}
         </AppShell>
       </MantineProvider>
     </ColorSchemeProvider>

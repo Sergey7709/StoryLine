@@ -17,7 +17,7 @@ export const fetchHandler = async (
     switch (type) {
       case "get":
         const responseGet = await axios.get(BASE_URL + params, { headers });
-        console.log("get");
+        // console.log("get", responseGet);
         return responseGet.data;
 
       case "post":
@@ -29,9 +29,6 @@ export const fetchHandler = async (
         const responsePut = await axios.put(BASE_URL + params, body, {
           headers,
         });
-        // console.log(BASE_URL + params, body, {
-        //   headers,
-        // });//!
 
         return responsePut.data;
       case "delete":

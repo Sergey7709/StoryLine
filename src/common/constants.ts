@@ -124,3 +124,23 @@ export const menuSortData = [
 export const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
 
 export const paramsReaderBlogs = "post/all";
+
+export const linksFooter = [
+  {
+    link: "/stocks",
+    label: "Акции",
+  },
+  {
+    link: "/bookstores-services",
+    label: "Услуги",
+  },
+
+  {
+    link: "/reader-blogs",
+    label: "Блоги читателей",
+  },
+  {
+    link: "/about-us",
+    label: "О нас",
+  },
+];

@@ -54,4 +54,4 @@ const SingleBookBlock: FC<SingleBookListProps> = React.memo(
   }
 );
 
-export default React.memo(SingleBookBlock);
+export default SingleBookBlock;

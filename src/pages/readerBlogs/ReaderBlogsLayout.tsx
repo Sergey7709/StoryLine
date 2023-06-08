@@ -89,8 +89,9 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
                 <Text color="violet"> Автор: {el.authorName} </Text>
 
                 <ActionIcon
+                  radius={"xl"}
                   size={40}
-                  color="green"
+                  color={el.likes > 0 ? "green" : "gray"}
                   variant="subtle"
                   onClick={() =>
                     addLikeHandler({
