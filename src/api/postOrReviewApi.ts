@@ -17,7 +17,6 @@ export const fetchHandler = async (
     switch (type) {
       case "get":
         const responseGet = await axios.get(BASE_URL + params, { headers });
-        // console.log("get", responseGet);
         return responseGet.data;
 
       case "post":

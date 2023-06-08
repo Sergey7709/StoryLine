@@ -14,7 +14,7 @@ import { CiEdit } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
 import { Post, PostCreate } from "../../common/types";
 import { useStyles } from "./ReaderBlogsStyle";
-import React, { memo } from "react";
+import { memo } from "react";
 import { useAppSelector } from "../../redux/redux.hooks";
 
 type ReaderBlogsLayoutType = {
@@ -40,14 +40,24 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
 
   const { classes } = useStyles();
 
-  // const sortData = data?.sort((postFirst, postEnd) => {
-  //   return Number(postFirst.date) - Number(postEnd.date);
-  // });
+  const readerBlogs = useAppSelector(
+    (state) => state.readerBlogs.dataReaderBlogs
+  ); //???
+
+  const dataReaderBlogsSort = [...(readerBlogs ?? [])].sort(
+    (a: Post, b: Post) => {
+      const dateA = new Date(a.date.split(".").reverse().join("-"));
+      const dateB = new Date(b.date.split(".").reverse().join("-"));
+      return dateB.getTime() - dateA.getTime();
+    }
+  ); ///????
+
   console.log("render layout");
 
   return (
     <Grid>
-      {data?.map((el: Post) => (
+      {/* {data?.map((el: Post) => ( */}
+      {dataReaderBlogsSort?.map((el: Post) => (
         <Grid.Col span={3} key={el.id}>
           <Card
             mt={10}

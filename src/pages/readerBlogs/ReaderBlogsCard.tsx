@@ -1,37 +1,21 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Post } from "../../common/types";
-import { useQuery } from "react-query";
-import { fetchHandler } from "../../api/postOrReviewApi";
-import { paramsReaderBlogs } from "../../common/constants";
-import { ActionIcon, Grid, Group, Paper, Space, Text } from "@mantine/core";
-import { Loader } from "../../components/loader/Loader";
-import { FaPenNib } from "react-icons/fa";
-import { AiOutlineLike, AiTwotoneLike } from "react-icons/ai";
+import { Grid, Group, Paper, Space, Text } from "@mantine/core";
 import { GoBackButton } from "../../components/GoBackButton";
-import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
+import { useAppSelector } from "../../redux/redux.hooks";
 
 export const ReaderBlogsCard = () => {
   const { id } = useParams();
 
-  // const { data, isLoading, isSuccess } = useQuery(["readerBlogsCard"], () =>
-  //   fetchHandler("get", paramsReaderBlogs)
-  // );
-
-  // const blog = isSuccess && data?.filter((el: Post) => el.id === Number(id));
-
   const dataReaderBlogs = useAppSelector(
     (stateReaderBlogs) => stateReaderBlogs.readerBlogs.dataReaderBlogs
-  ); //!
+  );
 
   const blog = dataReaderBlogs?.filter((el: Post) => el.id === Number(id));
 
   return (
     <>
-      {/* {isLoading ? (
-        <Loader />
-      ) : (
-        <> */}
       {blog?.map((el: Post) => (
         <Grid
           key={el.id}
@@ -85,8 +69,6 @@ export const ReaderBlogsCard = () => {
           </Paper>
         </Grid>
       ))}
-      {/* </>
-      )} */}
     </>
   );
 };

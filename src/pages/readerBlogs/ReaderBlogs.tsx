@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { fetchHandler } from "../../api/postOrReviewApi";
 import {
   Post,
@@ -18,8 +18,9 @@ import { ReaderBlogsLayout } from "./ReaderBlogsLayout";
 import { ReaderBlogsButton } from "./ReaderBlogsButton";
 import { Grid } from "@mantine/core";
 import { Footer } from "../../components/footer/Footer";
-import readerBlogsSlice, {
+import {
   getDataReaderBlogs,
+  updLikeReaderBlog,
 } from "../../redux/readerBlogsSlice";
 
 export const ReaderBlogs = () => {
@@ -27,19 +28,11 @@ export const ReaderBlogs = () => {
 
   const dispatch = useAppDispatch(); //!
 
-  const dataReaderBlogs = useAppSelector(
-    (stateReaderBlogs) => stateReaderBlogs.readerBlogs.dataReaderBlogs
-  ); //!
-
   const mutatePost = useMutation((args: UpdatePostArgs) =>
     fetchHandler(args.type, args.params, args?.body, args.token)
   ); //! вынести в api
 
   const [currentPost, setCurrentPost] = useState<number | "create">(0);
-
-  // const [addLike, setAddLike] = useState(false); //!
-
-  // const queryClient = useQueryClient(); //!
 
   const [postForm, setPostForm] = useState<Post | PostCreate>(initialPostState);
 
@@ -58,47 +51,43 @@ export const ReaderBlogs = () => {
     setPostForm(post);
   }, [post]);
 
-  const { data, isLoading, isSuccess } = useQuery<Post[]>(["readerBlogs"], () =>
-    fetchHandler("get", paramsReaderBlogs)
+  const { data, isLoading, isSuccess, refetch } = useQuery<Post[]>(
+    ["readerBlogs"],
+    () => fetchHandler("get", paramsReaderBlogs)
   ); //! вынести в api
 
   useEffect(() => {
     isSuccess && dispatch(getDataReaderBlogs(data));
   }, [isSuccess]); //!
 
-  // useEffect(() => {
-  //   const updatePostLike = async () => {
-  //     if (addLike) {
-  //       if (user?.token) {
-  //         await fetchHandler(
-  //           "put",
-  //           `post/${currentPost}`,
-  //           postForm,
-  //           user.token
-  //         );
-  //         queryClient.refetchQueries(["readerBlogs"]);
-  //         setAddLike(false);
-  //       }
-  //     }
-  //   };
-  //   updatePostLike();
-  // }, [addLike]); //!
+  const requestAddLike = useCallback(
+    (postLike: PostCreate & { id: number }, refetch: () => void) => {
+      if (user && user.token) {
+        const updAddLike: UpdatePostArgs = {
+          type: "put",
+          params: `post/${postLike.id}`,
+          body: postLike,
+          token: user?.token,
+        };
 
-  const requestAddLike = async (
-    postLike: PostCreate & {
-      id: number;
-    }
-  ) => {
-    try {
-      await fetchHandler("put", `post/${postLike.id}`, postLike, user?.token);
-
-      const blogData = await fetchHandler("get", paramsReaderBlogs);
-
-      dispatch(getDataReaderBlogs(blogData));
-    } catch (error) {
-      console.error(error);
-    }
-  }; //???
+        mutatePost.mutateAsync(updAddLike, {
+          onSuccess: () => {
+            console.log("add like");
+            refetch();
+          },
+          onError: () => {
+            notifications.show({
+              message: "Ошибка при добавлении лайка, повторите попытку!",
+              autoClose: 5000,
+              color: "red",
+              fz: "md",
+            });
+          },
+        });
+      }
+    },
+    [user?.token]
+  ); //!  //???
 
   const addLikeHandler = useCallback(
     ({
@@ -120,22 +109,12 @@ export const ReaderBlogs = () => {
           likes: likes + 1,
           id,
         };
-        requestAddLike(postLike);
+        dispatch(updLikeReaderBlog(id)); //????
+        requestAddLike(postLike, refetch);
       }
     },
-    []
+    [requestAddLike, refetch, user]
   ); //???
-
-  // const updatePostLike = () => {
-  //   if (addLike) {
-  //     if (user?.token) {
-  //       fetchHandler("put", `post/${currentPost}`, postForm, user.token);
-  //       queryClient.refetchQueries(["readerBlogs"]);
-  //       setAddLike(false);
-  //     }
-  //   }
-  // };
-  // updatePostLike();
 
   const submitPost = usePostReaderBlogs({ mutatePost, postForm, close });
 
@@ -156,32 +135,7 @@ export const ReaderBlogs = () => {
 
   const addCurrentPostHadler = useCallback((id: number) => {
     setCurrentPost(id);
-  }, []); //!
-
-  // const addLikeHandler = useCallback(
-  //   ({
-  //     description,
-  //     postImageUrl,
-  //     title,
-  //     date,
-  //     likes,
-  //     id,
-  //   }: PostCreate & {
-  //     id: number;
-  //   }) => {
-  //     setAddLike(true);
-  //     setCurrentPost(id);
-  //     setPostForm({
-  //       description,
-  //       postImageUrl,
-  //       title,
-  //       date,
-  //       likes: likes + 1,
-  //       id,
-  //     });
-  //   },
-  //   []
-  // ); //!
+  }, []);
 
   return (
     <>
@@ -205,8 +159,7 @@ export const ReaderBlogs = () => {
             <ReaderBlogsButton addPostHandler={addPostHandler} />
 
             <ReaderBlogsLayout
-              // data={data}
-              data={dataReaderBlogs}
+              data={data}
               open={open}
               addCurrentPostHadler={addCurrentPostHadler}
               addLikeHandler={addLikeHandler}

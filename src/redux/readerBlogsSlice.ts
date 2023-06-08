@@ -16,8 +16,17 @@ export const ReaderBlogsSlice = createSlice({
     getDataReaderBlogs: (state, action: PayloadAction<Post[]>) => {
       state.dataReaderBlogs = action.payload;
     },
+    updLikeReaderBlog: (state, action: PayloadAction<number>) => {
+      const currentBlog = state.dataReaderBlogs?.find(
+        (blog) => blog.id === action.payload
+      );
+      if (currentBlog) {
+        currentBlog.likes += 1;
+      } //!
+    },
   },
 });
 
-export const { getDataReaderBlogs } = ReaderBlogsSlice.actions;
+export const { getDataReaderBlogs, updLikeReaderBlog } =
+  ReaderBlogsSlice.actions;
 export default ReaderBlogsSlice.reducer;
