@@ -24,7 +24,6 @@ export const ReaderBlogsCard = () => {
           justify="center"
           align="start"
           sx={(theme) => ({
-            height: "200vh",
             backgroundColor:
               theme.colorScheme === "dark"
                 ? theme.colors.dark[5]
@@ -35,6 +34,7 @@ export const ReaderBlogsCard = () => {
             w={800}
             shadow="lg"
             p="md"
+            mb={20}
             radius="lg"
             withBorder
             sx={(theme) => ({
