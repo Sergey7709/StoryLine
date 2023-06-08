@@ -22,15 +22,21 @@ import {
   getDataReaderBlogs,
   updLikeReaderBlog,
 } from "../../redux/readerBlogsSlice";
+import { UseReaderBlogsApi } from "../../api/useReaderBlogsApi";
 
 export const ReaderBlogs = () => {
   const user = useAppSelector((state) => state.auth.user);
 
   const dispatch = useAppDispatch(); //!
 
-  const mutatePost = useMutation((args: UpdatePostArgs) =>
-    fetchHandler(args.type, args.params, args?.body, args.token)
-  ); //! вынести в api
+  const ReaderBlogsApi = UseReaderBlogsApi();
+
+  const { data, isLoading, isSuccess, refetch, requestAddLike, mutatePost } =
+    ReaderBlogsApi;
+
+  // const mutatePost = useMutation((args: UpdatePostArgs) =>
+  //   fetchHandler(args.type, args.params, args?.body, args.token)
+  // ); //! вынести в api
 
   const [currentPost, setCurrentPost] = useState<number | "create">(0);
 
@@ -51,43 +57,45 @@ export const ReaderBlogs = () => {
     setPostForm(post);
   }, [post]);
 
-  const { data, isLoading, isSuccess, refetch } = useQuery<Post[]>(
-    ["readerBlogs"],
-    () => fetchHandler("get", paramsReaderBlogs)
-  ); //! вынести в api
+  // const { data, isLoading, isSuccess, refetch } = useQuery<Post[]>(
+  //   ["readerBlogs"],
+  //   () => fetchHandler("get", paramsReaderBlogs)
+  // ); //! вынести в api
 
   useEffect(() => {
-    isSuccess && dispatch(getDataReaderBlogs(data));
+    data && dispatch(getDataReaderBlogs(data));
   }, [isSuccess]); //!
 
-  const requestAddLike = useCallback(
-    (postLike: PostCreate & { id: number }, refetch: () => void) => {
-      if (user && user.token) {
-        const updAddLike: UpdatePostArgs = {
-          type: "put",
-          params: `post/${postLike.id}`,
-          body: postLike,
-          token: user?.token,
-        };
+  const submitPost = usePostReaderBlogs({ mutatePost, postForm, close });
 
-        mutatePost.mutateAsync(updAddLike, {
-          onSuccess: () => {
-            console.log("add like");
-            refetch();
-          },
-          onError: () => {
-            notifications.show({
-              message: "Ошибка при добавлении лайка, повторите попытку!",
-              autoClose: 5000,
-              color: "red",
-              fz: "md",
-            });
-          },
-        });
-      }
-    },
-    [user?.token]
-  ); //!  //???
+  // const requestAddLike = useCallback(
+  //   (postLike: PostCreate & { id: number }, refetch: () => void) => {
+  //     if (user && user.token) {
+  //       const updAddLike: UpdatePostArgs = {
+  //         type: "put",
+  //         params: `post/${postLike.id}`,
+  //         body: postLike,
+  //         token: user?.token,
+  //       };
+
+  //       mutatePost.mutateAsync(updAddLike, {
+  //         onSuccess: () => {
+  //           console.log("add like");
+  //           refetch();
+  //         },
+  //         onError: () => {
+  //           notifications.show({
+  //             message: "Ошибка при добавлении лайка, повторите попытку!",
+  //             autoClose: 5000,
+  //             color: "red",
+  //             fz: "md",
+  //           });
+  //         },
+  //       });
+  //     }
+  //   },
+  //   [user?.token]
+  // ); //!  //???
 
   const addLikeHandler = useCallback(
     ({
@@ -115,8 +123,6 @@ export const ReaderBlogs = () => {
     },
     [requestAddLike, refetch, user]
   ); //???
-
-  const submitPost = usePostReaderBlogs({ mutatePost, postForm, close });
 
   const addPostHandler = () => {
     if (user) {

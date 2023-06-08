@@ -24,6 +24,7 @@ export const ReaderBlogsCard = () => {
           justify="center"
           align="start"
           sx={(theme) => ({
+            height: "105%",
             backgroundColor:
               theme.colorScheme === "dark"
                 ? theme.colors.dark[5]
