@@ -34,7 +34,7 @@ type ReaderBlogsLayoutType = {
 };
 
 export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
-  const { data, open, addLikeHandler, addCurrentPostHadler } = props;
+  const { open, addLikeHandler, addCurrentPostHadler } = props;
 
   const user = useAppSelector((state) => state.auth.user);
 
@@ -42,7 +42,7 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
 
   const readerBlogs = useAppSelector(
     (state) => state.readerBlogs.dataReaderBlogs
-  ); //???
+  );
 
   const dataReaderBlogsSort = [...(readerBlogs ?? [])].sort(
     (a: Post, b: Post) => {
@@ -50,13 +50,12 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
       const dateB = new Date(b.date.split(".").reverse().join("-"));
       return dateB.getTime() - dateA.getTime();
     }
-  ); ///????
+  );
 
   console.log("render layout");
 
   return (
     <Grid>
-      {/* {data?.map((el: Post) => ( */}
       {dataReaderBlogsSort?.map((el: Post) => (
         <Grid.Col span={3} key={el.id}>
           <Card

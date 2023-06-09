@@ -22,7 +22,7 @@ export const ReaderBlogsSlice = createSlice({
       );
       if (currentBlog) {
         currentBlog.likes += 1;
-      } //!
+      }
     },
   },
 });

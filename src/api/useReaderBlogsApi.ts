@@ -11,12 +11,12 @@ export const UseReaderBlogsApi = () => {
 
   const mutatePost = useMutation((args: UpdatePostArgs) =>
     fetchHandler(args.type, args.params, args?.body, args.token)
-  ); //! вынести в api
+  );
 
   const { data, isLoading, isSuccess, refetch } = useQuery<Post[]>(
     ["readerBlogs"],
     () => fetchHandler("get", paramsReaderBlogs)
-  ); //! вынести в api
+  );
 
   const requestAddLike = useCallback(
     (postLike: PostCreate & { id: number }, refetch: () => void) => {
@@ -45,7 +45,7 @@ export const UseReaderBlogsApi = () => {
       }
     },
     [user?.token]
-  ); //!  //???
+  );
 
   return { data, isLoading, isSuccess, refetch, requestAddLike, mutatePost };
 };
