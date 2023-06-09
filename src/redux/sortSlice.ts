@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { BsPaypal } from "react-icons/bs";
 
 type initialStateSortSlice = {
   categorySort: string;
@@ -8,6 +9,7 @@ type initialStateSortSlice = {
   reset: boolean;
   minPrice: string;
   maxPrice: string;
+  paginationPage: number; //!
 };
 
 const initialState: initialStateSortSlice = {
@@ -18,6 +20,7 @@ const initialState: initialStateSortSlice = {
   reset: false,
   minPrice: "",
   maxPrice: "",
+  paginationPage: 1, //!
 };
 
 const sortSlice = createSlice({
@@ -36,15 +39,18 @@ const sortSlice = createSlice({
     setSearchBooksValue: (state, action: PayloadAction<string>) => {
       state.searchBooksValue = `${action.payload}`;
     },
-    setMinPrice(state, action: PayloadAction<string>) {
+    setMinPrice: (state, action: PayloadAction<string>) => {
       state.minPrice = action.payload;
     },
-    setMaxPrice(state, action: PayloadAction<string>) {
+    setMaxPrice: (state, action: PayloadAction<string>) => {
       state.maxPrice = action.payload;
     },
-    setReset(state, action: PayloadAction<boolean>) {
+    setReset: (state, action: PayloadAction<boolean>) => {
       state.reset = action.payload;
     },
+    setPaginationPage: (state, action: PayloadAction<number>) => {
+      state.paginationPage = action.payload;
+    }, //!
   },
 });
 
@@ -56,5 +62,6 @@ export const {
   setReset,
   setMinPrice,
   setMaxPrice,
+  setPaginationPage, //!
 } = sortSlice.actions;
 export default sortSlice.reducer;

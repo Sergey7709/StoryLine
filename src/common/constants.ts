@@ -144,3 +144,5 @@ export const linksFooter = [
     label: "О нас",
   },
 ];
+
+export const QUANTITY_PAGES = 12;

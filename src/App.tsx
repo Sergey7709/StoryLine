@@ -25,7 +25,7 @@ import { ReaderBlogs } from "./pages/readerBlogs/ReaderBlogs";
 import { BookCard } from "./pages/catalog/BookCard";
 import { ReaderBlogsCard } from "./pages/readerBlogs/ReaderBlogsCard";
 
-export default function App() {
+export const App = () => {
   console.log("render App");
   useAutoLogin();
 
@@ -92,4 +92,4 @@ export default function App() {
       </MantineProvider>
     </ColorSchemeProvider>
   );
-}
+};

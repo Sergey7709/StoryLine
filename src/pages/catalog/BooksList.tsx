@@ -10,6 +10,8 @@ import { useGetBookList } from "../../api/useGetBookList";
 import { User } from "../../common/types";
 import { Footer } from "../../components/footer/Footer";
 import { Loader } from "../../components/loader/Loader";
+import { Paginator } from "../../components/pagination/Paginator";
+import { setPaginationPage } from "../../redux/sortSlice";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
@@ -21,6 +23,8 @@ export const BooksList = React.memo(() => {
   const [openedAuth, handlers] = useDisclosure(false);
 
   const { favoritesChange } = usePostFavorites(handlers);
+
+  const paginationPage = useAppSelector((state) => state.sort.paginationPage); //!
 
   const {
     data,
@@ -87,6 +91,8 @@ export const BooksList = React.memo(() => {
 
   console.log("render booklist");
 
+  // console.log("isLoading", isLoading);
+
   return (
     <>
       {isLoading ? (
@@ -104,6 +110,7 @@ export const BooksList = React.memo(() => {
             books={books}
             param={param}
           />
+          <Paginator initialPage={paginationPage} action={setPaginationPage} />
           <Footer />
         </>
       )}
