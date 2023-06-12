@@ -1,35 +1,24 @@
-import React, { useEffect, useState } from "react";
 import { Pagination } from "@mantine/core";
 import { useDispatch } from "react-redux";
-import { setPaginationPage } from "../../redux/sortSlice";
-import { useAppSelector } from "../../redux/redux.hooks";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 type PaginatorProps = {
-  initialPage: number;
+  currentPage: number;
   action: ActionCreatorWithPayload<number, string>;
 };
 
-export const Paginator = (props: PaginatorProps) => {
-  const { initialPage, action } = props;
+export const Paginator = ({ currentPage, action }: PaginatorProps) => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch(); //!
-  // const paginationPage = useAppSelector((state) => state.sort.paginationPage); //!
-
-  // const [activePage, setPage] = useState(paginationPage);
-
-  const [activePage, setPage] = useState(initialPage);
-
-  useEffect(() => {
-    if (activePage !== initialPage) {
-      // dispatch(setPaginationPage(activePage));
-      dispatch(action(activePage));
-    }
-  }, [activePage]); //!
-
-  // console.log(activePage);
+  // console.log(currentPage);
+  const setPageHadler = (value: number) => dispatch(action(value));
 
   return (
-    <Pagination mt={20} value={activePage} onChange={setPage} total={10} />
+    <Pagination
+      mt={20}
+      value={currentPage}
+      onChange={setPageHadler}
+      total={10}
+    />
   );
 };

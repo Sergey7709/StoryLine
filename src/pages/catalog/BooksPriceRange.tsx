@@ -12,24 +12,35 @@ import {
 
 const PriceRange = () => {
   const { reset, minPrice, maxPrice } = useAppSelector((state) => state.sort); //!
+
   const dispatch = useDispatch(); //!
 
-  const [min, setMin] = useState("");
-  const [max, setMax] = useState("");
+  // const [min, setMin] = useState("");
+  // const [max, setMax] = useState("");
+
+  const [min, setMin] = useState(minPrice); //!
+  const [max, setMax] = useState(maxPrice); //!
 
   const [debouncedMin] = useDebouncedValue(min, 1000);
   const [debouncedMax] = useDebouncedValue(max, 1000);
 
   useEffect(() => {
     if (reset) {
-      setMin("");
-      setMax("");
+      // dispatch(setMinPrice(""));
+      // dispatch(setMaxPrice(""));
+      // setMin("");
+      // setMax("");
       dispatch(setReset(false));
     } else {
-      dispatch(setMinPrice(debouncedMin));
-      dispatch(setMaxPrice(debouncedMax));
+      // console.log("dispatch", debouncedMin, debouncedMax);
+      // dispatch(setMinPrice(debouncedMin));
+      // dispatch(setMaxPrice(debouncedMax));
+      min !== "" && dispatch(setMinPrice(debouncedMin)); //!
+      max !== "" && dispatch(setMaxPrice(debouncedMax)); //!
     }
   }, [debouncedMin, debouncedMax, reset]);
+
+  // console.log("reset", reset);
 
   const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -46,6 +57,8 @@ const PriceRange = () => {
   };
 
   const handleReset = () => {
+    setMin("");
+    setMax("");
     dispatch(setMinPrice(""));
     dispatch(setMaxPrice(""));
     dispatch(setReset(true));

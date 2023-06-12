@@ -1,3 +1,4 @@
+import { QueryClient, useQueryClient } from "react-query";
 import { notifications } from "@mantine/notifications";
 import { useCallback } from "react";
 import { PostReaderBlogs, PostUpdate } from "../common/types";
@@ -12,6 +13,8 @@ export const usePostReaderBlogs = (props: PostReaderBlogs) => {
 
   const getCurrentUser = useCurrentUser();
 
+  const queryClient = useQueryClient();
+
   const submitPost = useCallback(
     async (type: FetchType, id?: number) => {
       try {
@@ -25,6 +28,7 @@ export const usePostReaderBlogs = (props: PostReaderBlogs) => {
                 token: user.token,
               }));
             getCurrentUser();
+            queryClient.invalidateQueries("readerBlogs");
             break;
           }
           case "put": {
@@ -41,6 +45,7 @@ export const usePostReaderBlogs = (props: PostReaderBlogs) => {
                 token: user.token,
               }));
             getCurrentUser();
+            queryClient.invalidateQueries("readerBlogs");
             break;
           }
           case "delete": {
@@ -52,6 +57,7 @@ export const usePostReaderBlogs = (props: PostReaderBlogs) => {
                 token: user.token,
               }));
             getCurrentUser();
+            queryClient.invalidateQueries("readerBlogs");
             break;
           }
           default:

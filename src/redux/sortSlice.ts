@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { BsPaypal } from "react-icons/bs";
 
 type initialStateSortSlice = {
   categorySort: string;

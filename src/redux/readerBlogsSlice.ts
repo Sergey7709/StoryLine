@@ -3,17 +3,19 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type initialStateReaderBlogsSlice = {
   dataReaderBlogs: Post[] | undefined;
+  pageReaderBlogs: number; //!
 };
 
 const initialState: initialStateReaderBlogsSlice = {
   dataReaderBlogs: [],
+  pageReaderBlogs: 1, //!
 };
 
 export const ReaderBlogsSlice = createSlice({
   name: "ReaderBlogsSlice",
   initialState,
   reducers: {
-    getDataReaderBlogs: (state, action: PayloadAction<Post[]>) => {
+    setDataReaderBlogs: (state, action: PayloadAction<Post[]>) => {
       state.dataReaderBlogs = action.payload;
     },
     updLikeReaderBlog: (state, action: PayloadAction<number>) => {
@@ -24,9 +26,12 @@ export const ReaderBlogsSlice = createSlice({
         currentBlog.likes += 1;
       }
     },
+    setPageReaderBlogs: (state, action: PayloadAction<number>) => {
+      state.pageReaderBlogs = action.payload;
+    }, //!
   },
 });
 
-export const { getDataReaderBlogs, updLikeReaderBlog } =
+export const { setDataReaderBlogs, updLikeReaderBlog, setPageReaderBlogs } =
   ReaderBlogsSlice.actions;
 export default ReaderBlogsSlice.reducer;

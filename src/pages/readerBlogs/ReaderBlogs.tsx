@@ -11,20 +11,21 @@ import { ReaderBlogsButton } from "./ReaderBlogsButton";
 import { Grid } from "@mantine/core";
 import { Footer } from "../../components/footer/Footer";
 import {
-  getDataReaderBlogs,
+  setDataReaderBlogs,
+  setPageReaderBlogs,
   updLikeReaderBlog,
 } from "../../redux/readerBlogsSlice";
 import { UseReaderBlogsApi } from "../../api/useReaderBlogsApi";
+import { Paginator } from "../../components/pagination/Paginator";
 
 export const ReaderBlogs = () => {
-  const user = useAppSelector((state) => state.auth.user);
-
   const dispatch = useAppDispatch();
 
-  const ReaderBlogsApi = UseReaderBlogsApi();
+  const user = useAppSelector((state) => state.auth.user);
 
-  const { data, isLoading, isSuccess, refetch, requestAddLike, mutatePost } =
-    ReaderBlogsApi;
+  const pageReaderBlogs = useAppSelector(
+    (state) => state.readerBlogs.pageReaderBlogs
+  );
 
   const [currentPost, setCurrentPost] = useState<number | "create">(0);
 
@@ -33,6 +34,15 @@ export const ReaderBlogs = () => {
   const [opened, { open, close }] = useDisclosure(false);
 
   const [onAuth, { open: openAuth, close: closeAuth }] = useDisclosure(false);
+
+  const ReaderBlogsApi = UseReaderBlogsApi();
+
+  const { data, isLoading, requestAddLike, mutatePost } = ReaderBlogsApi;
+
+  useEffect(() => {
+    console.log("new data");
+    data && dispatch(setDataReaderBlogs(data));
+  }, [data]);
 
   const post: Post | PostCreate = useMemo(() => {
     const findPost = user?.posts.find((el: Post) => el.id === currentPost);
@@ -45,10 +55,6 @@ export const ReaderBlogs = () => {
     setPostForm(post);
   }, [post]);
 
-  useEffect(() => {
-    data && dispatch(getDataReaderBlogs(data));
-  }, [isSuccess]);
-
   const submitPost = usePostReaderBlogs({ mutatePost, postForm, close });
 
   const addLikeHandler = useCallback(
@@ -59,30 +65,35 @@ export const ReaderBlogs = () => {
       date,
       likes,
       id,
-    }: PostCreate & {
-      id: number;
-    }) => {
-      if (user && user.token) {
-        const postLike = {
-          description,
-          postImageUrl,
-          title,
-          date,
-          likes: likes + 1,
-          id,
-        };
-        dispatch(updLikeReaderBlog(id));
-        requestAddLike(postLike, refetch);
+    }: PostCreate & { id: number }) => {
+      if (!user || !user.token) {
+        openAuth();
+        notifications.show({
+          message: "Войдите в аккаунт, чтобы добавить лайк",
+          autoClose: 5000,
+          color: "red",
+          fz: "md",
+        });
+        return;
       }
+
+      const postLike = {
+        description,
+        postImageUrl,
+        title,
+        date,
+        likes: likes + 1,
+        id,
+      };
+
+      dispatch(updLikeReaderBlog(id));
+      requestAddLike(postLike);
     },
-    [requestAddLike, refetch, user]
+    [requestAddLike, user]
   );
 
   const addPostHandler = () => {
-    if (user) {
-      open();
-      setCurrentPost("create");
-    } else {
+    if (!user) {
       openAuth();
       notifications.show({
         message: "Войдите в аккаунт, чтобы добавить пост",
@@ -90,7 +101,11 @@ export const ReaderBlogs = () => {
         color: "red",
         fz: "md",
       });
+      return;
     }
+
+    open();
+    setCurrentPost("create");
   };
 
   const addCurrentPostHadler = useCallback((id: number) => {
@@ -125,6 +140,10 @@ export const ReaderBlogs = () => {
               addLikeHandler={addLikeHandler}
             />
           </Grid>
+          <Paginator
+            currentPage={pageReaderBlogs}
+            action={setPageReaderBlogs}
+          />
           <Footer />
         </>
       )}

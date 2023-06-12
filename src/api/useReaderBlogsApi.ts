@@ -1,6 +1,6 @@
 import { notifications } from "@mantine/notifications";
 import { useCallback } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { paramsReaderBlogs } from "../common/constants";
 import { UpdatePostArgs, Post, PostCreate } from "../common/types";
 import { fetchHandler } from "./postOrReviewApi";
@@ -13,13 +13,29 @@ export const UseReaderBlogsApi = () => {
     fetchHandler(args.type, args.params, args?.body, args.token)
   );
 
+  const queryClient = useQueryClient();
+
+  const pageReaderBlogs = useAppSelector(
+    (state) => state.readerBlogs.pageReaderBlogs
+  ); //!
+
+  console.log(pageReaderBlogs);
+
+  const numPages = (pageReaderBlogs - 1) * 4; //! ///?????
+
+  const pagination =
+    numPages === 0 ? `&limit=${4}` : `&limit=${4}&offset=${numPages}`; //! ///?????
+
+  const paramsPagination = `${paramsReaderBlogs}${pagination}`; //!
+
   const { data, isLoading, isSuccess, refetch } = useQuery<Post[]>(
-    ["readerBlogs"],
-    () => fetchHandler("get", paramsReaderBlogs)
+    ["readerBlogs", paramsPagination],
+    // () => fetchHandler("get", paramsReaderBlogs)
+    () => fetchHandler("get", paramsPagination) //!
   );
 
   const requestAddLike = useCallback(
-    (postLike: PostCreate & { id: number }, refetch: () => void) => {
+    (postLike: PostCreate & { id: number }) => {
       if (user && user.token) {
         const updAddLike: UpdatePostArgs = {
           type: "put",
@@ -31,8 +47,9 @@ export const UseReaderBlogsApi = () => {
         mutatePost.mutateAsync(updAddLike, {
           onSuccess: () => {
             console.log("add like");
-            refetch();
+            queryClient.invalidateQueries("readerBlogs");
           },
+
           onError: () => {
             notifications.show({
               message: "Ошибка при добавлении лайка, повторите попытку!",

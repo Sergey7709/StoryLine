@@ -18,7 +18,7 @@ import { memo } from "react";
 import { useAppSelector } from "../../redux/redux.hooks";
 
 type ReaderBlogsLayoutType = {
-  data: Post[] | undefined;
+  data: Post[] | undefined; //???????????????
   open: () => void;
   addCurrentPostHadler: (id: number) => void;
   addLikeHandler: ({
@@ -56,7 +56,7 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
 
   return (
     <Grid>
-      {dataReaderBlogsSort?.map((el: Post) => (
+      {readerBlogs?.map((el: Post) => (
         <Grid.Col span={3} key={el.id}>
           <Card
             mt={10}

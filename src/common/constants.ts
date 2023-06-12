@@ -123,7 +123,7 @@ export const menuSortData = [
 
 export const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
 
-export const paramsReaderBlogs = "post/all";
+export const paramsReaderBlogs = "post/all?";
 
 export const linksFooter = [
   {
@@ -145,4 +145,4 @@ export const linksFooter = [
   },
 ];
 
-export const QUANTITY_PAGES = 12;
+export const QUANTITY_PAGES = 18;

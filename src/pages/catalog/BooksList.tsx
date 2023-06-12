@@ -12,9 +12,13 @@ import { Footer } from "../../components/footer/Footer";
 import { Loader } from "../../components/loader/Loader";
 import { Paginator } from "../../components/pagination/Paginator";
 import { setPaginationPage } from "../../redux/sortSlice";
+import { useQueryClient } from "react-query";
+import { ServerError } from "../../components/errorNetwork/ServerError";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
+
+  const queryClient = useQueryClient(); //!
 
   const dispatch = useAppDispatch();
 
@@ -26,26 +30,30 @@ export const BooksList = React.memo(() => {
 
   const paginationPage = useAppSelector((state) => state.sort.paginationPage); //!
 
+  const maxDiscount = useAppSelector((state) => state.sort.maxDiscount);
+
   const {
     data,
     isLoading,
     isLoadingError,
+    isSuccess,
     minPrice,
     maxPrice,
     searchBooksValue,
     param,
   } = useGetBookList();
 
-  useEffect(() => {
-    data?.items
-      ?.filter((book) => book.discount > 0)
-      .reduce((minDiscount, book) => {
-        const newMinDiscount =
-          book.discount > minDiscount ? book.discount : minDiscount;
-        dispatch(setMaxDiscount(newMinDiscount));
-        return newMinDiscount;
-      }, 0);
-  }, [data?.items]);
+  // useEffect(() => {
+  //   data?.items
+  //     ?.filter((book) => book.discount > 0)
+  //     .reduce((minDiscount, book) => {
+  //       const newMaxDiscount =
+  //         book.discount > minDiscount ? book.discount : minDiscount;
+  //       dispatch(setMaxDiscount(newMaxDiscount));
+  //       return newMaxDiscount;
+  //     }, 0);
+  // }, [data?.items]);
+  // // }, [data?.items]);
 
   const dataDiscount = useMemo(
     () =>
@@ -63,6 +71,8 @@ export const BooksList = React.memo(() => {
       }),
     [data?.items]
   );
+
+  console.log(dataDiscount);
 
   const books = useMemo(() => {
     const filteredBooks =
@@ -83,7 +93,8 @@ export const BooksList = React.memo(() => {
         />
       );
     });
-  }, [data?.items, dataDiscount, user?.favoriteItems]);
+  }, [data?.items, user?.favoriteItems]);
+  // }, [data?.items, dataDiscount, user?.favoriteItems]);
 
   const sortHandler = useCallback((valueSort: string) => {
     dispatch(setCategorySort(valueSort));
@@ -95,25 +106,27 @@ export const BooksList = React.memo(() => {
 
   return (
     <>
+      {/* {isLoadingError && <ServerError />}
       {isLoading ? (
         <Loader />
       ) : (
-        <>
-          <BookListLayout
-            isLoading={isLoading}
-            isLoadingError={isLoadingError}
-            openedAuth={openedAuth}
-            handlersClose={handlers.close}
-            sortHandler={sortHandler}
-            clasess={classes.grid}
-            data={data}
-            books={books}
-            param={param}
-          />
-          <Paginator initialPage={paginationPage} action={setPaginationPage} />
-          <Footer />
-        </>
-      )}
+        <> */}
+      <BookListLayout
+        isLoading={isLoading}
+        isLoadingError={isLoadingError}
+        isSuccess={isSuccess}
+        openedAuth={openedAuth}
+        handlersClose={handlers.close}
+        sortHandler={sortHandler}
+        clasess={classes.grid}
+        data={data}
+        books={books}
+        param={param}
+      />
+      {/* <Paginator currentPage={paginationPage} action={setPaginationPage} />
+          <Footer /> */}
+      {/* </>
+      )} */}
     </>
   );
 });
