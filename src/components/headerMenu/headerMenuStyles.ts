@@ -76,7 +76,6 @@ export const useStyles = createStyles((theme) => ({
 
   search_alt: {
     [theme.fn.largerThan("631")]: {
-      display: "none",
       width: "70%",
     },
   },

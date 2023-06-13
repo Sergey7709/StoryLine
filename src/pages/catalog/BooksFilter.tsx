@@ -17,7 +17,7 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
       <Menu
         shadow="md"
         width={"230px"}
-        offset={4}
+        offset={10}
         position="bottom-end"
         trigger="hover"
       >
@@ -26,7 +26,8 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
             <Text
               size={"md"}
               variant="gradient"
-              gradient={{ from: "coral", to: "red", deg: 45 }}
+              gradient={{ from: "teal", to: "blue", deg: 45 }}
+              fw={500}
             >
               Сортировать книги по...
             </Text>
@@ -34,17 +35,17 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
         </Menu.Target>
         <Menu.Dropdown>
           <Group>
-            {menuSortData.map((menuItem) => (
-              <Menu.Target key={menuItem.key}>
-                <Accordion variant="default" transitionDuration={300}>
-                  <Accordion.Item value="flexibility">
+            <Menu.Target>
+              <Accordion variant="contained" transitionDuration={400}>
+                {menuSortData.map((menuItem) => (
+                  <Accordion.Item key={menuItem.key} value={menuItem.title}>
                     <Accordion.Control>
                       <Text
                         align="start"
                         w={"15vh"}
                         size="md"
                         variant="gradient"
-                        gradient={{ from: "coral", to: "red", deg: 45 }}
+                        gradient={{ from: "teal", to: "blue", deg: 45 }}
                         weight={600}
                       >
                         {`${menuItem.title}`}
@@ -55,7 +56,7 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                         <Button
                           w={"100%"}
                           variant="light"
-                          color="orange"
+                          color="violet"
                           key={option.value}
                           onClick={() => sortHandler(option.value)}
                           mb={3}
@@ -63,7 +64,7 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                           <Text
                             size="md"
                             variant="gradient"
-                            gradient={{ from: "coral", to: "red", deg: 45 }}
+                            gradient={{ from: "teal", to: "blue", deg: 45 }}
                             weight={400}
                             align="left"
                           >
@@ -73,9 +74,9 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                       ))}
                     </Accordion.Panel>
                   </Accordion.Item>
-                </Accordion>
-              </Menu.Target>
-            ))}
+                ))}
+              </Accordion>
+            </Menu.Target>
           </Group>
         </Menu.Dropdown>
       </Menu>

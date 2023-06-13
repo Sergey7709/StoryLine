@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { fetchItem } from "./itemsApi";
 import { ItemsResponse } from "../common/types";
 import { useAppDispatch, useAppSelector } from "../redux/redux.hooks";

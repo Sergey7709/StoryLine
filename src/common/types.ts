@@ -209,3 +209,17 @@ export type BookListLayoutProps = {
   data: ItemsResponse | undefined;
   books: JSX.Element[] | undefined;
 };
+
+export type HeaderButtonsProps = {
+  classes: {
+    header: string;
+    inner: string;
+    links: string;
+    burger: string;
+    link: string;
+    linkLabel: string;
+    search_default: string;
+    search_alt: string;
+    dropdown: string;
+  };
+};

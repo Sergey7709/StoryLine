@@ -4,20 +4,8 @@ import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { NAV_BUTTONS } from "../../common/constants";
 import { MenuItem } from "./MenuItem";
+import { HeaderButtonsProps } from "../../common/types";
 
-type HeaderButtonsProps = {
-  classes: {
-    header: string;
-    inner: string;
-    links: string;
-    burger: string;
-    link: string;
-    linkLabel: string;
-    search_default: string;
-    search_alt: string;
-    dropdown: string;
-  };
-};
 const HeaderButtons: FC<HeaderButtonsProps> = ({ classes }) => {
   return (
     <>

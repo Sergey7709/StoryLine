@@ -130,20 +130,25 @@ export const ReaderBlogs = () => {
               onAuth={onAuth}
               closeAuth={closeAuth}
             />
+            <Grid.Col>
+              <ReaderBlogsButton addPostHandler={addPostHandler} />
+            </Grid.Col>
+            <Grid.Col>
+              <ReaderBlogsLayout
+                data={data}
+                open={open}
+                addCurrentPostHadler={addCurrentPostHadler}
+                addLikeHandler={addLikeHandler}
+              />
+            </Grid.Col>
 
-            <ReaderBlogsButton addPostHandler={addPostHandler} />
-
-            <ReaderBlogsLayout
-              data={data}
-              open={open}
-              addCurrentPostHadler={addCurrentPostHadler}
-              addLikeHandler={addLikeHandler}
-            />
+            <Grid.Col>
+              <Paginator
+                currentPage={pageReaderBlogs}
+                action={setPageReaderBlogs}
+              />
+            </Grid.Col>
           </Grid>
-          <Paginator
-            currentPage={pageReaderBlogs}
-            action={setPageReaderBlogs}
-          />
           <Footer />
         </>
       )}
