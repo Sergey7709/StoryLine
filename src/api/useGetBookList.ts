@@ -3,12 +3,10 @@ import { fetchItem } from "./itemsApi";
 import { ItemsResponse } from "../common/types";
 import { useAppDispatch, useAppSelector } from "../redux/redux.hooks";
 import { QUANTITY_PAGES, categoryNewBooks } from "./../common/constants";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { setMaxDiscount } from "../redux/sortSlice";
 
 export const useGetBookList = () => {
-  // const queryClient = useQueryClient();
-
   const { categorySort, maxDiscount, searchBooksValue, minPrice, maxPrice } =
     useAppSelector((state) => state.sort);
 
@@ -29,43 +27,35 @@ export const useGetBookList = () => {
         dispatch(setMaxDiscount(newMaxDiscount));
         return newMaxDiscount;
       }, 0);
-  }, [maxPrice, dispatch]); //???
-
-  const pagination =
-    offset === 0
-      ? `&limit=${QUANTITY_PAGES + 3}`
-      : `&limit=${QUANTITY_PAGES}&offset=${offset + 3}`; //!
+  }, [maxPrice, minPrice, dispatch]); //!
 
   const priceSort =
     Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice)
       ? `&priceFrom=${Number(minPrice)}&priceTo=${
           Number(maxPrice) + Number(maxDiscount)
         }`
-      : ""; //!!! Сортировка по цене при пагинации не работает!!!!
+      : "";
+
+  const pagination =
+    offset === 0
+      ? `&limit=${QUANTITY_PAGES + 3}`
+      : `&limit=${QUANTITY_PAGES}&offset=${offset + 3}`; //!
 
   const requestLink =
     param === categoryNewBooks
       ? categoryNewBooks
-      : // : `${param}${pagination}${categorySort}${priceSort}`; //!
-        `${param}${categorySort}${priceSort}`;
+      : `${param}${categorySort}${priceSort}${pagination}`; //!
+  // : `${param}${categorySort}${priceSort}${pagination}`; //!
 
-  // console.log(`${param}${categorySort}${priceSort}`);
+  console.log(`${param}${categorySort}${pagination}${priceSort}`);
 
   const requestBookList =
     searchBooksValue.length > 0 ? searchBooksValue : requestLink;
-
-  // console.log("categorySort", categorySort);
-  // console.log("requestBookList", requestBookList);
 
   const { data, isLoading, isLoadingError, isSuccess } =
     useQuery<ItemsResponse>(["item", requestBookList], () =>
       fetchItem(requestBookList)
     );
-
-  // console.log(data);
-  // useEffect(() => {
-  //   queryClient.invalidateQueries("item");
-  // }, [requestBookList]);
 
   return {
     data,

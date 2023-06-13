@@ -8,7 +8,7 @@ type initialStateSortSlice = {
   reset: boolean;
   minPrice: string;
   maxPrice: string;
-  paginationPage: number; //!
+  paginationPage: number;
 };
 
 const initialState: initialStateSortSlice = {
@@ -19,7 +19,7 @@ const initialState: initialStateSortSlice = {
   reset: false,
   minPrice: "",
   maxPrice: "",
-  paginationPage: 1, //!
+  paginationPage: 1,
 };
 
 const sortSlice = createSlice({

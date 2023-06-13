@@ -1,24 +1,16 @@
 import { useStyles } from "./BooksListStyles";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import SingleBookBlock from "./SingleBookBlock";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useDisclosure } from "@mantine/hooks";
-import { setMaxDiscount, setCategorySort } from "../../redux/sortSlice";
 import { BookListLayout } from "./BookListLayout";
 import { usePostFavorites } from "../../api/usePostFavorites";
 import { useGetBookList } from "../../api/useGetBookList";
 import { User } from "../../common/types";
-import { Footer } from "../../components/footer/Footer";
-import { Loader } from "../../components/loader/Loader";
-import { Paginator } from "../../components/pagination/Paginator";
-import { setPaginationPage } from "../../redux/sortSlice";
-import { useQueryClient } from "react-query";
-import { ServerError } from "../../components/errorNetwork/ServerError";
+import { setCategorySort } from "../../redux/sortSlice";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
-
-  const queryClient = useQueryClient(); //!
 
   const dispatch = useAppDispatch();
 
@@ -27,10 +19,6 @@ export const BooksList = React.memo(() => {
   const [openedAuth, handlers] = useDisclosure(false);
 
   const { favoritesChange } = usePostFavorites(handlers);
-
-  const paginationPage = useAppSelector((state) => state.sort.paginationPage); //!
-
-  const maxDiscount = useAppSelector((state) => state.sort.maxDiscount);
 
   const {
     data,
@@ -42,18 +30,6 @@ export const BooksList = React.memo(() => {
     searchBooksValue,
     param,
   } = useGetBookList();
-
-  // useEffect(() => {
-  //   data?.items
-  //     ?.filter((book) => book.discount > 0)
-  //     .reduce((minDiscount, book) => {
-  //       const newMaxDiscount =
-  //         book.discount > minDiscount ? book.discount : minDiscount;
-  //       dispatch(setMaxDiscount(newMaxDiscount));
-  //       return newMaxDiscount;
-  //     }, 0);
-  // }, [data?.items]);
-  // // }, [data?.items]);
 
   const dataDiscount = useMemo(
     () =>
@@ -71,8 +47,6 @@ export const BooksList = React.memo(() => {
       }),
     [data?.items]
   );
-
-  console.log(dataDiscount);
 
   const books = useMemo(() => {
     const filteredBooks =
@@ -94,7 +68,6 @@ export const BooksList = React.memo(() => {
       );
     });
   }, [data?.items, user?.favoriteItems]);
-  // }, [data?.items, dataDiscount, user?.favoriteItems]);
 
   const sortHandler = useCallback((valueSort: string) => {
     dispatch(setCategorySort(valueSort));
@@ -102,15 +75,8 @@ export const BooksList = React.memo(() => {
 
   console.log("render booklist");
 
-  // console.log("isLoading", isLoading);
-
   return (
     <>
-      {/* {isLoadingError && <ServerError />}
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <> */}
       <BookListLayout
         isLoading={isLoading}
         isLoadingError={isLoadingError}
@@ -123,10 +89,6 @@ export const BooksList = React.memo(() => {
         books={books}
         param={param}
       />
-      {/* <Paginator currentPage={paginationPage} action={setPaginationPage} />
-          <Footer /> */}
-      {/* </>
-      )} */}
     </>
   );
 });

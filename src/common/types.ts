@@ -197,3 +197,15 @@ export type ReaderBlogsModalFormProps = {
   onAuth: boolean;
   closeAuth: () => void;
 };
+export type BookListLayoutProps = {
+  isLoading: boolean;
+  isLoadingError: boolean;
+  isSuccess: boolean;
+  param: string;
+  openedAuth: boolean;
+  handlersClose: () => void;
+  sortHandler: (valueSort: string) => void;
+  clasess: string;
+  data: ItemsResponse | undefined;
+  books: JSX.Element[] | undefined;
+};
