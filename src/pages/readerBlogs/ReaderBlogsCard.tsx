@@ -28,7 +28,7 @@ export const ReaderBlogsCard = () => {
             backgroundColor:
               theme.colorScheme === "dark"
                 ? theme.colors.dark[5]
-                : theme.colors.violet[5],
+                : theme.colors.violet[3],
           })}
         >
           <Paper

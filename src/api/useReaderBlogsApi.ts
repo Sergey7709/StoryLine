@@ -17,21 +17,19 @@ export const UseReaderBlogsApi = () => {
 
   const pageReaderBlogs = useAppSelector(
     (state) => state.readerBlogs.pageReaderBlogs
-  ); //!
+  );
 
-  console.log(pageReaderBlogs);
-
-  const numPages = (pageReaderBlogs - 1) * 4; //! ///?????
+  const numPages = (pageReaderBlogs - 1) * 4;
 
   const pagination =
-    numPages === 0 ? `&limit=${4}` : `&limit=${4}&offset=${numPages}`; //! ///?????
+    numPages === 0 ? `&limit=${4}` : `&limit=${4}&offset=${numPages}`;
 
-  const paramsPagination = `${paramsReaderBlogs}${pagination}`; //!
+  const paramsPagination = `${paramsReaderBlogs}${pagination}`;
 
   const { data, isLoading, isSuccess, refetch } = useQuery<Post[]>(
     ["readerBlogs", paramsPagination],
-    // () => fetchHandler("get", paramsReaderBlogs)
-    () => fetchHandler("get", paramsPagination) //!
+
+    () => fetchHandler("get", paramsPagination)
   );
 
   const requestAddLike = useCallback(

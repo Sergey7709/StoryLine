@@ -16,9 +16,9 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
     <Group position="center">
       <Menu
         shadow="md"
-        width={"15%"}
+        width={"230px"}
         offset={4}
-        position="bottom"
+        position="bottom-end"
         trigger="hover"
       >
         <Menu.Target>
