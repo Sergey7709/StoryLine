@@ -1,4 +1,11 @@
-import { Group, Text, Menu, UnstyledButton, Space } from "@mantine/core";
+import {
+  Group,
+  Text,
+  Menu,
+  UnstyledButton,
+  Accordion,
+  Button,
+} from "@mantine/core";
 import { memo } from "react";
 import { menuSortData } from "../../common/constants";
 import { SortHandlerType } from "../../common/types";
@@ -9,9 +16,9 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
     <Group position="center">
       <Menu
         shadow="md"
-        width={"100%"} //!
+        width={"15%"}
         offset={4}
-        position="bottom-start"
+        position="bottom"
         trigger="hover"
       >
         <Menu.Target>
@@ -28,48 +35,46 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
         <Menu.Dropdown>
           <Group>
             {menuSortData.map((menuItem) => (
-              <Menu
-                position="bottom-start"
-                trigger="hover"
-                width={300}
-                offset={2}
-                key={menuItem.key}
-              >
-                <Menu.Target>
-                  <UnstyledButton>
-                    <Text
-                      w={"28vh"} //!
-                      pl={"20%"} //!
-                      size="md"
-                      variant="gradient"
-                      gradient={{ from: "coral", to: "red", deg: 45 }}
-                      weight={400}
-                      fw={"bold"}
-                    >
-                      {`${menuItem.title}`}
-                    </Text>
-                  </UnstyledButton>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  {menuItem.options.map((option) => (
-                    <Menu.Item
-                      px={5}
-                      key={option.value}
-                      onClick={() => sortHandler(option.value)}
-                    >
+              <Menu.Target key={menuItem.key}>
+                <Accordion variant="default" transitionDuration={300}>
+                  <Accordion.Item value="flexibility">
+                    <Accordion.Control>
                       <Text
-                        ml={"10%"} //!
+                        align="start"
+                        w={"15vh"}
                         size="md"
                         variant="gradient"
                         gradient={{ from: "coral", to: "red", deg: 45 }}
-                        weight={400}
+                        weight={600}
                       >
-                        {option.subtitle}
+                        {`${menuItem.title}`}
                       </Text>
-                    </Menu.Item>
-                  ))}
-                </Menu.Dropdown>
-              </Menu>
+                    </Accordion.Control>
+                    <Accordion.Panel>
+                      {menuItem.options.map((option) => (
+                        <Button
+                          w={"100%"}
+                          variant="light"
+                          color="orange"
+                          key={option.value}
+                          onClick={() => sortHandler(option.value)}
+                          mb={3}
+                        >
+                          <Text
+                            size="md"
+                            variant="gradient"
+                            gradient={{ from: "coral", to: "red", deg: 45 }}
+                            weight={400}
+                            align="left"
+                          >
+                            {option.subtitle}
+                          </Text>
+                        </Button>
+                      ))}
+                    </Accordion.Panel>
+                  </Accordion.Item>
+                </Accordion>
+              </Menu.Target>
             ))}
           </Group>
         </Menu.Dropdown>

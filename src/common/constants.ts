@@ -79,8 +79,8 @@ export const menuSortData = [
     key: "sortName",
     title: "Наименованию",
     options: [
-      { value: "&sortBy=title&sortOrder=asc", subtitle: "Наименованию А-Я" },
-      { value: "&sortBy=title&sortOrder=desc", subtitle: "Наименованию Я-А" },
+      { value: "&sortBy=title&sortOrder=asc", subtitle: "А-Я" },
+      { value: "&sortBy=title&sortOrder=desc", subtitle: "Я-А" },
     ],
   },
   {
@@ -89,11 +89,11 @@ export const menuSortData = [
     options: [
       {
         value: "&sortBy=averageRate&sortOrder=asc",
-        subtitle: "Рейтингу возрастанию",
+        subtitle: "возрастанию ↑",
       },
       {
         value: "&sortBy=averageRate&sortOrder=desc",
-        subtitle: "Рейтингу убыванию",
+        subtitle: "убыванию ↓",
       },
     ],
   },
@@ -101,8 +101,11 @@ export const menuSortData = [
     key: "sortCost",
     title: "Цене",
     options: [
-      { value: "&sortBy=price&sortOrder=asc", subtitle: "Цене возрастанию" },
-      { value: "&sortBy=price&sortOrder=desc", subtitle: "Цене убыванию" },
+      {
+        value: "&sortBy=price&sortOrder=asc",
+        subtitle: "возрастанию ↑",
+      },
+      { value: "&sortBy=price&sortOrder=desc", subtitle: "убыванию ↓" },
     ],
   },
   {
@@ -111,11 +114,11 @@ export const menuSortData = [
     options: [
       {
         value: "&sortBy=releaseDate&sortOrder=asc",
-        subtitle: "Дате возрастанию",
+        subtitle: "возрастанию ↑",
       },
       {
         value: "&sortBy=releaseDate&sortOrder=desc",
-        subtitle: "Дате убыванию",
+        subtitle: "убыванию ↓",
       },
     ],
   },
