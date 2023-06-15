@@ -55,15 +55,17 @@ export const BookCardLayout: FC<BookCardLayoutProps> = (props) => {
         </Button>
       </Modal>
 
-      <GoBackButton
-        variant={"gradient"}
-        size={"xs"}
-        gradient={{ from: "indigo", to: "cyan" }}
-        text={"ВЕРНУТЬСЯ"}
-      />
+      {!isLoading && (
+        <GoBackButton
+          variant={"gradient"}
+          size={"xs"}
+          gradient={{ from: "indigo", to: "cyan" }}
+          text={"ВЕРНУТЬСЯ"}
+        />
+      )}
 
       {isLoading ? (
-        <Loader />
+        <Loader title="Ищем выбранную книгу..." />
       ) : (
         data && (
           <Grid gutter="lg">

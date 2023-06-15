@@ -40,7 +40,6 @@ export const ReaderBlogs = () => {
   const { data, isLoading, requestAddLike, mutatePost } = ReaderBlogsApi;
 
   useEffect(() => {
-    console.log("new data");
     data && dispatch(setDataReaderBlogs(data));
   }, [data]);
 
@@ -115,7 +114,7 @@ export const ReaderBlogs = () => {
   return (
     <>
       {isLoading ? (
-        <Loader />
+        <Loader title="Ищем авторов и блоги..." />
       ) : (
         <>
           <Grid>

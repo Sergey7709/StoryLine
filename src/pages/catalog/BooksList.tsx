@@ -50,7 +50,7 @@ export const BooksList = React.memo(() => {
 
   const books = useMemo(() => {
     const filteredBooks =
-      user && Number(minPrice) > 0 && searchBooksValue.length === 0
+      Number(minPrice) > 0 && searchBooksValue.length === 0
         ? dataDiscount
         : data?.items;
 
@@ -67,6 +67,7 @@ export const BooksList = React.memo(() => {
         />
       );
     });
+    // }, [data?.items, user?.favoriteItems]);
   }, [data?.items, user?.favoriteItems]);
 
   const sortHandler = useCallback((valueSort: string) => {

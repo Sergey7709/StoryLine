@@ -21,12 +21,15 @@ const PriceRange = () => {
   const [debouncedMin] = useDebouncedValue(min, 1000);
   const [debouncedMax] = useDebouncedValue(max, 1000);
 
+  const isPriceNotValid =
+    min !== "" && max !== "" && Number(min) >= Number(max);
+
   useEffect(() => {
     if (reset) {
       dispatch(setReset(false));
-    } else {
+    } else if (Number(min) > 0 && Number(max) >= Number(min)) {
       min !== "" && dispatch(setMinPrice(debouncedMin));
-      max !== "" && dispatch(setMaxPrice(debouncedMax));
+      max !== "" && dispatch(setMaxPrice(debouncedMax)); //!!!
     }
   }, [debouncedMin, debouncedMax, reset]);
 
@@ -53,17 +56,14 @@ const PriceRange = () => {
     dispatch(setCategorySort(""));
   };
 
-  const isPriceNotValid =
-    minPrice !== "" && maxPrice !== "" && Number(minPrice) >= Number(maxPrice);
-
   return (
     <Grid w={400} justify="start" align="center">
       <Grid.Col>
         <Group noWrap spacing={5}>
-          <Text size="md" color="blue" weight={400}>
+          <Text tt="uppercase" size="sm" color="blue" weight={400}>
             Стоимость
           </Text>
-          <Text size="md" color="blue" weight={400}>
+          <Text tt="uppercase" size="sm" color="blue" weight={400}>
             от
           </Text>
           <Input
@@ -75,7 +75,7 @@ const PriceRange = () => {
             error={isPriceNotValid}
           />
 
-          <Text size="md" color="blue" weight={400}>
+          <Text tt="uppercase" size="sm" color="blue" weight={400}>
             до
           </Text>
           <Input

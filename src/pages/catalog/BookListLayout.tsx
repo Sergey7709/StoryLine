@@ -37,7 +37,7 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
   return (
     <>
       {isLoadingError && <ServerError />}
-      {isLoading && <Loader />}
+      {isLoading && <Loader title={"Ищем книги..."} />}
       {isSuccess && (
         <>
           <Grid>

@@ -79,8 +79,8 @@ export const menuSortData = [
     key: "sortName",
     title: "Наименованию",
     options: [
-      { value: "&sortBy=title&sortOrder=asc", subtitle: "А-Я" },
-      { value: "&sortBy=title&sortOrder=desc", subtitle: "Я-А" },
+      { value: "&sortBy=title&sortOrder=asc", subtitle: "а-я ⇧" },
+      { value: "&sortBy=title&sortOrder=desc", subtitle: "я-а ⇩" },
     ],
   },
   {
@@ -89,11 +89,11 @@ export const menuSortData = [
     options: [
       {
         value: "&sortBy=averageRate&sortOrder=asc",
-        subtitle: "возрастанию ↑",
+        subtitle: "возрастанию ⇧",
       },
       {
         value: "&sortBy=averageRate&sortOrder=desc",
-        subtitle: "убыванию ↓",
+        subtitle: "убыванию ⇩",
       },
     ],
   },
@@ -103,9 +103,9 @@ export const menuSortData = [
     options: [
       {
         value: "&sortBy=price&sortOrder=asc",
-        subtitle: "возрастанию ↑",
+        subtitle: "возрастанию ⇧",
       },
-      { value: "&sortBy=price&sortOrder=desc", subtitle: "убыванию ↓" },
+      { value: "&sortBy=price&sortOrder=desc", subtitle: "убыванию ⇩" },
     ],
   },
   {
@@ -114,11 +114,11 @@ export const menuSortData = [
     options: [
       {
         value: "&sortBy=releaseDate&sortOrder=asc",
-        subtitle: "возрастанию ↑",
+        subtitle: "возрастанию ⇧",
       },
       {
         value: "&sortBy=releaseDate&sortOrder=desc",
-        subtitle: "убыванию ↓",
+        subtitle: "убыванию ⇩",
       },
     ],
   },

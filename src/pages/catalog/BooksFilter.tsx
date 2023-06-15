@@ -24,7 +24,8 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
         <Menu.Target>
           <UnstyledButton>
             <Text
-              size={"md"}
+              tt="uppercase"
+              size={"sm"}
               variant="gradient"
               gradient={{ from: "teal", to: "blue", deg: 45 }}
               fw={500}
@@ -35,48 +36,50 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
         </Menu.Target>
         <Menu.Dropdown>
           <Group>
-            <Menu.Target>
-              <Accordion variant="contained" transitionDuration={400}>
-                {menuSortData.map((menuItem) => (
-                  <Accordion.Item key={menuItem.key} value={menuItem.title}>
-                    <Accordion.Control>
-                      <Text
-                        align="start"
-                        w={"15vh"}
-                        size="md"
-                        variant="gradient"
-                        gradient={{ from: "teal", to: "blue", deg: 45 }}
-                        weight={600}
+            {/* <Menu.Target> */}
+            <Accordion variant="contained" transitionDuration={400}>
+              {menuSortData.map((menuItem, index) => (
+                <Accordion.Item key={menuItem.key} value={menuItem.title}>
+                  <Accordion.Control>
+                    <Text
+                      tt="uppercase"
+                      align="start"
+                      w={"15vh"}
+                      size="sm"
+                      variant="gradient"
+                      gradient={{ from: "teal", to: "blue", deg: 45 }}
+                      weight={600}
+                    >
+                      {`${menuItem.title}`}
+                    </Text>
+                  </Accordion.Control>
+                  <Accordion.Panel>
+                    {menuItem.options.map((option) => (
+                      <Button
+                        w={"100%"}
+                        variant="light"
+                        color="violet"
+                        key={option.value}
+                        onClick={() => sortHandler(option.value)}
+                        mb={3}
                       >
-                        {`${menuItem.title}`}
-                      </Text>
-                    </Accordion.Control>
-                    <Accordion.Panel>
-                      {menuItem.options.map((option) => (
-                        <Button
-                          w={"100%"}
-                          variant="light"
-                          color="violet"
-                          key={option.value}
-                          onClick={() => sortHandler(option.value)}
-                          mb={3}
+                        <Text
+                          // tt="uppercase"
+                          size="md"
+                          variant="gradient"
+                          gradient={{ from: "teal", to: "blue", deg: 45 }}
+                          weight={500}
+                          align="left"
                         >
-                          <Text
-                            size="md"
-                            variant="gradient"
-                            gradient={{ from: "teal", to: "blue", deg: 45 }}
-                            weight={400}
-                            align="left"
-                          >
-                            {option.subtitle}
-                          </Text>
-                        </Button>
-                      ))}
-                    </Accordion.Panel>
-                  </Accordion.Item>
-                ))}
-              </Accordion>
-            </Menu.Target>
+                          {option.subtitle}
+                        </Text>
+                      </Button>
+                    ))}
+                  </Accordion.Panel>
+                </Accordion.Item>
+              ))}
+            </Accordion>
+            {/* </Menu.Target> */}
           </Group>
         </Menu.Dropdown>
       </Menu>

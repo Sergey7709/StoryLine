@@ -64,7 +64,7 @@ export const SingleBookBlockLayout = (props: SingleBookBlockLayoutProps) => {
             <Image
               width={"8rem"}
               height={"12rem"}
-              src={book.itemImageUrl}
+              // src={book.itemImageUrl}
               alt="book img"
             />
           </Link>

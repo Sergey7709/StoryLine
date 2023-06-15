@@ -26,7 +26,8 @@ export const MenuItem = () => {
   };
   const menuCategory = CATEGORIES.map((item, ind) => (
     <Menu.Item
-      fz={"md"}
+      tt={"uppercase"}
+      fz={"sm"}
       color="blue"
       onClick={() => onClickToItem(item.link, item.param)}
       key={ind}
