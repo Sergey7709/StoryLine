@@ -37,7 +37,7 @@ export const useGetBookList = () => {
   const requestLink =
     param === categoryNewBooks
       ? categoryNewBooks
-      : `${param}${categorySort}${priceSort}${pagination}`;
+      : `${param}${categorySort}${priceSort}`;
 
   const requestBookList =
     searchBooksValue.length > 0 ? searchBooksValue : requestLink;
@@ -72,6 +72,7 @@ export const useGetBookList = () => {
     minPrice,
     maxPrice,
     searchBooksValue,
+    categorySort,
     param,
   };
 };
