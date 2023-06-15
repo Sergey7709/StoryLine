@@ -3,7 +3,7 @@ import { fetchItem } from "./itemsApi";
 import { ItemsResponse } from "../common/types";
 import { useAppDispatch, useAppSelector } from "../redux/redux.hooks";
 import { QUANTITY_PAGES, categoryNewBooks } from "./../common/constants";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { setMaxDiscount } from "../redux/sortSlice";
 
 export const useGetBookList = () => {
@@ -18,22 +18,7 @@ export const useGetBookList = () => {
 
   const dispatch = useAppDispatch();
 
-  // const [isActionExecutedDiscount, setIsActionExecutedDiscount] =
-  //   useState(false); //???
-
   const previousMaxDiscount = useRef(0); //???
-  console.log(previousMaxDiscount);
-
-  // useEffect(() => {
-  //   data?.items
-  //     ?.filter((book) => book.discount > 0)
-  //     .reduce((newDiscount, book) => {
-  //       const newMaxDiscount =
-  //         book.discount > newDiscount ? book.discount : newDiscount;
-  //       dispatch(setMaxDiscount(newMaxDiscount));
-  //       return newMaxDiscount;
-  //     }, 0);
-  // }, [maxPrice, minPrice, dispatch]);
 
   console.log(maxDiscount);
 
@@ -52,8 +37,7 @@ export const useGetBookList = () => {
   const requestLink =
     param === categoryNewBooks
       ? categoryNewBooks
-      : // : `${param}${categorySort}${priceSort}${pagination}`;
-        `${param}${categorySort}${priceSort}${pagination}`;
+      : `${param}${categorySort}${priceSort}${pagination}`;
 
   const requestBookList =
     searchBooksValue.length > 0 ? searchBooksValue : requestLink;
@@ -79,21 +63,6 @@ export const useGetBookList = () => {
       }
     }
   }, [isSuccess, data?.items]);
-
-  // useEffect(() => {
-  //   if (isSuccess && !isActionExecutedDiscount) {
-  //     data.items
-  //       ?.filter((book) => book.discount > 0)
-  //       .reduce((newDiscount, book) => {
-  //         const newMaxDiscount =
-  //           book.discount > newDiscount ? book.discount : newDiscount;
-  //         dispatch(setMaxDiscount(newMaxDiscount));
-  //         return newMaxDiscount;
-  //       }, 0);
-
-  //     setIsActionExecutedDiscount(true);
-  //   }
-  // }, [isSuccess, isActionExecutedDiscount, dispatch]); ///????
 
   return {
     data,
