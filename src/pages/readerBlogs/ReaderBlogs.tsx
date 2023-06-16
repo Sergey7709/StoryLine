@@ -8,7 +8,7 @@ import { ReaderBlogsModalForm } from "./ReaderBlogsModalForm";
 import { usePostReaderBlogs } from "../../api/usePostReaderBlogs";
 import { ReaderBlogsLayout } from "./ReaderBlogsLayout";
 import { ReaderBlogsButton } from "./ReaderBlogsButton";
-import { Grid } from "@mantine/core";
+import { Grid, Title } from "@mantine/core";
 import { Footer } from "../../components/footer/Footer";
 import {
   setDataReaderBlogs,
@@ -129,10 +129,18 @@ export const ReaderBlogs = () => {
               onAuth={onAuth}
               closeAuth={closeAuth}
             />
-            <Grid.Col>
+
+            <Grid.Col xs={4} sm={6} md={4} xl={4}>
               <ReaderBlogsButton addPostHandler={addPostHandler} />
             </Grid.Col>
-            <Grid.Col>
+
+            <Grid.Col xs={8} sm={6} md={8} xl={8}>
+              <Title pl={"10%"} tt={"uppercase"} color="yellow">
+                Блоги читателей
+              </Title>
+            </Grid.Col>
+
+            <Grid.Col span={12}>
               <ReaderBlogsLayout
                 data={data}
                 open={open}
@@ -141,13 +149,14 @@ export const ReaderBlogs = () => {
               />
             </Grid.Col>
 
-            <Grid.Col>
+            <Grid.Col span={12}>
               <Paginator
                 currentPage={pageReaderBlogs}
                 action={setPageReaderBlogs}
               />
             </Grid.Col>
           </Grid>
+
           <Footer />
         </>
       )}

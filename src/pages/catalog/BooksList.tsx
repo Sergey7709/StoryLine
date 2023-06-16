@@ -6,7 +6,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { BookListLayout } from "./BookListLayout";
 import { usePostFavorites } from "../../api/usePostFavorites";
 import { useGetBookList } from "../../api/useGetBookList";
-import { Item, User } from "../../common/types";
+import { User } from "../../common/types";
 import { setCategorySort } from "../../redux/sortSlice";
 
 export const BooksList = React.memo(() => {

@@ -1,26 +1,25 @@
-import React from "react";
 import {
   Button,
   Container,
   Grid,
+  List,
   Space,
   Text,
   Title,
-  useMantineTheme,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { FcInfo } from "react-icons/fc";
+import { Link } from "react-router-dom";
 
 export const AboutUs = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-
   return (
-    <Container size={isMobile ? "sm" : "md"}>
+    <Container>
       <Title
         order={1}
         align="center"
         variant="gradient"
         pl={10}
-        gradient={{ from: "coral", to: "yellow", deg: 45 }}
+        gradient={{ from: "coral", to: "yellow", deg: 10 }}
+        fw={800}
       >
         МИР КНИГ в Москве
       </Title>
@@ -39,68 +38,73 @@ export const AboutUs = () => {
         У нас вы найдете книги на любой вкус и цвет: от классики до фантастики,
         от детективов до поэзии, от бизнеса до психологии.
       </Text>
+
       <Space h="xl" />
 
-      <Grid columns={isMobile ? 1 : 2}>
-        <div>
-          <Title order={2}>Мы рады предложить вам:</Title>
-          <ul>
-            <li>Большой выбор книг в наличии и под заказ.</li>
-            <li>
+      <Grid>
+        <Grid.Col span={12}>
+          <Title order={2} pb={10}>
+            Мы рады предложить вам:
+          </Title>
+          <List icon={<FcInfo />} spacing="md" size="lg" center>
+            <List.Item>Большой выбор книг в наличии и под заказ.</List.Item>
+            <List.Item>
               Низкие цены: мы работаем напрямую с издательствами и постоянно
               проводим акции и скидки.
-            </li>
-            <li>
+            </List.Item>
+            <List.Item>
               Быструю доставку: мы доставляем по Москве и области в течение 1-2
               дней с помощью курьеров или постаматов.
-            </li>
-            <li>
+            </List.Item>
+            <List.Item>
               Удобный самовывоз: вы можете забрать свой заказ в одном из наших
               пунктов выдачи, расположенных в разных районах Москвы.
-            </li>
-            <li>
+            </List.Item>
+            <List.Item>
               Качественный сервис: мы гарантируем безопасность оплаты, надежную
               упаковку и возврат товара в случае необходимости.
-            </li>
-            <li>
+            </List.Item>
+            <List.Item>
               Интересный контент: яркие истории в блогах от наших поклонников
               книг.
-            </li>
-            <li>
+            </List.Item>
+            <List.Item>
               Автографы: у нас множество книг с автографами авторов и
               иллюстраторов. Это уникальная возможность получить эксклюзивный
               подарок или сувенир.
-            </li>
-            <li>
+            </List.Item>
+            <List.Item>
               Кэшбэк: для постоянных покупателей МИР КНИГ - самое выгодное место
               в мире. За каждую покупку вы получаете баллы, которые можно
               потратить на следующий заказ или обменять на подарочные
               сертификаты.
-            </li>
-            <li>
+            </List.Item>
+            <List.Item>
               Подарки: мы любим баловать наших покупателей приятными сюрпризами.
               При заказе от определенной суммы вы можете получить бесплатную
               книгу, набор открыток, магнит или другой подарок на выбор.
-            </li>
-            <li>
+            </List.Item>
+            <List.Item>
               Конкурсы: мы регулярно проводим конкурсы в наших социальных сетях,
               где вы можете выиграть ценные призы: книги, гаджеты, подписки и
               даже поездки.
-            </li>
-            <li>
+            </List.Item>
+            <List.Item>
               Общение: мы всегда рады общаться с нашими покупателями и слушать
               их пожелания и отзывы. Вы можете связаться с нами по телефону,
               электронной почте или в социальных сетях. Мы будем рады ответить
               на ваши вопросы и помочь вам с выбором книг.
-            </li>
-            {/* <li></li>
-            <li></li> */}
-          </ul>
-        </div>
+            </List.Item>
+          </List>
+        </Grid.Col>
 
-        <Button variant="light" color="blue" size="xl">
-          Перейти к покупкам
-        </Button>
+        <Grid.Col span={12}>
+          <Link to={"/books-list/Все книги"}>
+            <Button variant="light" color="blue" size="xl" w={"100%"}>
+              Перейти к покупкам
+            </Button>
+          </Link>
+        </Grid.Col>
       </Grid>
     </Container>
   );

@@ -12,26 +12,11 @@ import {
 import { AiTwotoneLike } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
-import { Post, PostCreate } from "../../common/types";
+import { Post, PostCreate, ReaderBlogsLayoutType } from "../../common/types";
 import { useStyles } from "./ReaderBlogsStyle";
 import { memo } from "react";
 import { useAppSelector } from "../../redux/redux.hooks";
-
-type ReaderBlogsLayoutType = {
-  data: Post[] | undefined; //???????????????
-  open: () => void;
-  addCurrentPostHadler: (id: number) => void;
-  addLikeHandler: ({
-    description,
-    postImageUrl,
-    title,
-    date,
-    likes,
-    id,
-  }: PostCreate & {
-    id: number;
-  }) => void;
-};
+import { FcCalendar } from "react-icons/fc";
 
 export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
   const { open, addLikeHandler, addCurrentPostHadler } = props;
@@ -55,9 +40,17 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
   console.log("render layout");
 
   return (
-    <Grid>
+    <Grid className={classes.grid} ml={"3%"} justify="space-between">
       {readerBlogs?.map((el: Post) => (
-        <Grid.Col span={3} key={el.id}>
+        <Grid.Col
+          xs={12}
+          sm={6}
+          md={4}
+          lg={4}
+          xl={3}
+          className={classes.gridCol}
+          key={el.id}
+        >
           <Card
             mt={10}
             shadow="sm"
@@ -94,11 +87,11 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
             </Text>
 
             <Card.Section>
-              <Group position="left" spacing={5} ml={15} mt={"md"}>
+              <Group position="left" spacing={"2%"} ml={15} mt={5}>
                 <Text color="violet"> Автор: {el.authorName} </Text>
 
                 <ActionIcon
-                  radius={"xl"}
+                  radius={"100%"}
                   size={40}
                   color={el.likes > 0 ? "green" : "gray"}
                   variant="subtle"
@@ -138,8 +131,16 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
                   </Tooltip>
                 )}
 
-                <Badge color="cyan" variant="light" ml={"25%"} radius={0}>
-                  {el.date}
+                <Badge
+                  className={classes.date}
+                  variant={"gradient"}
+                  px={2}
+                  radius={0}
+                >
+                  <Group spacing={2}>
+                    <FcCalendar size={20} />
+                    {el.date}
+                  </Group>
                 </Badge>
               </Group>
             </Card.Section>

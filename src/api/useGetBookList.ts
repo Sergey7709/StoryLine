@@ -20,11 +20,12 @@ export const useGetBookList = () => {
 
   const previousMaxDiscount = useRef(0); //???
 
-  console.log(maxDiscount);
+  // console.log(maxDiscount);
 
   const priceSort =
     Number(minPrice) > 0 && Number(maxPrice) >= Number(minPrice)
       ? `&priceFrom=${Number(minPrice)}&priceTo=${
+          // Number(maxPrice) + Number(maxDiscount)
           Number(maxPrice) + Number(maxDiscount)
         }`
       : "";

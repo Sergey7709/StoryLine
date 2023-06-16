@@ -36,9 +36,8 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
         </Menu.Target>
         <Menu.Dropdown>
           <Group>
-            {/* <Menu.Target> */}
             <Accordion variant="contained" transitionDuration={400}>
-              {menuSortData.map((menuItem, index) => (
+              {menuSortData.map((menuItem) => (
                 <Accordion.Item key={menuItem.key} value={menuItem.title}>
                   <Accordion.Control>
                     <Text
@@ -79,7 +78,6 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                 </Accordion.Item>
               ))}
             </Accordion>
-            {/* </Menu.Target> */}
           </Group>
         </Menu.Dropdown>
       </Menu>

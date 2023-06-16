@@ -223,3 +223,19 @@ export type HeaderButtonsProps = {
     dropdown: string;
   };
 };
+
+export type ReaderBlogsLayoutType = {
+  data: Post[] | undefined;
+  open: () => void;
+  addCurrentPostHadler: (id: number) => void;
+  addLikeHandler: ({
+    description,
+    postImageUrl,
+    title,
+    date,
+    likes,
+    id,
+  }: PostCreate & {
+    id: number;
+  }) => void;
+};

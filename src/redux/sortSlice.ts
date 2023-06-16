@@ -49,7 +49,7 @@ const sortSlice = createSlice({
     },
     setPaginationPage: (state, action: PayloadAction<number>) => {
       state.paginationPage = action.payload;
-    }, //!
+    },
   },
 });
 
@@ -61,6 +61,6 @@ export const {
   setReset,
   setMinPrice,
   setMaxPrice,
-  setPaginationPage, //!
+  setPaginationPage,
 } = sortSlice.actions;
 export default sortSlice.reducer;

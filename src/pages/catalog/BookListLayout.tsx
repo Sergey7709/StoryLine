@@ -51,7 +51,7 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
             </Modal>
             <Grid.Col span={12}>
               <Group ml={"2%"} mb={5}>
-                {!isLoading && param !== categoryNewBooks ? (
+                {isSuccess && param !== categoryNewBooks ? (
                   <>
                     <GoBackButton
                       variant={"gradient"}
@@ -66,7 +66,7 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
                     {!searchBooksValue && <PriceRange />}
                   </>
                 ) : (
-                  !isLoading && (
+                  isSuccess && (
                     <GoBackButton
                       variant={"gradient"}
                       size={"xs"}
@@ -89,7 +89,7 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
                   </Grid.Col>
                 </Grid>
               </Group>
-              {!isLoading && (
+              {isSuccess && (
                 <Divider color={"coral"} size="xs" variant="solid" />
               )}
             </Grid.Col>
