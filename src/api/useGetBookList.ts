@@ -37,12 +37,13 @@ export const useGetBookList = () => {
   const requestLink =
     param === categoryNewBooks
       ? categoryNewBooks
-      : `${param}${categorySort}${priceSort}`;
+      : // : `${param}${categorySort}${priceSort}${pagination}`;
+        `${param}${categorySort}${priceSort}${pagination}`;
 
   const requestBookList =
     searchBooksValue.length > 0 ? searchBooksValue : requestLink;
 
-  const { data, isLoading, isLoadingError, isSuccess } =
+  const { data, isLoading, isLoadingError, isSuccess, refetch } =
     useQuery<ItemsResponse>(["item", requestBookList], () =>
       fetchItem(requestBookList)
     );
@@ -62,7 +63,7 @@ export const useGetBookList = () => {
         previousMaxDiscount.current = newMaxDiscount;
       }
     }
-  }, [isSuccess, data?.items]);
+  }, [isSuccess, data?.items, dispatch]);
 
   return {
     data,
