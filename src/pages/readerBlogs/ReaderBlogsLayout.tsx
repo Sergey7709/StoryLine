@@ -12,7 +12,7 @@ import {
 import { AiTwotoneLike } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
-import { Post, PostCreate, ReaderBlogsLayoutType } from "../../common/types";
+import { Post, ReaderBlogsLayoutType } from "../../common/types";
 import { useStyles } from "./ReaderBlogsStyle";
 import { memo } from "react";
 import { useAppSelector } from "../../redux/redux.hooks";

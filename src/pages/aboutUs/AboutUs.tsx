@@ -1,4 +1,5 @@
 import {
+  Image,
   Button,
   Container,
   Grid,
@@ -18,12 +19,20 @@ export const AboutUs = () => {
         align="center"
         variant="gradient"
         pl={10}
-        gradient={{ from: "coral", to: "yellow", deg: 10 }}
-        fw={800}
+        gradient={{ from: "coral", to: "orange", deg: 10 }}
+        fw={1200}
+        my={"xl"}
+        ff={"cursive"}
       >
         МИР КНИГ в Москве
       </Title>
-      <Space h="xl" />
+
+      <Image
+        height={500}
+        src="https://th.bing.com/th/id/OIG.9jqYqengVvwcbnNpADea?pid=ImgGn"
+        mb={"xl"}
+      />
+
       <Text size="lg">
         Добро пожаловать в МИР КНИГ - особенный магазин от книжных экспертов.
         Здесь вы встретите богатый выбор книг разных жанров и направлений, а
@@ -46,6 +55,7 @@ export const AboutUs = () => {
           <Title order={2} pb={10}>
             Мы рады предложить вам:
           </Title>
+
           <List icon={<FcInfo />} spacing="md" size="lg" center>
             <List.Item>Большой выбор книг в наличии и под заказ.</List.Item>
             <List.Item>
