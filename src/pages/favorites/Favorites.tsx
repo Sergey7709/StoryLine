@@ -19,7 +19,7 @@ export const Favorites = React.memo(() => {
 
   useEffect(() => {
     getCurrentUser();
-  }, [getCurrentUser]);
+  }, []);
 
   const { mutateAsync } = useMutation(
     (param: string) => {
