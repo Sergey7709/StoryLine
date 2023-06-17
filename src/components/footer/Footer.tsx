@@ -1,4 +1,4 @@
-import { Container, Group, UnstyledButton } from "@mantine/core";
+import { Container, Grid, Group, UnstyledButton } from "@mantine/core";
 
 import { NavLink } from "react-router-dom";
 import { useStyles } from "./footerStyles";
@@ -15,10 +15,14 @@ export const Footer = () => {
 
   return (
     <div className={classes.footer}>
-      <Container className={classes.inner}>
-        © 2023 World of books. All rights reserved.
-        <Group className={classes.links}>{items}</Group>
-      </Container>
+      <Grid className={classes.inner} bg={"gray"}>
+        <Grid.Col span={4}>
+          © 2023 World of books. All rights reserved.
+        </Grid.Col>
+        <Grid.Col span={3} offset={4}>
+          <Group className={classes.links}>{items}</Group>
+        </Grid.Col>
+      </Grid>
     </div>
   );
 };

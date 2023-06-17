@@ -85,37 +85,41 @@ export const Favorites = React.memo(() => {
 
   return (
     <>
-      {!user && <>Зарегестрируйтесь, что бы добавить в избранное</>}
-      {user && (
-        <>
-          <Flex justify={"center"} align={"center"}>
-            <Title
-              pb={"sm"}
-              variant="gradient"
-              gradient={{ from: "indigo", to: "green", deg: 45 }}
-              order={1}
-            >
-              МОИ ИЗБРАННЫЕ КНИГИ
-            </Title>
-          </Flex>
-          <Divider size="xs" variant="solid" color="gray" />
-          <Space h="md" />
-          {favoriteItems.length ? (
-            <Grid pl={5}>
-              {favoriteItems.map((favoriteBook) => (
-                <SingleBookList
-                  key={favoriteBook.id}
-                  book={favoriteBook}
-                  favorite={true}
-                  favoritesChange={favoritesChange}
-                />
-              ))}
-            </Grid>
-          ) : (
-            <EmptyData text="У вас нет избранных товаров" />
-          )}
-        </>
-      )}
+      <Container h={"100%"} size={"xl"}>
+        {!user && <>Зарегестрируйтесь, что бы добавить в избранное</>}
+        {user && (
+          <>
+            <Flex justify={"center"} align={"center"}>
+              <Title
+                pb={"sm"}
+                variant="gradient"
+                gradient={{ from: "indigo", to: "green", deg: 45 }}
+                order={1}
+              >
+                МОИ ИЗБРАННЫЕ КНИГИ
+              </Title>
+            </Flex>
+            <Divider size="xs" variant="solid" color="gray" />
+            <Space h="md" />
+            {favoriteItems.length ? (
+              <Grid pl={5}>
+                {favoriteItems.map((favoriteBook) => (
+                  <SingleBookList
+                    key={favoriteBook.id}
+                    book={favoriteBook}
+                    favorite={true}
+                    favoritesChange={favoritesChange}
+                  />
+                ))}
+              </Grid>
+            ) : (
+              <EmptyData text="У вас нет избранных товаров" />
+            )}
+          </>
+        )}
+      </Container>
+
+      <Footer />
     </>
   );
 });

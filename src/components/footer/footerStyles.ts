@@ -6,8 +6,6 @@ export const useStyles = createStyles((theme) => ({
     borderTop: `${rem(1)} solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
-    // background: "lightGray",
-    // width: "100%",
   },
 
   inner: {
