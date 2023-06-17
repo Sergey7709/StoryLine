@@ -7,32 +7,32 @@ import {
   Space,
   Text,
   Title,
+  Divider,
 } from "@mantine/core";
 import { FcInfo } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { Carusel } from "../../components/carusel/Carusel";
 
 export const AboutUs = () => {
   return (
     <Container>
+      <Carusel />
+      <Divider my="sm" color="orange" />
       <Title
         order={1}
         align="center"
         variant="gradient"
         pl={10}
         gradient={{ from: "coral", to: "orange", deg: 10 }}
-        fw={1200}
+        fw={"bolder"}
         my={"xl"}
-        ff={"cursive"}
+        ff={"monospace"}
+        fz={50}
       >
         МИР КНИГ в Москве
       </Title>
-
-      <Image
-        height={500}
-        src="https://th.bing.com/th/id/OIG.9jqYqengVvwcbnNpADea?pid=ImgGn"
-        mb={"xl"}
-      />
-
+      {/* <Space h="lg" /> */}
+      <Divider my="sm" color="orange" />
       <Text size="lg">
         Добро пожаловать в МИР КНИГ - особенный магазин от книжных экспертов.
         Здесь вы встретите богатый выбор книг разных жанров и направлений, а

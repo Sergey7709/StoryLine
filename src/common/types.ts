@@ -129,6 +129,7 @@ export type ActiveCartProps = {
   cartItems: CartItem[];
   totalCount: number;
   totalPrice: number;
+  isLoading: boolean;
 };
 
 export type CartBarProps = {
@@ -238,4 +239,19 @@ export type ReaderBlogsLayoutType = {
   }: PostCreate & {
     id: number;
   }) => void;
+};
+
+export type HeaderToolBarProps = {
+  classes: {
+    header: string;
+    inner: string;
+    links: string;
+    burger: string;
+    link: string;
+    linkLabel: string;
+    search_default: string;
+    search_alt: string;
+    dropdown: string;
+    image: string;
+  };
 };

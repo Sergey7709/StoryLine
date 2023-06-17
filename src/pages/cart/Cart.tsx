@@ -39,7 +39,7 @@ export const Cart = () => {
   };
 
   const orderMutation = usePostOrder(BASE_URL, OrderData, user);
-  const { mutateAsync } = orderMutation;
+  const { mutateAsync, isLoading } = orderMutation;
 
   const handleDeleteCartItem = (bookID: number) => {
     dispatch(deleteCartItems(bookID));
@@ -74,6 +74,7 @@ export const Cart = () => {
             cartItems={cart.cartItems}
             totalCount={cart.totalCount}
             totalPrice={cart.totalPrice}
+            isLoading={isLoading}
           />
         )}
       </Container>

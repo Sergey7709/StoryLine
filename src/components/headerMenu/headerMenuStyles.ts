@@ -80,6 +80,14 @@ export const useStyles = createStyles((theme) => ({
     },
   },
 
+  image: {
+    "&:hover": {
+      transform: "scale(1.05)",
+      boxShadow: theme.shadows.md,
+    },
+    transition: "transform 150ms ease, box-shadow 150ms ease",
+  },
+
   dropdown: {
     position: "absolute",
     top: HEADER_HEIGHT,

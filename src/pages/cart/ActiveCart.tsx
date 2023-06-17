@@ -25,6 +25,7 @@ export const ActiveCart: FC<ActiveCartProps> = (props) => {
     cartItems,
     totalCount,
     totalPrice,
+    isLoading,
   } = props;
   return (
     <Grid pl={"3%"}>
@@ -41,7 +42,12 @@ export const ActiveCart: FC<ActiveCartProps> = (props) => {
             text={"ВЕРНУТЬСЯ"}
           />
 
-          <Button size="xs" color="teal" onClick={handleAddOrder}>
+          <Button
+            loading={isLoading}
+            size="xs"
+            color="teal"
+            onClick={handleAddOrder}
+          >
             <Text>ОФОРМИТЬ ЗАКАЗ</Text>
           </Button>
 
