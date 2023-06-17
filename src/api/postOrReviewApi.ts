@@ -3,6 +3,7 @@ import { BASE_URL } from "../common/constants";
 import { PostCreate, PostUpdate, ReviewUpdate } from "../common/types";
 
 export type FetchType = "post" | "get" | "put" | "delete";
+
 export const fetchHandler = async (
   type: FetchType,
   params: string,

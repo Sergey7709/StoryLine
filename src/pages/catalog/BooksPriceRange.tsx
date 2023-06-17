@@ -29,7 +29,7 @@ const PriceRange = () => {
       dispatch(setReset(false));
     } else if (Number(min) > 0 && Number(max) >= Number(min)) {
       min !== "" && dispatch(setMinPrice(debouncedMin));
-      max !== "" && dispatch(setMaxPrice(debouncedMax)); //!!!
+      max !== "" && dispatch(setMaxPrice(debouncedMax));
     }
   }, [debouncedMin, debouncedMax, reset]);
 

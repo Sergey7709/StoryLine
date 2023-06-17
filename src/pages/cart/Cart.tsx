@@ -9,6 +9,7 @@ import { Container, Modal } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { Authorization } from "../authorization/Authorization";
+import { Footer } from "../../components/footer/Footer";
 
 export const Cart = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -78,6 +79,7 @@ export const Cart = () => {
           />
         )}
       </Container>
+      <Footer />
     </>
   );
 };

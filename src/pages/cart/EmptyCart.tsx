@@ -1,8 +1,19 @@
 import { Button, Grid, Title, Text, Image, Center } from "@mantine/core";
-import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/redux.hooks";
+import { setPaginationPage } from "../../redux/sortSlice";
 
 export const EmptyCart = () => {
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const pathHandler = () => {
+    dispatch(setPaginationPage(1));
+
+    navigate("/books-list/Все книги");
+  };
+
   return (
     <Grid justify="center" align="center">
       <Grid.Col span={12}>
@@ -20,11 +31,15 @@ export const EmptyCart = () => {
       </Grid.Col>
       <Grid.Col pt={20} span={12}>
         <Center>
-          <Link to={"/books-list/Все книги"}>
-            <Button variant="light" color="blue" size="xl" maw={500}>
-              <Text>Перейти к покупкам</Text>
-            </Button>
-          </Link>
+          <Button
+            variant="light"
+            color="blue"
+            size="xl"
+            maw={500}
+            onClick={pathHandler}
+          >
+            <Text>Перейти к покупкам</Text>
+          </Button>
         </Center>
       </Grid.Col>
     </Grid>

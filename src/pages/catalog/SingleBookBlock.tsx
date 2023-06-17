@@ -1,16 +1,10 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { Item } from "../../common/types";
+import { SingleBookListProps } from "../../common/types";
 import { useStyles } from "./BooksListStyles";
 import { useAppDispatch } from "../../redux/redux.hooks";
 import { addCartItems } from "../../redux/cartSlice";
-
 import { SingleBookBlockLayout } from "./SingleBookBlockLayout";
 
-type SingleBookListProps = {
-  book: Item;
-  favorite: boolean;
-  favoritesChange: (bookId: number, favorite: boolean) => void;
-};
 const SingleBookBlock: FC<SingleBookListProps> = React.memo(
   ({ book, favorite, favoritesChange }) => {
     const [favoriteState, setFavoriteState] = useState(favorite);
@@ -23,7 +17,6 @@ const SingleBookBlock: FC<SingleBookListProps> = React.memo(
     }, [book.id, favoriteState, favoritesChange]);
 
     const handleAddCartItem = () => {
-      // console.log("Добавлен товар в корзину", book);
       dispatch(addCartItems(book));
     };
 

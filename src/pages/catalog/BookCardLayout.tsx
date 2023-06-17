@@ -12,7 +12,6 @@ import {
   Text,
   Container,
 } from "@mantine/core";
-import { Link, useNavigate } from "react-router-dom";
 import { CartCount } from "../../components/cartCount/CartCount";
 import EmptyData from "../userAccount/assetsUserAccount/EmptyData";
 import ReviewsList from "./ReviewsList";

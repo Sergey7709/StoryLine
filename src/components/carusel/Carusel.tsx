@@ -12,7 +12,7 @@ const IMAGES_CARUSEL: string[] = [
 ];
 
 export const Carusel = () => {
-  const autoplay = useRef(Autoplay({ delay: 3000 }));
+  const autoplay = useRef(Autoplay({ delay: 2000 }));
   const slides = IMAGES_CARUSEL.map((url) => (
     <Carousel.Slide key={url}>
       <Image src={url} />
@@ -24,7 +24,7 @@ export const Carusel = () => {
       maw={700}
       mx="auto"
       withIndicators
-      height={700}
+      height={600}
       dragFree
       align="start"
       loop

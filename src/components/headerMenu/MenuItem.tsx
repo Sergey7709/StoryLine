@@ -13,7 +13,9 @@ import {
 
 export const MenuItem = () => {
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
+
   const onClickToItem = (link: string, param: string) => {
     dispatch(setSearchBooksValue(""));
     dispatch(setReset(true));

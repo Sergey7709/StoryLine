@@ -4,12 +4,13 @@ import { useMutation } from "react-query";
 import { BASE_URL } from "../../common/constants";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import { useAppSelector } from "../../redux/redux.hooks";
-import { Divider, Flex, Grid, Space } from "@mantine/core";
+import { Container, Divider, Flex, Grid, Space } from "@mantine/core";
 import SingleBookList from "../catalog/SingleBookBlock";
 import EmptyData from "../userAccount/assetsUserAccount/EmptyData";
 import { Title } from "@mantine/core";
 import { useCallback, useEffect, useMemo } from "react";
 import React from "react";
+import { Footer } from "../../components/footer/Footer";
 
 export const Favorites = React.memo(() => {
   const user = useAppSelector((state) => state.auth.user);
@@ -18,7 +19,7 @@ export const Favorites = React.memo(() => {
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+  }, [getCurrentUser]);
 
   const { mutateAsync } = useMutation(
     (param: string) => {

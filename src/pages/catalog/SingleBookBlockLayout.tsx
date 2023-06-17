@@ -13,31 +13,13 @@ import {
   Text,
 } from "@mantine/core";
 import { GiBookmarklet } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PricesDiscount from "./UI/PricesDiscount";
-import { Item, Review } from "../../common/types";
-
-type SingleBookBlockLayoutProps = {
-  id: number;
-  classes: {
-    card: string;
-    gridCol: string;
-    discount: string;
-    action_favorite: string;
-    favorite_on: string;
-    favorite_off: string;
-    buy: string;
-  };
-  book: Item;
-  discount: number;
-  price: number;
-  reviews: Review[];
-  favoriteState: boolean;
-  handleFavoritesChange: () => void;
-  handleAddCartItem: () => void;
-};
+import { SingleBookBlockLayoutProps } from "../../common/types";
 
 export const SingleBookBlockLayout = (props: SingleBookBlockLayoutProps) => {
+  const { link } = useParams();
+
   const {
     id,
     classes,
@@ -67,9 +49,26 @@ export const SingleBookBlockLayout = (props: SingleBookBlockLayoutProps) => {
               src={book.itemImageUrl}
               alt="book img"
             />
+            {link === "Новинки" && (
+              <Badge
+                className={classes.newBooks}
+                color="green"
+                variant="filled"
+                radius={0}
+                pl={20}
+              >
+                НОВИНКА
+              </Badge>
+            )}
           </Link>
           {discount > 0 && (
-            <Badge className={classes.discount} color="orange" variant="filled">
+            <Badge
+              className={classes.discount}
+              color="red"
+              variant="filled"
+              radius={0}
+              px={15}
+            >
               <Text fz={"md"} fw={500}>{`-${
                 ((price - discount) / price) * 100
               }%`}</Text>

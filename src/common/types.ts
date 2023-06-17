@@ -255,3 +255,34 @@ export type HeaderToolBarProps = {
     image: string;
   };
 };
+
+export type SingleBookBlockLayoutProps = {
+  id: number;
+  classes: {
+    card: string;
+    gridCol: string;
+    discount: string;
+    action_favorite: string;
+    favorite_on: string;
+    favorite_off: string;
+    buy: string;
+    newBooks: string;
+  };
+  book: Item;
+  discount: number;
+  price: number;
+  reviews: Review[];
+  favoriteState: boolean;
+  handleFavoritesChange: () => void;
+  handleAddCartItem: () => void;
+};
+
+export type SingleBookListProps = {
+  book: Item;
+  favorite: boolean;
+  favoritesChange: (bookId: number, favorite: boolean) => void;
+};
+
+export type ReviewsListProps = {
+  review: Review;
+};

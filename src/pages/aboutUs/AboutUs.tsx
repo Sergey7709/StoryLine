@@ -1,5 +1,4 @@
 import {
-  Image,
   Button,
   Container,
   Grid,
@@ -9,40 +8,62 @@ import {
   Title,
   Divider,
 } from "@mantine/core";
-import { FcInfo } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { FcOk } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 import { Carusel } from "../../components/carusel/Carusel";
+import { setPaginationPage } from "../../redux/sortSlice";
+import { useAppDispatch } from "../../redux/redux.hooks";
+import { Footer } from "../../components/footer/Footer";
 
 export const AboutUs = () => {
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  const pathHandler = () => {
+    dispatch(setPaginationPage(1));
+
+    navigate("/books-list/Все книги");
+  };
+
   return (
     <Container>
       <Carusel />
+
+      <Space h="xl" />
+
       <Divider my="sm" color="orange" />
+
       <Title
         order={1}
         align="center"
         variant="gradient"
-        pl={10}
         gradient={{ from: "coral", to: "orange", deg: 10 }}
         fw={"bolder"}
-        my={"xl"}
         ff={"monospace"}
         fz={50}
+        my={"xl"}
+        pl={10}
       >
         МИР КНИГ в Москве
       </Title>
-      {/* <Space h="lg" /> */}
+
       <Divider my="sm" color="orange" />
-      <Text size="lg">
+
+      <Space h="xl" />
+
+      <Text mt={20} size="lg">
         Добро пожаловать в МИР КНИГ - особенный магазин от книжных экспертов.
         Здесь вы встретите богатый выбор книг разных жанров и направлений, а
         также получите возможность приобрести их по самым привлекательным акциям
         и скидкам.
       </Text>
+
       <Text size="lg">
         Наш магазин родился в 2010 году и с того времени продал столько книг,
         что ими можно было бы выложить дорогу от Москвы до Петербурга. 😉
       </Text>
+
       <Text size="lg">
         У нас вы найдете книги на любой вкус и цвет: от классики до фантастики,
         от детективов до поэзии, от бизнеса до психологии.
@@ -56,7 +77,7 @@ export const AboutUs = () => {
             Мы рады предложить вам:
           </Title>
 
-          <List icon={<FcInfo />} spacing="md" size="lg" center>
+          <List icon={<FcOk />} spacing="md" size="lg" center>
             <List.Item>Большой выбор книг в наличии и под заказ.</List.Item>
             <List.Item>
               Низкие цены: мы работаем напрямую с издательствами и постоянно
@@ -109,13 +130,18 @@ export const AboutUs = () => {
         </Grid.Col>
 
         <Grid.Col span={12}>
-          <Link to={"/books-list/Все книги"}>
-            <Button variant="light" color="blue" size="xl" w={"100%"}>
-              Перейти к покупкам
-            </Button>
-          </Link>
+          <Button
+            variant="light"
+            color="blue"
+            size="xl"
+            w={"100%"}
+            onClick={pathHandler}
+          >
+            Перейти к покупкам
+          </Button>
         </Grid.Col>
       </Grid>
+      <Footer />
     </Container>
   );
 };

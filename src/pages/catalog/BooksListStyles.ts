@@ -85,4 +85,11 @@ export const useStyles = createStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+
+  newBooks: {
+    position: "absolute",
+    top: "40px",
+    left: rem(10),
+    pointerEvents: "none",
+  },
 }));
