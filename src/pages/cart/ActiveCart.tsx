@@ -10,6 +10,7 @@ import {
   Card,
   Text,
   Image,
+  Paper,
 } from "@mantine/core";
 import { FC } from "react";
 import { Link, NavLink } from "react-router-dom";
@@ -30,37 +31,47 @@ export const ActiveCart: FC<ActiveCartProps> = (props) => {
   return (
     <Grid pl={"3%"}>
       <Grid.Col span={12}>
-        <Group spacing="xs">
-          <Title order={1} pb={10}>
-            Корзина товаров
-          </Title>
+        <Paper withBorder px={20} py={20} shadow="xl">
+          <Group spacing="xs">
+            <Title order={1} pb={10}>
+              Корзина товаров
+            </Title>
 
-          <GoBackButton
-            variant={"gradient"}
-            size={"xs"}
-            gradient={{ from: "yellow", to: "orange" }}
-            text={"ВЕРНУТЬСЯ"}
-          />
+            <GoBackButton
+              variant={"gradient"}
+              size={"xs"}
+              gradient={{ from: "yellow", to: "orange" }}
+              text={"ВЕРНУТЬСЯ"}
+            />
 
-          <Button
-            loading={isLoading}
-            size="xs"
-            color="teal"
-            onClick={handleAddOrder}
-          >
-            <Text>ОФОРМИТЬ ЗАКАЗ</Text>
-          </Button>
+            <Button
+              loading={isLoading}
+              size="xs"
+              color="teal"
+              onClick={handleAddOrder}
+            >
+              <Text>ОФОРМИТЬ ЗАКАЗ</Text>
+            </Button>
 
-          <Button
-            size="xs"
-            color="red"
-            onClick={() => {
-              handleDeleteCartItem(0);
-            }}
-          >
-            <Text tt="uppercase"> очистить всю корзину</Text>
-          </Button>
-        </Group>
+            <Button
+              size="xs"
+              color="red"
+              onClick={() => {
+                handleDeleteCartItem(0);
+              }}
+            >
+              <Text tt="uppercase"> очистить всю корзину</Text>
+            </Button>
+            <Badge p={14} size="lg" radius="xs" variant="outline">
+              <Title order={5}>{`Итого кол-во: ${totalCount} шт.`}</Title>
+            </Badge>
+            <Badge p={14} size="lg" radius="xs" variant="outline">
+              <Title
+                order={5}
+              >{`Итого сумма заказа: ${totalPrice} руб. `}</Title>
+            </Badge>
+          </Group>
+        </Paper>
         <Space h="xl" />
       </Grid.Col>
 
@@ -138,12 +149,12 @@ export const ActiveCart: FC<ActiveCartProps> = (props) => {
           </Card>
         </Grid.Col>
       ))}
-      <Grid.Col span={12} py={0}>
+      {/* <Grid.Col span={12} py={0}>
         <Title order={3}>{`Итого кол-во: ${totalCount} шт.`}</Title>
       </Grid.Col>
       <Grid.Col span={12} py={0}>
         <Title order={3}>{`Итого сумма заказа: ${totalPrice} руб. `}</Title>
-      </Grid.Col>
+      </Grid.Col> */}
     </Grid>
   );
 };

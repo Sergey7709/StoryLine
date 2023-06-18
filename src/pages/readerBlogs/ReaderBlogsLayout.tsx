@@ -40,7 +40,7 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
   console.log("render layout");
 
   return (
-    <Grid className={classes.grid} ml={"3%"} justify="space-between">
+    <Grid className={classes.grid} ml={"3%"} justify="flex-start">
       {readerBlogs?.map((el: Post) => (
         <Grid.Col
           xs={12}

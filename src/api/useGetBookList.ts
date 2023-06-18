@@ -39,7 +39,7 @@ export const useGetBookList = () => {
     param === categoryNewBooks
       ? categoryNewBooks
       : // : `${param}${categorySort}${priceSort}${pagination}`;
-        `${param}${categorySort}${priceSort}`;
+        `${param}${categorySort}${priceSort}${pagination}`;
 
   const requestBookList =
     searchBooksValue.length > 0 ? searchBooksValue : requestLink;

@@ -55,7 +55,9 @@ export const SingleBookBlockLayout = (props: SingleBookBlockLayoutProps) => {
                 color="green"
                 variant="filled"
                 radius={0}
-                pl={20}
+                p={10}
+                w={130}
+                h={25}
               >
                 НОВИНКА
               </Badge>
@@ -67,7 +69,9 @@ export const SingleBookBlockLayout = (props: SingleBookBlockLayoutProps) => {
               color="red"
               variant="filled"
               radius={0}
-              px={15}
+              p={5}
+              w={100}
+              h={25}
             >
               <Text fz={"md"} fw={500}>{`-${
                 ((price - discount) / price) * 100
