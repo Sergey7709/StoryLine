@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
-    "@mantine/carousel": "^6.0.8",
+    "@mantine/carousel": "^6.0.13",
     "@mantine/core": "^6.0.8",
     "@mantine/dates": "^6.0.8",
     "@mantine/dropzone": "^6.0.8",

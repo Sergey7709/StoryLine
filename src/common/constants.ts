@@ -175,3 +175,33 @@ export const BLOCK_DATA_STOCKS = [
     param: "all?category=Детская литература",
   },
 ];
+
+export const IMAGES_CARUSEL_ABOUT_US = [
+  {
+    id: "a",
+    url: "https://th.bing.com/th/id/OIG.Cg5BCUCNTG8mFaNnTV6E?pid=ImgGn",
+  },
+  {
+    id: "b",
+    url: "https://th.bing.com/th/id/OIG.9jqYqengVvwcbnNpADea?pid=ImgGn",
+  },
+  {
+    id: "c",
+    url: "https://th.bing.com/th/id/OIG.OQY65Dcc2I8nM9F.q7Tz?pid=ImgGn",
+  },
+  {
+    id: "d",
+    url: "https://th.bing.com/th/id/OIG.WTO5CXQjC8yjv8PRGp5i?pid=ImgGn",
+  },
+  {
+    id: "e",
+    url: "https://th.bing.com/th/id/OIG.Pylbn1FZneukN416y69y?pid=ImgGn",
+  },
+];
+
+export const IMAGES_CARUSEL_HOME = [
+  { id: 148, url: "https://i.ibb.co/qD2Dswr/1.jpg" },
+  { id: 150, url: "https://i.ibb.co/jvKZgjd/3.jpg" },
+  { id: 151, url: "https://i.ibb.co/zmMpBHj/4.jpg" },
+  { id: 149, url: "https://i.ibb.co/nkxPkSx/2.jpg" },
+];

@@ -5,9 +5,14 @@ import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 type PaginatorProps = {
   currentPage: number;
   action: ActionCreatorWithPayload<number, string>;
+  totalPage: number;
 };
 
-export const Paginator = ({ currentPage, action }: PaginatorProps) => {
+export const Paginator = ({
+  currentPage,
+  action,
+  totalPage,
+}: PaginatorProps) => {
   const dispatch = useDispatch();
 
   // console.log(currentPage);
@@ -18,7 +23,7 @@ export const Paginator = ({ currentPage, action }: PaginatorProps) => {
       mt={20}
       value={currentPage}
       onChange={setPageHadler}
-      total={10}
+      total={totalPage}
     />
   );
 };

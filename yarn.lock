@@ -1638,12 +1638,12 @@
   resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@mantine/carousel@^6.0.8":
-  version "6.0.8"
-  resolved "https://registry.npmjs.org/@mantine/carousel/-/carousel-6.0.8.tgz"
-  integrity sha512-l8sskLghyv5VWLXECmV4yv2JmbdPYrR4tnbXDYNtYMyQQg3RRbtUVJ/p42qmjmfqduAq+t8Ba2ZFPHgQSfWcgw==
+"@mantine/carousel@^6.0.13":
+  version "6.0.13"
+  resolved "https://registry.yarnpkg.com/@mantine/carousel/-/carousel-6.0.13.tgz#e1a47835ca10203aa5a1e76118867e1a27ba70c5"
+  integrity sha512-eFrhcfnB3j2nqkEorciy/2BGVtNnEyWzcSgaGirxQE+M5zucabu9FC9Aeeeaf+XhYWgewOx1+lbu29hJIagDtw==
   dependencies:
-    "@mantine/utils" "6.0.8"
+    "@mantine/utils" "6.0.13"
 
 "@mantine/core@^6.0.8":
   version "6.0.8"
@@ -1743,6 +1743,11 @@
   integrity sha512-BlHiIGIMt6vMY9Vwldlz3VBToRKnVEaVjnAKzD2a6oK3wr92r875qdVbolZRV9hdlBslVyx6ClHt2NL3oCnLzw==
   dependencies:
     "@mantine/utils" "6.0.8"
+
+"@mantine/utils@6.0.13":
+  version "6.0.13"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-6.0.13.tgz#a7adc128a2e7c07031c7221c1533800d0c80279a"
+  integrity sha512-iqIU9wurqAeccVbWjM0yr1JGne5VP+ob55M03QAXOEN4+ck93VDTjCkZJR2RFhDcs5q0twQFoOmU/gULR8aKIA==
 
 "@mantine/utils@6.0.8":
   version "6.0.8"

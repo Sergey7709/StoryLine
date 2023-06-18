@@ -153,6 +153,7 @@ export const ReaderBlogs = () => {
               <Paginator
                 currentPage={pageReaderBlogs}
                 action={setPageReaderBlogs}
+                totalPage={4} ////!!!!!!!!!
               />
             </Grid.Col>
           </Grid>

@@ -14,6 +14,7 @@ import { Carusel } from "../../components/carusel/Carusel";
 import { setPaginationPage } from "../../redux/sortSlice";
 import { useAppDispatch } from "../../redux/redux.hooks";
 import { Footer } from "../../components/footer/Footer";
+import { IMAGES_CARUSEL_ABOUT_US } from "../../common/constants";
 
 export const AboutUs = () => {
   const navigate = useNavigate();
@@ -29,7 +30,11 @@ export const AboutUs = () => {
   return (
     <>
       <Container>
-        <Carusel />
+        <Carusel
+          imageUrl={IMAGES_CARUSEL_ABOUT_US}
+          maxWidth={700}
+          height={600}
+        />
 
         <Space h="xl" />
 

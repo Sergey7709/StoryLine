@@ -34,7 +34,7 @@ export const BookstoreServices = () => {
           </Text>
           <Text size="md" style={{ marginBottom: "1rem" }}>
             Стоимость доставки начинается от {300} рублей, срок доставки
-            {"4-5 дней"}
+            {" 4-5 дней"}
           </Text>
 
           <Text size="lg" weight={500}>

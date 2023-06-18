@@ -99,7 +99,11 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
               </Grid>
             </Grid.Col>
           </Grid>
-          <Paginator currentPage={paginationPage} action={setPaginationPage} />
+          <Paginator
+            currentPage={paginationPage}
+            action={setPaginationPage}
+            totalPage={Math.ceil((data?.items?.length ?? 0) / 18)} //!!!!!!!!!!
+          />
           <Footer />
         </>
       )}
