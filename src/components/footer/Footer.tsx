@@ -18,12 +18,12 @@ export const Footer = () => {
   return (
     <div className={classes.footer}>
       <Grid className={classes.inner}>
-        <Grid.Col span={4}>
+        <Grid.Col span={8}>
           <Text fz={"lg"} fw={"bold"} color="cyan.8">
             © 2023 World of books. All rights reserved.
           </Text>
         </Grid.Col>
-        <Grid.Col span={4} offset={3}>
+        <Grid.Col span={4}>
           <Group color="red" pr={"lg"} className={classes.links}>
             {items}
           </Group>
