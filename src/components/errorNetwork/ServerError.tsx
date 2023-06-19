@@ -16,7 +16,7 @@ export const ServerError = () => {
   return (
     <div className={classes.root}>
       <Container>
-        <div className={classes.label}>500</div>
+        <div className={classes.label}>{"Error"}</div>
         <Title className={classes.title}>Сервер не отвечает...</Title>
         <Text size="lg" align="center" className={classes.description}>
           Наши серверы не смогли обработать ваш запрос. Не волнуйтесь, наша

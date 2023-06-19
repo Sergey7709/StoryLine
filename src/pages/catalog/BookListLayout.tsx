@@ -1,32 +1,30 @@
 import { Grid, Title, Divider, Modal, Group } from "@mantine/core";
 import React, { memo } from "react";
-import { categoryNewBooks } from "../../common/constants";
+import { QUANTITY_PAGES, categoryNewBooks } from "../../common/constants";
 import { ServerError } from "../../components/errorNetwork/ServerError";
 import { Authorization } from "../authorization/Authorization";
 import { BooksFilter } from "./BooksFilter";
 import PriceRange from "./BooksPriceRange";
-import { ItemsResponse } from "../../common/types";
+import { BookListLayoutProps } from "../../common/types";
 import { Loader } from "../../components/loader/Loader";
 import { useAppSelector } from "../../redux/redux.hooks";
-
-type BookListLayoutProps = {
-  isLoading: boolean;
-  isLoadingError: boolean;
-  param: string;
-  openedAuth: boolean;
-  handlersClose: () => void;
-  sortHandler: (valueSort: string) => void;
-  clasess: string;
-  data: ItemsResponse | undefined;
-  books: JSX.Element[] | undefined;
-};
+import { useParams } from "react-router-dom";
+import { GoBackButton } from "../../components/GoBackButton";
+import { Paginator } from "../../components/pagination/Paginator";
+import { setPaginationPage } from "../../redux/sortSlice";
+import { Footer } from "../../components/footer/Footer";
 
 export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
   const { searchBooksValue } = useAppSelector((state) => state.sort);
 
+  const paginationPage = useAppSelector((state) => state.sort.paginationPage);
+
+  const { link } = useParams();
+
   const {
     isLoading,
     isLoadingError,
+    isSuccess,
     param,
     openedAuth,
     handlersClose,
@@ -34,48 +32,84 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
     clasess,
     data,
     books,
+    allDataBooks,
   } = props;
 
   return (
     <>
-      {isLoading && <Loader />}
       {isLoadingError && <ServerError />}
-      {!isLoading && param === categoryNewBooks && (
-        <Grid>
-          <Grid.Col span={12}>
-            <Title
-              pb={"sm"}
-              align="center"
-              variant="gradient"
-              gradient={{ from: "indigo", to: "green", deg: 45 }}
-              order={1}
+      {isLoading && <Loader title={"Ищем книги..."} />}
+      {isSuccess && (
+        <>
+          <Grid>
+            <Modal
+              size={500}
+              opened={openedAuth}
+              onClose={handlersClose}
+              centered
             >
-              КНИЖНЫЕ НОВИНКИ
-            </Title>
-            <Divider size="xs" variant="solid" color="gray" />
-          </Grid.Col>
-        </Grid>
-      )}
-      <Grid>
-        <Modal size={500} opened={openedAuth} onClose={handlersClose} centered>
-          <Authorization close={handlersClose} />
-        </Modal>
-        <Grid.Col span={12}>
-          <Group ml={"2%"} mb={5}>
-            {param !== categoryNewBooks && (
-              <>
-                {!searchBooksValue && <BooksFilter sortHandler={sortHandler} />}
-                {!searchBooksValue && <PriceRange />}
-              </>
-            )}
-          </Group>
-        </Grid.Col>
-        <Grid.Col span={12}>
-          <Grid className={clasess} align="center">
-            {data && books}
+              <Authorization close={handlersClose} />
+            </Modal>
+            <Grid.Col span={12}>
+              <Group ml={"2%"} mb={5}>
+                {isSuccess && param !== categoryNewBooks ? (
+                  <>
+                    <GoBackButton
+                      variant={"gradient"}
+                      size={"xs"}
+                      gradient={{ from: "yellow", to: "orange" }}
+                      text={"ВЕРНУТЬСЯ"}
+                    />
+
+                    {!searchBooksValue && (
+                      <BooksFilter sortHandler={sortHandler} />
+                    )}
+                    {!searchBooksValue && <PriceRange />}
+                  </>
+                ) : (
+                  isSuccess && (
+                    <GoBackButton
+                      variant={"gradient"}
+                      size={"xs"}
+                      gradient={{ from: "yellow", to: "orange" }}
+                      text={"ВЕРНУТЬСЯ"}
+                    />
+                  )
+                )}
+                <Grid>
+                  <Grid.Col span={12}>
+                    <Title
+                      align="center"
+                      variant="gradient"
+                      gradient={{ from: "coral", to: "red", deg: 45 }}
+                      order={2}
+                      italic
+                    >
+                      {!isLoading && link?.toLocaleUpperCase()}
+                    </Title>
+                  </Grid.Col>
+                </Grid>
+              </Group>
+              {isSuccess && (
+                <Divider color={"coral"} size="xs" variant="solid" />
+              )}
+            </Grid.Col>
+            <Grid.Col span={12}>
+              <Grid className={clasess} align="start">
+                {data && books}
+              </Grid>
+            </Grid.Col>
           </Grid>
-        </Grid.Col>
-      </Grid>
+          <Paginator
+            currentPage={paginationPage}
+            action={setPaginationPage}
+            totalPage={Math.ceil(
+              (allDataBooks?.items?.length ?? 0) / QUANTITY_PAGES
+            )}
+          />
+          <Footer />
+        </>
+      )}
     </>
   );
 });

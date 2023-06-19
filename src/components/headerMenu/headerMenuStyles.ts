@@ -76,9 +76,16 @@ export const useStyles = createStyles((theme) => ({
 
   search_alt: {
     [theme.fn.largerThan("631")]: {
-      display: "none",
       width: "70%",
     },
+  },
+
+  image: {
+    "&:hover": {
+      transform: "scale(1.05)",
+      boxShadow: theme.shadows.md,
+    },
+    transition: "transform 150ms ease, box-shadow 150ms ease",
   },
 
   dropdown: {
@@ -97,7 +104,6 @@ export const useStyles = createStyles((theme) => ({
     alignItems: "self-start",
     backgroundColor: theme.fn.variant({
       variant: "filled",
-      // color: theme.primaryColor,
       color: "violet",
     }).background,
     borderBottom: 0,

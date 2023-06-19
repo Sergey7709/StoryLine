@@ -4,12 +4,13 @@ import { useMutation } from "react-query";
 import { BASE_URL } from "../../common/constants";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import { useAppSelector } from "../../redux/redux.hooks";
-import { Divider, Flex, Grid, Space } from "@mantine/core";
-import SingleBookList from "../catalog/SingleBookList";
+import { Container, Divider, Flex, Grid, Space } from "@mantine/core";
+import SingleBookList from "../catalog/SingleBookBlock";
 import EmptyData from "../userAccount/assetsUserAccount/EmptyData";
 import { Title } from "@mantine/core";
 import { useCallback, useEffect, useMemo } from "react";
 import React from "react";
+import { Footer } from "../../components/footer/Footer";
 
 export const Favorites = React.memo(() => {
   const user = useAppSelector((state) => state.auth.user);
@@ -40,7 +41,7 @@ export const Favorites = React.memo(() => {
         });
       },
     }
-  ); //! перенести в api
+  );
 
   const favoritesChange = useCallback(
     async (bookId: number, favorite: boolean) => {
@@ -84,37 +85,41 @@ export const Favorites = React.memo(() => {
 
   return (
     <>
-      {!user && <></>}
-      {user && (
-        <>
-          <Flex justify={"center"} align={"center"}>
-            <Title
-              pb={"sm"}
-              variant="gradient"
-              gradient={{ from: "indigo", to: "green", deg: 45 }}
-              order={1}
-            >
-              МОИ ИЗБРАННЫЕ КНИГИ
-            </Title>
-          </Flex>
-          <Divider size="xs" variant="solid" color="gray" />
-          <Space h="md" />
-          {favoriteItems.length ? (
-            <Grid pl={5}>
-              {favoriteItems.map((favoriteBook) => (
-                <SingleBookList
-                  key={favoriteBook.id}
-                  book={favoriteBook}
-                  favorite={true}
-                  favoritesChange={favoritesChange}
-                />
-              ))}
-            </Grid>
-          ) : (
-            <EmptyData text="У вас нет избранных товаров" />
-          )}
-        </>
-      )}
+      <Container h={"100%"} size={"xl"}>
+        {!user && <>Зарегестрируйтесь, что бы добавить в избранное</>}
+        {user && (
+          <>
+            <Flex justify={"center"} align={"center"}>
+              <Title
+                pb={"sm"}
+                variant="gradient"
+                gradient={{ from: "indigo", to: "green", deg: 45 }}
+                order={1}
+              >
+                МОИ ИЗБРАННЫЕ КНИГИ
+              </Title>
+            </Flex>
+            <Divider size="xs" variant="solid" color="gray" />
+            <Space h="md" />
+            {favoriteItems.length ? (
+              <Grid pl={5}>
+                {favoriteItems.map((favoriteBook) => (
+                  <SingleBookList
+                    key={favoriteBook.id}
+                    book={favoriteBook}
+                    favorite={true}
+                    favoritesChange={favoritesChange}
+                  />
+                ))}
+              </Grid>
+            ) : (
+              <EmptyData text="У вас нет избранных товаров" />
+            )}
+          </>
+        )}
+      </Container>
+
+      <Footer />
     </>
   );
 });

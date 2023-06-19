@@ -1,4 +1,11 @@
-import { Group, Text, Menu, UnstyledButton } from "@mantine/core";
+import {
+  Group,
+  Text,
+  Menu,
+  UnstyledButton,
+  Accordion,
+  Button,
+} from "@mantine/core";
 import { memo } from "react";
 import { menuSortData } from "../../common/constants";
 import { SortHandlerType } from "../../common/types";
@@ -9,51 +16,67 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
     <Group position="center">
       <Menu
         shadow="md"
-        // withArrow
-        // width={370}
-        offset={4}
-        position="bottom-start"
+        width={"230px"}
+        offset={10}
+        position="bottom-end"
         trigger="hover"
       >
         <Menu.Target>
           <UnstyledButton>
-            <Text size={"md"} color="blue" weight={500}>
+            <Text
+              tt="uppercase"
+              size={"sm"}
+              variant="gradient"
+              gradient={{ from: "teal", to: "blue", deg: 45 }}
+              fw={500}
+            >
               Сортировать книги по...
             </Text>
           </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown>
           <Group>
-            {menuSortData.map((menuItem) => (
-              <Menu
-                position="bottom"
-                trigger="hover"
-                width={140}
-                offset={5}
-                key={menuItem.key}
-              >
-                <Menu.Target>
-                  <UnstyledButton>
-                    <Text size="md" color="blue" weight={400}>
+            <Accordion variant="contained" transitionDuration={400}>
+              {menuSortData.map((menuItem) => (
+                <Accordion.Item key={menuItem.key} value={menuItem.title}>
+                  <Accordion.Control>
+                    <Text
+                      tt="uppercase"
+                      align="start"
+                      w={"15vh"}
+                      size="sm"
+                      variant="gradient"
+                      gradient={{ from: "teal", to: "blue", deg: 45 }}
+                      weight={600}
+                    >
                       {`${menuItem.title}`}
                     </Text>
-                  </UnstyledButton>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  {menuItem.options.map((option) => (
-                    <Menu.Item
-                      px={2}
-                      key={option.value}
-                      onClick={() => sortHandler(option.value)}
-                    >
-                      <Text size="md" color="blue" weight={400}>
-                        {option.subtitle}
-                      </Text>
-                    </Menu.Item>
-                  ))}
-                </Menu.Dropdown>
-              </Menu>
-            ))}
+                  </Accordion.Control>
+                  <Accordion.Panel>
+                    {menuItem.options.map((option) => (
+                      <Button
+                        w={"100%"}
+                        variant="light"
+                        color="violet"
+                        key={option.value}
+                        onClick={() => sortHandler(option.value)}
+                        mb={3}
+                      >
+                        <Text
+                          size="md"
+                          variant="gradient"
+                          gradient={{ from: "teal", to: "blue", deg: 45 }}
+                          weight={500}
+                          align="left"
+                        >
+                          {option.subtitle}
+                        </Text>
+                      </Button>
+                    ))}
+                  </Accordion.Panel>
+                </Accordion.Item>
+              ))}
+            </Accordion>
           </Group>
         </Menu.Dropdown>
       </Menu>

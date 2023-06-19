@@ -11,23 +11,25 @@ import {
 } from "../../redux/sortSlice";
 
 const PriceRange = () => {
-  const { reset, minPrice, maxPrice } = useAppSelector((state) => state.sort); //!
-  const dispatch = useDispatch(); //!
+  const { reset, minPrice, maxPrice } = useAppSelector((state) => state.sort);
 
-  const [min, setMin] = useState("");
-  const [max, setMax] = useState("");
+  const dispatch = useDispatch();
+
+  const [min, setMin] = useState(minPrice);
+  const [max, setMax] = useState(maxPrice);
 
   const [debouncedMin] = useDebouncedValue(min, 1000);
   const [debouncedMax] = useDebouncedValue(max, 1000);
 
+  const isPriceNotValid =
+    min !== "" && max !== "" && Number(min) >= Number(max);
+
   useEffect(() => {
     if (reset) {
-      setMin("");
-      setMax("");
       dispatch(setReset(false));
-    } else {
-      dispatch(setMinPrice(debouncedMin));
-      dispatch(setMaxPrice(debouncedMax));
+    } else if (Number(min) > 0 && Number(max) >= Number(min)) {
+      min !== "" && dispatch(setMinPrice(debouncedMin));
+      max !== "" && dispatch(setMaxPrice(debouncedMax));
     }
   }, [debouncedMin, debouncedMax, reset]);
 
@@ -46,23 +48,22 @@ const PriceRange = () => {
   };
 
   const handleReset = () => {
+    setMin("");
+    setMax("");
     dispatch(setMinPrice(""));
     dispatch(setMaxPrice(""));
     dispatch(setReset(true));
     dispatch(setCategorySort(""));
   };
 
-  const isPriceNotValid =
-    minPrice !== "" && maxPrice !== "" && Number(minPrice) >= Number(maxPrice);
-
   return (
     <Grid w={400} justify="start" align="center">
       <Grid.Col>
         <Group noWrap spacing={5}>
-          <Text size="md" color="blue" weight={400}>
+          <Text tt="uppercase" size="sm" color="blue" weight={400}>
             Стоимость
           </Text>
-          <Text size="md" color="blue" weight={400}>
+          <Text tt="uppercase" size="sm" color="blue" weight={400}>
             от
           </Text>
           <Input
@@ -74,7 +75,7 @@ const PriceRange = () => {
             error={isPriceNotValid}
           />
 
-          <Text size="md" color="blue" weight={400}>
+          <Text tt="uppercase" size="sm" color="blue" weight={400}>
             до
           </Text>
           <Input

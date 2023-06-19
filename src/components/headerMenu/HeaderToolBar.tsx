@@ -1,5 +1,4 @@
 import {
-  Autocomplete,
   Avatar,
   Grid,
   Group,
@@ -22,20 +21,7 @@ import { ThemeToggleIcon } from "../../assets/ThemeToggleIcon";
 import HeaderButtons from "./HeaderButtons";
 import { AvatarIcon } from "../../assets/AvatarIcon";
 import BookSearch from "../BookSearch";
-
-type HeaderToolBarProps = {
-  classes: {
-    header: string;
-    inner: string;
-    links: string;
-    burger: string;
-    link: string;
-    linkLabel: string;
-    search_default: string;
-    search_alt: string;
-    dropdown: string;
-  };
-};
+import { HeaderToolBarProps } from "../../common/types";
 
 const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
   const [openedAuth, { open, close }] = useDisclosure(false);
@@ -49,6 +35,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
         <Group spacing={1}>
           <Link to="/">
             <Image
+              className={classes.image}
               maw={50}
               ml="30px"
               radius="md"

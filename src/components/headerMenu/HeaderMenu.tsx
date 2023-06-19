@@ -12,11 +12,11 @@ const HeaderMenu = () => {
       <Grid m={10} gutter={"5px"}>
         <HeaderToolBar classes={classes} />
 
-        <Grid.Col span={12}>
+        <Grid.Col span={10}>
           <Group
             spacing={12}
             align="center"
-            position="center"
+            position="right"
             className={classes.links}
           >
             <HeaderButtons classes={classes} />

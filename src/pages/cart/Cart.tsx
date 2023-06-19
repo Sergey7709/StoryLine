@@ -5,7 +5,11 @@ import { usePostOrder } from "../../api/usePostOrder";
 import { EmptyCart } from "./EmptyCart";
 import { ActiveCart } from "./ActiveCart";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
-import { Container } from "@mantine/core";
+import { Container, Modal } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { useDisclosure } from "@mantine/hooks";
+import { Authorization } from "../authorization/Authorization";
+import { Footer } from "../../components/footer/Footer";
 
 export const Cart = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -13,6 +17,8 @@ export const Cart = () => {
   const cart = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
+
+  const [onAuth, { open: openAuth, close: closeAuth }] = useDisclosure(false);
 
   const orderItems = cart.cartItems.map((book) => ({
     imageUrl: book.itemImageUrl,
@@ -34,7 +40,7 @@ export const Cart = () => {
   };
 
   const orderMutation = usePostOrder(BASE_URL, OrderData, user);
-  const { mutateAsync } = orderMutation;
+  const { mutateAsync, isLoading } = orderMutation;
 
   const handleDeleteCartItem = (bookID: number) => {
     dispatch(deleteCartItems(bookID));
@@ -43,11 +49,22 @@ export const Cart = () => {
   const handleAddOrder = () => {
     if (user?.token) {
       mutateAsync(`order`);
+    } else {
+      openAuth();
+      notifications.show({
+        message: "Войдите в аккаунт, чтобы добавить пост",
+        autoClose: 5000,
+        color: "red",
+        fz: "md",
+      });
     }
   };
 
   return (
     <>
+      <Modal size={500} opened={onAuth} onClose={closeAuth} centered>
+        <Authorization close={closeAuth} />
+      </Modal>
       <Container size="100%" h={"100%"} px="xs" py={"lg"}>
         {cart.cartItems.length === 0 ? (
           <EmptyCart />
@@ -58,9 +75,11 @@ export const Cart = () => {
             cartItems={cart.cartItems}
             totalCount={cart.totalCount}
             totalPrice={cart.totalPrice}
+            isLoading={isLoading}
           />
         )}
       </Container>
+      <Footer />
     </>
   );
 };

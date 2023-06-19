@@ -13,20 +13,23 @@ import {
 
 export const MenuItem = () => {
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
+
   const onClickToItem = (link: string, param: string) => {
     dispatch(setSearchBooksValue(""));
-    dispatch(setReset(true)); //?
-    dispatch(setCategorySort("")); //?
-    dispatch(setMinPrice("")); //?
-    dispatch(setMaxPrice("")); //?
+    dispatch(setCategorySort(""));
+    dispatch(setMinPrice(""));
+    dispatch(setMaxPrice(""));
+    dispatch(setReset(true));
     dispatch(currentFilter(param));
 
     navigate(link);
   };
   const menuCategory = CATEGORIES.map((item, ind) => (
     <Menu.Item
-      fz={"md"}
+      tt={"uppercase"}
+      fz={"sm"}
       color="blue"
       onClick={() => onClickToItem(item.link, item.param)}
       key={ind}

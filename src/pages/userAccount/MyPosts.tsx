@@ -10,17 +10,17 @@ import {
   Input,
   Textarea,
   Box,
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { getCurrentDate } from '../../helpers/getCurrentDate';
-import { useMutation } from 'react-query';
-import { FetchType, fetchHandler } from '../../api/postOrReviewApi';
-import { Post, PostCreate, PostUpdate } from '../../common/types';
-import { notifications } from '@mantine/notifications';
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
+import { getCurrentDate } from "../../helpers/getCurrentDate";
+import { useMutation } from "react-query";
+import { FetchType, fetchHandler } from "../../api/postOrReviewApi";
+import { Post, PostCreate, PostUpdate } from "../../common/types";
+import { notifications } from "@mantine/notifications";
 
-import EmptyData from './assetsUserAccount/EmptyData';
-import { useCurrentUser } from '../../hooks/useCurrenUser';
+import EmptyData from "./assetsUserAccount/EmptyData";
+import { useCurrentUser } from "../../hooks/useCurrenUser";
 type UpdatePostArgs = {
   params: string;
   token: string;
@@ -28,9 +28,9 @@ type UpdatePostArgs = {
   type: FetchType;
 };
 const initialPostState = {
-  description: '',
-  postImageUrl: '',
-  title: '',
+  description: "",
+  postImageUrl: "",
+  title: "",
   likes: 0,
   date: getCurrentDate(),
 };
@@ -40,14 +40,16 @@ type MyPostsProps = {
 };
 const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
   const mutatePost = useMutation((args: UpdatePostArgs) =>
-    fetchHandler(args.type, args.params, args?.body, args.token),
+    fetchHandler(args.type, args.params, args?.body, args.token)
   );
   const getCurrentUser = useCurrentUser();
-  const [currentPost, setCurrentPost] = useState<number | 'create'>(0);
+  const [currentPost, setCurrentPost] = useState<number | "create">(0);
   const [opened, { open, close }] = useDisclosure(false);
   const post: Post | PostCreate = useMemo(() => {
     const findPost = posts.find((el) => el.id === currentPost);
-    return currentPost === 'create' || findPost === undefined ? initialPostState : findPost;
+    return currentPost === "create" || findPost === undefined
+      ? initialPostState
+      : findPost;
   }, [currentPost, posts]);
   const [postForm, setPostForm] = useState<Post | PostCreate>(initialPostState);
   useEffect(() => {
@@ -58,18 +60,18 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
     async (type: FetchType, id?: number) => {
       try {
         switch (type) {
-          case 'post': {
+          case "post": {
             await mutatePost.mutateAsync({
               type,
-              params: 'post/create',
+              params: "post/create",
               body: postForm,
               token: token,
             });
             getCurrentUser();
             break;
           }
-          case 'put': {
-            if (!id) throw new Error('Не верный ID поста');
+          case "put": {
+            if (!id) throw new Error("Не верный ID поста");
             const updatePostForm: PostUpdate = {
               ...postForm,
               id,
@@ -77,64 +79,74 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
             await mutatePost.mutateAsync({
               type,
               body: updatePostForm,
-              params: 'post/' + id.toString(),
+              params: "post/" + id.toString(),
               token: token,
             });
             getCurrentUser();
             break;
           }
-          case 'delete': {
-            if (!id) throw new Error('Не верный ID поста');
+          case "delete": {
+            if (!id) throw new Error("Не верный ID поста");
             await mutatePost.mutateAsync({
               type,
-              params: 'post/' + id.toString(),
+              params: "post/" + id.toString(),
               token: token,
             });
             getCurrentUser();
             break;
           }
           default:
-            throw new Error('Неверный тип экшена');
+            throw new Error("Неверный тип экшена");
         }
         notifications.show({
-          color: 'green',
+          color: "green",
           autoClose: 3000,
           title: `Пост успешно ${
-            type === 'post' ? ' добавлен' : type === 'put' ? 'изменен' : 'удален'
+            type === "post"
+              ? " добавлен"
+              : type === "put"
+              ? "изменен"
+              : "удален"
           }`,
-          message: '',
+          message: "",
         });
         close();
       } catch (err) {
         console.log(err);
         notifications.show({
-          color: 'red',
+          color: "red",
           autoClose: 3000,
-          title: 'Ошибка',
-          message: 'Попробуйте позже',
+          title: "Ошибка",
+          message: "Попробуйте позже",
         });
       }
     },
-    [close, getCurrentUser, mutatePost, postForm, token],
+    [close, getCurrentUser, mutatePost, postForm, token]
   );
 
   return (
     <>
       <Modal size="lg" opened={opened} onClose={close} centered>
         <Input
-          onChange={(e) => setPostForm((prev) => ({ ...prev, title: e.target.value }))}
+          onChange={(e) =>
+            setPostForm((prev) => ({ ...prev, title: e.target.value }))
+          }
           mt={10}
           value={postForm.title}
           placeholder="Заголовок"
         />
         <Input
-          onChange={(e) => setPostForm((prev) => ({ ...prev, postImageUrl: e.target.value }))}
+          onChange={(e) =>
+            setPostForm((prev) => ({ ...prev, postImageUrl: e.target.value }))
+          }
           mt={10}
           value={postForm.postImageUrl}
           placeholder="Ссылка на картинку"
         />
         <Textarea
-          onChange={(e) => setPostForm((prev) => ({ ...prev, description: e.target.value }))}
+          onChange={(e) =>
+            setPostForm((prev) => ({ ...prev, description: e.target.value }))
+          }
           autosize
           value={postForm.description}
           placeholder="Пост"
@@ -144,24 +156,26 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
           color="dimmed"
         />
         <Box display="flex">
-          {currentPost !== 'create' && (
+          {currentPost !== "create" && (
             <Button
               loading={mutatePost.isLoading}
               color="pink"
               mr={20}
               onClick={() => {
-                if ('id' in postForm) submitPost('delete', postForm.id);
-              }}>
+                if ("id" in postForm) submitPost("delete", postForm.id);
+              }}
+            >
               Удалить пост
             </Button>
           )}
           <Button
             onClick={() => {
-              if ('id' in postForm) submitPost('put', postForm.id);
-              else submitPost('post');
+              if ("id" in postForm) submitPost("put", postForm.id);
+              else submitPost("post");
             }}
-            loading={mutatePost.isLoading}>
-            {currentPost === 'create' ? 'Создать пост' : 'Изменить пост'}
+            loading={mutatePost.isLoading}
+          >
+            {currentPost === "create" ? "Создать пост" : "Изменить пост"}
           </Button>
         </Box>
       </Modal>
@@ -169,8 +183,9 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
         mt={10}
         onClick={() => {
           open();
-          setCurrentPost('create');
-        }}>
+          setCurrentPost("create");
+        }}
+      >
         Добавить пост
       </Button>
       {!posts.length && <EmptyData text="Вы не написали ни одного поста" />}
@@ -193,6 +208,7 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
               <Text truncate size="sm" color="dimmed">
                 {el.description}
               </Text>
+
               <Button
                 onClick={() => {
                   open();
@@ -202,7 +218,8 @@ const MyPosts: FC<MyPostsProps> = ({ posts, token }) => {
                 color="blue"
                 fullWidth
                 mt="md"
-                radius="md">
+                radius="md"
+              >
                 Изменить
               </Button>
             </Card>

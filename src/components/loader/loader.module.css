@@ -18,7 +18,7 @@
   perspective: 800px;
   animation: anim 2s ease-in-out infinite,
     dotMove 10s ease-out alternate infinite, move 10s linear infinite 1s;
-  content: "●";
+  content: "📖";
   color: var(--col1);
   position: absolute;
   translate: -60px 500px;

@@ -1,13 +1,13 @@
 import { useStyles } from "./BooksListStyles";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
-import SingleBookList from "./SingleBookList";
-import React, { useCallback, useEffect, useMemo } from "react";
+import SingleBookBlock from "./SingleBookBlock";
+import React, { useCallback, useMemo } from "react";
 import { useDisclosure } from "@mantine/hooks";
-import { setMaxDiscount, setCategorySort } from "../../redux/sortSlice";
 import { BookListLayout } from "./BookListLayout";
 import { usePostFavorites } from "../../api/usePostFavorites";
 import { useGetBookList } from "../../api/useGetBookList";
 import { User } from "../../common/types";
+import { setCategorySort } from "../../redux/sortSlice";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
@@ -24,24 +24,16 @@ export const BooksList = React.memo(() => {
     data,
     isLoading,
     isLoadingError,
+    isSuccess,
     minPrice,
     maxPrice,
     searchBooksValue,
+    categorySort,
     param,
+    allDataBooks,
   } = useGetBookList();
 
-  useEffect(() => {
-    data?.items
-      ?.filter((book) => book.discount > 0)
-      .reduce((minDiscount, book) => {
-        const newMinDiscount =
-          book.discount > minDiscount ? book.discount : minDiscount;
-        dispatch(setMaxDiscount(newMinDiscount));
-        return newMinDiscount;
-      }, 0);
-  }, [data]);
-
-  const dataDiscount = useMemo(
+  const sortedDataDiscount = useMemo(
     () =>
       data?.items.filter((book) => {
         if (book.discount !== 0) {
@@ -58,18 +50,42 @@ export const BooksList = React.memo(() => {
     [data?.items]
   );
 
+  const sortBooksByCategoryAndPrice = () => {
+    if (data && categorySort) {
+      const sortedItems = [...data.items];
+
+      sortedItems.sort((a, b) => {
+        const aPrice = a.discount && a.discount > 0 ? a.discount : a.price;
+        const bPrice = b.discount && b.discount > 0 ? b.discount : b.price;
+        if (categorySort === "&sortBy=price&sortOrder=asc") {
+          return aPrice - bPrice;
+        } else if (categorySort === "&sortBy=price&sortOrder=desc") {
+          return bPrice - aPrice;
+        } else {
+          return 0;
+        }
+      });
+
+      return sortedItems;
+    } else {
+      return data?.items;
+    }
+  };
+
+  const sortedArray = sortBooksByCategoryAndPrice();
+
   const books = useMemo(() => {
     const filteredBooks =
-      user && Number(minPrice) > 0 && searchBooksValue.length === 0
-        ? dataDiscount
-        : data?.items;
+      Number(minPrice) > 0 && searchBooksValue.length === 0
+        ? sortedDataDiscount
+        : sortedArray;
 
     return filteredBooks?.map((book) => {
       const isFavorite =
         user?.favoriteItems.some((el) => el.id === book.id) || false;
 
       return (
-        <SingleBookList
+        <SingleBookBlock
           favorite={isFavorite}
           book={book}
           key={book.id}
@@ -80,14 +96,18 @@ export const BooksList = React.memo(() => {
   }, [data?.items, user?.favoriteItems]);
 
   const sortHandler = useCallback((valueSort: string) => {
+    console.log(valueSort);
     dispatch(setCategorySort(valueSort));
   }, []);
+
+  console.log("render booklist");
 
   return (
     <>
       <BookListLayout
         isLoading={isLoading}
         isLoadingError={isLoadingError}
+        isSuccess={isSuccess}
         openedAuth={openedAuth}
         handlersClose={handlers.close}
         sortHandler={sortHandler}
@@ -95,6 +115,7 @@ export const BooksList = React.memo(() => {
         data={data}
         books={books}
         param={param}
+        allDataBooks={allDataBooks}
       />
     </>
   );
