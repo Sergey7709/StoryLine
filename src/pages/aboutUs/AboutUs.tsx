@@ -39,13 +39,8 @@ export const AboutUs = () => {
     <>
       <Container>
         <Center>
-          <Carusel
-            imageUrl={IMAGES_CARUSEL_ABOUT_US}
-            maxWidth={"65%"}
-            // height={"55%"}
-          />
+          <Carusel imageUrl={IMAGES_CARUSEL_ABOUT_US} maxWidth={"65%"} />
         </Center>
-        {/* <Space h="xl" /> */}
 
         <Divider my="sm" color="orange" />
 

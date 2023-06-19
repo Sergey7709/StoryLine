@@ -1,4 +1,4 @@
-import { QueryClient, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import { notifications } from "@mantine/notifications";
 import { useCallback } from "react";
 import { PostReaderBlogs, PostUpdate } from "../common/types";

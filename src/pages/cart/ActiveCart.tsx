@@ -149,12 +149,6 @@ export const ActiveCart: FC<ActiveCartProps> = (props) => {
           </Card>
         </Grid.Col>
       ))}
-      {/* <Grid.Col span={12} py={0}>
-        <Title order={3}>{`Итого кол-во: ${totalCount} шт.`}</Title>
-      </Grid.Col>
-      <Grid.Col span={12} py={0}>
-        <Title order={3}>{`Итого сумма заказа: ${totalPrice} руб. `}</Title>
-      </Grid.Col> */}
     </Grid>
   );
 };

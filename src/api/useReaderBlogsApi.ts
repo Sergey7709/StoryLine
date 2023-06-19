@@ -26,6 +26,12 @@ export const UseReaderBlogsApi = () => {
 
   const paramsPagination = `${paramsReaderBlogs}${pagination}`;
 
+  const { data: allDataReaderBlogs } = useQuery<Post[]>(
+    ["allReaderBlogs", pageReaderBlogs],
+
+    () => fetchHandler("get", `${paramsReaderBlogs}`)
+  );
+
   const { data, isLoading, isSuccess, refetch } = useQuery<Post[]>(
     ["readerBlogs", paramsPagination],
 
@@ -62,5 +68,13 @@ export const UseReaderBlogsApi = () => {
     [user?.token]
   );
 
-  return { data, isLoading, isSuccess, refetch, requestAddLike, mutatePost };
+  return {
+    data,
+    isLoading,
+    isSuccess,
+    refetch,
+    requestAddLike,
+    mutatePost,
+    allDataReaderBlogs,
+  };
 };

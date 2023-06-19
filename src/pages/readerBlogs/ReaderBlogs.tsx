@@ -153,7 +153,9 @@ export const ReaderBlogs = () => {
               <Paginator
                 currentPage={pageReaderBlogs}
                 action={setPageReaderBlogs}
-                totalPage={4} ////!!!!!!!!!
+                totalPage={Math.ceil(
+                  (ReaderBlogsApi.allDataReaderBlogs?.length ?? 0) / 4
+                )}
               />
             </Grid.Col>
           </Grid>

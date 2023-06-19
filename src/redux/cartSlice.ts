@@ -139,6 +139,6 @@ export const {
   handleChangeCountItem,
 } = cartSlice.actions;
 
-export { loadInitialStateFromStorage }; //! экспорт в компонент CartIcon
+export { loadInitialStateFromStorage };
 
 export default cartSlice.reducer;

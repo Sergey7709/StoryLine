@@ -30,6 +30,7 @@ export const BooksList = React.memo(() => {
     searchBooksValue,
     categorySort,
     param,
+    allDataBooks,
   } = useGetBookList();
 
   const sortedDataDiscount = useMemo(
@@ -114,6 +115,7 @@ export const BooksList = React.memo(() => {
         data={data}
         books={books}
         param={param}
+        allDataBooks={allDataBooks}
       />
     </>
   );

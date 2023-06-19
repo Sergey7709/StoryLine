@@ -1,6 +1,6 @@
 import { Grid, Title, Divider, Modal, Group } from "@mantine/core";
 import React, { memo } from "react";
-import { categoryNewBooks } from "../../common/constants";
+import { QUANTITY_PAGES, categoryNewBooks } from "../../common/constants";
 import { ServerError } from "../../components/errorNetwork/ServerError";
 import { Authorization } from "../authorization/Authorization";
 import { BooksFilter } from "./BooksFilter";
@@ -17,7 +17,7 @@ import { Footer } from "../../components/footer/Footer";
 export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
   const { searchBooksValue } = useAppSelector((state) => state.sort);
 
-  const paginationPage = useAppSelector((state) => state.sort.paginationPage); //!
+  const paginationPage = useAppSelector((state) => state.sort.paginationPage);
 
   const { link } = useParams();
 
@@ -32,6 +32,7 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
     clasess,
     data,
     books,
+    allDataBooks,
   } = props;
 
   return (
@@ -102,7 +103,9 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
           <Paginator
             currentPage={paginationPage}
             action={setPaginationPage}
-            totalPage={Math.ceil((data?.items?.length ?? 0) / 18)} //!!!!!!!!!!
+            totalPage={Math.ceil(
+              (allDataBooks?.items?.length ?? 0) / QUANTITY_PAGES
+            )}
           />
           <Footer />
         </>

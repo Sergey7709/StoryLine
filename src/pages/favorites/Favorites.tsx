@@ -41,7 +41,7 @@ export const Favorites = React.memo(() => {
         });
       },
     }
-  ); //! перенести в api
+  );
 
   const favoritesChange = useCallback(
     async (bookId: number, favorite: boolean) => {

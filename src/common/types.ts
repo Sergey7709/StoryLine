@@ -2,6 +2,7 @@ import { UseMutationResult } from "react-query";
 import { FetchReviewArgs } from "../pages/userAccount/MyReviews";
 import { getCurrentDate } from "../helpers/getCurrentDate";
 import { FetchType } from "../api/postOrReviewApi";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 export type User = {
   id: number;
@@ -209,6 +210,7 @@ export type BookListLayoutProps = {
   clasess: string;
   data: ItemsResponse | undefined;
   books: JSX.Element[] | undefined;
+  allDataBooks?: ItemsResponse | undefined;
 };
 
 export type HeaderButtonsProps = {
@@ -285,4 +287,10 @@ export type SingleBookListProps = {
 
 export type ReviewsListProps = {
   review: Review;
+};
+
+export type PaginatorProps = {
+  currentPage: number;
+  action: ActionCreatorWithPayload<number, string>;
+  totalPage: number;
 };

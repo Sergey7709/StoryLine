@@ -39,7 +39,7 @@ export const CATEGORIES = [
   {
     link: "/books-list/Новинки",
     label: "Новинки",
-    param: categoryNewBooks, //!!!!
+    param: categoryNewBooks,
   },
   {
     link: "/books-list/Художественная литература",

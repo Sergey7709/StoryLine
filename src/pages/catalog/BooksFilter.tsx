@@ -63,7 +63,6 @@ export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
                         mb={3}
                       >
                         <Text
-                          // tt="uppercase"
                           size="md"
                           variant="gradient"
                           gradient={{ from: "teal", to: "blue", deg: 45 }}

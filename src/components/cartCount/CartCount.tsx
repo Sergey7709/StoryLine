@@ -66,5 +66,3 @@ export const CartCount: FC<CartBarProps> = ({
     </>
   );
 };
-
-// export default CartCount;

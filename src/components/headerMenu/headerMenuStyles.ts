@@ -104,7 +104,6 @@ export const useStyles = createStyles((theme) => ({
     alignItems: "self-start",
     backgroundColor: theme.fn.variant({
       variant: "filled",
-      // color: theme.primaryColor,
       color: "violet",
     }).background,
     borderBottom: 0,

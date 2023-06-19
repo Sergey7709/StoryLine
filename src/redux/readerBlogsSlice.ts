@@ -3,12 +3,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type initialStateReaderBlogsSlice = {
   dataReaderBlogs: Post[] | undefined;
-  pageReaderBlogs: number; //!
+  pageReaderBlogs: number;
 };
 
 const initialState: initialStateReaderBlogsSlice = {
   dataReaderBlogs: [],
-  pageReaderBlogs: 1, //!
+  pageReaderBlogs: 1,
 };
 
 export const ReaderBlogsSlice = createSlice({
@@ -28,7 +28,7 @@ export const ReaderBlogsSlice = createSlice({
     },
     setPageReaderBlogs: (state, action: PayloadAction<number>) => {
       state.pageReaderBlogs = action.payload;
-    }, //!
+    },
   },
 });
 
