@@ -5,7 +5,7 @@ import { usePostOrder } from "../../api/usePostOrder";
 import { EmptyCart } from "./EmptyCart";
 import { ActiveCart } from "./ActiveCart";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
-import { Container, Modal } from "@mantine/core";
+import { Container, Modal, Space } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { Authorization } from "../authorization/Authorization";
@@ -79,6 +79,7 @@ export const Cart = () => {
           />
         )}
       </Container>
+      <Space h={100} />
       <Footer />
     </>
   );
