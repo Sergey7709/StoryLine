@@ -8,6 +8,7 @@ import {
   Title,
   Divider,
   Center,
+  useMantineTheme,
 } from "@mantine/core";
 import { FcOk } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
@@ -16,11 +17,17 @@ import { setPaginationPage } from "../../redux/sortSlice";
 import { useAppDispatch } from "../../redux/redux.hooks";
 import { Footer } from "../../components/footer/Footer";
 import { IMAGES_CARUSEL_ABOUT_US } from "../../common/constants";
+import styles from "./aboutUs.module.css";
+import { useMediaQuery } from "@mantine/hooks";
 
 export const AboutUs = () => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
+
+  const theme = useMantineTheme();
+
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
 
   const pathHandler = () => {
     dispatch(setPaginationPage(1));
@@ -34,24 +41,22 @@ export const AboutUs = () => {
         <Center>
           <Carusel
             imageUrl={IMAGES_CARUSEL_ABOUT_US}
-            maxWidth={700}
-            height={600}
+            maxWidth={"65%"}
+            // height={"55%"}
           />
         </Center>
-        <Space h="xl" />
+        {/* <Space h="xl" /> */}
 
         <Divider my="sm" color="orange" />
 
         <Title
+          className={styles.button}
           order={1}
           align="center"
-          variant="gradient"
-          gradient={{ from: "coral", to: "orange", deg: 10 }}
           fw={"bolder"}
           ff={"monospace"}
-          fz={50}
+          fz={mobile ? 30 : 40}
           my={"xl"}
-          pl={10}
         >
           МИР КНИГ в Москве
         </Title>

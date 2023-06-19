@@ -1,10 +1,12 @@
 import { Container, Paper, Text, Image } from "@mantine/core";
 import { Footer } from "../../components/footer/Footer";
+import { GoBackButton } from "../../components/GoBackButton";
 
 export const BookstoreServices = () => {
   return (
     <>
       <Container size={"xl"}>
+        <GoBackButton text="ВЕРНУТЬСЯ" width={"100%"} />
         <Paper shadow="xs" p="lg" withBorder>
           <Image
             height={400}

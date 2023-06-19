@@ -1,3 +1,5 @@
+import { MantineGradient } from "@mantine/core";
+
 export const BASE_URL = "https://rest-api-books.onrender.com/";
 // export const BASE_URL = "http://localhost:5555/";
 
@@ -206,3 +208,13 @@ export const IMAGES_CARUSEL_HOME = [
   { id: 151, url: "https://i.ibb.co/zmMpBHj/4.jpg" },
   { id: 149, url: "https://i.ibb.co/nkxPkSx/2.jpg" },
 ];
+
+export type GoBackButtonPropsType = {
+  variant?: string;
+  color?: string;
+  size?: string;
+  gradient?: MantineGradient | undefined;
+  text?: string;
+  compact?: boolean;
+  width?: number | string;
+};

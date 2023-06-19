@@ -1,21 +1,21 @@
-/* .btn {
-  font-size: 1rem;
+.btn {
+  /* font-size: 2rem; */
   padding: 0.5rem 1.5rem;
   border: none;
   outline: none;
-  border-radius: 0.4rem;
+  /* border-radius: 0.4rem; */
   cursor: pointer;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 
   background: rgb(2, 29, 78);
   background: linear-gradient(
     270deg,
-    rgba(75, 9, 161, 0.681) 0%,
-    rgba(140, 9, 227, 0.873) 60%
+    rgba(210, 19, 73, 0.681) 0%,
+    rgba(239, 4, 63, 0.873) 60%
   );
 
   color: rgb(243, 243, 251);
-  font-weight: 700;
+  font-weight: 800;
   transition: 0.6s;
   box-shadow: 0px 0px 60px #1f4c65;
   -webkit-box-reflect: below 10px
@@ -34,7 +34,7 @@
     rgba(250, 193, 7, 0.873) 60%
   );
   color: rgb(4, 4, 38);
-} */
+}
 
 /* .button {
   position: relative;
@@ -91,7 +91,9 @@
   scale: 0.7;
 } */
 
-.button {
+/* !!! */
+
+/* .button {
   --glow-color: rgb(217, 176, 255);
   --glow-spread-color: rgba(191, 123, 255, 0.781);
   --enhanced-glow-color: rgb(231, 206, 255);
@@ -138,7 +140,9 @@
   box-shadow: 0 0 0.6em 0.25em var(--glow-color),
     0 0 2.5em 2em var(--glow-spread-color),
     inset 0 0 0.5em 0.25em var(--glow-color);
-}
+} */
+
+/* !! */
 
 /* .button {
   --c: #fff;
@@ -178,7 +182,9 @@
   padding: 0.1em 0.3em;
 }
 
-/* 
+
+
+
 .button {
   position: relative;
   width: 10em;
@@ -231,4 +237,4 @@
 
 .button:after {
   bottom: -2px;
-} */
+}  */

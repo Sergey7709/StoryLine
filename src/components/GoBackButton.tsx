@@ -1,18 +1,10 @@
-import { Button, MantineGradient, Text } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import { TiArrowBack } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
-
-type GoBackButtonPropsType = {
-  variant?: string;
-  color?: string;
-  size?: string;
-  gradient?: MantineGradient | undefined;
-  text?: string;
-  compact?: boolean;
-};
+import { GoBackButtonPropsType } from "../common/constants";
 
 export const GoBackButton = (props: GoBackButtonPropsType) => {
-  const { variant, color, size, gradient, text, compact } = props;
+  const { variant, color, size, gradient, text, compact, width } = props;
 
   const navigate = useNavigate();
 
@@ -28,6 +20,7 @@ export const GoBackButton = (props: GoBackButtonPropsType) => {
       gradient={gradient}
       onClick={goBack}
       compact={compact}
+      w={width}
     >
       <Text>{text}</Text>
     </Button>
