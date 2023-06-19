@@ -18,6 +18,7 @@ import { GiTrophyCup } from "react-icons/gi";
 import { SiLeaderprice } from "react-icons/si";
 import { HiOutlineRocketLaunch } from "react-icons/hi2";
 import { Footer } from "../../components/footer/Footer";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
   const { classes } = useStyles();
@@ -51,12 +52,14 @@ export const Home = () => {
             </Paper>
             <Paper pt={9} pb={3} px={7} shadow="xl">
               <UnstyledButton>
-                <Image
-                  radius={3}
-                  className={classes.image}
-                  maw={354}
-                  src={"https://i.ibb.co/7RLt3DF/7.jpg"}
-                />
+                <Link to={"/reader-blogs"}>
+                  <Image
+                    radius={3}
+                    className={classes.image}
+                    maw={354}
+                    src={"https://i.ibb.co/7RLt3DF/7.jpg"}
+                  />
+                </Link>
               </UnstyledButton>
             </Paper>
           </Group>
@@ -132,7 +135,7 @@ export const Home = () => {
           </SimpleGrid>
         </Grid.Col> */}
       </Grid>
-      <Divider my="sm" />
+
       <Space h={80} />
       <Footer />
     </>

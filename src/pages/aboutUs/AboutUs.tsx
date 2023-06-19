@@ -7,6 +7,7 @@ import {
   Text,
   Title,
   Divider,
+  Center,
 } from "@mantine/core";
 import { FcOk } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
@@ -30,12 +31,13 @@ export const AboutUs = () => {
   return (
     <>
       <Container>
-        <Carusel
-          imageUrl={IMAGES_CARUSEL_ABOUT_US}
-          maxWidth={700}
-          height={600}
-        />
-
+        <Center>
+          <Carusel
+            imageUrl={IMAGES_CARUSEL_ABOUT_US}
+            maxWidth={700}
+            height={600}
+          />
+        </Center>
         <Space h="xl" />
 
         <Divider my="sm" color="orange" />
@@ -137,9 +139,9 @@ export const AboutUs = () => {
           </Grid.Col>
 
           <Grid.Col span={12}>
+            <Space h={50} />
             <Button
-              variant="light"
-              color="blue"
+              variant="gradient"
               size="xl"
               w={"100%"}
               onClick={pathHandler}

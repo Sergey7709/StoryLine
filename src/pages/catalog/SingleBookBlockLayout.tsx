@@ -49,7 +49,7 @@ export const SingleBookBlockLayout = (props: SingleBookBlockLayoutProps) => {
               src={book.itemImageUrl}
               alt="book img"
             />
-            {link === "Новинки" && (
+            {book.releaseDate === "2023" || book.releaseDate === "2022" ? (
               <Badge
                 className={classes.newBooks}
                 color="green"
@@ -61,7 +61,7 @@ export const SingleBookBlockLayout = (props: SingleBookBlockLayoutProps) => {
               >
                 НОВИНКА
               </Badge>
-            )}
+            ) : null}
           </Link>
           {discount > 0 && (
             <Badge
