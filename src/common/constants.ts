@@ -25,6 +25,9 @@ export const NAV_BUTTONS = [
   },
 ];
 
+export const categoryNewBooks =
+  "all?sortBy=releaseDate&sortOrder=desc&limit=13";
+
 export const CATEGORIES = [
   {
     link: "/books-list/Все книги",
@@ -34,7 +37,7 @@ export const CATEGORIES = [
   {
     link: "/books-list/Новинки",
     label: "Новинки",
-    param: "all?sortBy=releaseDate&sortOrder=desc&limit=8",
+    param: categoryNewBooks, //!!!!
   },
   {
     link: "/books-list/Художественная литература",
@@ -123,8 +126,6 @@ export const menuSortData = [
     ],
   },
 ];
-
-export const categoryNewBooks = "all?sortBy=releaseDate&sortOrder=desc&limit=8";
 
 export const paramsReaderBlogs = "post/all?";
 

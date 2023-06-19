@@ -18,10 +18,10 @@ export const MenuItem = () => {
 
   const onClickToItem = (link: string, param: string) => {
     dispatch(setSearchBooksValue(""));
-    dispatch(setReset(true));
     dispatch(setCategorySort(""));
     dispatch(setMinPrice(""));
     dispatch(setMaxPrice(""));
+    dispatch(setReset(true));
     dispatch(currentFilter(param));
 
     navigate(link);

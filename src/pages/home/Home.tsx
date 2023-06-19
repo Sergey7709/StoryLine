@@ -10,7 +10,6 @@ import {
   SimpleGrid,
   Stack,
   Space,
-  Divider,
 } from "@mantine/core";
 import { useStyles } from "../../components/headerMenu/headerMenuStyles";
 import { SlBookOpen } from "react-icons/sl";
@@ -69,7 +68,7 @@ export const Home = () => {
           <SimpleGrid
             cols={4}
             breakpoints={[
-              { maxWidth: "62rem", cols: 3, spacing: "md" },
+              { maxWidth: "62rem", cols: 2, spacing: "md" },
               { maxWidth: "48rem", cols: 2, spacing: "sm" },
             ]}
           >
@@ -83,60 +82,10 @@ export const Home = () => {
             ))}
           </SimpleGrid>
         </Grid.Col>
-
-        {/* <Grid.Col px={"10%"} span={12}>
-          <SimpleGrid
-            cols={4}
-            breakpoints={[
-              { maxWidth: "62rem", cols: 3, spacing: "md" },
-              { maxWidth: "48rem", cols: 2, spacing: "sm" },
-            ]}
-          >
-            <Stack py={10} align="center">
-              <UnstyledButton>
-                <Text align="center">
-                  <SlBookOpen size={50} color="indigo" />
-                </Text>
-                <Text w={150} color="indigo.8" align="center">
-                  Самые свежие обзоры книг
-                </Text>
-              </UnstyledButton>
-            </Stack>
-            <Stack py={10} align="center">
-              <UnstyledButton>
-                <Text align="center">
-                  <GiTrophyCup size={50} color="indigo" />
-                </Text>
-                <Text w={150} color="indigo.8" align="center">
-                  Привилегии постоянным покупателям
-                </Text>
-              </UnstyledButton>
-            </Stack>
-            <Stack py={10} align="center">
-              <UnstyledButton>
-                <Text align="center">
-                  <SiLeaderprice size={50} color="indigo" />
-                </Text>
-                <Text w={150} color="indigo.8" align="center">
-                  Самые привлекательные цены
-                </Text>
-              </UnstyledButton>
-            </Stack>
-            <Stack py={10} align="center">
-              <UnstyledButton>
-                <Text align="center">
-                  <HiOutlineRocketLaunch size={50} color="indigo" />
-                </Text>
-                <Text w={150} color="indigo.8" align="center">
-                  Быстрая доставка
-                </Text>
-              </UnstyledButton>
-            </Stack>
-          </SimpleGrid>
-        </Grid.Col> */}
       </Grid>
 
       <Space h={80} />
+
       <Footer />
     </>
   );

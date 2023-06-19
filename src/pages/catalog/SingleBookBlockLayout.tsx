@@ -13,13 +13,11 @@ import {
   Text,
 } from "@mantine/core";
 import { GiBookmarklet } from "react-icons/gi";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PricesDiscount from "./UI/PricesDiscount";
 import { SingleBookBlockLayoutProps } from "../../common/types";
 
 export const SingleBookBlockLayout = (props: SingleBookBlockLayoutProps) => {
-  const { link } = useParams();
-
   const {
     id,
     classes,
