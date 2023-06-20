@@ -6,7 +6,7 @@ import {
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Notifications } from "@mantine/notifications";
-import { AppShell, Header, Footer } from "@mantine/core";
+import { AppShell, Header } from "@mantine/core";
 import { BooksList } from "./pages/catalog/BooksList";
 import { useAutoLogin } from "./hooks/useAutoLogin";
 import UserAccount from "./pages/userAccount/UserAccount";
