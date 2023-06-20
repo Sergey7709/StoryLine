@@ -35,7 +35,7 @@ export const useGetBookList = () => {
 
   const { data: allDataBooks } = useQuery<ItemsResponse>(
     ["allItems", requestBookList],
-    () => fetchItem(param)
+    () => fetchItem(`${param}${categorySort}`)
   );
 
   const { data, isLoading, isLoadingError, isSuccess } =

@@ -26,7 +26,6 @@ import { BookCard } from "./pages/catalog/BookCard";
 import { ReaderBlogsCard } from "./pages/readerBlogs/ReaderBlogsCard";
 
 export const App = () => {
-  console.log("render App");
   useAutoLogin();
 
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
