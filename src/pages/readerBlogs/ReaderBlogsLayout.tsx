@@ -29,16 +29,6 @@ export const ReaderBlogsLayout = memo((props: ReaderBlogsLayoutType) => {
     (state) => state.readerBlogs.dataReaderBlogs
   );
 
-  const dataReaderBlogsSort = [...(readerBlogs ?? [])].sort(
-    (a: Post, b: Post) => {
-      const dateA = new Date(a.date.split(".").reverse().join("-"));
-      const dateB = new Date(b.date.split(".").reverse().join("-"));
-      return dateB.getTime() - dateA.getTime();
-    }
-  );
-
-  console.log("render layout");
-
   return (
     <Grid className={classes.grid} ml={"3%"} justify="flex-start">
       {readerBlogs?.map((el: Post) => (

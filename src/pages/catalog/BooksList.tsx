@@ -20,67 +20,11 @@ export const BooksList = React.memo(() => {
 
   const { favoritesChange } = usePostFavorites(handlers);
 
-  const {
-    data,
-    isLoading,
-    isLoadingError,
-    isSuccess,
-    minPrice,
-    maxPrice,
-    searchBooksValue,
-    categorySort,
-    param,
-    allDataBooks,
-  } = useGetBookList();
-
-  const sortedDataDiscount = useMemo(
-    () =>
-      data?.items.filter((book) => {
-        if (book.discount !== 0) {
-          return (
-            book.discount >= Number(minPrice) &&
-            book.discount <= Number(maxPrice)
-          );
-        } else {
-          return (
-            book.price >= Number(minPrice) && book.price <= Number(maxPrice)
-          );
-        }
-      }),
-    [data?.items]
-  );
-
-  const sortBooksByCategoryAndPrice = () => {
-    if (data && categorySort) {
-      const sortedItems = [...data.items];
-
-      sortedItems.sort((a, b) => {
-        const aPrice = a.discount && a.discount > 0 ? a.discount : a.price;
-        const bPrice = b.discount && b.discount > 0 ? b.discount : b.price;
-        if (categorySort === "&sortBy=price&sortOrder=asc") {
-          return aPrice - bPrice;
-        } else if (categorySort === "&sortBy=price&sortOrder=desc") {
-          return bPrice - aPrice;
-        } else {
-          return 0;
-        }
-      });
-
-      return sortedItems;
-    } else {
-      return data?.items;
-    }
-  };
-
-  const sortedArray = sortBooksByCategoryAndPrice();
+  const { data, isLoading, isLoadingError, isSuccess, param, allDataBooks } =
+    useGetBookList();
 
   const books = useMemo(() => {
-    const filteredBooks =
-      Number(minPrice) > 0 && searchBooksValue.length === 0
-        ? sortedDataDiscount
-        : sortedArray;
-
-    return filteredBooks?.map((book) => {
+    return data?.items?.map((book) => {
       const isFavorite =
         user?.favoriteItems.some((el) => el.id === book.id) || false;
 
@@ -96,11 +40,8 @@ export const BooksList = React.memo(() => {
   }, [data?.items, user?.favoriteItems]);
 
   const sortHandler = useCallback((valueSort: string) => {
-    console.log(valueSort);
     dispatch(setCategorySort(valueSort));
   }, []);
-
-  console.log("render booklist");
 
   return (
     <>

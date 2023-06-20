@@ -22,8 +22,8 @@ export const useGetBookList = () => {
 
   const pagination =
     offset === 0
-      ? `&limit=${QUANTITY_PAGES + 3}`
-      : `&limit=${QUANTITY_PAGES}&offset=${offset + 3}`;
+      ? `&limit=${QUANTITY_PAGES + 4}`
+      : `&limit=${QUANTITY_PAGES}&offset=${offset + 4}`;
 
   const requestLink =
     param === categoryNewBooks
@@ -35,7 +35,7 @@ export const useGetBookList = () => {
 
   const { data: allDataBooks } = useQuery<ItemsResponse>(
     ["allItems", requestBookList],
-    () => fetchItem(param)
+    () => fetchItem(`${param}${categorySort}${priceSort}`)
   );
 
   const { data, isLoading, isLoadingError, isSuccess } =

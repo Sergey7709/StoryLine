@@ -27,8 +27,6 @@ const SingleBookBlock: FC<SingleBookListProps> = React.memo(
       setFavoriteState(favorite);
     }, [favorite]);
 
-    console.log("render single");
-
     return (
       <>
         <SingleBookBlockLayout

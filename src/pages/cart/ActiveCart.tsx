@@ -19,7 +19,6 @@ import { CartCount } from "../../components/cartCount/CartCount";
 import { GoBackButton } from "../../components/GoBackButton";
 
 export const ActiveCart: FC<ActiveCartProps> = (props) => {
-  console.log("render activecart");
   const {
     handleDeleteCartItem,
     handleAddOrder,

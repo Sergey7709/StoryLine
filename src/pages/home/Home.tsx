@@ -63,7 +63,7 @@ export const Home = () => {
                 <Link to={"/reader-blogs"}>
                   <Image
                     radius={3}
-                    className={classes.image}
+                    className={styles.button}
                     maw={354}
                     src={"https://i.ibb.co/7RLt3DF/7.jpg"}
                   />

@@ -11,7 +11,6 @@ import { menuSortData } from "../../common/constants";
 import { SortHandlerType } from "../../common/types";
 
 export const BooksFilter = memo(({ sortHandler }: SortHandlerType) => {
-  console.log("render BooksFilter");
   return (
     <Group position="center">
       <Menu
