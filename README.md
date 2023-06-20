@@ -1,46 +1,52 @@
-# Getting Started with Create React App
+Концепция учебного проекта заключается в создании прототипа современного и удобного сайта книжного магазина. Сайт имеет следующие функции:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+✅ Регистрация и авторизация пользователей
+✅ Поиск и сортировка книг по различным критериям (разделы, категории, название, цена, и т.д.)
+✅ Просмотр подробной информации о книге (описание, отзывы, фото и т.д.)
+✅ Добавление книг в избранное пользователя
+✅ Добавление книг в корзину и оформление заказа
+✅ Управление личным кабинетом (просмотр истории заказов, изменение данных, и т.д.)
+✅ Блоги пользователей с возможностью редактирования своих постов и оценки постов пользователей.
 
-## Available Scripts
+Технологии:
 
-In the project directory, you can run:
+Обоснование выбора технологий для разработки сайта основано на следующих критериях:
 
-### `yarn start`
+① Скорость и производительность
+② Надежность и безопасность
+③ Гибкость и масштабируемость
+④ Удобство и эффективность разработки
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Для фронтенда выбраны следующие технологии:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+React TypeScript - популярная библиотека для создания пользовательского интерфейса с использованием компонентов и TypeScript для строгой типизации кода
+Redux Toolkit - библиотека для управления состоянием приложения с использованием Redux
+Axios - библиотека для выполнения HTTP-запросов в браузере и на стороне сервера. Она предоставляет удобные методы для отправки запросов, обработки ошибок 
+React Query (TanStack Query) - библиотека для управления состоянием и кэширования данных на клиентской стороне. Она предоставляет инструменты для выполнения запросов к API, кэширования данных и обработки различных состояний загрузки.
+Mantine UI - современный и модульный набор компонентов пользовательского интерфейса для React. Он предоставляет качественные и стилизованные компоненты, которые можно легко настроить и использовать для быстрой разработки интерфейса.
 
-### `yarn test`
+Для бэкенда выбраны следующие технологии:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+NestJS - прогрессивный фреймворк для создания эффективных и масштабируемых серверных приложений на Node.js
+TypeORM - ORM (объектно-реляционное отображение) библиотека для работы с базами данных с использованием TypeScript
+PostgreSQL - расширяемая система управления базами данных (СУБД), предназначенная для хранения и обработки больших объемов данных. 
 
-### `yarn build`
+Разработка:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Фронтенд
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Кошелев С.А. отвечал за реализацию:1. API книг, пользовательских блогов, избранного
+2. Компоненты для Header, Footer, 404, ошибки сети, каталога, блока книг,  поиска и сортировки книг, избранное, корзина, пользовательские блоги, карусель, пагинация, анимация загрузки, а также их верстка и Redux логика.
+3. Страницы Home, «О нас», доставка,  акции.
+4. Роутинг
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Шимкович Д.В. отвечал за реализацию:
+API запросов авторизации и регистрации пользователей, получения и редактирования постов пользователей, отзывов.
+Компоненты авторизации пользователя, аккаунта, личного кабинета,  чат бот,  их верстка и Redux логика.
 
-### `yarn eject`
+Бэкенд
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+ Полностью реализовал Шимкович Д.В.
+![image](https://github.com/Sergey7709/books-store/assets/116739566/eefc0ca3-697a-4950-be7d-426364253ebc)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
