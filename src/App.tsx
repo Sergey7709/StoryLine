@@ -69,7 +69,7 @@ export const App = () => {
                 element={<ReaderBlogsCard />}
               />
               <Route path={"/about-us"} element={<AboutUs />} />
-              <Route path={"/books-list/:link"} element={<BooksList />} />
+              <Route path={"/books-list/:param"} element={<BooksList />} />
               <Route path={"/book-card/:id"} element={<BookCard />} />
               <Route path={"/user-account"} element={<UserAccount />} />
               <Route path={"*"} element={<Error404 />} />

@@ -30,6 +30,8 @@ export const NAV_BUTTONS = [
 export const categoryNewBooks =
   "all?sortBy=releaseDate&sortOrder=desc&limit=13";
 
+export const serchQuery = "?sortBy=releaseDate&sortOrder=desc&limit=13";
+
 export const CATEGORIES = [
   {
     link: "/books-list/Все книги",

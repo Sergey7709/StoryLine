@@ -1,6 +1,10 @@
 import { Grid, Title, Divider, Modal, Group } from "@mantine/core";
 import React, { memo } from "react";
-import { QUANTITY_PAGES, categoryNewBooks } from "../../common/constants";
+import {
+  QUANTITY_PAGES,
+  categoryNewBooks,
+  serchQuery,
+} from "../../common/constants";
 import { ServerError } from "../../components/errorNetwork/ServerError";
 import { Authorization } from "../authorization/Authorization";
 import { BooksFilter } from "./BooksFilter";
@@ -8,18 +12,30 @@ import PriceRange from "./BooksPriceRange";
 import { BookListLayoutProps } from "../../common/types";
 import { Loader } from "../../components/loader/Loader";
 import { useAppSelector } from "../../redux/redux.hooks";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { GoBackButton } from "../../components/GoBackButton";
 import { Paginator } from "../../components/pagination/Paginator";
 import { setPaginationPage } from "../../redux/sortSlice";
 import { Footer } from "../../components/footer/Footer";
+import queryString from "query-string";
 
 export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
   const { searchBooksValue } = useAppSelector((state) => state.sort);
 
   const paginationPage = useAppSelector((state) => state.sort.paginationPage);
 
-  const { link } = useParams();
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+  const querySearchName = decodeURIComponent(location.search);
+
+  console.log(querySearchName);
+
+  const title =
+    typeof queryParams.category === "string"
+      ? queryParams.category.toUpperCase()
+      : querySearchName === serchQuery
+      ? "НОВИНКИ"
+      : "ВСЕ КНИГИ";
 
   const {
     isLoading,
@@ -85,7 +101,7 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
                       order={2}
                       italic
                     >
-                      {!isLoading && link?.toLocaleUpperCase()}
+                      {!isLoading && title}
                     </Title>
                   </Grid.Col>
                 </Grid>

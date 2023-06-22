@@ -1,18 +1,33 @@
 import { useStyles } from "./BooksListStyles";
 import { useAppDispatch, useAppSelector } from "../../redux/redux.hooks";
 import SingleBookBlock from "./SingleBookBlock";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { BookListLayout } from "./BookListLayout";
 import { usePostFavorites } from "../../api/usePostFavorites";
 import { useGetBookList } from "../../api/useGetBookList";
 import { User } from "../../common/types";
-import { setCategorySort } from "../../redux/sortSlice";
+import { setCategorySort, setPaginationPage } from "../../redux/sortSlice";
+import { useLocation } from "react-router-dom";
+import { currentFilter } from "../../redux/filterSlice";
 
 export const BooksList = React.memo(() => {
   const user: User | null = useAppSelector((stateAuth) => stateAuth.auth.user);
 
+  const location = useLocation();
+
+  const querySearchName = decodeURIComponent(location.search);
+
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (querySearchName.length === 0) {
+      dispatch(currentFilter("all?"));
+    } else {
+      dispatch(currentFilter(`all${querySearchName}`));
+      dispatch(setPaginationPage(1));
+    }
+  }, [location]);
 
   const { classes } = useStyles();
 

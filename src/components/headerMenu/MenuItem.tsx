@@ -16,7 +16,7 @@ export const MenuItem = () => {
 
   const navigate = useNavigate();
 
-  const onClickToItem = (link: string, param: string) => {
+  const onClickToItem = (param: string) => {
     dispatch(setSearchBooksValue(""));
     dispatch(setCategorySort(""));
     dispatch(setMinPrice(""));
@@ -24,14 +24,14 @@ export const MenuItem = () => {
     dispatch(setReset(true));
     dispatch(currentFilter(param));
 
-    navigate(link);
+    navigate(`/books-list/${param}`);
   };
   const menuCategory = CATEGORIES.map((item, ind) => (
     <Menu.Item
       tt={"uppercase"}
       fz={"sm"}
       color="blue"
-      onClick={() => onClickToItem(item.link, item.param)}
+      onClick={() => onClickToItem(item.param)}
       key={ind}
     >
       {item.label}
