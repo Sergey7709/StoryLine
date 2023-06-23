@@ -28,8 +28,6 @@ export const BookListLayout: React.FC<BookListLayoutProps> = memo((props) => {
   const queryParams = queryString.parse(location.search);
   const querySearchName = decodeURIComponent(location.search);
 
-  console.log(querySearchName);
-
   const title =
     typeof queryParams.category === "string"
       ? queryParams.category.toUpperCase()

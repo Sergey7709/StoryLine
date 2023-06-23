@@ -4,16 +4,30 @@ import { useMutation } from "react-query";
 import { BASE_URL } from "../../common/constants";
 import { useCurrentUser } from "../../hooks/useCurrenUser";
 import { useAppSelector } from "../../redux/redux.hooks";
-import { Container, Divider, Flex, Grid, Space } from "@mantine/core";
+import {
+  Button,
+  Center,
+  Container,
+  Divider,
+  Flex,
+  Grid,
+  Modal,
+  SimpleGrid,
+  Space,
+} from "@mantine/core";
 import SingleBookList from "../catalog/SingleBookBlock";
 import EmptyData from "../userAccount/assetsUserAccount/EmptyData";
 import { Title } from "@mantine/core";
 import { useCallback, useEffect, useMemo } from "react";
 import React from "react";
 import { Footer } from "../../components/footer/Footer";
+import { useDisclosure } from "@mantine/hooks";
+import { Authorization } from "../authorization/Authorization";
 
 export const Favorites = React.memo(() => {
   const user = useAppSelector((state) => state.auth.user);
+
+  const [onAuth, { open: openAuth, close: closeAuth }] = useDisclosure(false);
 
   const getCurrentUser = useCurrentUser();
 
@@ -78,6 +92,10 @@ export const Favorites = React.memo(() => {
     [user?.favoriteItems]
   );
 
+  const openAuthHandler = () => {
+    openAuth();
+  };
+
   const favoriteItems = useMemo(
     () => user?.favoriteItems ?? [],
     [user?.favoriteItems]
@@ -85,8 +103,23 @@ export const Favorites = React.memo(() => {
 
   return (
     <>
-      <Container h={"100%"} size={"xl"}>
-        {!user && <>Зарегестрируйтесь, что бы добавить в избранное</>}
+      <Modal size={500} opened={onAuth} onClose={closeAuth} centered>
+        <Authorization close={closeAuth} />
+      </Modal>
+
+      <Container h={"100vh"} size={"xl"}>
+        {!user && (
+          <Center h={"50%"}>
+            <SimpleGrid>
+              <Title order={2} align="center" tt={"uppercase"}>
+                Войдите в аккаунт, что бы добавить в избранное!
+              </Title>
+              <Button onClick={openAuthHandler} color="red" tt={"uppercase"}>
+                Войти/зарегистрироваться
+              </Button>
+            </SimpleGrid>
+          </Center>
+        )}
         {user && (
           <>
             <Flex justify={"center"} align={"center"}>
@@ -118,7 +151,6 @@ export const Favorites = React.memo(() => {
           </>
         )}
       </Container>
-
       <Footer />
     </>
   );
