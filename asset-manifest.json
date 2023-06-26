@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Sergey7709/books-store.git/static/css/main.66eb367f.css",
+    "main.js": "/Sergey7709/books-store.git/static/js/main.48496b30.js",
+    "index.html": "/Sergey7709/books-store.git/index.html",
+    "main.66eb367f.css.map": "/Sergey7709/books-store.git/static/css/main.66eb367f.css.map",
+    "main.48496b30.js.map": "/Sergey7709/books-store.git/static/js/main.48496b30.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.66eb367f.css",
+    "static/js/main.48496b30.js"
+  ]
+}
