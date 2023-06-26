@@ -1,7 +1,6 @@
 import { Carusel } from "../../components/carusel/Carusel";
 import { IMAGES_CARUSEL_HOME } from "../../common/constants";
 import {
-  Image,
   Grid,
   Group,
   Paper,
@@ -14,7 +13,7 @@ import {
   Center,
   useMantineTheme,
 } from "@mantine/core";
-import { useStyles } from "../../components/headerMenu/headerMenuStyles";
+
 import { SlBookOpen } from "react-icons/sl";
 import { GiTrophyCup } from "react-icons/gi";
 import { SiLeaderprice } from "react-icons/si";
@@ -23,10 +22,9 @@ import { Footer } from "../../components/footer/Footer";
 import { Link } from "react-router-dom";
 import styles from "./home.module.css";
 import { useMediaQuery } from "@mantine/hooks";
+import { Chart } from "../../components/chart/Chart";
 
 export const Home = () => {
-  const { classes } = useStyles();
-
   const theme = useMantineTheme();
 
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
@@ -53,23 +51,14 @@ export const Home = () => {
   return (
     <>
       <Grid justify="center">
-        <Grid.Col span={12}>
+        <Grid.Col span={12} pt={20}>
           <Group spacing={20} position="center">
             <Paper p={7} shadow="xl">
               <Carusel imageUrl={IMAGES_CARUSEL_HOME} maxWidth={900} />
             </Paper>
-            <Paper pt={9} pb={3} px={7} shadow="xl">
-              <UnstyledButton>
-                <Link to={"/reader-blogs"}>
-                  <Image
-                    radius={3}
-                    className={styles.button}
-                    maw={354}
-                    src={"https://i.ibb.co/7RLt3DF/7.jpg"}
-                  />
-                </Link>
-              </UnstyledButton>
-            </Paper>
+            <Link to={"/reader-blogs"}>
+              <Chart />
+            </Link>
           </Group>
         </Grid.Col>
 
