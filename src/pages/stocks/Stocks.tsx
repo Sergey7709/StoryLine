@@ -11,11 +11,11 @@ export const Stocks = () => {
 
   const navigate = useNavigate();
 
-  const pathHandler = (path: string, param: string) => {
+  const pathHandler = (param: string) => {
     dispatch(currentFilter(param));
     dispatch(setPaginationPage(1));
 
-    navigate(path);
+    navigate(`/books-list/${param}`); //!
   };
   return (
     <>
@@ -30,7 +30,7 @@ export const Stocks = () => {
                   color="green"
                   fullWidth
                   radius={0}
-                  onClick={() => pathHandler(block.path, block.param)}
+                  onClick={() => pathHandler(block.param)}
                 >
                   <Text tt={"uppercase"}>Перейти к покупкам</Text>
                 </Button>
