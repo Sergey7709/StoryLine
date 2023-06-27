@@ -15,7 +15,7 @@ export const Stocks = () => {
     dispatch(currentFilter(param));
     dispatch(setPaginationPage(1));
 
-    navigate(`/books-list/${param}`); //!
+    navigate(`/books-list/${param}`);
   };
   return (
     <>
