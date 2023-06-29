@@ -184,23 +184,23 @@ export const BLOCK_DATA_STOCKS = [
 export const IMAGES_CARUSEL_ABOUT_US = [
   {
     id: "a",
-    url: "https://th.bing.com/th/id/OIG.Cg5BCUCNTG8mFaNnTV6E?pid=ImgGn",
+    url: "https://www.caandesign.com/wp-content/uploads/2017/06/arbitrary-lines-form-scattered-ladders-different-heights-walking-sitting-zhongshuge-bookstore-chengdu-china-caandesign-15.jpg",
   },
   {
     id: "b",
-    url: "https://th.bing.com/th/id/OIG.9jqYqengVvwcbnNpADea?pid=ImgGn",
+    url: "https://www.caandesign.com/wp-content/uploads/2017/06/arbitrary-lines-form-scattered-ladders-different-heights-walking-sitting-zhongshuge-bookstore-chengdu-china-caandesign-17.jpg",
   },
   {
     id: "c",
-    url: "https://th.bing.com/th/id/OIG.OQY65Dcc2I8nM9F.q7Tz?pid=ImgGn",
+    url: "https://www.caandesign.com/wp-content/uploads/2017/06/arbitrary-lines-form-scattered-ladders-different-heights-walking-sitting-zhongshuge-bookstore-chengdu-china-caandesign-21.jpg",
   },
   {
     id: "d",
-    url: "https://th.bing.com/th/id/OIG.WTO5CXQjC8yjv8PRGp5i?pid=ImgGn",
+    url: "https://www.caandesign.com/wp-content/uploads/2017/06/arbitrary-lines-form-scattered-ladders-different-heights-walking-sitting-zhongshuge-bookstore-chengdu-china-caandesign-23.jpg",
   },
   {
     id: "e",
-    url: "https://th.bing.com/th/id/OIG.Pylbn1FZneukN416y69y?pid=ImgGn",
+    url: "https://www.caandesign.com/wp-content/uploads/2017/06/arbitrary-lines-form-scattered-ladders-different-heights-walking-sitting-zhongshuge-bookstore-chengdu-china-caandesign-25.jpg",
   },
 ];
 
