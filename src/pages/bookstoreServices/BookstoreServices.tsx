@@ -8,14 +8,7 @@ export const BookstoreServices = () => {
       <Container size={"xl"}>
         <GoBackButton text="ВЕРНУТЬСЯ" width={"100%"} />
         <Paper shadow="xs" p="lg" withBorder>
-          {/*<Image*/}
-          {/*  height={400}*/}
-          {/*  maw={"auto"}*/}
-          {/*  mb={20}*/}
-          {/*  // src={*/}
-          {/*  //   "https://phonoteka.org/uploads/posts/2021-05/1620781634_15-phonoteka_org-p-fon-dlya-storis-dostavka-17.jpg"*/}
-          {/*  // }*/}
-          {/*/>*/}
+
           <Text size="lg" weight={500}>
             Доставка
           </Text>
