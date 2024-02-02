@@ -21,11 +21,9 @@ type ResultObject = {
 export const Chart: React.FC = () => {
   const { allDataReaderBlogs, isSuccess } = UseReaderBlogsApi();
 
-  // Создаем объект, в котором будем хранить количество блогов по дате
   const countBlogs: { [date: string]: number } = {};
 
-  // Перебираем все полученные блоги и заполняем объект countBlogs датой и ее кол-вом
-  isSuccess &&
+   isSuccess &&
     allDataReaderBlogs?.forEach((blog) => {
       if (countBlogs[blog.date]) {
         countBlogs[blog.date] += 1;
@@ -34,15 +32,13 @@ export const Chart: React.FC = () => {
       }
     });
 
-  // Преобразуем объект countBlogs в массив объектов типа ResultObject
-  const resultArray: ResultObject[] = Object.entries(countBlogs).map(
+   const resultArray: ResultObject[] = Object.entries(countBlogs).map(
     ([date, count]) => ({
       date,
       count,
     })
   );
 
-  // Сортируем массив объектов по дате и прводим даты в правильный формат
   const sortedDates = [...resultArray].sort((a, b) => {
     const [dayA, monthA, yearA] = a.date.split(".");
     const dateA = new Date(`${monthA}/${dayA}/${yearA}`);
@@ -56,16 +52,12 @@ export const Chart: React.FC = () => {
 
   const count = sortedDates.map((el) => el.count);
 
-  // Получаем итоговый массив дат
   const resultDate = sortedDates?.map((el) => el.date);
 
-  //Регистрация необходимыx компонентов для работы Chart.js
   ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-  // Получаем массив меток для оси X
   const labels = resultDate;
 
-  // Создаем объект данных для графика
   const data = {
     labels,
 
