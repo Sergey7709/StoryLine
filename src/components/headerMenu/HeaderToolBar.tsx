@@ -39,7 +39,7 @@ const HeaderToolBar: FC<HeaderToolBarProps> = ({ classes }) => {
               maw={50}
               ml="30px"
               radius="md"
-              src="https://th.bing.com/th/id/OIG.IuHUSGbrzq_JUMRk1Yrq?pid=ImgGn"
+              src="https://i.ibb.co/Bfftmyz/logo.jpg"
               alt="Home image"
             />
           </Link>
