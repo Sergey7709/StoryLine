@@ -23,8 +23,16 @@ import { Link } from "react-router-dom";
 import styles from "./home.module.css";
 import { useMediaQuery } from "@mantine/hooks";
 import { Chart } from "../../components/chart/Chart";
+import {UseReaderBlogsApi} from "../../api/useReaderBlogsApi";
+import {useGetBookList} from "../../api/useGetBookList";
+import {Loader} from "../../components/loader/Loader";
+import React from "react";
 
 export const Home = () => {
+  const { isLoading: isLoadingBlogs } = UseReaderBlogsApi();
+  const { isLoading: isLoadingBooks } =
+      useGetBookList();
+
   const theme = useMantineTheme();
 
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
@@ -47,6 +55,9 @@ export const Home = () => {
       text: "Быстрая доставка",
     },
   ];
+
+  if (isLoadingBooks || isLoadingBlogs) {
+  return <Loader title={"Уже открываемся..."} />}
 
   return (
     <>
